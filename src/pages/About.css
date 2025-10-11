@@ -1,0 +1,13 @@
+.about-page {
+    min-height: 100vh;
+  }
+  
+  .about-page h1 {
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+  }
+  
+  .about-page p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+  

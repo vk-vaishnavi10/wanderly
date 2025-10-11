@@ -1,0 +1,227 @@
+/* 🌌 Background Container */
+.car-booking {
+  background-color: #000;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 6rem 1rem 3rem; /* ✅ pushes below navbar */
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+/* 📝 Booking Card */
+.car-booking-card {
+  background: rgba(20, 20, 20, 0.95);
+  border: 2px solid #FFD700;
+  border-radius: 15px;
+  padding: 2.2rem;
+  max-width: 450px;
+  width: 100%;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.25);
+  color: #FFD700;
+  text-align: left;
+  margin-top: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.car-booking-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 35px rgba(255, 215, 0, 0.45);
+}
+
+/* 🏷️ Title & Subtitle */
+.car-booking-card h2 {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 0.8rem;
+  color: #FFD700;
+  letter-spacing: 1px;
+}
+
+.car-booking-card p {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+/* 📸 Car Preview Section */
+.car-preview {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  animation: fadeInUp 1s ease;
+}
+
+.selected-car-image {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+  margin-bottom: 0.6rem;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.selected-car-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.9);
+}
+
+.car-preview-text {
+  color: #FFD700;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+/* 📋 Labels */
+.car-booking-card label {
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+  display: block;
+  color: #FFD700;
+  font-size: 0.9rem;
+}
+
+/* ✏️ Inputs & Selects */
+.car-booking-card input,
+.car-booking-card select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #FFD700;
+  margin-bottom: 1.2rem;
+  background: #111;
+  color: #FFD700;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.car-booking-card input::placeholder {
+  color: #bbb;
+  font-style: italic;
+}
+
+.car-booking-card input:focus,
+.car-booking-card select:focus {
+  border-color: #fff;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+}
+
+/* 🚕 Confirm Button */
+.car-booking-card button {
+  background: linear-gradient(135deg, #FFD700, #e6c200);
+  color: #000;
+  font-weight: bold;
+  border: none;
+  padding: 0.9rem;
+  width: 100%;
+  border-radius: 12px;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.car-booking-card button:hover {
+  background: #fff;
+  color: #000;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+  transform: scale(1.03);
+}
+
+.car-booking-card button:active {
+  transform: scale(0.98);
+}
+
+/* ✨ Glow pulse effect */
+.car-booking-card button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: skewX(-20deg);
+  transition: left 0.5s ease;
+}
+
+.car-booking-card button:hover::after {
+  left: 100%;
+}
+
+/* 🎞️ Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 🧠 Responsive Fixes */
+@media (max-width: 768px) {
+  .car-booking {
+    padding: 5rem 1rem 2rem;
+  }
+
+  .car-booking-card {
+    max-width: 90%;
+    padding: 1.8rem;
+  }
+
+  .car-booking-card h2 {
+    font-size: 1.3rem;
+  }
+
+  .selected-car-image {
+    max-width: 250px;
+  }
+
+  .car-booking-card button {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .car-booking {
+    padding: 4.5rem 1rem 2rem;
+  }
+
+  .car-booking-card {
+    padding: 1.5rem;
+  }
+
+  .car-booking-card input,
+  .car-booking-card select {
+    padding: 0.65rem 0.9rem;
+    font-size: 0.9rem;
+  }
+
+  .selected-car-image {
+    max-width: 200px;
+  }
+
+  .car-booking-card button {
+    padding: 0.8rem;
+  }
+}

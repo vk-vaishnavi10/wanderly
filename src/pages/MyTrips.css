@@ -1,0 +1,10 @@
+/* Custom Toast Theme */
+.golden-toast {
+    background: #111 !important;
+    border: 2px solid #FFD700 !important;
+    color: #FFD700 !important;
+    font-weight: bold;
+    border-radius: 10px !important;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.8) !important;
+  }
+  

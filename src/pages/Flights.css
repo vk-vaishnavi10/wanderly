@@ -1,0 +1,258 @@
+/* 🌌 Base Page Styling */
+.flights-page {
+  background-color: #000;
+  min-height: 100vh;
+  margin-top: 100px;
+  padding: 2rem;
+  font-family: "Poppins", sans-serif;
+  color: #FFD700;
+  text-align: center;
+}
+
+/* ✈️ Section Title */
+.flights-page h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #FFD700;
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+}
+
+/* 🔍 Search Bar Layout */
+.search-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1.5rem auto;
+  padding: 1.5rem 2rem;
+  background: rgba(17, 17, 17, 0.85);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 215, 0, 0.5);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.25);
+  max-width: 950px;
+}
+
+/* ✈️ Dropdowns (From / To) */
+.search-form select {
+  flex: 1;
+  min-width: 180px;
+  padding: 0.7rem 1.2rem;
+  border: 2px solid #FFD700;
+  border-radius: 10px;
+  background: #000;
+  color: #FFD700;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+  appearance: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+.search-form select:hover,
+.search-form select:focus {
+  border-color: #ffea70;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+  background: #111;
+  color: #fff;
+}
+
+.search-form select option {
+  background-color: #000 !important;
+  color: #FFD700 !important;
+  font-size: 1rem;
+  padding: 10px;
+}
+
+.search-form select option:checked,
+.search-form select option:hover {
+  background-color: #FFD700 !important;
+  color: #000 !important;
+}
+
+/* 🔘 Buttons */
+.search-form button {
+  background: #FFD700;
+  color: #000;
+  font-weight: bold;
+  border-radius: 50px;
+  padding: 0.7rem 2rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.search-form button:hover {
+  background: #000;
+  color: #FFD700;
+  border: 2px solid #FFD700;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+  transform: translateY(-3px);
+}
+
+/* 🟡 Reset Button Styling */
+.search-form button[type="button"] {
+  background: #333;
+  color: #FFD700;
+  border: 1px solid #FFD700;
+}
+
+.search-form button[type="button"]:hover {
+  background: #FFD700;
+  color: #000;
+}
+
+/* 🧭 Searchable Dropdown Wrappers */
+.dropdown-wrapper {
+  position: relative;
+  flex: 1;
+  min-width: 180px;
+}
+
+/* 🖊️ Search Inputs */
+.search-input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: none;
+  border-bottom: 2px solid #FFD700;
+  background: transparent;
+  color: #FFD700;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.search-input:focus {
+  border-bottom-color: #ffea00;
+  color: #fff;
+}
+
+/* 🔽 Dropdown List Styling */
+.dropdown-list {
+  position: absolute;
+  top: 105%;
+  left: 0;
+  width: 100%;
+  background: #111;
+  border: 1px solid #FFD700;
+  border-radius: 10px;
+  margin-top: 5px;
+  z-index: 999;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+  animation: fadeIn 0.25s ease-in;
+}
+
+.dropdown-list li {
+  padding: 10px;
+  cursor: pointer;
+  color: #FFD700;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.dropdown-list li:hover {
+  background: #FFD700;
+  color: #000;
+  font-weight: bold;
+}
+
+.no-option {
+  padding: 10px;
+  color: gray;
+  text-align: center;
+}
+
+/* 🧾 Summary Section */
+.summary-bar {
+  margin: 1.8rem auto;
+  background: rgba(15, 15, 15, 0.9);
+  border: 1px solid #FFD700;
+  border-radius: 10px;
+  padding: 12px;
+  color: #FFD700;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  width: 80%;
+  max-width: 900px;
+}
+
+/* 🛫 Flight Card */
+.flight-card {
+  border-radius: 1rem;
+  border: 2px solid #FFD700;
+  overflow: hidden;
+  background: #111;
+  color: #FFD700;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  cursor: pointer;
+}
+
+.flight-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.7);
+}
+
+/* 🖼 Flight Image */
+.flight-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-bottom: 2px solid #FFD700;
+  transition: transform 0.4s ease;
+}
+
+.flight-card:hover img {
+  transform: scale(1.08);
+}
+
+/* 📋 Flight Details */
+.flight-card .card-body {
+  padding: 1.2rem;
+  text-align: center;
+}
+
+.flight-card h5 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.4rem;
+  color: #FFD700;
+}
+
+.flight-card p {
+  margin: 0.2rem 0;
+  font-size: 0.95rem;
+  color: #ccc;
+}
+
+/* ✈️ View Details Button */
+.flight-card .btn {
+  border-radius: 50px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  background: #FFD700;
+  color: #000;
+  border: none;
+}
+
+.flight-card .btn:hover {
+  background: #000;
+  color: #FFD700;
+  border: 2px solid #FFD700;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.7);
+}
+
+/* 🌟 Smooth Animation for dropdowns */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

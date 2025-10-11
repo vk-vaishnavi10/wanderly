@@ -1,0 +1,187 @@
+/* 🌌 Reset */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  background: #000;
+  font-family: 'Poppins', sans-serif;
+  color: #FFD700;
+  overflow-x: hidden;
+}
+
+/* Root Reset */
+#root {
+  width: 100%;
+  max-width: 100% !important;
+  padding: 0;
+  text-align: initial; /* Don’t force center align globally */
+}
+
+/* 🌌 Global Theme */
+body {
+  background-color: #000 !important;
+  color: #FFD700;
+  padding-top: 80px; /* Push below navbar */
+  line-height: 1.6;
+}
+
+/* ✅ Section Wrapper */
+.page-container {
+  background-color: #000;
+  color: #FFD700;
+  min-height: 100vh;
+  width: 100%;
+  padding: 2rem;
+}
+
+/* ✨ Navbar */
+.custom-navbar-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 55px;
+  border-radius: 0 0 12px 12px;
+  padding: 0.5rem 1rem;
+
+  /* ✅ Glassmorphism */
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  border-bottom: 2px solid #FFD700;
+  z-index: 1000;
+}
+
+/* ✨ Section Headings */
+.section-heading {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 3rem 0 2rem;
+  color: #FFD700;
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+}
+
+/* 🟨 Golden Card Theme (Shared by Flights, Hotels, Cars) */
+.card {
+  background-color: #111;
+  border: 1px solid #FFD700;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.9);
+}
+
+/* Card Image */
+.card img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  object-fit: cover;
+}
+
+/* Card Title */
+.card-title {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #FFD700;
+  margin-bottom: 0.5rem;
+}
+
+/* Card Text */
+.card-text {
+  color: #ccc;
+  margin-bottom: 1rem;
+}
+
+/* Card Buttons */
+.card button,
+.card .btn {
+  background: #FFD700;
+  color: #000;
+  font-weight: bold;
+  border-radius: 25px;
+  padding: 0.6rem 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.card button:hover,
+.card .btn:hover {
+  background: #000;
+  color: #FFD700;
+  box-shadow: 0 0 18px rgba(255, 215, 0, 1);
+}
+
+/* 🏨 Hotel Cards inside grid */
+.stay-card {
+  background: #111;
+  border: 2px solid #FFD700;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.stay-card img {
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+  border-bottom: 2px solid #FFD700;
+}
+
+.stay-card .card-body {
+  flex: 1;
+  padding: 1rem;
+  text-align: center;
+}
+
+.stay-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+}
+
+/* 🌐 Dropdown Menu */
+.dropdown-menu {
+  background-color: #000 !important;
+  border: 1px solid #FFD700;
+  border-radius: 8px;
+  padding: 0.3rem 0;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+}
+
+.dropdown-item {
+  color: #FFD700 !important;
+  font-weight: 600;
+  padding: 0.6rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #FFD700 !important;
+  color: #000 !important;
+  box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.8);
+}
+
+/* 🖥 Responsive Grid Fix */
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.col-12,
+.col-md-6,
+.col-lg-4 {
+  padding: 1rem;
+}

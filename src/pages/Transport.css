@@ -1,0 +1,141 @@
+/* 🌌 Page Background */
+.transport-page {
+    background: #000;
+    color: #FFD700;
+    min-height: 100vh;
+    font-family: "Poppins", sans-serif;
+    padding-top: 80px; /* offset for fixed navbar */
+  }
+  
+  /* Hero */
+  .transport-hero {
+    padding: 3rem 1rem;
+    background: linear-gradient(180deg, rgba(255, 215, 0, 0.1), transparent);
+    color: #FFD700;
+  }
+  .transport-hero h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+  }
+  .transport-hero p {
+    color: #fff;
+    margin-top: 10px;
+  }
+  
+  /* Cards */
+  .transport-card {
+    background: #111;
+    border: 1px solid #FFD700;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .transport-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+  }
+  
+  .transport-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+  
+  .transport-card h4 {
+    font-weight: bold;
+    color: #FFD700;
+  }
+  
+  .transport-card .price {
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  
+  /* Buttons */
+  .transport-card .btn {
+    font-weight: bold;
+    border-radius: 8px;
+  }
+  .transport-card .btn:hover {
+    background: #fff;
+    color: #000;
+    transform: scale(1.05);
+  }
+  /* 🌌 Booking Page */
+.car-booking {
+    background: #000;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 1rem;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  /* 📝 Booking Card */
+  .car-booking-card {
+    background: rgba(20, 20, 20, 0.95);
+    border: 2px solid #FFD700;
+    border-radius: 15px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 500px;   /* ✅ keeps it neat */
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+    color: #FFD700;
+    text-align: center;
+  }
+  
+  /* Labels */
+  .car-booking-card label {
+    font-weight: bold;
+    margin-bottom: 0.4rem;
+    display: block;
+    text-align: left;
+    color: #FFD700;
+  }
+  
+  /* Inputs */
+  .car-booking-card input,
+  .car-booking-card select {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border-radius: 10px;
+    border: 1px solid #FFD700;
+    margin-bottom: 1.2rem;
+    background: #111;
+    color: #FFD700;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.3s ease;
+  }
+  
+  .car-booking-card input:focus,
+  .car-booking-card select:focus {
+    border-color: #fff;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+  }
+  
+  /* 🚀 Confirm Button */
+  .car-booking-card button {
+    background: linear-gradient(135deg, #FFD700, #e6c200);
+    color: #000;
+    font-weight: bold;
+    border: none;
+    padding: 0.9rem;
+    width: 100%;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .car-booking-card button:hover {
+    background: #fff;
+    color: #000;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.9);
+  }
+  

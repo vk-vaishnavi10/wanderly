@@ -1,0 +1,171 @@
+/* 🌌 Navbar Base */
+.custom-navbar {
+  background: rgba(0, 0, 0, 0.95); /* Black */
+  padding: 0.7rem 1.25rem;
+  z-index: 999;
+  border-bottom: 2px solid #FFD700;
+  backdrop-filter: blur(8px);
+}
+
+/* 🏷️ Logo */
+.navbar-logo {
+  height: 60px;
+  width: auto;
+  margin-right: 10px;
+}
+
+.brand-text {
+  color: #FFD700;
+  font-weight: 900;
+  font-size: 1.6rem;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.7);
+}
+
+/* 🔗 Nav Links */
+.nav-link {
+  color: #FFD700 !important;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  margin: 0 6px;
+  border-radius: 8px;
+  transition: all 0.28s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background: #FFD700;
+  color: #000 !important;
+  box-shadow: 0 0 18px rgba(255, 215, 0, 0.85);
+  transform: scale(1.06);
+}
+
+/* 🔘 Buttons */
+.glass-btn,
+.glass-btn-special,
+.glass-btn-special-outline {
+  border-radius: 8px;
+  padding: 0.5rem 1.2rem;
+  font-weight: bold;
+  transition: 0.25s;
+  color: #FFD700; /* ✅ Always yellow text */
+}
+
+/* Register Button */
+.glass-btn-special {
+  background: #000;              /* Black background */
+  color: #FFD700;                /* Yellow text */
+  font-weight: 800;
+  border: 2px solid #FFD700;
+  border-radius: 8px;
+  padding: 0.5rem 1.2rem;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+  transition: all 0.25s ease;
+}
+
+.glass-btn-special:hover {
+  background: #FFD700;           /* Gold background */
+  color: #000;                   /* Black text */
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(255, 215, 0, 1);
+}
+
+/* Sign In Button */
+.glass-btn-special-outline {
+  border: 2px solid #FFD700;
+  background: transparent;
+  color: #FFD700; /* ✅ Yellow text */
+  font-weight: 700;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+}
+.glass-btn-special-outline:hover {
+  background: #000; /* ✅ Black background */
+  color: #FFD700;   /* ✅ Yellow text */
+  box-shadow: 0 0 25px rgba(255, 215, 0, 1);
+  transform: scale(1.04);
+}
+
+/* INR Dropdown / Text */
+.mytrips-btn {
+  background: transparent;
+  color: #FFD700; /* ✅ Yellow text */
+  font-weight: 700;
+  border: 2px solid #FFD700;
+  padding: 0.45rem 1rem;
+  border-radius: 6px;
+  transition: 0.25s;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+.mytrips-btn:hover {
+  background: #000; /* ✅ Black background */
+  color: #FFD700;   /* ✅ Yellow text */
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.95);
+  transform: scale(1.03);
+}
+
+/* MyTrips preview dropdown */
+.mytrips-wrapper {
+  position: relative;
+}
+.mytrips-preview {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 280px;
+  background: rgba(10,10,10,0.97);
+  border: 1px solid rgba(255,215,0,0.06);
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+  transform-origin: top right;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px) scale(0.98);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 2000;
+}
+.mytrips-preview.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+.preview-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 4px;
+  border-bottom: 1px dashed rgba(255,215,0,0.04);
+}
+.preview-item:last-child {
+  border-bottom: none;
+}
+.small-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #FFD700, #f0c400);
+  box-shadow: 0 4px 12px rgba(255,215,0,0.14);
+}
+.preview-title {
+  color: #fff;
+  font-weight: 700;
+}
+.muted {
+  color: #d9c88a;
+  font-size: 0.8rem;
+}
+
+/* dropdown buttons inside preview */
+.preview-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 992px) {
+  .navbar-nav.mx-auto {
+    display: none; /* collapse center links on smaller screens if you use bootstrap collapse elsewhere */
+  }
+  .navbar-logo { height: 48px; }
+}

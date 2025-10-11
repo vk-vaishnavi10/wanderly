@@ -1,0 +1,178 @@
+/* 💛 Main Container */
+.dining-details {
+  font-family: "Poppins", sans-serif;
+  padding-top: 8rem; /* ensures content sits below navbar */
+  color: #fff;
+  min-height: 100vh;
+  overflow-x: hidden;
+
+  /* ✨ Premium Golden Glow Background */
+  background: radial-gradient(circle at top center, rgba(255, 215, 0, 0.15), rgba(0, 0, 0, 0.9)),
+              linear-gradient(135deg, #000 0%, #1a1a1a 50%, #000 100%);
+  background-size: 200% 200%;
+  animation: goldenFlow 10s ease-in-out infinite alternate;
+}
+
+/* 🌌 Background Light Animation */
+@keyframes goldenFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+/* 🌆 Hero Section (Image + Info) */
+.dining-hero-card {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+  background: rgba(17, 17, 17, 0.9);
+  border: 2px solid #ffd700;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+  transition: all 0.4s ease;
+  overflow: hidden;
+}
+
+.dining-hero-card:hover {
+  transform: scale(1.01);
+  box-shadow: 0 0 45px rgba(255, 215, 0, 0.6);
+}
+
+/* 🖼️ Hero Image */
+.dining-hero-img {
+  width: 100%;
+  max-width: 50%;
+  height: 420px; /* ✅ cinematic proportion */
+  object-fit: cover;
+  border-radius: 15px;
+  border: 2px solid #ffd700;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+  transition: transform 0.6s ease, box-shadow 0.6s ease;
+}
+
+.dining-hero-img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+}
+
+/* ℹ️ Info Section */
+.dining-hero-info {
+  flex: 1;
+  color: #ddd;
+  padding: 10px;
+}
+
+.dining-hero-info h2 {
+  color: #ffd700;
+  font-weight: 700;
+  margin-bottom: 10px;
+  font-size: 1.8rem;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
+.dining-hero-info p {
+  margin: 6px 0;
+  line-height: 1.5;
+}
+
+.rating {
+  color: #ffd700;
+  font-weight: bold;
+}
+
+.price-range {
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+/* 🍛 Menu Section (optional future expansion) */
+.menu-section h3 {
+  color: #ffd700;
+  font-weight: bold;
+  margin-top: 40px;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+}
+
+.menu-card {
+  background: #111;
+  border: 1px solid #ffd700;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.menu-card:hover {
+  background: #ffd700;
+  color: #000;
+  transform: scale(1.05);
+  cursor: pointer;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+}
+
+/* 🕓 Reservation Card */
+.confirm-btn {
+  background: linear-gradient(135deg, #ffd700, #e6b800);
+  color: #000;
+  border: none;
+  border-radius: 30px;
+  padding: 12px;
+  font-weight: 600;
+  transition: 0.3s ease;
+  font-size: 1.05rem;
+}
+
+.confirm-btn:hover {
+  background: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+}
+
+/* ⏳ Countdown Timer */
+.countdown {
+  margin-top: 15px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #ffdd33;
+  text-shadow: 0px 0px 12px rgba(255, 221, 51, 0.8);
+  animation: pulse 1.5s infinite alternate;
+}
+
+/* ⏱️ Pulse Animation */
+@keyframes pulse {
+  from {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+/* 📱 Responsive Layout */
+@media (max-width: 992px) {
+  .dining-hero-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .dining-hero-img {
+    max-width: 100%;
+    height: 320px;
+    border-radius: 10px;
+  }
+
+  .dining-hero-info h2 {
+    font-size: 1.5rem;
+  }
+
+  .dining-hero-info p {
+    font-size: 0.95rem;
+  }
+}

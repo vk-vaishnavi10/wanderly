@@ -1,0 +1,440 @@
+/* Reset & Base */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #000;
+  color: #FFD700;
+  font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
+}
+
+/* =========================================
+   🌍 HERO SECTION
+========================================= */
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* animated subtle gold gradient layer for classic look */
+.hero-parallax-gradient {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(800px 400px at 10% 10%, rgba(255,215,0,0.03), transparent 8%),
+              radial-gradient(600px 300px at 90% 80%, rgba(255,215,0,0.02), transparent 8%);
+  z-index: 0;
+  animation: slowShift 12s linear infinite;
+  pointer-events: none;
+}
+@keyframes slowShift {
+  0% { transform: translate3d(0,0,0); opacity: 1; }
+  50% { transform: translate3d(6px, -6px, 0); opacity: 0.95; }
+  100% { transform: translate3d(0,0,0); opacity: 1; }
+}
+
+/* Background Slideshow */
+.slideshow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out, transform 10s ease-out;
+}
+
+.slide.active {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* Dim layer for contrast */
+.hero-dark-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 1;
+}
+
+/* 💛 CONTENT BOX — centered */
+.hero-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(10px);
+  border-radius: 1.2rem;
+  padding: 2.2rem 2.6rem;
+  width: 90%;
+  max-width: 760px;
+  text-align: center;
+  z-index: 2;
+  border: 1px solid rgba(255, 215, 0, 0.1);
+  box-shadow: 0 0 38px rgba(255, 215, 0, 0.25);
+  animation: fadeInHero 1s ease-in-out;
+}
+
+@keyframes fadeInHero {
+  from { opacity: 0; transform: translate(-50%, -55%); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+/* Text styles */
+.hero-overlay h1 {
+  font-size: clamp(2.3rem, 3.4vw, 3.4rem);
+  font-weight: 900;
+  margin-bottom: 0.9rem;
+  color: #FFD700;
+  text-shadow: 0 0 18px rgba(255, 215, 0, 0.85);
+}
+
+.hero-overlay p {
+  color: #f3f1e6;
+  font-size: 1.05rem;
+  margin-bottom: 1.1rem;
+}
+
+/* Center search & quick buttons */
+.search-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===========================
+   🔍 SEARCH BOX
+=========================== */
+.search-row {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  border: 2px solid rgba(255,215,0,0.95);
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(16,16,16,0.85), rgba(8,8,8,0.6));
+  padding: 0.3rem;
+  width: 100%;
+  max-width: 650px;
+  gap: 8px;
+  position: relative;
+  box-shadow: inset 0 0 12px rgba(0,0,0,0.6);
+}
+
+.search-box input {
+  border: none;
+  background: transparent;
+  color: #FFD700;
+  flex: 1;
+  padding: 0.7rem 1rem;
+  outline: none;
+  font-size: 1rem;
+}
+
+.search-box input::placeholder {
+  color: #c7b87b;
+  opacity: 0.9;
+}
+
+/* Buttons inside search */
+.icon-btn {
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0.5rem;
+  border-radius: 999px;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+  color: #FFD700;
+}
+
+.icon-btn:hover {
+  transform: scale(1.12);
+  box-shadow: 0 0 12px rgba(255,215,0,0.28);
+}
+
+.mic-btn[aria-pressed="true"] {
+  box-shadow: 0 0 14px rgba(255,215,0,0.85);
+  transform: scale(1.06);
+}
+
+.search-btn {
+  background: linear-gradient(90deg, #FFD700, #f0c400);
+  color: #000;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.6rem 1.25rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.search-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 26px rgba(255, 215, 0, 0.28);
+}
+
+/* ===========================
+   🪄 AUTOCOMPLETE SUGGESTIONS
+=========================== */
+.suggestions-list {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0 auto;
+  max-width: 650px;
+  background: rgba(15, 15, 15, 0.98);
+  border-radius: 10px;
+  list-style: none;
+  padding: 6px 0;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,215,0,0.08);
+  z-index: 40;
+}
+
+.suggestions-list li {
+  padding: 10px 18px;
+  cursor: pointer;
+  color: #fffacd;
+  transition: background 0.15s ease;
+}
+
+.suggestions-list li:hover,
+.suggestions-list li:focus {
+  background: rgba(255,215,0,0.08);
+  outline: none;
+}
+
+/* Quick Links below search */
+.quick-links .btn {
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: 2px solid rgba(255,215,0,0.12);
+  color: #FFD700;
+}
+.quick-links .btn:hover {
+  background: #FFD700;
+  color: #000;
+  box-shadow: 0 6px 20px rgba(255,215,0,0.2);
+}
+
+/* =========================================
+   💛 COMMON SECTIONS (below hero)
+========================================= */
+.section-separator {
+  height: 50px;
+  background: linear-gradient(180deg, rgba(255,215,0,0.04), transparent);
+}
+
+.section-heading {
+  text-align: center;
+  font-size: 2rem;
+  margin: 3rem 0 2rem;
+  color: #FFD700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+}
+
+/* =========================================
+   🏖️ CARDS
+========================================= */
+.destination-card {
+  border: 2px solid rgba(255,215,0,0.14);
+  border-radius: 1rem;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(10,10,10,0.9), rgba(5,5,5,0.75));
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.destination-card img {
+  height: 200px;
+  object-fit: cover;
+  width: 100%;
+  transition: transform 0.5s ease;
+}
+
+.destination-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 14px 40px rgba(255, 215, 0, 0.12);
+}
+
+.destination-card:hover img {
+  transform: scale(1.08);
+}
+
+/* Deal, Why Us, and Extra sections */
+.deal-card .bg-dark,
+.whyus-card .bg-dark,
+.extra-card .bg-dark {
+  background: linear-gradient(180deg, rgba(18,18,18,0.9), rgba(12,12,12,0.8));
+}
+.deal-card h4,
+.whyus-card h3 {
+  color: #FFD700;
+}
+
+/* Newsletter */
+.subscribe-input {
+  max-width: 420px;
+}
+
+/* Reveal animation for intersection observer */
+.animate-card, .deal-card, .whyus-card, .extra-card, .inspo-card {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.animate-card.visible, .deal-card.visible, .whyus-card.visible, .extra-card.visible, .inspo-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===========================
+   🌟 Inspiration Carousel (compact)
+=========================== */
+.inspo-carousel {
+  display: flex;
+  overflow-x: auto;
+  padding: 8px 6px;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+.inspo-card {
+  min-width: 220px;
+  max-width: 240px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(12,12,12,0.92), rgba(8,8,8,0.85));
+  border: 1px solid rgba(255,215,0,0.08);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.inspo-card .inspo-img-wrap {
+  height: 130px;
+  overflow: hidden;
+}
+.inspo-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.inspo-card:hover img {
+  transform: scale(1.08);
+}
+.inspo-card .card-body {
+  padding: 10px 12px;
+  color: #fff;
+}
+.inspo-card h5 {
+  color: #FFD700;
+  margin: 0;
+}
+.inspo-card .muted {
+  color: #ddd;
+  font-size: 0.9rem;
+}
+
+/* ===========================
+   📱 RESPONSIVE DESIGN
+=========================== */
+@media (max-width: 768px) {
+  .hero-overlay {
+    padding: 1.6rem 1.2rem;
+    width: 92%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) !important;
+  }
+
+  .hero-overlay h1 {
+    font-size: 1.9rem;
+  }
+
+  .destination-card img {
+    height: 150px;
+  }
+
+  .search-box input {
+    font-size: 0.95rem;
+  }
+
+  .suggestions-list {
+    max-width: calc(100% - 20px);
+    left: 10px;
+    right: 10px;
+  }
+}
+
+/* ===========================
+   CHAT ASSISTANT MOCKUP
+=========================== */
+.chat-assistant {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  pointer-events: auto;
+}
+
+/* small round dot */
+.chat-dot {
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #FFD700, #f0c400);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 8px 30px rgba(255,215,0,0.25);
+  cursor: pointer;
+}
+
+/* small card that appears (keep subtle) */
+.chat-card {
+  display: none;
+  min-width: 220px;
+  max-width: 280px;
+  background: rgba(10,10,10,0.95);
+  border: 1px solid rgba(255,215,0,0.08);
+  padding: 12px;
+  border-radius: 10px;
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+.chat-assistant:hover .chat-card {
+  display: block;
+}
+
+/* keep classic look for small screens */
+@media (max-width: 420px) {
+  .chat-card {
+    display: none;
+  }
+}

@@ -1,0 +1,157 @@
+/* 🌌 Background Section */
+.cab-booking {
+  background-color: #000;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 6rem 1rem 3rem; /* ✅ pushes below navbar */
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* 🚕 Booking Card */
+.cab-booking-card {
+  background: rgba(18, 18, 18, 0.95);
+  border: 2px solid #FFD700;
+  border-radius: 16px;
+  padding: 2.2rem;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.35);
+  color: #FFD700;
+  text-align: left;
+  margin-top: 1rem;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.cab-booking-card:hover {
+  box-shadow: 0 0 35px rgba(255, 215, 0, 0.5);
+  transform: translateY(-3px);
+}
+
+/* 🏷️ Header */
+.cab-booking-card h2 {
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #FFD700;
+  letter-spacing: 1px;
+}
+
+.cab-booking-card p {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #ddd;
+  font-size: 0.95rem;
+}
+
+/* 📝 Labels */
+.cab-booking-card label {
+  font-weight: bold;
+  margin-bottom: 0.4rem;
+  display: block;
+  color: #FFD700;
+  font-size: 0.9rem;
+}
+
+/* ✏️ Input & Select Fields */
+.cab-booking-card input,
+.cab-booking-card select {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #FFD700;
+  margin-bottom: 1.3rem;
+  background: #111;
+  color: #FFD700;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.cab-booking-card input::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+.cab-booking-card input:focus,
+.cab-booking-card select:focus {
+  border-color: #fff;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+}
+
+/* 🚕 Confirm Booking Button */
+.cab-booking-card button {
+  background: linear-gradient(135deg, #FFD700, #e6c200);
+  color: #000;
+  font-weight: 700;
+  border: none;
+  padding: 1rem;
+  width: 100%;
+  border-radius: 12px;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cab-booking-card button:hover {
+  background: #fff;
+  color: #000;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+  transform: scale(1.04);
+}
+
+/* 💫 Floating Taxi Icon (optional aesthetic) */
+.cab-booking-card::before {
+  content: "🚕";
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.8rem;
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 768px) {
+  .cab-booking {
+    padding: 5rem 1rem 2.5rem;
+  }
+
+  .cab-booking-card {
+    max-width: 90%;
+    padding: 1.8rem;
+  }
+
+  .cab-booking-card h2 {
+    font-size: 1.3rem;
+  }
+
+  .cab-booking-card button {
+    font-size: 1rem;
+    padding: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cab-booking {
+    padding: 4.5rem 1rem 2rem;
+  }
+
+  .cab-booking-card {
+    padding: 1.5rem;
+  }
+
+  .cab-booking-card input,
+  .cab-booking-card select {
+    padding: 0.65rem 0.9rem;
+    font-size: 0.9rem;
+  }
+
+  .cab-booking-card button {
+    padding: 0.8rem;
+  }
+}

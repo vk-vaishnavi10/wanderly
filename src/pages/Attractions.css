@@ -1,0 +1,108 @@
+/* 🌌 Page Layout */
+.attractions-page {
+    background-color: #000;
+    min-height: 100vh;
+    padding: 8rem 2rem 4rem; /* ✅ Push content below fixed navbar */
+    color: #ffd700;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  /* 🌍 Title */
+  .attractions-page h1 {
+    color: #ffd700;
+    font-weight: 700;
+    text-shadow: 0 0 10px #ffd700, 0 0 20px #000;
+    margin-bottom: 2rem;
+  }
+  
+  /* 🔍 Search Bar */
+  .attractions-page .form-control {
+    background-color: #111;
+    color: #ffd700;
+    border: 1px solid #ffd700;
+    border-radius: 10px;
+    padding: 0.9rem 1.2rem;
+    transition: 0.3s;
+  }
+  
+  .attractions-page .form-control::placeholder {
+    color: #aaa;
+  }
+  
+  .attractions-page .form-control:focus {
+    border-color: #fff;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+    background-color: #111;
+  }
+  
+  /* 🎴 Attraction Cards */
+  .attraction-card {
+    background-color: #111;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: 15px;
+    color: #ffd700;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .attraction-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+  }
+  
+  /* 🖼️ Image Styling */
+  .attraction-card img {
+    height: 220px;
+    object-fit: cover;
+    border-bottom: 2px solid #ffd700;
+    transition: transform 0.4s ease;
+  }
+  
+  .attraction-card:hover img {
+    transform: scale(1.05);
+  }
+  
+  /* ✨ Card Content */
+  .attraction-card .card-body {
+    color: #fff;
+  }
+  
+  .attraction-card .card-title {
+    color: #ffd700;
+    font-weight: 600;
+  }
+  
+  .attraction-card .card-subtitle {
+    color: #999;
+  }
+  
+  /* 🟡 Explore Button */
+  .explore-btn {
+    background: linear-gradient(135deg, #ffd700, #e6c200);
+    color: #000;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    padding: 0.6rem 1.2rem;
+    transition: 0.3s;
+  }
+  
+  .explore-btn:hover {
+    background: #fff;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+  }
+  
+  /* 📱 Responsive Fixes */
+  @media (max-width: 768px) {
+    .attractions-page {
+      padding: 7rem 1.5rem 3rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .attractions-page {
+      padding: 6rem 1rem 2rem;
+    }
+  }
+  
