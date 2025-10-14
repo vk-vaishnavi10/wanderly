@@ -16,6 +16,12 @@ export default function Payment() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // 🧩 Mock OTP States
+  const [phone, setPhone] = useState("");
+  const [otp, setOtp] = useState("");
+  const [generatedOtp, setGeneratedOtp] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
+
   // ✅ Load flight + booking details
   useEffect(() => {
     const flightData = location.state?.flight || location.state?.bookingDetails?.flight;
@@ -47,9 +53,7 @@ export default function Payment() {
 
     try {
       // 🔹 Clean numeric amount
-      const numericAmount = parseFloat(
-        flight.price?.toString().replace(/[₹,]/g, "")
-      );
+      const numericAmount = parseFloat(flight.price?.toString().replace(/[₹,]/g, ""));
 
       // 🔹 Prepare JSON payload
       const paymentData = {
@@ -65,7 +69,6 @@ export default function Payment() {
 
       // ✅ Send to backend
       const res = await addPayment(paymentData);
-
       console.log("✅ Payment saved:", res.data);
 
       // ✅ Clear temp data and redirect
@@ -74,6 +77,28 @@ export default function Payment() {
     } catch (err) {
       console.error("❌ Payment failed:", err.response?.data || err.message);
       alert("Something went wrong while processing payment!");
+    }
+  };
+
+  // 🔹 Mock OTP Sender
+  const handleSendOtp = () => {
+    if (!phone) {
+      alert("Please enter your phone number first!");
+      return;
+    }
+    const otpValue = Math.floor(100000 + Math.random() * 900000).toString(); // random 6-digit OTP
+    setGeneratedOtp(otpValue);
+    setOtpSent(true);
+    alert(`📱 OTP sent successfully! (Mock OTP: ${otpValue})`);
+  };
+
+  // 🔹 OTP Verifier
+  const handleVerifyOtp = () => {
+    if (otp === generatedOtp) {
+      alert("✅ OTP Verified Successfully!");
+      handlePayment(new Event("submit"));
+    } else {
+      alert("❌ Invalid OTP, please try again!");
     }
   };
 
@@ -220,23 +245,40 @@ export default function Payment() {
                       </button>
                     </>
                   )}
+
                   {step === 2 && (
                     <>
-                      <input type="text" placeholder="Username" required />
-                      <input type="password" placeholder="Password" required />
+                      <input
+                        type="text"
+                        placeholder="Registered Phone Number"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        required
+                      />
                       <button
                         type="button"
                         className="pay-btn"
-                        onClick={() => setStep(3)}
+                        onClick={handleSendOtp}
                       >
-                        🔓 Login
+                        📲 Send OTP
                       </button>
                     </>
                   )}
-                  {step === 3 && (
+
+                  {otpSent && (
                     <>
-                      <input type="text" placeholder="Enter OTP" required />
-                      <button type="submit" className="pay-btn">
+                      <input
+                        type="text"
+                        placeholder="Enter OTP"
+                        value={otp}
+                        onChange={(e) => setOtp(e.target.value)}
+                        required
+                      />
+                      <button
+                        type="button"
+                        className="pay-btn"
+                        onClick={handleVerifyOtp}
+                      >
                         ✅ Verify & Pay ₹{flight.price}
                       </button>
                     </>

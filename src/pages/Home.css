@@ -266,6 +266,14 @@ html, body, #root {
   overflow: hidden;
   background: linear-gradient(180deg, rgba(10,10,10,0.9), rgba(5,5,5,0.75));
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 0 rgba(255,215,0,0);
+}
+
+.destination-card:hover {
+  transform: translateY(-8px);
+  border-color: #FFD700;
+  box-shadow: 0 0 25px 5px rgba(255,215,0,0.3);
+  animation: glowPulse 2.5s infinite ease-in-out;
 }
 
 .destination-card img {
@@ -273,11 +281,6 @@ html, body, #root {
   object-fit: cover;
   width: 100%;
   transition: transform 0.5s ease;
-}
-
-.destination-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 14px 40px rgba(255, 215, 0, 0.12);
 }
 
 .destination-card:hover img {
@@ -312,7 +315,7 @@ html, body, #root {
 }
 
 /* ===========================
-   🌟 Inspiration Carousel (compact)
+   🌟 Inspiration Carousel
 =========================== */
 .inspo-carousel {
   display: flex;
@@ -321,6 +324,7 @@ html, body, #root {
   scrollbar-width: thin;
   -webkit-overflow-scrolling: touch;
 }
+
 .inspo-card {
   min-width: 220px;
   max-width: 240px;
@@ -329,8 +333,25 @@ html, body, #root {
   background: linear-gradient(180deg, rgba(12,12,12,0.92), rgba(8,8,8,0.85));
   border: 1px solid rgba(255,215,0,0.08);
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border 0.25s ease;
 }
+
+.inspo-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  border-color: #FFD700;
+  box-shadow: 0 0 25px 5px rgba(255,215,0,0.3);
+  animation: glowPulse 2.5s infinite ease-in-out;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 25px 3px rgba(255,215,0,0.25);
+  }
+  50% {
+    box-shadow: 0 0 35px 7px rgba(255,215,0,0.45);
+  }
+}
+
 .inspo-card .inspo-img-wrap {
   height: 130px;
   overflow: hidden;
@@ -402,7 +423,6 @@ html, body, #root {
   pointer-events: auto;
 }
 
-/* small round dot */
 .chat-dot {
   width: 56px;
   height: 56px;
@@ -416,7 +436,6 @@ html, body, #root {
   cursor: pointer;
 }
 
-/* small card that appears (keep subtle) */
 .chat-card {
   display: none;
   min-width: 220px;
@@ -432,7 +451,6 @@ html, body, #root {
   display: block;
 }
 
-/* keep classic look for small screens */
 @media (max-width: 420px) {
   .chat-card {
     display: none;

@@ -5,29 +5,12 @@ import { getFlights } from "../services/api.js";
 import localFlights from "../data/flights.js";
 import "./Flights.css";
 
-// 🕓 Format readable date/time
 function formatDateTime(dateStr) {
   if (!dateStr) return "N/A";
   const d = new Date(dateStr);
-  return d.toLocaleString("en-IN", {
-    dateStyle: "medium",
-    timeStyle: "short",
-  });
+  return d.toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" });
 }
 
-// ⏱ Compute duration
-function computeDuration(departure, arrival) {
-  if (!departure || !arrival) return "N/A";
-  const start = new Date(departure);
-  const end = new Date(arrival);
-  const diffMs = Math.max(0, end - start);
-  const mins = Math.floor(diffMs / 60000);
-  const h = Math.floor(mins / 60);
-  const m = mins % 60;
-  return `${h}h ${m}m`;
-}
-
-// 🧮 Convert "2h 30m" → minutes
 function durationToMinutes(duration) {
   const match = duration?.match(/(\d+)h\s*(\d+)?m?/);
   if (!match) return 0;
@@ -48,7 +31,6 @@ export default function Flights() {
   const [showFromOptions, setShowFromOptions] = useState(false);
   const [showToOptions, setShowToOptions] = useState(false);
 
-  // ✅ Fetch and Normalize Flights
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -58,13 +40,10 @@ export default function Flights() {
 
         if (data.length === 0) {
           data = localFlights.map((f) => ({
-            id: f.id,
-            airline: f.airline,
-            fromCity: f.from,
-            toCity: f.to,
+            id: f.id, airline: f.airline,
+            fromCity: f.from, toCity: f.to,
             price: parseInt(f.price.replace(/[₹,]/g, "")),
-            duration: f.duration,
-            image: f.image,
+            duration: f.duration, image: f.image,
           }));
         }
 
@@ -76,11 +55,9 @@ export default function Flights() {
           price: parseInt(f.price?.toString().replace(/[^\d]/g, "")) || 0,
           duration: f.duration || "2h",
           image: f.image || "https://via.placeholder.com/400x250?text=Flight",
-          departureTime:
-            f.departureTime || new Date().toISOString(),
+          departureTime: f.departureTime || new Date().toISOString(),
           arrivalTime:
-            f.arrivalTime ||
-            new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
+            f.arrivalTime || new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
         }));
 
         setFlights(normalized);
@@ -88,13 +65,10 @@ export default function Flights() {
         console.error("❌ Backend unavailable — using local data:", err);
         setFlights(
           localFlights.map((f) => ({
-            id: f.id,
-            airline: f.airline,
-            fromCity: f.from,
-            toCity: f.to,
+            id: f.id, airline: f.airline,
+            fromCity: f.from, toCity: f.to,
             price: parseInt(f.price.replace(/[₹,]/g, "")),
-            duration: f.duration,
-            image: f.image,
+            duration: f.duration, image: f.image,
             departureTime: new Date().toISOString(),
             arrivalTime: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
           }))
@@ -107,19 +81,15 @@ export default function Flights() {
     fetchData();
   }, []);
 
-  // ✈️ Unique city options
   const uniqueFromCities = [...new Set(flights.map((f) => f.fromCity))];
   const uniqueToCities = [...new Set(flights.map((f) => f.toCity))];
 
-  // ✈️ Filter flights
   let filteredFlights = flights.filter((f) => {
-    const matchesFrom =
-      !from || f.fromCity.toLowerCase() === from.toLowerCase();
+    const matchesFrom = !from || f.fromCity.toLowerCase() === from.toLowerCase();
     const matchesTo = !to || f.toCity.toLowerCase() === to.toLowerCase();
     return matchesFrom && matchesTo;
   });
 
-  // 🧠 Sorting
   if (sort === "priceLow") filteredFlights.sort((a, b) => a.price - b.price);
   else if (sort === "priceHigh") filteredFlights.sort((a, b) => b.price - a.price);
   else if (sort === "duration")
@@ -127,9 +97,7 @@ export default function Flights() {
       (a, b) => durationToMinutes(a.duration) - durationToMinutes(b.duration)
     );
   else if (sort === "airline")
-    filteredFlights.sort((a, b) =>
-      (a.airline || "").localeCompare(b.airline || "")
-    );
+    filteredFlights.sort((a, b) => (a.airline || "").localeCompare(b.airline || ""));
 
   const sortLabels = {
     priceLow: "Price (Low → High)",
@@ -142,16 +110,9 @@ export default function Flights() {
     filteredFlights.length === 0
       ? "No flights found for your search."
       : from && to
-      ? `Showing ${filteredFlights.length} flight${
-          filteredFlights.length > 1 ? "s" : ""
-        } from ${from} → ${to}${
-          sort ? ` | Sorted by ${sortLabels[sort]}` : ""
-        }`
-      : `Showing all ${filteredFlights.length} flights${
-          sort ? ` | Sorted by ${sortLabels[sort]}` : ""
-        }`;
+      ? `Showing ${filteredFlights.length} flight${filteredFlights.length > 1 ? "s" : ""} from ${from} → ${to}${sort ? ` | Sorted by ${sortLabels[sort]}` : ""}`
+      : `Showing all ${filteredFlights.length} flights${sort ? ` | Sorted by ${sortLabels[sort]}` : ""}`;
 
-  // Filtered suggestions for dropdowns
   const filteredFromCities = uniqueFromCities.filter((city) =>
     city.toLowerCase().includes(fromQuery.toLowerCase())
   );
@@ -165,10 +126,8 @@ export default function Flights() {
         ✈️ Search Flights
       </h2>
 
-      {/* 🔍 Search Section */}
       <div className="search-controls">
         <div className="search-form">
-          {/* From Input */}
           <div className="dropdown-wrapper">
             <input
               type="text"
@@ -201,7 +160,6 @@ export default function Flights() {
             )}
           </div>
 
-          {/* To Input */}
           <div className="dropdown-wrapper">
             <input
               type="text"
@@ -237,24 +195,14 @@ export default function Flights() {
           <button>🔎 Search</button>
           <button
             onClick={() => {
-              setFrom("");
-              setTo("");
-              setFromQuery("");
-              setToQuery("");
-              setSort("");
+              setFrom(""); setTo(""); setFromQuery(""); setToQuery(""); setSort("");
             }}
-            style={{
-              marginLeft: "10px",
-              backgroundColor: "#444",
-              color: "#FFD700",
-              border: "1px solid #FFD700",
-            }}
+            style={{ marginLeft: "10px", backgroundColor: "#444", color: "#FFD700", border: "1px solid #FFD700" }}
           >
             🔁 Reset
           </button>
         </div>
 
-        {/* Sort Dropdown */}
         <div className="sort-box mt-3 text-center">
           <label htmlFor="sort" style={{ color: "#FFD700", marginRight: "10px" }}>
             Sort by:
@@ -263,13 +211,7 @@ export default function Flights() {
             id="sort"
             value={sort}
             onChange={(e) => setSort(e.target.value)}
-            style={{
-              padding: "8px",
-              borderRadius: "8px",
-              border: "1px solid #FFD700",
-              background: "#111",
-              color: "#FFD700",
-            }}
+            style={{ padding: "8px", borderRadius: "8px", border: "1px solid #FFD700", background: "#111", color: "#FFD700" }}
           >
             <option value="">-- Select --</option>
             <option value="priceLow">💰 Price: Low → High</option>
@@ -280,10 +222,8 @@ export default function Flights() {
         </div>
       </div>
 
-      {/* Summary */}
       <div className="summary-bar">{summaryText}</div>
 
-      {/* Flight Results */}
       {loading ? (
         <p className="text-light text-center mt-4">Loading flights...</p>
       ) : (
@@ -292,32 +232,16 @@ export default function Flights() {
             filteredFlights.map((flight) => (
               <div key={flight.id} className="col-md-4">
                 <div className="card flight-card shadow-lg border-0">
-                  <img
-                    src={flight.image}
-                    className="card-img-top"
-                    alt={flight.airline}
-                  />
+                  <img src={flight.image} className="card-img-top" alt={flight.airline} />
                   <div className="card-body text-center">
-                    <h5 className="card-title text-warning fw-bold">
-                      {flight.airline}
-                    </h5>
-                    <p className="card-text mb-1">
-                      {flight.fromCity} ✈️ {flight.toCity}
-                    </p>
+                    <h5 className="card-title text-warning fw-bold">{flight.airline}</h5>
+                    <p className="card-text mb-1">{flight.fromCity} ✈️ {flight.toCity}</p>
                     <p className="card-text text-light small">
-                      <strong>₹{flight.price.toLocaleString()}</strong> •{" "}
-                      {flight.duration}
+                      <strong>₹{flight.price.toLocaleString()}</strong> • {flight.duration}
                     </p>
-                    <small className="text-muted d-block">
-                      🕓 Departure: {formatDateTime(flight.departureTime)}
-                    </small>
-                    <small className="text-muted d-block">
-                      🛬 Arrival: {formatDateTime(flight.arrivalTime)}
-                    </small>
-                    <Link
-                      to={`/flights/${flight.id}`}
-                      className="btn btn-warning w-100 mt-3 fw-bold"
-                    >
+                    <small className="text-muted d-block">🕓 Departure: {formatDateTime(flight.departureTime)}</small>
+                    <small className="text-muted d-block">🛬 Arrival: {formatDateTime(flight.arrivalTime)}</small>
+                    <Link to={`/flights/${flight.id}`} className="btn btn-warning w-100 mt-3 fw-bold">
                       View Details
                     </Link>
                   </div>
@@ -325,9 +249,7 @@ export default function Flights() {
               </div>
             ))
           ) : (
-            <p className="text-light text-center mt-4">
-              ⚠️ No flights found for your search.
-            </p>
+            <p className="text-light text-center mt-4">⚠️ No flights found for your search.</p>
           )}
         </div>
       )}

@@ -2,13 +2,16 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import "./Home.css";
-
+import varImg from "../images/var.jpg";
 // Slideshow images
 import travel1 from "../images/travel1.jpeg";
 import travel2 from "../images/travel2.jpg";
 import travel3 from "../images/travel3.jpg";
 import travel4 from "../images/travel4.jpg";
 import travel5 from "../images/travel5.jpg";
+import manImg from "../images/man.jpg";
+import ham from "../images/ham.jpg";
+import ooty from "../images/ooty.jpg";
 
 // Popular Destinations
 import tajmahal from "../images/tajmahal.jpg";
@@ -24,7 +27,6 @@ export default function Home() {
   const navigate = useNavigate();
   const slides = [travel1, travel2, travel3, travel4, travel5];
 
-  // local suggestions (you can replace with API)
   const suggestions = [
     "Goa",
     "Dubai",
@@ -49,15 +51,15 @@ export default function Home() {
     return () => clearInterval(id);
   }, [slides.length]);
 
-  // Parallax on mouse move (hero)
+  // Parallax mouse movement
   const heroRef = useRef(null);
   useEffect(() => {
     const el = heroRef.current;
     if (!el) return;
     const handle = (e) => {
       const rect = el.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width - 0.5) * 20; // -10 .. 10
-      const y = ((e.clientY - rect.top) / rect.height - 0.5) * 10; // -5 .. 5
+      const x = ((e.clientX - rect.left) / rect.width - 0.5) * 20;
+      const y = ((e.clientY - rect.top) / rect.height - 0.5) * 10;
       el.style.setProperty("--parallax-x", `${x}deg`);
       el.style.setProperty("--parallax-y", `${y}px`);
     };
@@ -65,27 +67,25 @@ export default function Home() {
     return () => window.removeEventListener("mousemove", handle);
   }, []);
 
-  // Intersection observer to add visible class (for legacy reveal)
+  // Reveal animations
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
+          if (entry.isIntersecting) entry.target.classList.add("visible");
         });
       },
       { threshold: 0.18 }
     );
 
     document
-      .querySelectorAll(".animate-card, .deal-card, .whyus-card, .extra-card, .inspo-card")
-      .forEach((el) => {
-        observer.observe(el);
-      });
+      .querySelectorAll(
+        ".animate-card, .deal-card, .whyus-card, .extra-card, .inspo-card"
+      )
+      .forEach((el) => observer.observe(el));
   }, []);
 
-  // Voice recognition (basic, feature-detect)
+  // Voice recognition
   const recognitionRef = useRef(null);
   useEffect(() => {
     const SpeechRecognition =
@@ -102,14 +102,13 @@ export default function Home() {
       setListening(false);
       navigate(`/destination/${encodeURIComponent(text.trim())}`);
     };
-    r.onend = () => {
-      setListening(false);
-    };
+    r.onend = () => setListening(false);
     recognitionRef.current = r;
   }, [navigate]);
 
   const toggleListen = () => {
-    if (!recognitionRef.current) return alert("Voice search not supported in this browser.");
+    if (!recognitionRef.current)
+      return alert("Voice search not supported in this browser.");
     if (listening) {
       recognitionRef.current.stop();
       setListening(false);
@@ -117,7 +116,7 @@ export default function Home() {
       try {
         recognitionRef.current.start();
         setListening(true);
-      } catch (err) {
+      } catch {
         setListening(false);
       }
     }
@@ -129,7 +128,6 @@ export default function Home() {
     navigate(`/destination/${encodeURIComponent(finalQuery)}`);
   };
 
-  // keyboard handling for suggestions (Enter triggers)
   const handleKeyDown = (e) => {
     if (e.key === "ArrowDown" || e.key === "ArrowUp") {
       e.preventDefault();
@@ -140,7 +138,7 @@ export default function Home() {
     }
   };
 
-  // framer motion variants
+  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { staggerChildren: 0.12 } },
@@ -151,12 +149,11 @@ export default function Home() {
     visible: { opacity: 1, y: 0 },
   };
 
-  // Inspiration carousel items
   const inspirations = [
-    { img: tajmahal, title: "Taj Mahal", subtitle: "Agra • Romantic Escapes" },
-    { img: kerala, title: "Kerala Backwaters", subtitle: "Houseboats & Calm" },
-    { img: jaipur, title: "Jaipur", subtitle: "Royal Palaces" },
-    { img: lehladakh, title: "Leh Ladakh", subtitle: "Mountain Adventure" },
+    { img: varImg, title: "VARANASI", subtitle: "Uttar Pradesh Divine Experience" },
+    { img: manImg, title: "MANALI", subtitle: "Manali vibes and mountain highs." },
+    { img: ham, title: "HAMPI", subtitle: "Lost in the ancient charm of Hampi." },
+    { img: ooty, title: "OOTY", subtitle: "Life's better in the hills of Ooty" },
   ];
 
   return (
@@ -169,12 +166,9 @@ export default function Home() {
         variants={containerVariants}
       >
         {/* Hero Section */}
-        <section id="hero" className="hero-section" ref={heroRef} aria-label="Hero">
-          {/* Parallax animated subtle gradient (keeps black+yellow classic) */}
-          <div className="hero-parallax-gradient" aria-hidden />
-
-          {/* Slideshow layers */}
-          <div className="slideshow" aria-hidden>
+        <section id="hero" className="hero-section" ref={heroRef}>
+          <div className="hero-parallax-gradient" />
+          <div className="slideshow">
             {slides.map((img, i) => {
               const active = i === activeSlide;
               return (
@@ -188,20 +182,15 @@ export default function Home() {
                 />
               );
             })}
-            {/* subtle dim overlay */}
             <div className="hero-dark-overlay" />
           </div>
 
-          {/* Hero content */}
           <motion.div
             className="hero-overlay"
             variants={itemVariants}
-            role="region"
-            aria-labelledby="hero-heading"
             style={{ transform: "translate(-50%, -50%)" }}
           >
             <motion.h1
-              id="hero-heading"
               className="fw-bold mb-3"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -218,15 +207,13 @@ export default function Home() {
               Flights, Hotels, Cabs & Packages — all in one place.
             </motion.p>
 
+            {/* Search Box */}
             <div className="search-row mt-4">
               <div
                 className={`search-box ${showSuggestions ? "open" : ""}`}
-                aria-haspopup="listbox"
-                aria-expanded={showSuggestions}
                 onFocus={() => setShowSuggestions(true)}
               >
                 <input
-                  aria-label="Search destination"
                   type="text"
                   placeholder="Where are you going?"
                   value={query}
@@ -242,28 +229,21 @@ export default function Home() {
                   className="icon-btn mic-btn"
                   onClick={toggleListen}
                   title="Voice search"
-                  aria-pressed={listening}
                 >
                   {listening ? "🎙️" : "🎤"}
                 </button>
 
-                <button
-                  className="search-btn"
-                  onClick={() => handleSearch()}
-                  aria-label="Search"
-                >
+                <button className="search-btn" onClick={() => handleSearch()}>
                   Search
                 </button>
               </div>
 
-              {/* Suggestions dropdown */}
               {showSuggestions && filtered.length > 0 && (
                 <motion.ul
                   className="suggestions-list"
                   initial={{ opacity: 0, y: -6 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.12 }}
-                  role="listbox"
                 >
                   {filtered.map((s, i) => (
                     <li
@@ -273,8 +253,6 @@ export default function Home() {
                         setShowSuggestions(false);
                         handleSearch(s);
                       }}
-                      role="option"
-                      tabIndex={0}
                     >
                       {s}
                     </li>
@@ -283,20 +261,28 @@ export default function Home() {
               )}
             </div>
 
-            {/* small quick links */}
             <motion.div
               className="quick-links mt-3"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.25 }}
             >
-              <button className="btn btn-sm btn-outline-warning me-2" onClick={() => navigate("/flights")}>
+              <button
+                className="btn btn-sm btn-outline-warning me-2"
+                onClick={() => navigate("/flights")}
+              >
                 Flights
               </button>
-              <button className="btn btn-sm btn-outline-warning me-2" onClick={() => navigate("/stays")}>
+              <button
+                className="btn btn-sm btn-outline-warning me-2"
+                onClick={() => navigate("/stays")}
+              >
                 Hotels
               </button>
-              <button className="btn btn-sm btn-outline-warning" onClick={() => navigate("/packages")}>
+              <button
+                className="btn btn-sm btn-outline-warning"
+                onClick={() => navigate("/packages")}
+              >
                 Packages
               </button>
             </motion.div>
@@ -305,8 +291,12 @@ export default function Home() {
 
         <div className="section-separator" />
 
-        {/* Inspiration Carousel */}
-        <motion.section id="inspiration" className="container py-5" variants={itemVariants}>
+        {/* Travel Inspiration */}
+        <motion.section
+          id="inspiration"
+          className="container py-5"
+          variants={itemVariants}
+        >
           <h2 className="text-center mb-4">Travel Inspiration</h2>
           <div className="inspo-carousel d-flex gap-3 justify-content-center">
             {inspirations.map((it, i) => (
@@ -322,11 +312,14 @@ export default function Home() {
                 <div className="card-body">
                   <h5>{it.title}</h5>
                   <p className="muted">{it.subtitle}</p>
-                  <div className="mt-2">
-                    <button className="btn btn-sm btn-outline-warning" onClick={() => navigate(`/destination/${encodeURIComponent(it.title)}`)}>
-                      Explore
-                    </button>
-                  </div>
+                  <button
+                    className="btn btn-sm btn-outline-warning mt-2"
+                    onClick={() =>
+                      navigate(`/destination/${encodeURIComponent(it.title)}`)
+                    }
+                  >
+                    Explore
+                  </button>
                 </div>
               </motion.div>
             ))}
@@ -368,7 +361,11 @@ export default function Home() {
         <div className="section-separator" />
 
         {/* Top Deals */}
-        <motion.section id="deals" className="container py-5 text-center" variants={itemVariants}>
+        <motion.section
+          id="deals"
+          className="container py-5 text-center"
+          variants={itemVariants}
+        >
           <h2 className="mb-4 text-warning">🔥 Top Deals & Offers</h2>
           <div className="row g-4 mt-3">
             {[
@@ -389,7 +386,11 @@ export default function Home() {
         <div className="section-separator" />
 
         {/* Why Choose Us */}
-        <motion.section id="why-us" className="container py-5 text-center" variants={itemVariants}>
+        <motion.section
+          id="why-us"
+          className="container py-5 text-center"
+          variants={itemVariants}
+        >
           <h2 className="mb-4 text-warning">💎 Why Choose Wanderly?</h2>
           <div className="row g-4 mt-3">
             {[
@@ -415,7 +416,8 @@ export default function Home() {
               },
             ].map((why, i) => (
               <div key={i} className="col-md-4 whyus-card">
-                <motion.div className="p-4 bg-dark text-light rounded shadow-sm border border-warning h-100"
+                <motion.div
+                  className="p-4 bg-dark text-light rounded shadow-sm border border-warning h-100"
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.2 }}
                 >
@@ -429,34 +431,41 @@ export default function Home() {
 
         <div className="section-separator" />
 
-        {/* About Section */}
+        {/* About */}
         <motion.section className="container py-5 text-center" variants={itemVariants}>
           <h2 className="mb-4 text-warning">📖 About Wanderly</h2>
           <p className="lead text-light">
-            Wanderly is built with a mission to make travel <b>seamless, affordable, and memorable</b>.
-            No more hidden costs, endless searching, or scattered bookings.
-            We bring everything — <b>flights, hotels, cars, attractions, and cabs</b> — into one platform.
+            Wanderly is built with a mission to make travel{" "}
+            <b>seamless, affordable, and memorable</b>. We bring everything —
+            <b> flights, hotels, cars, attractions, and cabs</b> — into one
+            platform.
           </p>
 
           <div className="row mt-4">
-            <div className="col-md-4">
-              <div className="p-4 bg-dark text-light rounded shadow-sm border border-warning extra-card h-100">
-                <h4>🚀 Our Mission</h4>
-                <p>To simplify travel planning by offering everything in one place.</p>
+            {[
+              {
+                icon: "🚀",
+                title: "Our Mission",
+                desc: "To simplify travel planning by offering everything in one place.",
+              },
+              {
+                icon: "🌟",
+                title: "Our Vision",
+                desc: "To be the world’s most trusted and traveler-friendly platform.",
+              },
+              {
+                icon: "🤝",
+                title: "Our Promise",
+                desc: "Affordable deals, safe payments, and 24/7 dedicated support.",
+              },
+            ].map((card, i) => (
+              <div key={i} className="col-md-4">
+                <div className="p-4 bg-dark text-light rounded shadow-sm border border-warning extra-card h-100">
+                  <h4>{card.icon} {card.title}</h4>
+                  <p>{card.desc}</p>
+                </div>
               </div>
-            </div>
-            <div className="col-md-4">
-              <div className="p-4 bg-dark text-light rounded shadow-sm border border-warning extra-card h-100">
-                <h4>🌟 Our Vision</h4>
-                <p>To be the world’s most trusted and traveler-friendly platform.</p>
-              </div>
-            </div>
-            <div className="col-md-4">
-              <div className="p-4 bg-dark text-light rounded shadow-sm border border-warning extra-card h-100">
-                <h4>🤝 Our Promise</h4>
-                <p>Affordable deals, safe payments, and 24/7 dedicated support.</p>
-              </div>
-            </div>
+            ))}
           </div>
 
           <NavLink to="/about" className="btn btn-warning fw-bold mt-4 px-4">
@@ -475,38 +484,12 @@ export default function Home() {
               type="email"
               placeholder="Enter your email"
               className="form-control subscribe-input"
-              aria-label="Email for newsletter"
             />
             <button className="btn btn-warning fw-bold">Subscribe</button>
           </div>
         </motion.section>
 
-        <div className="section-separator" />
-
-        {/* Contact Section */}
-        <motion.section className="container py-5 text-center" variants={itemVariants}>
-          <h2 className="text-warning">📞 Contact Us</h2>
-          <p>Email: <a href="mailto:support@wanderly.com" className="text-warning">support@wanderly.com</a></p>
-          <p>Phone: <span className="text-warning">+91 98765 43210</span></p>
-          <p>Location: Hyderabad, India 🌆</p>
-          <div className="mt-3">
-            <a href="https://facebook.com" className="btn btn-dark m-1">🌐 Facebook</a>
-            <a href="https://instagram.com" className="btn btn-dark m-1">📸 Instagram</a>
-            <a href="https://twitter.com" className="btn btn-dark m-1">🐦 Twitter</a>
-          </div>
-        </motion.section>
-
-        <div className="section-separator" />
-
-        {/* Call to Action */}
-        <motion.section className="container py-5 text-center" variants={itemVariants}>
-          <h2 className="fw-bold text-warning">🚀 Ready for your next adventure?</h2>
-          <NavLink to="/register" className="btn btn-warning fw-bold px-5 mt-3">
-            Join Wanderly Now
-          </NavLink>
-        </motion.section>
-
-        {/* Chat bubble assistant (mockup) */}
+        {/* Chat bubble assistant */}
         <div className="chat-assistant" role="button" aria-label="Open assistant">
           <div className="chat-dot">💬</div>
           <div className="chat-card">
