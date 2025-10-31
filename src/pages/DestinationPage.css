@@ -1,137 +1,183 @@
 .destination-page {
-    width: 100vw;
-    min-height: 100vh;
-    background: #000;
-    color: #FFD700;
-    padding: 2rem;
-    text-align: center;
-  }
-  
-  /* Main Title */
+  width: 100vw;
+  min-height: 100vh;
+  background: #000;
+  color: #FFD700;
+  padding: 6rem 2rem 3rem; /* top space for navbar */
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+}
+
+/* 🌟 Title */
+.destination-title {
+  font-size: 2.8rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+  letter-spacing: 1px;
+}
+
+/* 🖼️ Main Image */
+.destination-main-img {
+  width: 90%;
+  max-width: 850px;
+  border-radius: 14px;
+  margin: 2rem auto;
+  display: block;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+  border: 2px solid rgba(255, 215, 0, 0.8);
+  object-fit: cover;
+}
+
+/* 📄 Description */
+.destination-desc {
+  max-width: 900px;
+  margin: 0 auto;
+  font-size: 1.15rem;
+  color: #f8f8f8;
+  line-height: 1.7;
+  text-align: justify;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+}
+
+/* 🔗 Wiki Link */
+.wiki-link {
+  margin-top: 1.2rem;
+}
+.wiki-link a {
+  color: #00e0ff;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1.05rem;
+}
+.wiki-link a:hover {
+  color: #FFD700;
+  text-decoration: underline;
+  text-shadow: 0 0 6px rgba(255, 215, 0, 0.7);
+}
+
+/* 🖼️ Gallery & Sections */
+.gallery-section h2,
+.map-section h2,
+.attractions-section h2 {
+  margin: 3rem 0 1.5rem;
+  font-weight: bold;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+  font-size: 1.8rem;
+  letter-spacing: 0.5px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.gallery-card {
+  background: #111;
+  border: 2px solid rgba(255, 215, 0, 0.4);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.gallery-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.7);
+}
+.gallery-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.gallery-caption {
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  padding: 0.7rem;
+  font-size: 0.95rem;
+}
+
+/* 🗺️ Map */
+.map-section {
+  margin-top: 3rem;
+}
+.map-iframe {
+  width: 100%;
+  max-width: 900px;
+  height: 450px;
+  border: 2px solid rgba(255, 215, 0, 0.6);
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+}
+
+/* 🏰 Attractions */
+.attractions-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.attractions-list li {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.9rem 1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+.attractions-list li:hover {
+  background: rgba(255, 215, 0, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+.attractions-list a {
+  color: #FFD700;
+  text-decoration: none;
+  font-weight: 600;
+}
+.attractions-list a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+/* ⚠️ Messages */
+.loading-text,
+.error-text {
+  color: #FFD700;
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 1.2rem;
+}
+.error-text {
+  color: #ff3b3b;
+}
+
+/* 📱 Responsive Fixes */
+@media (max-width: 768px) {
   .destination-title {
-    font-size: 2.5rem;
-    font-weight: 900;
-    margin-bottom: 1rem;
-    text-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+    font-size: 2rem;
   }
-  
-  /* Main Image */
-  .destination-main-img {
-    width: 90%;
-    max-width: 800px;
-    border-radius: 12px;
-    margin: 1.5rem 0;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  /* Description */
+
   .destination-desc {
-    max-width: 800px;
-    margin: 0 auto;
-    font-size: 1.2rem;
-    color: #fff;
-    line-height: 1.6;
-    text-align: justify;
+    font-size: 1rem;
+    padding: 0 1rem;
   }
-  
-  /* Wiki link */
-  .wiki-link a {
-    color: #00e0ff;
-    font-weight: bold;
-    text-decoration: none;
-  }
-  .wiki-link a:hover {
-    color: #FFD700;
-    text-decoration: underline;
-  }
-  
-  /* Gallery */
-  .gallery-section h2,
-  .map-section h2,
-  .attractions-section h2 {
-    margin: 2rem 0 1rem;
-    font-weight: bold;
-    text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
-  }
-  
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-  }
-  
-  .gallery-card {
-    background: #111;
-    border: 2px solid rgba(255, 215, 0, 0.6);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .gallery-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
-  }
-  .gallery-img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-  }
-  .gallery-caption {
-    background: rgba(0, 0, 0, 0.6);
-    color: #fff;
-    padding: 0.7rem;
-    font-size: 0.95rem;
-  }
-  
-  /* Map */
+
   .map-iframe {
-    width: 100%;
-    max-width: 900px;
-    height: 450px;
-    border: 2px solid rgba(255, 215, 0, 0.6);
-    border-radius: 12px;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+    height: 350px;
   }
-  
-  /* Attractions */
-  .attractions-list {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
+
+  .gallery-grid {
+    grid-template-columns: 1fr 1fr;
   }
-  .attractions-list li {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 0.8rem 1rem;
-    border-radius: 8px;
-    transition: 0.3s;
+}
+
+@media (max-width: 480px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
   }
-  .attractions-list li:hover {
-    background: rgba(255, 215, 0, 0.2);
+
+  .destination-title {
+    font-size: 1.8rem;
   }
-  .attractions-list a {
-    color: #FFD700;
-    text-decoration: none;
-    font-weight: 600;
-  }
-  .attractions-list a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Messages */
-  .loading-text,
-  .error-text {
-    color: #FFD700;
-    text-align: center;
-    margin-top: 2rem;
-  }
-  .error-text {
-    color: red;
-  }
-  
+}

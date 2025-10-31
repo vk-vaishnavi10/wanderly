@@ -1,18 +1,28 @@
-import React, { useState } from "react";
+// src/pages/Signin.jsx
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext"; // ✅ import context
 import "./Signin.css";
 
 export default function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useContext(UserContext); // ✅ access login() from context
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (email && password) {
-      // ✅ Save fake user to localStorage (temporary login)
-      localStorage.setItem("user", JSON.stringify({ email }));
+      // ✅ Mock user data (for now)
+      const userData = {
+        fullName: "Kavanoor Vaishnavi",
+        email: email,
+        phone: "9390681891",
+      };
+
+      // ✅ Save in global context (auto-updates navbar)
+      login(userData);
 
       // ✅ Redirect to Home
       navigate("/");

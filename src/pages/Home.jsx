@@ -313,13 +313,15 @@ export default function Home() {
                   <h5>{it.title}</h5>
                   <p className="muted">{it.subtitle}</p>
                   <button
-                    className="btn btn-sm btn-outline-warning mt-2"
-                    onClick={() =>
-                      navigate(`/destination/${encodeURIComponent(it.title)}`)
-                    }
-                  >
-                    Explore
-                  </button>
+  className="btn btn-sm btn-outline-warning mt-2"
+  onClick={() =>
+    navigate(`/destination/${encodeURIComponent(it.title)}`)
+  }
+>
+  Explore
+</button>
+
+
                 </div>
               </motion.div>
             ))}
@@ -490,14 +492,7 @@ export default function Home() {
         </motion.section>
 
         {/* Chat bubble assistant */}
-        <div className="chat-assistant" role="button" aria-label="Open assistant">
-          <div className="chat-dot">💬</div>
-          <div className="chat-card">
-            <h6>Wanderly Assistant</h6>
-            <p>Hi! Need help planning a trip? Try: “Plan Goa 3 days”.</p>
-            <button className="btn btn-sm btn-outline-warning">Ask</button>
-          </div>
-        </div>
+       
       </motion.div>
     </AnimatePresence>
   );

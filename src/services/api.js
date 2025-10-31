@@ -26,6 +26,22 @@ export const getUserById = (id) => api.get(`/users/${id}`);
 export const updateUser = (id, user) => api.put(`/users/${id}`, user);
 export const deleteUser = (id) => api.delete(`/users/${id}`);
 
+// ------------------ OTP (Phone-based) ------------------ //
+/**
+ * 🔹 Send OTP to the user's phone number
+ * Backend Endpoint: POST /users/send-otp
+ * Payload: { phone }
+ */
+export const sendOtp = (phone) => api.post(`/users/send-otp`, { phone });
+
+/**
+ * 🔹 Verify OTP entered by user
+ * Backend Endpoint: POST /users/verify-otp
+ * Payload: { phone, otp }
+ */
+export const verifyOtp = (phone, otp) => api.post(`/users/verify-otp`, { phone, otp });
+
+
 // ------------------ FLIGHTS ------------------ //
 export const getFlights = () => api.get(`/flights`);
 export const getFlightById = (id) => api.get(`/flights/${id}`);
@@ -92,7 +108,25 @@ export const addTransportBooking = (booking) => api.post(`/transport-bookings`, 
 export const getTransportBookings = () => api.get(`/transport-bookings`);
 export const deleteTransportBooking = (id) => api.delete(`/transport-bookings/${id}`);
 
-// ✅ Optional: export everything as a single object (if you prefer named import)
+// ------------------ AI TRAVEL COMPANION ------------------ //
+/**
+ * 🧠 Send messages to AI Companion (Spring Boot -> OpenAI)
+ * @param {Array} messages - Array of { role: "user" | "assistant" | "system", content: string }
+ */
+export const chatWithAI = async (messages) => {
+  try {
+    const response = await api.post(`/ai/chat`, {
+      messages,
+      temperature: 0.7,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("🚨 AI Chat Error:", error);
+    return { error: "AI server unavailable. Please try again later." };
+  }
+};
+
+// ✅ Export everything together (for optional named import)
 export default {
   registerUser,
   loginUser,
@@ -100,6 +134,8 @@ export default {
   getUserById,
   updateUser,
   deleteUser,
+  sendOtp,
+  verifyOtp,
   getFlights,
   getFlightById,
   addFlight,

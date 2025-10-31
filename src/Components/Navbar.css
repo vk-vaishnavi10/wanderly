@@ -1,6 +1,6 @@
 /* 🌌 Navbar Base */
 .custom-navbar {
-  background: rgba(0, 0, 0, 0.95); /* Black */
+  background: rgba(0, 0, 0, 0.95);
   padding: 0.7rem 1.25rem;
   z-index: 999;
   border-bottom: 2px solid #FFD700;
@@ -13,7 +13,6 @@
   width: auto;
   margin-right: 10px;
 }
-
 .brand-text {
   color: #FFD700;
   font-weight: 900;
@@ -21,7 +20,7 @@
   text-shadow: 0 0 8px rgba(255, 215, 0, 0.7);
 }
 
-/* 🔗 Nav Links */
+/* 🔗 Links */
 .nav-link {
   color: #FFD700 !important;
   font-weight: 700;
@@ -30,7 +29,6 @@
   border-radius: 8px;
   transition: all 0.28s ease;
 }
-
 .nav-link:hover,
 .nav-link.active {
   background: #FFD700;
@@ -39,7 +37,7 @@
   transform: scale(1.06);
 }
 
-/* 🔘 Buttons */
+/* 🔘 Buttons (Register / Signin) */
 .glass-btn,
 .glass-btn-special,
 .glass-btn-special-outline {
@@ -47,13 +45,13 @@
   padding: 0.5rem 1.2rem;
   font-weight: bold;
   transition: 0.25s;
-  color: #FFD700; /* ✅ Always yellow text */
+  color: #FFD700;
 }
 
-/* Register Button */
+/* Register */
 .glass-btn-special {
-  background: #000;              /* Black background */
-  color: #FFD700;                /* Yellow text */
+  background: #000;
+  color: #FFD700;
   font-weight: 800;
   border: 2px solid #FFD700;
   border-radius: 8px;
@@ -61,33 +59,32 @@
   box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
   transition: all 0.25s ease;
 }
-
 .glass-btn-special:hover {
-  background: #FFD700;           /* Gold background */
-  color: #000;                   /* Black text */
+  background: #FFD700;
+  color: #000;
   transform: scale(1.05);
   box-shadow: 0 0 25px rgba(255, 215, 0, 1);
 }
 
-/* Sign In Button */
+/* Signin */
 .glass-btn-special-outline {
   border: 2px solid #FFD700;
   background: transparent;
-  color: #FFD700; /* ✅ Yellow text */
+  color: #FFD700;
   font-weight: 700;
   box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
 }
 .glass-btn-special-outline:hover {
-  background: #000; /* ✅ Black background */
-  color: #FFD700;   /* ✅ Yellow text */
+  background: #000;
+  color: #FFD700;
   box-shadow: 0 0 25px rgba(255, 215, 0, 1);
   transform: scale(1.04);
 }
 
-/* INR Dropdown / Text */
+/* MyTrips */
 .mytrips-btn {
   background: transparent;
-  color: #FFD700; /* ✅ Yellow text */
+  color: #FFD700;
   font-weight: 700;
   border: 2px solid #FFD700;
   padding: 0.45rem 1rem;
@@ -96,16 +93,14 @@
   box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
 }
 .mytrips-btn:hover {
-  background: #000; /* ✅ Black background */
-  color: #FFD700;   /* ✅ Yellow text */
+  background: #000;
+  color: #FFD700;
   box-shadow: 0 0 20px rgba(255, 215, 0, 0.95);
   transform: scale(1.03);
 }
 
-/* MyTrips preview dropdown */
-.mytrips-wrapper {
-  position: relative;
-}
+/* MyTrips preview */
+.mytrips-wrapper { position: relative; }
 .mytrips-preview {
   position: absolute;
   top: calc(100% + 10px);
@@ -135,9 +130,7 @@
   padding: 8px 4px;
   border-bottom: 1px dashed rgba(255,215,0,0.04);
 }
-.preview-item:last-child {
-  border-bottom: none;
-}
+.preview-item:last-child { border-bottom: none; }
 .small-dot {
   width: 12px;
   height: 12px;
@@ -145,16 +138,8 @@
   background: linear-gradient(90deg, #FFD700, #f0c400);
   box-shadow: 0 4px 12px rgba(255,215,0,0.14);
 }
-.preview-title {
-  color: #fff;
-  font-weight: 700;
-}
-.muted {
-  color: #d9c88a;
-  font-size: 0.8rem;
-}
-
-/* dropdown buttons inside preview */
+.preview-title { color: #fff; font-weight: 700; }
+.muted { color: #d9c88a; font-size: 0.8rem; }
 .preview-actions {
   display: flex;
   justify-content: flex-end;
@@ -162,10 +147,35 @@
   margin-top: 8px;
 }
 
-/* Responsive tweaks */
+/* 👤 Navbar avatar */
+.navbar-avatar {
+  width: 32px;
+  height: 32px;
+  background: #ffc107;
+  color: #111;
+  font-weight: 800;
+  font-size: 12px;
+  border: 2px solid #ffd700;
+  box-shadow: 0 0 10px rgba(255,215,0,0.45);
+}
+.navbar-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 50%;
+  transition: opacity .25s ease;
+}
+.navbar-avatar-fallback {
+  display: inline-flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive */
 @media (max-width: 992px) {
-  .navbar-nav.mx-auto {
-    display: none; /* collapse center links on smaller screens if you use bootstrap collapse elsewhere */
-  }
+  .navbar-nav.mx-auto { display: none; }
   .navbar-logo { height: 48px; }
 }

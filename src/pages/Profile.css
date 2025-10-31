@@ -1,0 +1,299 @@
+/* 🌟 PROFILE PAGE STYLING */
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 85vh;
+    background: linear-gradient(135deg, #fff8e1, #fff4cc, #ffe680);
+    background-size: 300% 300%;
+    animation: gradientFlow 8s ease infinite;
+    padding: 40px 20px;
+  }
+  
+  @keyframes gradientFlow {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  /* 🪶 PROFILE CARD */
+  .profile-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 40px 45px;
+    box-shadow: 0 10px 35px rgba(255, 193, 7, 0.25);
+    text-align: center;
+    max-width: 420px;
+    width: 100%;
+    backdrop-filter: blur(8px);
+    transition: all 0.4s ease;
+  }
+  
+  .profile-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(255, 193, 7, 0.4);
+  }
+  
+  /* ✨ AVATAR SECTION */
+  .avatar-circle {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 20px;
+    background: linear-gradient(145deg, #ffdb4d, #ffc107);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 25px rgba(255, 193, 7, 0.6);
+    overflow: hidden;
+    animation: glowPulse 3s ease-in-out infinite;
+    transition: all 0.3s ease;
+  }
+  
+  .avatar-circle:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 35px rgba(255, 193, 7, 0.8);
+  }
+  
+  /* 👤 Profile Image */
+  .profile-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  
+  @keyframes glowPulse {
+    0% {
+      box-shadow: 0 0 12px rgba(255, 193, 7, 0.4);
+    }
+    50% {
+      box-shadow: 0 0 25px rgba(255, 193, 7, 0.9);
+    }
+    100% {
+      box-shadow: 0 0 12px rgba(255, 193, 7, 0.4);
+    }
+  }
+  
+  /* 📸 Upload Button */
+  .upload-btn {
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    background: #111;
+    color: #ffc107;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+    cursor: pointer;
+    transition: 0.3s;
+    overflow: hidden;
+  }
+  
+  .upload-btn:hover {
+    background: #ffc107;
+    color: #111;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(255, 193, 7, 0.7);
+  }
+  
+  .upload-btn input[type="file"] {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+  
+  /* 🔆 TITLE */
+  .profile-title {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #1e1e1e;
+    margin-bottom: 25px;
+    text-shadow: 0 0 8px rgba(255, 193, 7, 0.3);
+  }
+  
+  .glow {
+    color: #ffb400;
+  }
+  
+  /* 📜 INFO TEXT */
+  .profile-info p {
+    font-size: 1rem;
+    color: #222;
+    margin: 8px 0;
+    text-align: left;
+  }
+  
+  .profile-info strong {
+    color: #000;
+  }
+  
+  /* ✍️ INPUT FIELDS */
+  .profile-input {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 2px solid #ffda47;
+    margin-bottom: 12px;
+    background: #fffef6;
+    font-size: 1rem;
+    color: #333;
+    transition: all 0.3s ease;
+  }
+  
+  .profile-input:focus {
+    outline: none;
+    border-color: #ffc107;
+    box-shadow: 0 0 10px rgba(255, 193, 7, 0.7);
+    transform: scale(1.02);
+  }
+  
+  /* 🖲 BUTTONS */
+  .edit-btn,
+  .save-btn,
+  .cancel-btn,
+  .logout-btn {
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 10px 22px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .edit-btn {
+    background: #ffc107;
+    color: #111;
+  }
+  
+  .edit-btn:hover {
+    background: #ffcf40;
+    transform: translateY(-2px);
+  }
+  
+  .save-btn {
+    background: #28a745;
+    color: white;
+  }
+  
+  .save-btn:hover {
+    background: #34ce57;
+    transform: translateY(-2px);
+  }
+  
+  .cancel-btn {
+    background: #9e9e9e;
+    color: white;
+  }
+  
+  .cancel-btn:hover {
+    background: #bdbdbd;
+    transform: translateY(-2px);
+  }
+  
+  .logout-btn {
+    background: #dc3545;
+    color: white;
+  }
+  
+  .logout-btn:hover {
+    background: #e74c3c;
+    transform: translateY(-2px);
+  }
+  
+  /* 🌐 SOCIAL ICONS */
+  .social-links {
+    margin-top: 20px;
+  }
+  
+  .social-links a {
+    color: #111;
+    margin: 0 8px;
+    font-size: 1.3rem;
+    transition: 0.3s;
+  }
+  
+  .social-links a:hover {
+    color: #ffc107;
+    transform: scale(1.2);
+  }
+  
+  /* ✅ TOAST NOTIFICATION */
+  .toast-notification {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    background: #111;
+    color: #ffc107;
+    padding: 12px 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 193, 7, 0.6);
+    font-weight: 600;
+    animation: slideIn 0.5s ease, fadeOut 0.5s ease 2.5s forwards;
+    z-index: 9999;
+  }
+  
+  @keyframes slideIn {
+    0% {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes fadeOut {
+    to {
+      opacity: 0;
+      transform: translateX(100px);
+    }
+  }
+  
+  /* 🪄 ENTRY ANIMATION (soft fade-up on load) */
+  .profile-card {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease forwards;
+  }
+  
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* 📱 RESPONSIVE */
+  @media (max-width: 500px) {
+    .profile-card {
+      padding: 25px;
+    }
+  
+    .profile-title {
+      font-size: 1.5rem;
+    }
+  
+    .edit-btn,
+    .logout-btn,
+    .save-btn,
+    .cancel-btn {
+      width: 100%;
+    }
+  }
+  

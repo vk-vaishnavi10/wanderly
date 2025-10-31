@@ -1,196 +1,214 @@
-/* Container */
+/* 🌟 Wanderly Travel ChatBox - Elegant Premium Design */
 .chatbox-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 2000;
+  font-family: "Poppins", sans-serif;
+}
+
+/* 🧭 Floating toggle */
+.chatbox-toggle {
+  background: radial-gradient(circle, #ffd700, #ffcc00);
+  border: none;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-size: 1.8rem;
+  color: #000;
+  cursor: pointer;
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px rgba(255, 230, 0, 0.7);
+  animation: pulseGlow 2.5s infinite;
+  transition: transform 0.2s ease;
+}
+.chatbox-toggle:hover {
+  transform: scale(1.1);
+}
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 10px rgba(255, 230, 0, 0.5); }
+  50% { box-shadow: 0 0 25px rgba(255, 255, 150, 0.9); }
+  100% { box-shadow: 0 0 10px rgba(255, 230, 0, 0.5); }
+}
+
+/* 💬 Chat window */
+.chatbox-window {
+  width: 320px;
+  height: 460px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 215, 0, 0.6);
+  border-radius: 18px;
+  position: fixed;
+  bottom: 100px;
+  right: 30px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: fadeInUp 0.4s ease;
+  box-shadow: 0 0 25px rgba(255, 230, 0, 0.25);
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Header */
+.chatbox-header {
+  background: linear-gradient(90deg, #000, #111);
+  color: #ffd700;
+  font-weight: 600;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.5);
+}
+.close-btn {
+  background: none;
+  border: none;
+  color: #ffd700;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* Messages */
+.chatbox-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  scroll-behavior: smooth;
+}
+.chat-row { display: flex; align-items: flex-start; }
+.chat-row.user { justify-content: flex-end; }
+
+.chat-msg {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  animation: popIn 0.25s ease;
+}
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+.chat-msg.bot {
+  background: rgba(255, 215, 0, 0.15);
+  color: #ffeb99;
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  box-shadow: 0 0 8px rgba(255, 230, 0, 0.2);
+}
+.chat-msg.user {
+  background: #ffd700;
+  color: #000;
+  font-weight: 500;
+  box-shadow: 0 0 6px rgba(255, 215, 0, 0.4);
+}
+
+/* Suggestions */
+.chatbox-suggestions {
+  display: flex;
+  overflow-x: auto;
+  padding: 8px;
+  gap: 8px;
+  scrollbar-width: none;
+}
+.chatbox-suggestions::-webkit-scrollbar { display: none; }
+.chatbox-suggestions button {
+  background: linear-gradient(145deg, #ffcc00, #ffd84d);
+  border: none;
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-weight: 600;
+  color: #000;
+  box-shadow: 0 0 8px rgba(255, 230, 0, 0.5);
+  transition: all 0.2s ease;
+}
+.chatbox-suggestions button:hover {
+  background: #fff55e;
+  transform: scale(1.08);
+  box-shadow: 0 0 10px rgba(255, 255, 100, 0.8);
+}
+
+/* Input */
+.chatbox-input {
+  display: flex;
+  border-top: 1px solid rgba(255, 215, 0, 0.4);
+  background: #111;
+}
+.chatbox-input input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 12px;
+  background: transparent;
+  color: #fff;
+  font-size: 0.9rem;
+}
+.chatbox-input button {
+  background: #ffd700;
+  border: none;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #000;
+  border-radius: 0 10px 10px 0;
+  transition: 0.2s;
+}
+.chatbox-input button:hover {
+  background: #fff75f;
+}
+
+/* Typing dots */
+.typing-indicator span {
+  background-color: #ffd700;
+  height: 8px;
+  width: 8px;
+  margin: 0 2px;
+  border-radius: 50%;
+  display: inline-block;
+  animation: blink 1.4s infinite both;
+}
+@keyframes blink {
+  0%, 80%, 100% { opacity: 0; }
+  40% { opacity: 1; }
+}
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+/* ✨ Reset Animation */
+.fade-out {
+  animation: fadeOut 0.8s forwards;
+}
+
+.fade-in {
+  animation: fadeIn 0.8s forwards;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    filter: brightness(1);
   }
-  
-  /* Floating Button */
-  .chatbox-toggle {
-    background: #FFD700;
-    color: #000;
-    font-size: 1.8rem;
-    border: none;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    cursor: pointer;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
-    transition: transform 0.2s ease;
-  }
-  .chatbox-toggle:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 25px rgba(255, 215, 0, 1);
-  }
-  
-  /* Chatbox Window */
-  .chatbox-window {
-    width: 320px;
-    height: 420px;
-    background: rgba(0, 0, 0, 0.95);
-    border: 1.5px solid #FFD700;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-    overflow: hidden;
-    animation: bounceIn 0.4s ease;
-  }
-  
-  /* Header */
-  .chatbox-header {
-    background: #111;
-    color: #FFD700;
-    padding: 10px;
-    font-weight: bold;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .chatbox-header span {
-    color: #fff;
-    font-size: 1rem;
-  }
-  .close-btn {
-    background: transparent;
-    border: none;
-    color: #FFD700;
-    font-size: 1.2rem;
-    cursor: pointer;
-  }
-  
-  /* Messages container */
-  .chatbox-messages {
-    flex: 1;
-    padding: 10px;
-    overflow-y: auto;
-    font-size: 0.9rem;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .chat-row {
-    display: flex;
-  }
-  .chat-row.user {
-    justify-content: flex-end;
-  }
-  .chat-row.bot {
-    justify-content: flex-start;
-  }
-  
-  /* Messages */
-  .chat-msg {
-    padding: 8px 12px;
-    border-radius: 10px;
-    max-width: 75%;
-    line-height: 1.4;
+  to {
     opacity: 0;
-    animation: fadeIn 0.4s forwards;
+    filter: brightness(0.3);
   }
-  .chat-msg.user {
-    background: #FFD700;
-    color: #000;
-    border-bottom-right-radius: 0;
-    animation: slideInRight 0.4s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    filter: brightness(0.5);
   }
-  .chat-msg.bot {
-    background: #222;
-    color: #fff;
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    border-bottom-left-radius: 0;
-    animation: slideInLeft 0.4s forwards;
+  to {
+    opacity: 1;
+    filter: brightness(1);
   }
-  
-  /* Quick Suggestions */
-  .chat-suggestions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    padding: 8px;
-    background: #000;
-    border-top: 1px solid #FFD700;
-  }
-  .chat-suggestions button {
-    background: transparent;
-    color: #FFD700;
-    border: 1px solid #FFD700;
-    border-radius: 20px;
-    padding: 5px 12px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  .chat-suggestions button:hover {
-    background: #FFD700;
-    color: #000;
-    font-weight: bold;
-  }
-  
-  /* Input */
-  .chatbox-input {
-    display: flex;
-    padding: 8px;
-    border-top: 1px solid #FFD700;
-    background: #111;
-  }
-  .chatbox-input input {
-    flex: 1;
-    border: none;
-    padding: 8px;
-    background: #222;
-    color: #FFD700;
-    border-radius: 6px;
-    outline: none;
-  }
-  .chatbox-input button {
-    background: #FFD700;
-    border: none;
-    padding: 8px 12px;
-    margin-left: 5px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  
-  /* Typing Indicator */
-  .typing-indicator {
-    display: flex;
-    gap: 4px;
-    padding: 6px 12px;
-    background: rgba(255, 215, 0, 0.1);
-    border-radius: 15px;
-  }
-  .typing-indicator span {
-    width: 6px;
-    height: 6px;
-    background: #FFD700;
-    border-radius: 50%;
-    animation: bounce 1.2s infinite ease-in-out;
-  }
-  .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-  .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-  
-  /* Animations */
-  @keyframes bounce {
-    0%, 80%, 100% { transform: scale(0); }
-    40% { transform: scale(1); }
-  }
-  @keyframes bounceIn {
-    from { transform: scale(0.8); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  @keyframes slideInLeft {
-    from { transform: translateX(-30px); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-  }
-  @keyframes slideInRight {
-    from { transform: translateX(30px); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-  }
-  
+}
+
