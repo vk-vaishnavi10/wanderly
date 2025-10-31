@@ -179,3 +179,36 @@
   .navbar-nav.mx-auto { display: none; }
   .navbar-logo { height: 48px; }
 }
+/* ✨ Wanderly Dropdown Fix — Remove Blue Active Background */
+.dropdown-item:active,
+.dropdown-item.active {
+  background-color: #FFD700 !important; /* Gold glow */
+  color: #000 !important; /* Black text for contrast */
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.9);
+  transform: scale(1.02);
+}
+
+/* ✨ Normal hover — Golden Glow */
+.dropdown-item:hover {
+  background-color: #FFD700 !important;
+  color: #000 !important;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 1);
+  transform: scale(1.03);
+}
+
+/* 🖤 Dropdown menu background fix */
+.dropdown-menu {
+  background-color: rgba(0, 0, 0, 0.95) !important;
+  border: 1px solid #FFD700;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+}
+
+/* 🌟 Dropdown headers styling */
+.dropdown-header {
+  color: #FFD700;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
