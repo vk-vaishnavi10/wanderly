@@ -84,7 +84,7 @@ export default function Navbar() {
             onMouseLeave={() => setMyTripsOpen(false)}
           >
             <NavLink to="/mytrips" className="mytrips-btn">
-              MyTrips
+              Trips
             </NavLink>
 
             <div className={`mytrips-preview ${myTripsOpen ? "open" : ""}`} role="dialog">

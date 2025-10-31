@@ -11,9 +11,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
+
 // NEW: user context + router
 import { BrowserRouter } from "react-router-dom";
 import { UserProvider } from "./context/UserContext.jsx";
+import { registerSW } from "virtual:pwa-register";
+registerSW({ immediate: true });
+
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

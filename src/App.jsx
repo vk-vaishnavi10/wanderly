@@ -7,6 +7,7 @@ import "./App.css";
 import Navbar from "./Components/Navbar.jsx";
 import Footer from "./Components/Footer.jsx";
 import ChatBox from "./Components/ChatBox.jsx";
+import InstallPrompt from "./Components/InstallPrompt.jsx";
 
 // 🧭 Pages
 import Profile from "./pages/Profile.jsx";
@@ -51,7 +52,7 @@ export default function App() {
       {/* 🌟 Navbar */}
       <Navbar />
 
-      {/* 🧭 Main Route Section */}
+      {/* 🧭 Main Routes */}
       <main className="flex-grow-1">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -69,6 +70,7 @@ export default function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/admin" element={<AdminPanel />} />
           <Route path="/stays" element={<Stays />} />
+          <Route path="/stays/:id" element={<StayDetails />} />
           <Route path="/users" element={<Users />} />
           <Route path="/attractions" element={<Attractions />} />
           <Route path="/attractions/:id" element={<AttractionDetails />} />
@@ -83,7 +85,6 @@ export default function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/register" element={<Register />} />
           <Route path="/signin" element={<Signin />} />
-          <Route path="/stays/:id" element={<StayDetails />} />
           <Route path="/about" element={<About />} />
           <Route path="/destination/:name" element={<DestinationPage />} />
         </Routes>
@@ -92,8 +93,11 @@ export default function App() {
       {/* 🌎 Footer */}
       <Footer />
 
-      {/* 💬 Wanderly Chat (Single Bubble Only — Clean!) */}
+      {/* 💬 Wanderly Chat Assistant */}
       <ChatBox ref={chatRef} onToggle={(open) => setChatOpen(open)} />
+
+      {/* 📲 Install App Prompt */}
+      <InstallPrompt />
     </>
   );
 }
