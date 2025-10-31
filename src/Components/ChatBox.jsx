@@ -14,16 +14,20 @@ const ChatBox = forwardRef(({ onToggle }, ref) => {
   const [messages, setMessages] = useState([
     {
       sender: "bot",
-      text: "🌍 Hey traveler! I’m your Wanderly Travel Companion. Where do you want to go next?",
-      suggestions: ["Cool weather", "Adventure", "Beach trips"],
+      text: "🌍 Hey traveler! I’m your Wanderly Travel Companion.\n\nI can help you plan adventures, find cool-weather escapes, or explore hidden gems.\n\nWhere do you want to wander today?",
+      suggestions: [
+        "Cool Places ❄️",
+        "Adventure 🧗‍♂️",
+        "Heritage 🏰",
+        "Beach Getaways 🏖️",
+        "Hidden Gems 💎",
+      ],
     },
   ]);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
-  const [resetting, setResetting] = useState(false);
   const chatEndRef = useRef(null);
 
-  // Auto-scroll
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, typing]);
@@ -36,7 +40,7 @@ const ChatBox = forwardRef(({ onToggle }, ref) => {
     },
   }));
 
-  // 🌦️ Weather API
+  // 🌦️ Weather Fetch
   const fetchWeather = async (city) => {
     try {
       const res = await fetch(
@@ -44,12 +48,10 @@ const ChatBox = forwardRef(({ onToggle }, ref) => {
       );
       const data = await res.json();
       if (data.cod !== 200) return `⚠️ Couldn't find weather for "${city}".`;
-
       const temp = data.main.temp;
       const feels = data.main.feels_like;
       const desc = data.weather[0].description;
       const icon = getWeatherEmoji(desc);
-
       return `${icon} Weather in ${city}: ${temp}°C, feels like ${feels}°C — ${desc}.`;
     } catch {
       return "⚠️ Unable to fetch weather right now.";
@@ -67,10 +69,9 @@ const ChatBox = forwardRef(({ onToggle }, ref) => {
     return "🌤️";
   };
 
-  // 💬 Chat Logic
+  // 💬 Message Handler
   const sendMessage = async (msgText) => {
     if (!msgText.trim()) return;
-
     const userMsg = { sender: "user", text: msgText };
     setMessages((prev) => [...prev, userMsg]);
     setTyping(true);
@@ -80,71 +81,71 @@ const ChatBox = forwardRef(({ onToggle }, ref) => {
     let reply = "";
     let suggestions = [];
 
+    // 🌍 Categories
+    if (lower.includes("cool")) {
+      reply =
+        "❄️ *Chilly escapes calling you!*\n\n🏔️ **Manali** — snow peaks & riverside cafés\n🌿 **Coorg** — coffee hills & misty trails\n🚂 **Ooty** — lakes & toy train charm\n\nWhat do you want to check next?";
+      suggestions = ["Weather in Manali", "Recent visits Manali", "Best spots Ooty"];
+    } else if (lower.includes("adventure")) {
+      reply =
+        "🧗‍♂️ *For the thrill seekers!*\n\n🌄 **Rishikesh** — rafting, bungee & spiritual vibes\n🏍️ **Leh** — bike trails to heaven\n🏞️ **Sikkim** — scenic trekking routes\n\nWhat would you like to explore?";
+      suggestions = ["Weather in Leh", "Plan trip Rishikesh", "Best spots Sikkim"];
+    } else if (lower.includes("heritage")) {
+      reply =
+        "🏰 *Stories carved in stone await you!*\n\n🎨 **Jaipur** — forts & colors\n🕌 **Hampi** — ruins and legends\n🕉️ **Varanasi** — ghats and divinity\n\nWhat shall we uncover?";
+      suggestions = ["Weather in Jaipur", "Recent visits Hampi", "Best spots Varanasi"];
+    } else if (lower.includes("beach")) {
+      reply =
+        "🏖️ *Let’s chase the waves!*\n\n🌅 **Goa** — golden sands & nightlife\n🧘‍♀️ **Varkala** — cliffs & calm yoga vibes\n🏄 **Pondicherry** — French charm & sea cafés\n\nWhat would you like to explore?";
+      suggestions = ["Weather in Goa", "Best spots Pondicherry", "Plan trip Varkala"];
+    } else if (lower.includes("hidden") || lower.includes("gem")) {
+      reply =
+        "💎 *Offbeat treasures for quiet souls!*\n\n🌿 **Gokarna** — temples & tides\n☀️ **Auroville** — peace & purpose\n🏕️ **Ziro Valley** — tribal music & meadows\n\nCurious about the weather or best time to visit?";
+      suggestions = ["Weather in Auroville", "Recent visits Gokarna", "Best spots Ziro Valley"];
+    }
+
     // 🌦️ Weather
-    if (lower.includes("weather")) {
+    else if (lower.includes("weather")) {
       const city = msgText.split("in")[1]?.trim() || "India";
       reply = await fetchWeather(city);
-      suggestions = ["Plan trip", "Nearby attractions"];
+      suggestions = ["Plan trip " + city, "Best spots " + city];
     }
 
-    // ❄️ Cool weather
-    else if (lower.includes("cool weather")) {
+    // 📅 Recent Visits
+    else if (lower.includes("recent")) {
+      const city = msgText.split("visits")[1]?.trim() || "India";
       reply =
-        "❄️ Here are some cool-weather destinations: Manali, Ooty, Coorg, Shimla!";
-      suggestions = ["Weather in Manali", "Plan Manali 3 days", "Hill stations"];
+        `📊 *Recent traveler activity in ${city}:*\n\n🔥 Peak months: December - February\n👨‍👩‍👧 Most visitors: couples & backpackers\n💬 Top feedback: “Peaceful & scenic!”`;
+      suggestions = ["Weather in " + city, "Best spots " + city];
     }
 
-    // 🏖️ Beach trips
-    else if (lower.includes("beach")) {
+    // 🏞️ Best Spots
+    else if (lower.includes("best spots") || lower.includes("best place")) {
+      const city = msgText.split("in")[1]?.trim() || "India";
       reply =
-        "🏖️ These are perfect for beaches: Goa, Gokarna, Varkala, and Pondicherry!";
-      suggestions = ["Weather in Goa", "Plan Goa 4 days", "Beach cafés"];
+        `🗺️ *Top attractions in ${city}:*\n\n⭐ 1. Central viewpoint\n🌅 2. Local market & street cafés\n🌄 3. Cultural museum\n🍲 4. Try local cuisine!\n\nWould you like me to plan a trip?`;
+      suggestions = ["Plan trip " + city, "Weather in " + city];
     }
 
-    // 🧗 Adventure
-    else if (lower.includes("adventure")) {
-      reply =
-        "🧗 Adventure hotspots: Rishikesh (rafting), Ladakh (biking), Auli (skiing), Coorg (trekking)!";
-      suggestions = ["Plan Rishikesh trip", "Weather in Ladakh", "South adventure"];
-    }
-
-    // 🏰 Heritage
-    else if (lower.includes("heritage") || lower.includes("culture")) {
-      reply =
-        "🏰 For heritage lovers: Jaipur, Hampi, Varanasi, and Mysore — full of stories and traditions!";
-      suggestions = ["Plan Jaipur 3 days", "Weather in Hampi", "Cultural tours"];
-    }
-
-    // 🌴 South India
-    else if (lower.includes("south")) {
-      reply =
-        "🌴 Explore South India: Kerala’s backwaters, Pondicherry’s charm, and Coorg’s hills!";
-      suggestions = ["Plan Kerala 4 days", "Weather in Coorg", "Beach trips"];
-    }
-
-    // 🏔️ North India
-    else if (lower.includes("north")) {
-      reply =
-        "🏔️ North India: Shimla, Manali, and Kashmir — snow, mountains & magic!";
-      suggestions = ["Plan Manali 3 days", "Weather in Kashmir", "Hill stations"];
-    }
-
-    // 🗓️ Trip planner
+    // 🗓️ Trip Planner
     else if (lower.includes("plan")) {
-      const words = lower.split(" ");
-      const dest = words.find((w, i) => words[i - 1] === "to") || words[1] || "Goa";
-      const daysMatch = lower.match(/\d+/);
-      const days = daysMatch ? parseInt(daysMatch[0]) : 3;
-
-      reply = generateSmartTripPlan(dest, days);
-      suggestions = ["Weather in " + dest, "Hotels in " + dest, "Food spots in " + dest];
+      const dest = msgText.split("trip")[1]?.trim() || "Goa";
+      reply =
+        `🧭 *Here’s a 3-day travel plan for ${dest}:*\n\n🌅 **Day 1:** Explore local landmarks & cafés\n🏖️ **Day 2:** Adventure activities or relaxation\n🍲 **Day 3:** Food crawl & souvenir shopping\n\n💡 Tip: Try sunrise views for perfect pictures!`;
+      suggestions = ["Weather in " + dest, "Best spots " + dest];
     }
 
-    // ✨ Default fallback
+    // ✨ Default Fallback
     else {
       reply =
-        "✨ I can help you plan trips, check weather, or suggest destinations! Try 'Cool weather' or 'Plan Goa 3 days'.";
-      suggestions = ["Cool weather", "Adventure", "Beach trips", "North India", "South India"];
+        "✨ I can help you explore destinations, check weather, or plan your next journey.\n\nTry asking:\n- 'Cool Places'\n- 'Weather in Goa'\n- 'Plan trip to Manali'";
+      suggestions = [
+        "Cool Places ❄️",
+        "Adventure 🧗‍♂️",
+        "Heritage 🏰",
+        "Beach Getaways 🏖️",
+        "Hidden Gems 💎",
+      ];
     }
 
     setTimeout(() => {
@@ -153,77 +154,23 @@ const ChatBox = forwardRef(({ onToggle }, ref) => {
     }, 900);
   };
 
-  // 🧠 Smart Trip Plan Generator
-  const generateSmartTripPlan = (dest, days) => {
-    const type = detectPlaceType(dest);
-    let plan = "";
-
-    switch (type) {
-      case "beach":
-        plan = `🌊 ${days}-Day Beach Trip for ${capitalize(dest)}:\n
-🌅 Day 1: Relax at ${dest}'s beaches.\n
-🏄 Day 2: Try water sports & cafés.\n
-🍛 Day 3: Seafood & local markets.\n
-🎶 Day 4: Sunset and shacks.\n
-💡 Tip: Don’t miss the sunrise!`;
-        break;
-
-      case "hill":
-        plan = `⛰️ ${days}-Day Hill Getaway for ${capitalize(dest)}:\n
-🌄 Day 1: Visit viewpoints & waterfalls.\n
-🔥 Day 2: Go trekking.\n
-🍵 Day 3: Explore tea estates.\n
-🎁 Day 4: Bonfire & relaxation.\n
-💡 Tip: Carry warm clothes!`;
-        break;
-
-      case "heritage":
-        plan = `🏰 ${days}-Day Heritage Trip for ${capitalize(dest)}:\n
-📜 Day 1: Visit forts & museums.\n
-🕌 Day 2: Temples & monuments.\n
-🍲 Day 3: Local cuisine & markets.\n
-💡 Tip: Best photos in morning light!`;
-        break;
-
-      default:
-        plan = `🧭 ${days}-Day City Trip for ${capitalize(dest)}:\n
-🏙️ Day 1: Explore top attractions.\n
-🎨 Day 2: Visit markets & cafés.\n
-🍲 Day 3: Food crawl & nightlife.\n
-💡 Tip: Take local transport for fun!`;
-    }
-
-    return plan;
-  };
-
-  const detectPlaceType = (place) => {
-    place = place.toLowerCase();
-    if (["goa", "gokarna", "varkala", "pondicherry"].includes(place)) return "beach";
-    if (["manali", "ooty", "coorg", "munnar", "darjeeling", "shimla"].includes(place))
-      return "hill";
-    if (["jaipur", "hampi", "varanasi", "agra", "mysore"].includes(place))
-      return "heritage";
-    return "city";
-  };
-
-  const capitalize = (word) =>
-    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-
   const handleSuggestionClick = (text) => sendMessage(text);
 
-  // ✨ Reset Chat
   const resetChat = () => {
-    setResetting(true);
-    setTimeout(() => {
-      setMessages([
-        {
-          sender: "bot",
-          text: "🌍 Ready for another journey? Tell me your next dream destination!",
-          suggestions: ["Cool weather", "Adventure", "Beach trips", "Plan trip"],
-        },
-      ]);
-      setResetting(false);
-    }, 800);
+    setMessages([
+      {
+        sender: "bot",
+        text:
+          "🌍 Ready for another journey?\n\nI can help you explore destinations, check weather, or plan adventures again!",
+        suggestions: [
+          "Cool Places ❄️",
+          "Adventure 🧗‍♂️",
+          "Heritage 🏰",
+          "Beach Getaways 🏖️",
+          "Hidden Gems 💎",
+        ],
+      },
+    ]);
   };
 
   return (
@@ -240,19 +187,33 @@ const ChatBox = forwardRef(({ onToggle }, ref) => {
         <button
           className="chatbox-toggle bounce-btn"
           title="Ask Wanderly"
+          style={{
+            backgroundColor: "#FFD700",
+            color: "#000",
+            boxShadow: "0 0 12px #FFD700",
+            fontWeight: "bold",
+          }}
           onClick={() => {
             setIsOpen(true);
             onToggle?.(true);
           }}
         >
-          🧭
+          💬
         </button>
       )}
 
       {isOpen && (
-        <div className={`chatbox-window bounce-in ${resetting ? "fade-out" : "fade-in"}`}>
+        <div
+          className="chatbox-window glassy"
+          style={{
+            background: "rgba(0, 0, 0, 0.9)",
+            color: "#FFD700",
+            border: "1px solid #FFD700",
+            boxShadow: "0 0 15px rgba(255, 215, 0, 0.6)",
+          }}
+        >
           <div className="chatbox-header">
-            <span>🧭 Wanderly Travel Companion</span>
+            <span>🌟 Wanderly Travel Companion</span>
             <button
               onClick={() => {
                 setIsOpen(false);
@@ -267,7 +228,11 @@ const ChatBox = forwardRef(({ onToggle }, ref) => {
           <div className="chatbox-messages">
             {messages.map((msg, i) => (
               <div key={i} className={`chat-row ${msg.sender}`}>
-                <div className={`chat-msg ${msg.sender}`}>{msg.text}</div>
+                <div className={`chat-msg ${msg.sender}`}>
+                  {msg.text.split("\n").map((line, j) => (
+                    <div key={j}>{line}</div>
+                  ))}
+                </div>
                 {msg.suggestions && (
                   <div className="chat-suggestions">
                     {msg.suggestions.map((s, j) => (
@@ -301,7 +266,6 @@ const ChatBox = forwardRef(({ onToggle }, ref) => {
             <button onClick={() => sendMessage(input)}>➤</button>
           </div>
 
-          {/* 🔁 Reset button */}
           <div style={{ textAlign: "center", margin: "10px 0" }}>
             <button
               onClick={resetChat}
