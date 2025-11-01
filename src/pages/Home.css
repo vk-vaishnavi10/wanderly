@@ -1,3 +1,8 @@
+/* ======================================================
+   🌍 WANDERLY - HOME PAGE STYLING (Enhanced Edition)
+   Author: Vaishnavi ✨
+====================================================== */
+
 /* Reset & Base */
 html, body, #root {
   margin: 0;
@@ -19,7 +24,7 @@ html, body, #root {
   overflow: hidden;
 }
 
-/* animated subtle gold gradient layer for classic look */
+/* Subtle gold gradient animation for luxury feel */
 .hero-parallax-gradient {
   position: absolute;
   inset: 0;
@@ -29,6 +34,7 @@ html, body, #root {
   animation: slowShift 12s linear infinite;
   pointer-events: none;
 }
+
 @keyframes slowShift {
   0% { transform: translate3d(0,0,0); opacity: 1; }
   50% { transform: translate3d(6px, -6px, 0); opacity: 0.95; }
@@ -38,8 +44,7 @@ html, body, #root {
 /* Background Slideshow */
 .slideshow {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
   z-index: 0;
@@ -47,10 +52,7 @@ html, body, #root {
 
 .slide {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background-size: cover;
   background-position: center;
   opacity: 0;
@@ -62,7 +64,7 @@ html, body, #root {
   transform: scale(1.05);
 }
 
-/* Dim layer for contrast */
+/* Dim overlay */
 .hero-dark-overlay {
   position: absolute;
   inset: 0;
@@ -94,7 +96,7 @@ html, body, #root {
   to { opacity: 1; transform: translate(-50%, -50%); }
 }
 
-/* Text styles */
+/* Headline */
 .hero-overlay h1 {
   font-size: clamp(2.3rem, 3.4vw, 3.4rem);
   font-weight: 900;
@@ -109,31 +111,26 @@ html, body, #root {
   margin-bottom: 1.1rem;
 }
 
-/* Center search & quick buttons */
+/* ===========================
+   🔍 SEARCH BOX
+=========================== */
 .search-row {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-/* ===========================
-   🔍 SEARCH BOX
-=========================== */
-.search-row {
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin-top: 1rem;
 }
 
 .search-box {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   border: 2px solid rgba(255,215,0,0.95);
   border-radius: 999px;
   background: linear-gradient(180deg, rgba(16,16,16,0.85), rgba(8,8,8,0.6));
-  padding: 0.3rem;
+  padding: 0.3rem 0.6rem;
   width: 100%;
   max-width: 650px;
   gap: 8px;
@@ -141,14 +138,18 @@ html, body, #root {
   box-shadow: inset 0 0 12px rgba(0,0,0,0.6);
 }
 
+/* Input fixes */
 .search-box input {
-  border: none;
-  background: transparent;
-  color: #FFD700;
   flex: 1;
-  padding: 0.7rem 1rem;
+  background: transparent;
+  border: none;
+  color: #FFD700;
   outline: none;
+  padding: 0.7rem 1rem;
   font-size: 1rem;
+  font-weight: 400;
+  width: 100%;
+  min-width: 0;
 }
 
 .search-box input::placeholder {
@@ -156,14 +157,14 @@ html, body, #root {
   opacity: 0.9;
 }
 
-/* Buttons inside search */
+/* Mic button */
 .icon-btn {
   background: transparent;
   border: none;
   outline: none;
   cursor: pointer;
-  font-size: 1.1rem;
-  padding: 0.5rem;
+  font-size: 1.2rem;
+  padding: 0.4rem;
   border-radius: 999px;
   transition: transform 0.15s ease, box-shadow 0.2s ease;
   color: #FFD700;
@@ -179,6 +180,7 @@ html, body, #root {
   transform: scale(1.06);
 }
 
+/* Search button */
 .search-btn {
   background: linear-gradient(90deg, #FFD700, #f0c400);
   color: #000;
@@ -204,6 +206,7 @@ html, body, #root {
   left: 50%;
   transform: translateX(-50%);
   margin: 0 auto;
+  width: 100%;
   max-width: 650px;
   background: rgba(15, 15, 15, 0.98);
   border-radius: 10px;
@@ -227,7 +230,9 @@ html, body, #root {
   outline: none;
 }
 
-/* Quick Links below search */
+/* ===========================
+   ⚡ QUICK LINKS
+=========================== */
 .quick-links .btn {
   border-radius: 999px;
   font-weight: 600;
@@ -235,6 +240,7 @@ html, body, #root {
   border: 2px solid rgba(255,215,0,0.12);
   color: #FFD700;
 }
+
 .quick-links .btn:hover {
   background: #FFD700;
   color: #000;
@@ -242,7 +248,7 @@ html, body, #root {
 }
 
 /* =========================================
-   💛 COMMON SECTIONS (below hero)
+   🌟 COMMON SECTIONS
 ========================================= */
 .section-separator {
   height: 50px;
@@ -258,7 +264,7 @@ html, body, #root {
 }
 
 /* =========================================
-   🏖️ CARDS
+   🏖️ DESTINATION CARDS
 ========================================= */
 .destination-card {
   border: 2px solid rgba(255,215,0,0.14);
@@ -287,12 +293,13 @@ html, body, #root {
   transform: scale(1.08);
 }
 
-/* Deal, Why Us, and Extra sections */
+/* Deals, Why Us, Extras */
 .deal-card .bg-dark,
 .whyus-card .bg-dark,
 .extra-card .bg-dark {
   background: linear-gradient(180deg, rgba(18,18,18,0.9), rgba(12,12,12,0.8));
 }
+
 .deal-card h4,
 .whyus-card h3 {
   color: #FFD700;
@@ -303,20 +310,29 @@ html, body, #root {
   max-width: 420px;
 }
 
-/* Reveal animation for intersection observer */
-.animate-card, .deal-card, .whyus-card, .extra-card, .inspo-card {
+/* Reveal Animation */
+.animate-card,
+.deal-card,
+.whyus-card,
+.extra-card,
+.inspo-card {
   opacity: 0;
   transform: translateY(10px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
-.animate-card.visible, .deal-card.visible, .whyus-card.visible, .extra-card.visible, .inspo-card.visible {
+
+.animate-card.visible,
+.deal-card.visible,
+.whyus-card.visible,
+.extra-card.visible,
+.inspo-card.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* ===========================
-   🌟 Inspiration Carousel
-=========================== */
+/* =========================================
+   🌟 INSPIRATION CARDS
+========================================= */
 .inspo-carousel {
   display: flex;
   overflow-x: auto;
@@ -344,50 +360,48 @@ html, body, #root {
 }
 
 @keyframes glowPulse {
-  0%, 100% {
-    box-shadow: 0 0 25px 3px rgba(255,215,0,0.25);
-  }
-  50% {
-    box-shadow: 0 0 35px 7px rgba(255,215,0,0.45);
-  }
+  0%, 100% { box-shadow: 0 0 25px 3px rgba(255,215,0,0.25); }
+  50% { box-shadow: 0 0 35px 7px rgba(255,215,0,0.45); }
 }
 
 .inspo-card .inspo-img-wrap {
   height: 130px;
   overflow: hidden;
 }
+
 .inspo-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
 }
+
 .inspo-card:hover img {
   transform: scale(1.08);
 }
+
 .inspo-card .card-body {
   padding: 10px 12px;
   color: #fff;
 }
+
 .inspo-card h5 {
   color: #FFD700;
   margin: 0;
 }
+
 .inspo-card .muted {
   color: #ddd;
   font-size: 0.9rem;
 }
 
-/* ===========================
-   📱 RESPONSIVE DESIGN
-=========================== */
+/* =========================================
+   📱 RESPONSIVE
+========================================= */
 @media (max-width: 768px) {
   .hero-overlay {
     padding: 1.6rem 1.2rem;
     width: 92%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) !important;
   }
 
   .hero-overlay h1 {
@@ -396,6 +410,11 @@ html, body, #root {
 
   .destination-card img {
     height: 150px;
+  }
+
+  .search-box {
+    max-width: 90%;
+    padding: 0.3rem 0.5rem;
   }
 
   .search-box input {
@@ -409,9 +428,9 @@ html, body, #root {
   }
 }
 
-/* ===========================
-   CHAT ASSISTANT MOCKUP
-=========================== */
+/* =========================================
+   💬 CHAT ASSISTANT
+========================================= */
 .chat-assistant {
   position: fixed;
   right: 22px;
@@ -420,7 +439,6 @@ html, body, #root {
   display: flex;
   align-items: center;
   gap: 12px;
-  pointer-events: auto;
 }
 
 .chat-dot {
@@ -434,6 +452,12 @@ html, body, #root {
   font-size: 22px;
   box-shadow: 0 8px 30px rgba(255,215,0,0.25);
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.chat-dot:hover {
+  transform: scale(1.07);
+  box-shadow: 0 0 25px 8px rgba(255,215,0,0.3);
 }
 
 .chat-card {
@@ -447,12 +471,17 @@ html, body, #root {
   color: #fff;
   box-shadow: 0 10px 30px rgba(0,0,0,0.6);
 }
+
 .chat-assistant:hover .chat-card {
   display: block;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 420px) {
-  .chat-card {
-    display: none;
-  }
+  .chat-card { display: none; }
 }
