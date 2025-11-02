@@ -234,3 +234,28 @@
     font-size: 0.75rem;
   }
 }
+/* ✅ Selected seat with airline glow pulse */
+.seat.selected {
+  background: var(--seat-theme, #ffd700);
+  color: #000;
+  font-weight: bold;
+  animation: pulseSeat 1.5s infinite;
+  box-shadow: 0 0 15px var(--seat-theme, #ffd700cc);
+}
+
+/* ✨ Airline pulse animation */
+@keyframes pulseSeat {
+  0% {
+    box-shadow: 0 0 10px var(--seat-theme, #ffd70099);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 25px var(--seat-theme, #ffd700dd),
+      0 0 45px var(--seat-theme, #ffd70066);
+    transform: scale(1.05);
+  }
+  100% {
+    box-shadow: 0 0 10px var(--seat-theme, #ffd70099);
+    transform: scale(1);
+  }
+}

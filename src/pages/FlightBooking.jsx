@@ -153,16 +153,18 @@ export default function FlightBooking() {
 
   return (
     <div
-      className="flight-booking"
-      style={{
-        minHeight: "100vh",
-        backgroundImage:
-          "url(https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?auto=format&fit=crop&w=1650&q=80)",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        paddingTop: "100px",
-      }}
-    >
+    className="flight-booking"
+    style={{
+      "--seat-theme": themeColor, // 🎨 Airline theme color variable
+      minHeight: "100vh",
+      backgroundImage:
+        "url(https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?auto=format&fit=crop&w=1650&q=80)",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      paddingTop: "100px",
+    }}
+  >
+  
       <div className="booking-container">
         {/* ✈️ Flight Summary */}
         <div className="flight-summary text-center" style={{ color: themeColor }}>
