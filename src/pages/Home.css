@@ -329,6 +329,30 @@ html, body, #root {
   opacity: 1;
   transform: translateY(0);
 }
+/* ✨ Destination text fix (better visibility on dark theme) */
+/* 💛 Fix: Destination titles and captions visibility */
+.destination-card h3,
+.destination-card h4,
+.destination-card h5,
+.destination-card p,
+.destination-card span {
+  color: #FFD700 !important; /* bright Wanderly gold */
+  font-weight: 600;
+  text-align: center;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+  opacity: 1 !important;
+}
+
+/* 🌟 On hover: stronger glow + white shimmer */
+.destination-card:hover h3,
+.destination-card:hover h4,
+.destination-card:hover h5,
+.destination-card:hover p,
+.destination-card:hover span {
+  color: #fff !important;
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.9);
+}
+
 
 /* =========================================
    🌟 INSPIRATION CARDS
