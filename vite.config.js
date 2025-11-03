@@ -76,8 +76,12 @@ export default defineConfig({
     host: true,
     port: 5173,
     open: true,
-    historyApiFallback: true
+    fs: { strict: false },
+    historyApiFallback: {
+      index: '/index.html',
+    },
   },
+  
   build: {
     outDir: "dist"
   },

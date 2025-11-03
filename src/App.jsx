@@ -64,7 +64,7 @@ export default function App() {
           <Route path="/hotels/book/:id" element={<HotelBooking />} />
           <Route path="/packages" element={<Packages />} />
           <Route path="/packages/:id" element={<PackageDetails />} />
-          <Route path="/payment" element={<Payment />} />
+          <Route path="/payment/:id" element={<Payment />} />
           <Route path="/payment/success" element={<PaymentSuccess />} />
           <Route path="/mytrips" element={<MyTrips />} />
           <Route path="/dashboard" element={<Dashboard />} />
