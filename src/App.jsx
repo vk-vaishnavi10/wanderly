@@ -25,7 +25,7 @@ import Payment from "./pages/Payment.jsx";
 import PaymentSuccess from "./pages/PaymentSuccess.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import AdminPanel from "./pages/AdminPanel.jsx";
-import Stays from "./pages/Stays.jsx";
+import Stays from "./pages/stays.jsx";
 import Attractions from "./pages/Attractions.jsx";
 import AttractionDetails from "./pages/AttractionDetails.jsx";
 import Transport from "./pages/Transport.jsx";

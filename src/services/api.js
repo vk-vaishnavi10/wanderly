@@ -1,7 +1,8 @@
 import axios from "axios";
 
 // ✅ Base API URL — update this only if backend port or domain changes
-const API_BASE = "http://localhost:8085/api";
+const API_BASE = "http://wanderly-backend:8085/api";
+
 
 // ✅ Create reusable Axios instance for cleaner requests
 const api = axios.create({
