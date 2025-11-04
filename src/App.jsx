@@ -42,7 +42,8 @@ import Register from "./pages/Register.jsx";
 import Signin from "./pages/Signin.jsx";
 import Users from "./pages/Users.jsx";
 import DestinationPage from "./pages/DestinationPage.jsx";
-
+import WanderTracker from "./pages/WanderTracker.jsx";
+import Memories from "./pages/Memories.jsx";
 export default function App() {
   const chatRef = useRef(null);
   const [chatOpen, setChatOpen] = useState(false);
@@ -87,6 +88,9 @@ export default function App() {
           <Route path="/signin" element={<Signin />} />
           <Route path="/about" element={<About />} />
           <Route path="/destination/:name" element={<DestinationPage />} />
+          <Route path="/wander-tracker" element={<WanderTracker />} />
+          <Route path="/memories" element={<Memories />} />
+
         </Routes>
       </main>
 
