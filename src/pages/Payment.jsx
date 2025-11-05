@@ -6,61 +6,56 @@ import qrImg from "../images/qr.png";
 import { getFlightById, addPayment } from "../services/api";
 
 export default function Payment() {
-  
-
   const { id } = useParams();
-  console.log("🚀 Payment component mounted, id =", id);
-  const navigate = useNavigate();
-  const location = useLocation();
-
   const [method, setMethod] = useState("card");
   const [bank, setBank] = useState("");
   const [step, setStep] = useState(1);
   const [flight, setFlight] = useState(null);
-  const [bookingDetails, setBookingDetails] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [bookingDetails, setBookingDetails] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  // 🔹 OTP Simulation
+  // 🧩 Mock OTP States
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
   const [generatedOtp, setGeneratedOtp] = useState("");
   const [otpSent, setOtpSent] = useState(false);
 
-  // 🧩 Load flight + booking info
+  // ✅ Load flight + booking details
   useEffect(() => {
-    const storedBooking = JSON.parse(localStorage.getItem("flightBooking"));
-    const flightFromState = location.state?.flight;
-    const bookingFromState = location.state?.bookingDetails;
+    const flightData = location.state?.flight || location.state?.bookingDetails?.flight;
+    const bookingData =
+      location.state?.bookingDetails || JSON.parse(localStorage.getItem("flightBooking"));
 
-    if (bookingFromState) setBookingDetails(bookingFromState);
-    else if (storedBooking) setBookingDetails(storedBooking);
+    if (bookingData) setBookingDetails(bookingData);
 
-    if (flightFromState) {
-      setFlight(flightFromState);
+    if (flightData) {
+      setFlight(flightData);
       setLoading(false);
     } else if (id) {
       getFlightById(id)
         .then((res) => setFlight(res.data))
-        .catch((err) => console.error("❌ Error fetching flight:", err))
+        .catch((err) => console.error("❌ Fetch failed:", err))
         .finally(() => setLoading(false));
     } else {
       setLoading(false);
     }
   }, [id, location.state]);
 
-  // ✅ Payment Handler
+  // ✅ Handle Payment Submission
   const handlePayment = async (e) => {
     e.preventDefault();
-    if (!flight || !bookingDetails) {
-      alert("⚠️ Missing flight or booking information!");
+    if (!flight) {
+      alert("Flight details are missing!");
       return;
     }
 
     try {
-      const numericAmount = parseFloat(
-        String(flight.price || bookingDetails.amount || 0).replace(/[₹,]/g, "")
-      );
+      // 🔹 Clean numeric amount
+      const numericAmount = parseFloat(flight.price?.toString().replace(/[₹,]/g, ""));
 
+      // 🔹 Prepare JSON payload
       const paymentData = {
         userName: bookingDetails?.fullName?.trim() || "Guest",
         email: bookingDetails?.email?.trim() || "unknown@example.com",
@@ -70,9 +65,13 @@ export default function Payment() {
         status: "SUCCESS",
       };
 
-      console.log("💳 Sending payment:", paymentData);
-      await addPayment(paymentData);
+      console.log("🟡 Sending paymentData:", paymentData);
 
+      // ✅ Send to backend
+      const res = await addPayment(paymentData);
+      console.log("✅ Payment saved:", res.data);
+
+      // ✅ Clear temp data and redirect
       localStorage.removeItem("flightBooking");
       navigate("/payment/success", { state: { flight, bookingDetails } });
     } catch (err) {
@@ -81,19 +80,19 @@ export default function Payment() {
     }
   };
 
-  // 🔹 Mock OTP Send
+  // 🔹 Mock OTP Sender
   const handleSendOtp = () => {
     if (!phone) {
       alert("Please enter your phone number first!");
       return;
     }
-    const otpValue = Math.floor(100000 + Math.random() * 900000).toString();
+    const otpValue = Math.floor(100000 + Math.random() * 900000).toString(); // random 6-digit OTP
     setGeneratedOtp(otpValue);
     setOtpSent(true);
     alert(`📱 OTP sent successfully! (Mock OTP: ${otpValue})`);
   };
 
-  // 🔹 OTP Verify
+  // 🔹 OTP Verifier
   const handleVerifyOtp = () => {
     if (otp === generatedOtp) {
       alert("✅ OTP Verified Successfully!");
@@ -111,15 +110,7 @@ export default function Payment() {
       </div>
     );
 
-  // ⚠️ Missing Data Fallback
-  if (!flight && !bookingDetails)
-    return (
-      <div className="text-center text-warning mt-5">
-        ⚠️ No booking data found. Please go back and rebook your flight.
-      </div>
-    );
-
-  // 🧾 Payment UI
+  // 🧾 UI
   return (
     <div className="payment-page text-light" style={{ minHeight: "90vh" }}>
       <div
@@ -137,162 +128,170 @@ export default function Payment() {
         <h2 style={{ color: "#FFD700", textAlign: "center" }}>💳 Payment</h2>
         <hr style={{ borderColor: "#FFD700" }} />
 
-        {/* ✈️ Flight Info */}
-        <div className="flight-summary text-center mb-3">
-          <p>
-            ✈️ <strong>{flight.airline}</strong> —{" "}
-            {flight.fromCity || flight.from} → {flight.toCity || flight.to}
-          </p>
-          <p>
-            💰 <strong>₹{flight.price}</strong> | ⏱ Duration:{" "}
-            {flight.duration || "N/A"}
-          </p>
-        </div>
+        {flight ? (
+          <>
+            {/* ✈️ Flight Info */}
+            <div className="flight-summary text-center mb-3">
+              <p>
+                ✈️ <strong>{flight.airline}</strong> —{" "}
+                {flight.fromCity || flight.from} → {flight.toCity || flight.to}
+              </p>
+              <p>
+                💰 <strong>₹{flight.price}</strong> | ⏱ Duration:{" "}
+                {flight.duration || "N/A"}
+              </p>
+            </div>
 
-        {/* 🧾 Booking Info */}
-        {bookingDetails && (
-          <div
-            className="booking-info text-center mb-3"
-            style={{
-              border: "1px solid #FFD700",
-              borderRadius: "8px",
-              padding: "10px",
-              background: "#111",
-            }}
-          >
-            <p>👤 {bookingDetails.fullName}</p>
-            <p>📧 {bookingDetails.email}</p>
-            <p>👥 {bookingDetails.passengers}</p>
-            <p>📅 {bookingDetails.travelDate}</p>
-          </div>
-        )}
-
-        {/* 💰 Payment Methods */}
-        <div className="payment-methods mb-3">
-          <label>
-            <input
-              type="radio"
-              value="card"
-              checked={method === "card"}
-              onChange={() => setMethod("card")}
-            />{" "}
-            💳 Debit / Credit Card
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="upi"
-              checked={method === "upi"}
-              onChange={() => setMethod("upi")}
-            />{" "}
-            📱 UPI
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="netbanking"
-              checked={method === "netbanking"}
-              onChange={() => {
-                setMethod("netbanking");
-                setStep(1);
-              }}
-            />{" "}
-            🏦 Net Banking
-          </label>
-        </div>
-
-        {/* 💳 Payment Form */}
-        <form onSubmit={handlePayment} className="payment-form mt-3">
-          {method === "card" && (
-            <>
-              <input type="text" placeholder="Card Number" required />
-              <input type="text" placeholder="Card Holder Name" required />
-              <div className="card-row">
-                <input type="text" placeholder="MM/YY" required />
-                <input type="password" placeholder="CVV" required />
+            {/* 🧾 Booking Info */}
+            {bookingDetails && (
+              <div
+                className="booking-info text-light text-center mb-3"
+                style={{
+                  border: "1px solid #FFD700",
+                  borderRadius: "8px",
+                  padding: "10px",
+                  background: "#111",
+                }}
+              >
+                <p>👤 {bookingDetails.fullName}</p>
+                <p>📧 {bookingDetails.email}</p>
+                <p>👥 {bookingDetails.passengers}</p>
+                <p>📅 {bookingDetails.travelDate}</p>
               </div>
-              <button type="submit" className="pay-btn">
-                ✅ Pay ₹{flight.price}
-              </button>
-            </>
-          )}
+            )}
 
-          {method === "upi" && (
-            <>
-              <p>Scan QR to pay:</p>
-              <img src={qrImg} alt="UPI QR" className="upi-qr" />
-              <button type="submit" className="pay-btn">
-                ✅ Pay ₹{flight.price}
-              </button>
-            </>
-          )}
+            {/* 💰 Payment Methods */}
+            <div className="payment-methods">
+              <label>
+                <input
+                  type="radio"
+                  value="card"
+                  checked={method === "card"}
+                  onChange={() => setMethod("card")}
+                />{" "}
+                💳 Debit / Credit Card
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="upi"
+                  checked={method === "upi"}
+                  onChange={() => setMethod("upi")}
+                />{" "}
+                📱 UPI
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="netbanking"
+                  checked={method === "netbanking"}
+                  onChange={() => {
+                    setMethod("netbanking");
+                    setStep(1);
+                  }}
+                />{" "}
+                🏦 Net Banking
+              </label>
+            </div>
 
-          {method === "netbanking" && (
-            <>
-              {step === 1 && (
+            {/* 💳 Payment Form */}
+            <form onSubmit={handlePayment} className="payment-form mt-3">
+              {method === "card" && (
                 <>
-                  <select
-                    value={bank}
-                    onChange={(e) => setBank(e.target.value)}
-                    required
-                  >
-                    <option value="">Select Bank</option>
-                    <option>State Bank of India</option>
-                    <option>ICICI Bank</option>
-                    <option>HDFC Bank</option>
-                    <option>Axis Bank</option>
-                  </select>
-                  <button
-                    type="button"
-                    className="pay-btn"
-                    onClick={() => setStep(2)}
-                    disabled={!bank}
-                  >
-                    🔐 Proceed to Login
+                  <input type="text" placeholder="Card Number" required />
+                  <input type="text" placeholder="Card Holder Name" required />
+                  <div className="card-row">
+                    <input type="text" placeholder="MM/YY" required />
+                    <input type="password" placeholder="CVV" required />
+                  </div>
+                  <button type="submit" className="pay-btn">
+                    ✅ Pay ₹{flight.price}
                   </button>
                 </>
               )}
 
-              {step === 2 && (
+              {method === "upi" && (
                 <>
-                  <input
-                    type="text"
-                    placeholder="Registered Phone Number"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    required
-                  />
-                  <button
-                    type="button"
-                    className="pay-btn"
-                    onClick={handleSendOtp}
-                  >
-                    📲 Send OTP
+                  <p>Scan QR to pay:</p>
+                  <img src={qrImg} alt="UPI QR" className="upi-qr" />
+                  <button type="submit" className="pay-btn">
+                    ✅ Pay ₹{flight.price}
                   </button>
                 </>
               )}
 
-              {otpSent && (
+              {method === "netbanking" && (
                 <>
-                  <input
-                    type="text"
-                    placeholder="Enter OTP"
-                    value={otp}
-                    onChange={(e) => setOtp(e.target.value)}
-                    required
-                  />
-                  <button
-                    type="button"
-                    className="pay-btn"
-                    onClick={handleVerifyOtp}
-                  >
-                    ✅ Verify & Pay ₹{flight.price}
-                  </button>
+                  {step === 1 && (
+                    <>
+                      <select
+                        value={bank}
+                        onChange={(e) => setBank(e.target.value)}
+                        required
+                      >
+                        <option value="">Select Bank</option>
+                        <option>State Bank of India</option>
+                        <option>ICICI Bank</option>
+                        <option>HDFC Bank</option>
+                        <option>Axis Bank</option>
+                      </select>
+                      <button
+                        type="button"
+                        className="pay-btn"
+                        onClick={() => setStep(2)}
+                        disabled={!bank}
+                      >
+                        🔐 Proceed to Login
+                      </button>
+                    </>
+                  )}
+
+                  {step === 2 && (
+                    <>
+                      <input
+                        type="text"
+                        placeholder="Registered Phone Number"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        required
+                      />
+                      <button
+                        type="button"
+                        className="pay-btn"
+                        onClick={handleSendOtp}
+                      >
+                        📲 Send OTP
+                      </button>
+                    </>
+                  )}
+
+                  {otpSent && (
+                    <>
+                      <input
+                        type="text"
+                        placeholder="Enter OTP"
+                        value={otp}
+                        onChange={(e) => setOtp(e.target.value)}
+                        required
+                      />
+                      <button
+                        type="button"
+                        className="pay-btn"
+                        onClick={handleVerifyOtp}
+                      >
+                        ✅ Verify & Pay ₹{flight.price}
+                      </button>
+                    </>
+                  )}
                 </>
               )}
-            </>
-          )}
-        </form>
+            </form>
+          </>
+        ) : (
+          <p className="text-warning text-center mt-3">
+            ⚠️ Flight details not found. Please go back and try again.
+          </p>
+        )}
       </div>
     </div>
   );

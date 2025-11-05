@@ -216,20 +216,7 @@ export default function Navbar() {
                     <i className="bi bi-suitcase2 me-2" /> My Trips
                   </NavLink>
                 </li>
-
-                {/* 🏃 NEW Motion Tracker Feature */}
-                <li>
-                  <NavLink className="dropdown-item text-warning fw-bold" to="/wander-tracker">
-                    <i className="bi bi-activity me-2" /> 🌍 Wander Tracker
-                  </NavLink>
-                </li>
-                <NavLink className="dropdown-item text-warning fw-bold" to="/memories">
-  <i className="bi bi-images me-2" /> 📸 Memories
-</NavLink>
-
-
                 <li><hr className="dropdown-divider" /></li>
-
                 <li>
                   <button className="dropdown-item text-danger" onClick={handleLogout}>
                     <i className="bi bi-box-arrow-right me-2" /> Logout

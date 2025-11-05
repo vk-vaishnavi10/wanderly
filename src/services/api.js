@@ -1,15 +1,15 @@
 import axios from "axios";
 
-// ✅ Base API URL — change only if backend port/domain changes
+// ✅ Base API URL — update this only if backend port or domain changes
 const API_BASE = "http://localhost:8085/api";
 
-// ✅ Create reusable Axios instance
+// ✅ Create reusable Axios instance for cleaner requests
 const api = axios.create({
   baseURL: API_BASE,
   headers: { "Content-Type": "application/json" },
 });
 
-// ✅ Global response interceptor for consistent error handling
+// ✅ Optional: global error interceptor (for consistent error logging)
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -27,8 +27,20 @@ export const updateUser = (id, user) => api.put(`/users/${id}`, user);
 export const deleteUser = (id) => api.delete(`/users/${id}`);
 
 // ------------------ OTP (Phone-based) ------------------ //
+/**
+ * 🔹 Send OTP to the user's phone number
+ * Backend Endpoint: POST /users/send-otp
+ * Payload: { phone }
+ */
 export const sendOtp = (phone) => api.post(`/users/send-otp`, { phone });
+
+/**
+ * 🔹 Verify OTP entered by user
+ * Backend Endpoint: POST /users/verify-otp
+ * Payload: { phone, otp }
+ */
 export const verifyOtp = (phone, otp) => api.post(`/users/verify-otp`, { phone, otp });
+
 
 // ------------------ FLIGHTS ------------------ //
 export const getFlights = () => api.get(`/flights`);
@@ -38,7 +50,6 @@ export const updateFlight = (id, flight) => api.put(`/flights/${id}`, flight);
 export const deleteFlight = (id) => api.delete(`/flights/${id}`);
 
 // ------------------ FLIGHT BOOKINGS ------------------ //
-// ✅ Corrected backend path with hyphen
 export const addFlightBooking = (booking) => api.post(`/flight-bookings`, booking);
 export const getFlightBookings = () => api.get(`/flight-bookings`);
 export const deleteFlightBooking = (id) => api.delete(`/flight-bookings/${id}`);
@@ -99,7 +110,7 @@ export const deleteTransportBooking = (id) => api.delete(`/transport-bookings/${
 
 // ------------------ AI TRAVEL COMPANION ------------------ //
 /**
- * 🧠 Send messages to AI Companion (Spring Boot → OpenAI)
+ * 🧠 Send messages to AI Companion (Spring Boot -> OpenAI)
  * @param {Array} messages - Array of { role: "user" | "assistant" | "system", content: string }
  */
 export const chatWithAI = async (messages) => {
@@ -115,7 +126,7 @@ export const chatWithAI = async (messages) => {
   }
 };
 
-// ✅ Export all functions for optional named import
+// ✅ Export everything together (for optional named import)
 export default {
   registerUser,
   loginUser,
@@ -164,5 +175,4 @@ export default {
   addTransportBooking,
   getTransportBookings,
   deleteTransportBooking,
-  chatWithAI,
 };

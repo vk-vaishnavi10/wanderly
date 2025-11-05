@@ -25,7 +25,7 @@ import Payment from "./pages/Payment.jsx";
 import PaymentSuccess from "./pages/PaymentSuccess.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import AdminPanel from "./pages/AdminPanel.jsx";
-import Stays from "./pages/stays.jsx";
+import Stays from "./pages/Stays.jsx";
 import Attractions from "./pages/Attractions.jsx";
 import AttractionDetails from "./pages/AttractionDetails.jsx";
 import Transport from "./pages/Transport.jsx";
@@ -42,8 +42,7 @@ import Register from "./pages/Register.jsx";
 import Signin from "./pages/Signin.jsx";
 import Users from "./pages/Users.jsx";
 import DestinationPage from "./pages/DestinationPage.jsx";
-import WanderTracker from "./pages/WanderTracker.jsx";
-import Memories from "./pages/Memories.jsx";
+
 export default function App() {
   const chatRef = useRef(null);
   const [chatOpen, setChatOpen] = useState(false);
@@ -65,7 +64,7 @@ export default function App() {
           <Route path="/hotels/book/:id" element={<HotelBooking />} />
           <Route path="/packages" element={<Packages />} />
           <Route path="/packages/:id" element={<PackageDetails />} />
-          <Route path="/payment/:id" element={<Payment />} />
+          <Route path="/payment" element={<Payment />} />
           <Route path="/payment/success" element={<PaymentSuccess />} />
           <Route path="/mytrips" element={<MyTrips />} />
           <Route path="/dashboard" element={<Dashboard />} />
@@ -88,9 +87,6 @@ export default function App() {
           <Route path="/signin" element={<Signin />} />
           <Route path="/about" element={<About />} />
           <Route path="/destination/:name" element={<DestinationPage />} />
-          <Route path="/wander-tracker" element={<WanderTracker />} />
-          <Route path="/memories" element={<Memories />} />
-
         </Routes>
       </main>
 
