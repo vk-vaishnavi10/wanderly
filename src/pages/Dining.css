@@ -1,9 +1,9 @@
 /* 🌟 Dining Page Main Layout */
 .dining-page {
-  background: #000;
-  color: #ffd700;
+  background: radial-gradient(circle at top, #0b0c1a 0%, #1a103f 100%);
+  color: #E8EAF6;
   min-height: 100vh;
-  padding-top: 8rem; /* ✅ Prevent navbar overlap */
+  padding-top: 8rem; /* Prevent navbar overlap */
   font-family: "Poppins", sans-serif;
   overflow-x: hidden;
 }
@@ -11,36 +11,42 @@
 /* 🌈 Hero Section */
 .dining-hero {
   padding: 3rem 1rem;
-  background: linear-gradient(180deg, rgba(255, 215, 0, 0.08), transparent);
-  color: #ffd700;
+  background: linear-gradient(180deg, rgba(155, 93, 229, 0.08), transparent);
+  color: #E8EAF6;
   text-align: center;
 }
 
 .dining-hero h1 {
   font-size: 2.8rem;
-  font-weight: 700;
-  text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+  font-weight: 800;
+  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 300%;
+  animation: dreamyFlow 8s ease-in-out infinite;
+  text-shadow: 0 0 20px rgba(155, 93, 229, 0.4);
 }
 
 .dining-hero p {
-  color: #eee;
+  color: rgba(232, 234, 246, 0.85);
   margin-top: 10px;
   font-size: 1.1rem;
+  text-shadow: 0 0 8px rgba(110, 193, 228, 0.2);
 }
 
 /* 🍽️ Dining Cards */
 .dining-card {
-  background: #111;
-  border: 1px solid #ffd700;
+  background: rgba(18, 15, 35, 0.9);
+  border: 2px solid rgba(155, 93, 229, 0.4);
   border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  box-shadow: 0 0 25px rgba(155, 93, 229, 0.25);
   transition: all 0.3s ease;
 }
 
 .dining-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 0 35px rgba(255, 215, 0, 0.6);
+  box-shadow: 0 0 40px rgba(241, 91, 181, 0.35);
 }
 
 /* 🖼️ Image Styling */
@@ -48,40 +54,48 @@
   width: 100%;
   height: 230px;
   object-fit: cover;
-  border-bottom: 2px solid #ffd700;
+  border-bottom: 2px solid rgba(241, 91, 181, 0.5);
   transition: transform 0.4s ease;
+  filter: brightness(0.95);
 }
 
 .dining-card:hover .dining-img {
   transform: scale(1.05);
+  filter: brightness(1);
 }
 
 /* 🧾 Text */
 .dining-card h4 {
-  font-weight: 600;
-  color: #ffd700;
+  font-weight: 700;
+  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.3rem;
   margin-bottom: 8px;
+  text-shadow: 0 0 10px rgba(155, 93, 229, 0.4);
 }
 
 .dining-card p {
-  color: #ddd;
+  color: rgba(232, 234, 246, 0.85);
   font-size: 0.95rem;
+  line-height: 1.6;
 }
 
 /* 🍽️ Reserve Button */
 .btn-warning {
-  background: linear-gradient(135deg, #ffd700, #e6b800);
-  color: #000 !important;
+  background: linear-gradient(120deg, #6EC1E4, #9B5DE5, #F15BB5);
+  color: #fff !important;
   border: none;
-  font-weight: bold;
+  font-weight: 700;
   border-radius: 30px;
   transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(155, 93, 229, 0.3);
 }
 
 .btn-warning:hover {
-  background: #fff !important;
+  background: linear-gradient(120deg, #F15BB5, #9B5DE5, #6EC1E4);
   transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+  box-shadow: 0 0 25px rgba(241, 91, 181, 0.4);
 }
 
 /* 📱 Responsive Fix */
@@ -93,4 +107,15 @@
   .dining-card {
     border-radius: 10px;
   }
+
+  .dining-card h4 {
+    font-size: 1.1rem;
+  }
+}
+
+/* 🌈 Animated Gradient Flow */
+@keyframes dreamyFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }

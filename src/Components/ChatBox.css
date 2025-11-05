@@ -1,17 +1,17 @@
-/* 🌟 Wanderly Travel ChatBox - Elegant Premium Design */
+/* 🌟 Wanderly Travel ChatBox - Dream Sky Aurora Edition */
 .chatbox-container {
   font-family: "Poppins", sans-serif;
 }
 
-/* 🧭 Floating toggle */
+/* 🧭 Floating Toggle */
 .chatbox-toggle {
-  background: radial-gradient(circle, #ffd700, #ffcc00);
+  background: radial-gradient(circle at top left, #6EC1E4, #9B5DE5, #F15BB5);
   border: none;
   width: 60px;
   height: 60px;
   border-radius: 50%;
   font-size: 1.8rem;
-  color: #000;
+  color: #fff;
   cursor: pointer;
   position: fixed;
   bottom: 25px;
@@ -19,26 +19,29 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 15px rgba(255, 230, 0, 0.7);
+  box-shadow: 0 0 20px rgba(155, 93, 229, 0.6);
   animation: pulseGlow 2.5s infinite;
-  transition: transform 0.2s ease;
-}
-.chatbox-toggle:hover {
-  transform: scale(1.1);
-}
-@keyframes pulseGlow {
-  0% { box-shadow: 0 0 10px rgba(255, 230, 0, 0.5); }
-  50% { box-shadow: 0 0 25px rgba(255, 255, 150, 0.9); }
-  100% { box-shadow: 0 0 10px rgba(255, 230, 0, 0.5); }
+  transition: transform 0.3s ease;
 }
 
-/* 💬 Chat window */
+.chatbox-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 25px rgba(241, 91, 181, 0.6);
+}
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 12px rgba(155, 93, 229, 0.5); }
+  50% { box-shadow: 0 0 30px rgba(241, 91, 181, 0.8); }
+  100% { box-shadow: 0 0 12px rgba(155, 93, 229, 0.5); }
+}
+
+/* 💬 Chat Window */
 .chatbox-window {
   width: 320px;
   height: 460px;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 215, 0, 0.6);
+  background: rgba(15, 10, 30, 0.8);
+  backdrop-filter: blur(14px);
+  border: 2px solid rgba(155, 93, 229, 0.5);
   border-radius: 18px;
   position: fixed;
   bottom: 100px;
@@ -47,33 +50,42 @@
   flex-direction: column;
   overflow: hidden;
   animation: fadeInUp 0.4s ease;
-  box-shadow: 0 0 25px rgba(255, 230, 0, 0.25);
+  box-shadow: 0 0 30px rgba(155, 93, 229, 0.35);
 }
+
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Header */
+/* ✨ Header */
 .chatbox-header {
-  background: linear-gradient(90deg, #000, #111);
-  color: #ffd700;
+  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
+  color: #fff;
   font-weight: 600;
   padding: 10px 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgba(255, 215, 0, 0.5);
+  border-bottom: 1px solid rgba(155, 93, 229, 0.4);
+  background-size: 300%;
+  animation: dreamyFlow 8s infinite linear;
 }
+
 .close-btn {
   background: none;
   border: none;
-  color: #ffd700;
-  font-size: 1.2rem;
+  color: #fff;
+  font-size: 1.3rem;
   cursor: pointer;
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+.close-btn:hover {
+  color: #F15BB5;
+  transform: scale(1.2);
 }
 
-/* Messages */
+/* 💬 Messages */
 .chatbox-messages {
   flex: 1;
   padding: 10px;
@@ -83,9 +95,16 @@
   gap: 8px;
   scroll-behavior: smooth;
 }
-.chat-row { display: flex; align-items: flex-start; }
-.chat-row.user { justify-content: flex-end; }
 
+.chat-row {
+  display: flex;
+  align-items: flex-start;
+}
+.chat-row.user {
+  justify-content: flex-end;
+}
+
+/* Message bubbles */
 .chat-msg {
   max-width: 80%;
   padding: 10px 14px;
@@ -94,24 +113,27 @@
   line-height: 1.4;
   animation: popIn 0.25s ease;
 }
+
 @keyframes popIn {
   from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
 }
+
 .chat-msg.bot {
-  background: rgba(255, 215, 0, 0.15);
-  color: #ffeb99;
-  border: 1px solid rgba(255, 215, 0, 0.4);
-  box-shadow: 0 0 8px rgba(255, 230, 0, 0.2);
-}
-.chat-msg.user {
-  background: #ffd700;
-  color: #000;
-  font-weight: 500;
-  box-shadow: 0 0 6px rgba(255, 215, 0, 0.4);
+  background: rgba(155, 93, 229, 0.15);
+  color: #E8EAF6;
+  border: 1px solid rgba(155, 93, 229, 0.4);
+  box-shadow: 0 0 8px rgba(155, 93, 229, 0.25);
 }
 
-/* Suggestions */
+.chat-msg.user {
+  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
+  color: #fff;
+  font-weight: 500;
+  box-shadow: 0 0 12px rgba(241, 91, 181, 0.4);
+}
+
+/* 💡 Suggestions */
 .chatbox-suggestions {
   display: flex;
   overflow-x: auto;
@@ -119,28 +141,30 @@
   gap: 8px;
   scrollbar-width: none;
 }
-.chatbox-suggestions::-webkit-scrollbar { display: none; }
+.chatbox-suggestions::-webkit-scrollbar {
+  display: none;
+}
 .chatbox-suggestions button {
-  background: linear-gradient(145deg, #ffcc00, #ffd84d);
+  background: linear-gradient(120deg, #6EC1E4, #9B5DE5, #F15BB5);
   border: none;
   padding: 6px 14px;
   border-radius: 12px;
   font-weight: 600;
-  color: #000;
-  box-shadow: 0 0 8px rgba(255, 230, 0, 0.5);
-  transition: all 0.2s ease;
+  color: #fff;
+  box-shadow: 0 0 12px rgba(155, 93, 229, 0.4);
+  transition: all 0.3s ease;
 }
 .chatbox-suggestions button:hover {
-  background: #fff55e;
   transform: scale(1.08);
-  box-shadow: 0 0 10px rgba(255, 255, 100, 0.8);
+  background: linear-gradient(120deg, #F15BB5, #9B5DE5, #6EC1E4);
+  box-shadow: 0 0 20px rgba(241, 91, 181, 0.5);
 }
 
-/* Input */
+/* ✍️ Input Box */
 .chatbox-input {
   display: flex;
-  border-top: 1px solid rgba(255, 215, 0, 0.4);
-  background: #111;
+  border-top: 1px solid rgba(155, 93, 229, 0.4);
+  background: rgba(15, 10, 30, 0.9);
 }
 .chatbox-input input {
   flex: 1;
@@ -148,26 +172,27 @@
   outline: none;
   padding: 12px;
   background: transparent;
-  color: #fff;
+  color: #E8EAF6;
   font-size: 0.9rem;
 }
 .chatbox-input button {
-  background: #ffd700;
+  background: linear-gradient(90deg, #6EC1E4, #9B5DE5);
   border: none;
   padding: 10px 14px;
   cursor: pointer;
   font-weight: 600;
-  color: #000;
+  color: #fff;
   border-radius: 0 10px 10px 0;
-  transition: 0.2s;
+  transition: 0.3s;
 }
 .chatbox-input button:hover {
-  background: #fff75f;
+  background: linear-gradient(90deg, #F15BB5, #9B5DE5);
+  box-shadow: 0 0 12px rgba(241, 91, 181, 0.4);
 }
 
-/* Typing dots */
+/* ✨ Typing Indicator */
 .typing-indicator span {
-  background-color: #ffd700;
+  background-color: #9B5DE5;
   height: 8px;
   width: 8px;
   margin: 0 2px;
@@ -181,34 +206,27 @@
 }
 .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
 .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-/* ✨ Reset Animation */
+
+/* 🎭 Fade Animations */
 .fade-out {
   animation: fadeOut 0.8s forwards;
 }
-
 .fade-in {
   animation: fadeIn 0.8s forwards;
 }
 
 @keyframes fadeOut {
-  from {
-    opacity: 1;
-    filter: brightness(1);
-  }
-  to {
-    opacity: 0;
-    filter: brightness(0.3);
-  }
+  from { opacity: 1; filter: brightness(1); }
+  to { opacity: 0; filter: brightness(0.3); }
 }
-
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    filter: brightness(0.5);
-  }
-  to {
-    opacity: 1;
-    filter: brightness(1);
-  }
+  from { opacity: 0; filter: brightness(0.5); }
+  to { opacity: 1; filter: brightness(1); }
 }
 
+/* 🌈 Aurora Flow Header Animation */
+@keyframes dreamyFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}

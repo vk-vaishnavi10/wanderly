@@ -4,14 +4,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import "./Home.css";
 import varImg from "../images/var.jpg";
 // Slideshow images
-import travel1 from "../images/travel1.jpeg";
-import travel2 from "../images/travel2.jpg";
-import travel3 from "../images/travel3.jpg";
-import travel4 from "../images/travel4.jpg";
-import travel5 from "../images/travel5.jpg";
+import { UserContext } from "../context/UserContext";
+import { useContext } from "react";
+
+
 import manImg from "../images/man.jpg";
 import ham from "../images/ham.jpg";
 import ooty from "../images/ooty.jpg";
+import homeVideo from "../assets/videos/homebg.mp4";
 
 // Popular Destinations
 import tajmahal from "../images/tajmahal.jpg";
@@ -21,11 +21,19 @@ import lehladakh from "../images/lehladakh.jpg";
 
 export default function Home() {
   const [query, setQuery] = useState("");
-  const [activeSlide, setActiveSlide] = useState(0);
+  
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [listening, setListening] = useState(false);
   const navigate = useNavigate();
-  const slides = [travel1, travel2, travel3, travel4, travel5];
+  const { user } = useContext(UserContext);
+
+useEffect(() => {
+  if (!user) {
+    navigate("/signin"); // 🚫 Redirect if not logged in
+  }
+}, [user, navigate]);
+
+
 
   const suggestions = [
     "Goa",
@@ -44,12 +52,7 @@ export default function Home() {
   );
 
   // Slideshow auto-advance
-  useEffect(() => {
-    const id = setInterval(() => {
-      setActiveSlide((p) => (p + 1) % slides.length);
-    }, 5000);
-    return () => clearInterval(id);
-  }, [slides.length]);
+  
 
   // Parallax mouse movement
   const heroRef = useRef(null);
@@ -165,129 +168,85 @@ export default function Home() {
         exit="exit"
         variants={containerVariants}
       >
-        {/* Hero Section */}
         <section id="hero" className="hero-section" ref={heroRef}>
-          <div className="hero-parallax-gradient" />
-          <div className="slideshow">
-            {slides.map((img, i) => {
-              const active = i === activeSlide;
-              return (
-                <motion.div
-                  key={i}
-                  className={`slide ${active ? "active" : ""}`}
-                  style={{ backgroundImage: `url(${img})` }}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: active ? 1 : 0, scale: active ? 1.03 : 1 }}
-                  transition={{ duration: 1.2 }}
-                />
-              );
-            })}
-            <div className="hero-dark-overlay" />
-          </div>
 
-          <motion.div
-            className="hero-overlay"
-            variants={itemVariants}
-            style={{ transform: "translate(-50%, -50%)" }}
+    <video className="hero-video-bg" autoPlay loop muted playsInline>
+    <source src={homeVideo} type="video/mp4" />
+  </video>
+  <div className="hero-dark-overlay" />
+
+
+  {/* ✨ Floating Headline & Search */}
+  <div className="hero-floating-content">
+    <motion.h1
+      className="dreamy-heading"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1 }}
+    >
+      Every Destination Begins With a Dream
+    </motion.h1>
+
+    <motion.p
+      className="dreamy-subtext"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.3 }}
+    >
+      Type your dream place and let’s go 🌍
+    </motion.p>
+
+    {/* 🌈 Floating Search Bar */}
+    <motion.div
+      className="floating-search-bar"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.6 }}
+    >
+      <input
+        type="text"
+        placeholder="Where are you going?"
+        value={query}
+        onChange={(e) => {
+          setQuery(e.target.value);
+          setShowSuggestions(true);
+        }}
+        onKeyDown={handleKeyDown}
+        onBlur={() => setTimeout(() => setShowSuggestions(false), 120)}
+      />
+      <button className="icon-btn mic-btn" onClick={toggleListen} title="Voice search">
+        {listening ? "🎙️" : "🎤"}
+      </button>
+      <button className="search-icon-btn" onClick={() => handleSearch()}>
+        🔍
+      </button>
+    </motion.div>
+
+    {/* 🔽 Suggestions Dropdown */}
+    {showSuggestions && filtered.length > 0 && (
+      <motion.ul
+        className="suggestions-list"
+        initial={{ opacity: 0, y: -6 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.12 }}
+      >
+        {filtered.map((s, i) => (
+          <li
+            key={i}
+            onMouseDown={() => {
+              setQuery(s);
+              setShowSuggestions(false);
+              handleSearch(s);
+            }}
           >
-            <motion.h1
-              className="fw-bold mb-3"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.9 }}
-            >
-              Find Your Next Destination
-            </motion.h1>
+            {s}
+          </li>
+        ))}
+      </motion.ul>
+    )}
+  </div>
+</section>
 
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.15 }}
-            >
-              Flights, Hotels, Cabs & Packages — all in one place.
-            </motion.p>
-
-            {/* Search Box */}
-            <div className="search-row mt-4">
-              <div
-                className={`search-box ${showSuggestions ? "open" : ""}`}
-                onFocus={() => setShowSuggestions(true)}
-              >
-                <input
-                  type="text"
-                  placeholder="Where are you going?"
-                  value={query}
-                  onChange={(e) => {
-                    setQuery(e.target.value);
-                    setShowSuggestions(true);
-                  }}
-                  onKeyDown={handleKeyDown}
-                  onBlur={() => setTimeout(() => setShowSuggestions(false), 120)}
-                />
-
-                <button
-                  className="icon-btn mic-btn"
-                  onClick={toggleListen}
-                  title="Voice search"
-                >
-                  {listening ? "🎙️" : "🎤"}
-                </button>
-
-                <button className="search-btn" onClick={() => handleSearch()}>
-                  Search
-                </button>
-              </div>
-
-              {showSuggestions && filtered.length > 0 && (
-                <motion.ul
-                  className="suggestions-list"
-                  initial={{ opacity: 0, y: -6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.12 }}
-                >
-                  {filtered.map((s, i) => (
-                    <li
-                      key={i}
-                      onMouseDown={() => {
-                        setQuery(s);
-                        setShowSuggestions(false);
-                        handleSearch(s);
-                      }}
-                    >
-                      {s}
-                    </li>
-                  ))}
-                </motion.ul>
-              )}
-            </div>
-
-            <motion.div
-              className="quick-links mt-3"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.25 }}
-            >
-              <button
-                className="btn btn-sm btn-outline-warning me-2"
-                onClick={() => navigate("/flights")}
-              >
-                Flights
-              </button>
-              <button
-                className="btn btn-sm btn-outline-warning me-2"
-                onClick={() => navigate("/stays")}
-              >
-                Hotels
-              </button>
-              <button
-                className="btn btn-sm btn-outline-warning"
-                onClick={() => navigate("/packages")}
-              >
-                Packages
-              </button>
-            </motion.div>
-          </motion.div>
-        </section>
 
         <div className="section-separator" />
 

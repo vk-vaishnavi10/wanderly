@@ -1,0 +1,198 @@
+/* 🌍 Wanderly Map Page - Royal Edition */
+.map-section {
+    text-align: center;
+    background: linear-gradient(180deg, #0b0b1f 0%, #0e1034 100%);
+    padding: 3rem 1rem;
+    color: #f8f5e6;
+    min-height: 100vh;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  /* 👑 Title */
+  .map-title {
+    color: #ffd700;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+    margin-bottom: 0.5rem;
+  }
+  
+  /* 🌟 Subtitle */
+  .map-subtitle {
+    color: #cfcfe4;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* 🗺️ Map Container */
+  .map-container {
+    border: 2px solid rgba(255, 215, 0, 0.7);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow:
+      0 0 25px rgba(255, 215, 0, 0.4),
+      0 0 60px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.4s ease;
+  }
+  
+  .map-container:hover {
+    transform: scale(1.01);
+    box-shadow:
+      0 0 35px rgba(255, 215, 0, 0.6),
+      0 0 80px rgba(255, 255, 255, 0.2);
+  }
+  
+  /* 💫 Info Window Box */
+  .info-window {
+    color: #000;
+    background: linear-gradient(135deg, #fff8dc, #f5f0d0);
+    padding: 10px 12px;
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+    font-family: "Poppins", sans-serif;
+    text-align: left;
+    min-width: 180px;
+    border: 1px solid #d4af37;
+  }
+  
+  .info-window h4 {
+    color: #b8860b;
+    margin-bottom: 0.4rem;
+    font-size: 1rem;
+  }
+  
+  .info-window p {
+    color: #444;
+    font-size: 0.9rem;
+    margin-bottom: 0.6rem;
+  }
+  
+  /* ✨ Explore Button */
+  .explore-btn {
+    background: linear-gradient(90deg, #d4af37, #b8860b);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .explore-btn:hover {
+    background: linear-gradient(90deg, #ffd700, #d4af37);
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+  }
+  
+  /* 🟡 Footer */
+  .map-footer {
+    margin-top: 2rem;
+    font-size: 1rem;
+    color: #e6dfb3;
+  }
+  
+  .wanderly-link {
+    color: #ffd700;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .wanderly-link:hover {
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+  }
+  /* 🔍 Search Box Styling */
+.map-search-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1.8rem;
+  }
+  
+  .map-input {
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #ffd700;
+    background: #fffef5;
+    width: 250px;
+    font-size: 0.95rem;
+    color: #333;
+  }
+  
+  .map-select {
+    padding: 0.55rem;
+    border-radius: 8px;
+    border: 1px solid #ffd700;
+    background: #fffdf0;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  .map-btn {
+    background: linear-gradient(90deg, #ffd700, #d4af37);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .map-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+  }
+  /* 💎 Glassy Search Bar */
+.glassy {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 215, 0, 0.4);
+    border-radius: 14px;
+    padding: 0.8rem 1rem;
+    backdrop-filter: blur(10px) saturate(150%);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+  }
+  
+  .map-input,
+  .map-select,
+  .map-btn {
+    backdrop-filter: blur(12px);
+  }
+  
+  .map-input {
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid #ffd700;
+    border-radius: 10px;
+    padding: 0.6rem 1rem;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .map-select {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ffd700;
+    border-radius: 10px;
+    padding: 0.5rem 0.8rem;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  .map-btn {
+    background: linear-gradient(90deg, #ff9a00, #ffd700);
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 700;
+    padding: 0.6rem 1.2rem;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+    transition: 0.3s ease;
+  }
+  
+  .map-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.7);
+  }
+  

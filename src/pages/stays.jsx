@@ -4,6 +4,9 @@ import { Modal } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { addStayBooking } from "../services/api"; // ✅ API function
 
+// 🎥 Background Video
+import hotelbg from "../assets/videos/hotelbg.mp4";
+
 // 🖼️ Local Images
 import oberoi from "../images/oberoi.jpg";
 import tajlake from "../images/tajlake.jpg";
@@ -200,12 +203,17 @@ export default function Stays() {
     <section className="stays-section">
       {/* 🏙 Hero Section */}
       <div className="hero-section">
-        <div className="slideshow">
-          <div className="slide" style={{ backgroundImage: `url(${oberoi})` }}></div>
-          <div className="slide" style={{ backgroundImage: `url(${tajlake})` }}></div>
-          <div className="slide" style={{ backgroundImage: `url(${leela})` }}></div>
-          <div className="slide" style={{ backgroundImage: `url(${radisson})` }}></div>
-        </div>
+        {/* 🎥 Background Video (added instead of slideshow) */}
+        <video
+          className="hotel-bg-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+        >
+          <source src={hotelbg} type="video/mp4" />
+        </video>
 
         <div className="hero-overlay">
           <h1>🏨 Find Your Stay</h1>

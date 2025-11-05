@@ -1,48 +1,47 @@
 // src/pages/Signin.jsx
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { UserContext } from "../context/UserContext"; // ✅ import context
+import { UserContext } from "../context/UserContext";
 import "./Signin.css";
 
 export default function Signin() {
-  const [email, setEmail] = useState("");
+  const [wanderId, setWanderId] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useContext(UserContext); // ✅ access login() from context
+  const { login } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (email && password) {
-      // ✅ Mock user data (for now)
-      const userData = {
-        fullName: "Kavanoor Vaishnavi",
-        email: email,
-        phone: "9390681891",
-      };
+    const savedUser = JSON.parse(localStorage.getItem("registeredUser"));
+    if (!savedUser) {
+      alert("No user found. Please register first.");
+      return;
+    }
 
-      // ✅ Save in global context (auto-updates navbar)
-      login(userData);
-
-      // ✅ Redirect to Home
-      navigate("/");
+    if (
+      savedUser.wanderId === wanderId.trim() &&
+      savedUser.password === password.trim()
+    ) {
+      login(savedUser);
+      navigate("/home");
     } else {
-      alert("Please enter email and password");
+      alert("Invalid Wander ID or Password");
     }
   };
 
   return (
     <div className="signin-container">
       <div className="signin-card">
-        <h2 className="signin-title">🔒 Sign In</h2>
+        <h2 className="signin-title">🔐 Sign In</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <input
-              type="email"
+              type="text"
               className="form-control"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter Wander ID"
+              value={wanderId}
+              onChange={(e) => setWanderId(e.target.value)}
               required
             />
           </div>
@@ -60,6 +59,7 @@ export default function Signin() {
             Sign In
           </button>
         </form>
+
         <p className="mt-3 text-light">
           Don’t have an account?{" "}
           <Link to="/register" className="text-warning fw-bold">

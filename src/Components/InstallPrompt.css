@@ -1,84 +1,91 @@
-/* ✨ InstallPrompt.css */
+/* ✨ InstallPrompt.css (Dream Sky Aurora Palette) */
 .install-prompt {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    z-index: 2500;
-    animation: fadeIn 0.6s ease forwards;
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 2500;
+  animation: fadeIn 0.6s ease forwards;
+}
+
+.install-card {
+  background: rgba(10, 5, 25, 0.9);
+  border: 2px solid #9B5DE5;
+  border-radius: 14px;
+  padding: 16px 20px;
+  box-shadow: 0 0 18px rgba(155, 93, 229, 0.6);
+  color: #E8EAF6;
+  width: 280px;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+}
+
+.install-card h4 {
+  margin-bottom: 8px;
+  font-weight: 800;
+  font-size: 1.1rem;
+  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.install-card p {
+  font-size: 0.9rem;
+  margin-bottom: 14px;
+  color: rgba(232, 234, 246, 0.85);
+}
+
+/* ✨ Buttons Area */
+.install-actions {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.btn-install,
+.btn-cancel {
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: 25px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+/* 🌈 Install Button */
+.btn-install {
+  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
+  color: #fff;
+  box-shadow: 0 0 10px rgba(155, 93, 229, 0.5);
+}
+
+.btn-install:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(241, 91, 181, 0.6);
+  background: linear-gradient(90deg, #F15BB5, #9B5DE5, #6EC1E4);
+}
+
+/* 💜 Cancel Button */
+.btn-cancel {
+  background: transparent;
+  border: 2px solid #9B5DE5;
+  color: #E8EAF6;
+}
+
+.btn-cancel:hover {
+  background: linear-gradient(90deg, #9B5DE5, #F15BB5);
+  color: #fff;
+  transform: scale(1.05);
+}
+
+/* ✨ Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  .install-card {
-    background: rgba(0, 0, 0, 0.9);
-    border: 2px solid #ffd700;
-    border-radius: 14px;
-    padding: 16px 20px;
-    box-shadow: 0 0 18px rgba(255, 215, 0, 0.7);
-    color: #ffd700;
-    width: 280px;
-    text-align: center;
-    font-family: "Poppins", sans-serif;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .install-card h4 {
-    margin-bottom: 8px;
-    font-weight: 800;
-    font-size: 1.1rem;
-  }
-  
-  .install-card p {
-    font-size: 0.9rem;
-    margin-bottom: 14px;
-    color: #fff7b3;
-  }
-  
-  .install-actions {
-    display: flex;
-    justify-content: space-around;
-    gap: 10px;
-  }
-  
-  .btn-install,
-  .btn-cancel {
-    flex: 1;
-    padding: 6px 10px;
-    border-radius: 25px;
-    border: none;
-    font-weight: 700;
-    cursor: pointer;
-    transition: 0.25s ease;
-  }
-  
-  .btn-install {
-    background: #ffd700;
-    color: #000;
-    box-shadow: 0 0 10px #ffd700;
-  }
-  
-  .btn-install:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px #ffd700;
-  }
-  
-  .btn-cancel {
-    background: transparent;
-    border: 2px solid #ffd700;
-    color: #ffd700;
-  }
-  
-  .btn-cancel:hover {
-    background: #ffd700;
-    color: #000;
-    transform: scale(1.05);
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
+}

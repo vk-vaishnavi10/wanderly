@@ -1,108 +1,128 @@
 /* 🌌 Page Layout */
 .attractions-page {
-    background-color: #000;
-    min-height: 100vh;
-    padding: 8rem 2rem 4rem; /* ✅ Push content below fixed navbar */
-    color: #ffd700;
-    font-family: "Poppins", sans-serif;
+  background: radial-gradient(circle at center, #0b0c1a 0%, #1a103f 100%);
+  min-height: 100vh;
+  padding: 8rem 2rem 4rem; /* ✅ Push content below fixed navbar */
+  color: #E8EAF6;
+  font-family: "Poppins", sans-serif;
+}
+
+/* 🌍 Title */
+.attractions-page h1 {
+  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  text-shadow: 0 0 20px rgba(155, 93, 229, 0.6);
+  margin-bottom: 2rem;
+  animation: dreamyFlow 8s ease-in-out infinite;
+}
+
+/* 🔍 Search Bar */
+.attractions-page .form-control {
+  background: rgba(25, 20, 45, 0.6);
+  color: #E8EAF6;
+  border: 1px solid rgba(155, 93, 229, 0.7);
+  border-radius: 10px;
+  padding: 0.9rem 1.2rem;
+  transition: 0.3s;
+}
+
+.attractions-page .form-control::placeholder {
+  color: rgba(232, 234, 246, 0.6);
+}
+
+.attractions-page .form-control:focus {
+  border-color: #F15BB5;
+  box-shadow: 0 0 20px rgba(241, 91, 181, 0.5);
+  background-color: rgba(20, 15, 35, 0.9);
+}
+
+/* 🎴 Attraction Cards */
+.attraction-card {
+  background: linear-gradient(180deg, rgba(15, 15, 30, 0.9), rgba(8, 8, 16, 0.75));
+  border: 2px solid rgba(155, 93, 229, 0.3);
+  border-radius: 15px;
+  color: #E8EAF6;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 0 rgba(155, 93, 229, 0);
+}
+
+.attraction-card:hover {
+  transform: translateY(-8px);
+  border-color: #F15BB5;
+  box-shadow: 0 0 25px rgba(241, 91, 181, 0.3);
+  animation: glowPulse 2.5s infinite ease-in-out;
+}
+
+/* 🖼️ Image Styling */
+.attraction-card img {
+  height: 220px;
+  object-fit: cover;
+  border-bottom: 2px solid #9B5DE5;
+  transition: transform 0.4s ease;
+}
+
+.attraction-card:hover img {
+  transform: scale(1.05);
+}
+
+/* ✨ Card Content */
+.attraction-card .card-body {
+  color: #E8EAF6;
+}
+
+.attraction-card .card-title {
+  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+}
+
+.attraction-card .card-subtitle {
+  color: rgba(232, 234, 246, 0.7);
+}
+
+/* 💜 Explore Button */
+.explore-btn {
+  background: linear-gradient(120deg, #6EC1E4, #9B5DE5, #F15BB5);
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  padding: 0.6rem 1.2rem;
+  transition: 0.3s;
+  box-shadow: 0 0 12px rgba(155, 93, 229, 0.4);
+}
+
+.explore-btn:hover {
+  background: linear-gradient(120deg, #F15BB5, #9B5DE5, #6EC1E4);
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(241, 91, 181, 0.6);
+}
+
+/* 📱 Responsive Fixes */
+@media (max-width: 768px) {
+  .attractions-page {
+    padding: 7rem 1.5rem 3rem;
   }
-  
-  /* 🌍 Title */
-  .attractions-page h1 {
-    color: #ffd700;
-    font-weight: 700;
-    text-shadow: 0 0 10px #ffd700, 0 0 20px #000;
-    margin-bottom: 2rem;
+}
+
+@media (max-width: 480px) {
+  .attractions-page {
+    padding: 6rem 1rem 2rem;
   }
-  
-  /* 🔍 Search Bar */
-  .attractions-page .form-control {
-    background-color: #111;
-    color: #ffd700;
-    border: 1px solid #ffd700;
-    border-radius: 10px;
-    padding: 0.9rem 1.2rem;
-    transition: 0.3s;
-  }
-  
-  .attractions-page .form-control::placeholder {
-    color: #aaa;
-  }
-  
-  .attractions-page .form-control:focus {
-    border-color: #fff;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
-    background-color: #111;
-  }
-  
-  /* 🎴 Attraction Cards */
-  .attraction-card {
-    background-color: #111;
-    border: 2px solid rgba(255, 215, 0, 0.3);
-    border-radius: 15px;
-    color: #ffd700;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .attraction-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
-  }
-  
-  /* 🖼️ Image Styling */
-  .attraction-card img {
-    height: 220px;
-    object-fit: cover;
-    border-bottom: 2px solid #ffd700;
-    transition: transform 0.4s ease;
-  }
-  
-  .attraction-card:hover img {
-    transform: scale(1.05);
-  }
-  
-  /* ✨ Card Content */
-  .attraction-card .card-body {
-    color: #fff;
-  }
-  
-  .attraction-card .card-title {
-    color: #ffd700;
-    font-weight: 600;
-  }
-  
-  .attraction-card .card-subtitle {
-    color: #999;
-  }
-  
-  /* 🟡 Explore Button */
-  .explore-btn {
-    background: linear-gradient(135deg, #ffd700, #e6c200);
-    color: #000;
-    font-weight: bold;
-    border: none;
-    border-radius: 25px;
-    padding: 0.6rem 1.2rem;
-    transition: 0.3s;
-  }
-  
-  .explore-btn:hover {
-    background: #fff;
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
-  }
-  
-  /* 📱 Responsive Fixes */
-  @media (max-width: 768px) {
-    .attractions-page {
-      padding: 7rem 1.5rem 3rem;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .attractions-page {
-      padding: 6rem 1rem 2rem;
-    }
-  }
-  
+}
+
+/* 🌈 Animations */
+@keyframes dreamyFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 25px rgba(155, 93, 229, 0.25); }
+  50% { box-shadow: 0 0 35px rgba(241, 91, 181, 0.45); }
+}

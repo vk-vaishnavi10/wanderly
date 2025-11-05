@@ -1,0 +1,186 @@
+/* =======================================================
+   🌅 WANDERLY - INTRO PAGE (Cinematic Split Edition)
+   Author: Vaishnavi ✨
+======================================================= */
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #000;
+  }
+  
+  /* 🎬 Base Layout */
+  .intro-page {
+    position: fixed; /* ✅ sits on top of everything */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+    background: black;
+    z-index: 2000; /* ✅ higher than navbar (navbar is 1000) */
+  }
+  
+  /* 🎥 Background Video */
+  .intro-bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    z-index: 0;
+    filter: brightness(0.75) saturate(1.1);
+    animation: zoomInOut 14s ease-in-out infinite alternate;
+  }
+  
+  @keyframes zoomInOut {
+    from { transform: scale(1); }
+    to { transform: scale(1.06); }
+  }
+  
+  /* 🌌 Left Cinematic Overlay Panel — flush with left edge */
+  .intro-overlay {
+    position: absolute;
+    top: 0;
+    left: 0; /* ✅ no gap, overrides navbar */
+    width: 40%; /* 🩵 slightly wider for cinematic feel */
+    height: 100%;
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    padding-left: 6%;
+    padding-right: 3%;
+    margin: 0;
+    border: none;
+    z-index: 2001; /* ✅ above video & navbar */
+    animation: slideInLeft 1.4s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+    box-shadow: 12px 0 50px rgba(0, 0, 0, 0.6);
+  }
+  
+  /* 🎥 Smooth Cinematic Entrance */
+  @keyframes slideInLeft {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  /* 🌈 Title Styling */
+  .intro-title {
+    font-size: 3.6rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #00bcd4, #9b5de5, #f15bb5, #f9c74f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.35);
+    margin-bottom: 0.6rem;
+    max-width: 520px;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards;
+    animation-delay: 0.3s;
+  }
+  
+  /* ✨ Subtitle */
+  .intro-sub {
+    color: #eaeaea;
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-top: 0.3rem;
+    font-weight: 400;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    max-width: 460px;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards;
+    animation-delay: 0.9s;
+  }
+  
+  /* 🌟 Button */
+  .intro-box {
+    margin-top: 2rem;
+    margin-left: 2px;
+  }
+  
+  .intro-btn {
+    background: linear-gradient(90deg, #00bcd4, #9b5de5, #f15bb5);
+    border: none;
+    color: #fff;
+    padding: 0.9rem 2.3rem;
+    border-radius: 50px;
+    font-size: 1.15rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.35s ease;
+    box-shadow: 0 0 25px rgba(155, 93, 229, 0.4);
+    opacity: 0;
+    animation: fadeUp 1s ease forwards;
+    animation-delay: 1.5s;
+  }
+  
+  .intro-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 30px rgba(241, 91, 181, 0.6),
+                0 0 50px rgba(0, 188, 212, 0.4);
+    background: linear-gradient(90deg, #f15bb5, #9b5de5, #00bcd4);
+  }
+  
+  /* 🌙 Fade-up Animation (for text stagger) */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* 🌘 Fade-out Transition */
+  .fade-out {
+    animation: fadeOutIntro 1s forwards ease-in-out;
+  }
+  
+  @keyframes fadeOutIntro {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(1.03);
+    }
+  }
+  
+  /* 📱 Responsive */
+  @media (max-width: 768px) {
+    .intro-overlay {
+      width: 100%;
+      align-items: center;
+      text-align: center;
+      backdrop-filter: blur(4px);
+      padding: 0 10%;
+      box-shadow: none;
+    }
+  
+    .intro-title {
+      font-size: 2.6rem;
+      text-align: center;
+    }
+  
+    .intro-sub {
+      font-size: 1rem;
+    }
+  
+    .intro-btn {
+      padding: 0.7rem 1.6rem;
+      font-size: 1rem;
+    }
+  }
+  

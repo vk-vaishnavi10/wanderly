@@ -1,26 +1,39 @@
 /* 🌌 Background */
 .flights-details {
-  background-color: #000;
+  background: radial-gradient(circle at top, rgba(155, 93, 229, 0.15), rgba(0, 0, 0, 0.9)),
+              linear-gradient(135deg, #0b0c1a 0%, #1a103f 50%, #0b0c1a 100%);
+  background-size: 200% 200%;
+  animation: auroraFlow 12s ease-in-out infinite alternate;
   min-height: 100vh;
   font-family: "Poppins", sans-serif;
+  color: #E8EAF6;
+}
+
+/* ✨ Background animation */
+@keyframes auroraFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
 }
 
 /* ✈️ Flight Info Card */
 .flight-route-card {
-  background: rgba(20, 20, 20, 0.95);
-  border: 2px solid #FFD700;
+  background: rgba(18, 15, 35, 0.95);
+  border: 2px solid rgba(155, 93, 229, 0.5);
   border-radius: 15px;
   padding: 2rem;
   text-align: center;
   margin-bottom: 2rem;
-  box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
+  box-shadow: 0 0 25px rgba(155, 93, 229, 0.25);
   animation: fadeInDown 0.6s ease;
 }
 
 .flight-route-card h2 {
   font-weight: bold;
-  color: #FFD700;
+  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   margin-bottom: 1rem;
+  text-shadow: 0 0 20px rgba(155, 93, 229, 0.4);
 }
 
 .flight-info {
@@ -28,7 +41,7 @@
   justify-content: center;
   gap: 2rem;
   font-size: 1.2rem;
-  color: #fff;
+  color: #E8EAF6;
 }
 
 /* 🛑 Stops Timeline */
@@ -38,7 +51,9 @@
 }
 
 .stops-section h4 {
-  color: #FFD700;
+  background: linear-gradient(90deg, #6EC1E4, #9B5DE5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-weight: bold;
   margin-bottom: 1rem;
 }
@@ -56,39 +71,43 @@
   margin-bottom: 1rem;
 }
 
+/* 🌟 Stop Point */
 .stop-circle {
   width: 12px;
   height: 12px;
-  background: #FFD700;
+  background: linear-gradient(135deg, #6EC1E4, #9B5DE5);
   border-radius: 50%;
   margin-right: 10px;
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+  box-shadow: 0 0 15px rgba(155, 93, 229, 0.7);
 }
 
+/* 📍 Stop Info */
 .stop-content {
-  background: #111;
-  border: 1px solid #FFD700;
+  background: rgba(15, 10, 30, 0.9);
+  border: 1px solid rgba(155, 93, 229, 0.4);
   padding: 8px 12px;
   border-radius: 10px;
-  color: #fff;
+  color: #E8EAF6;
+  box-shadow: 0 0 10px rgba(155, 93, 229, 0.2);
 }
 
 .stop-content strong {
-  color: #FFD700;
+  color: #9B5DE5;
 }
 
 .delay {
   margin-left: 10px;
-  color: #ff5555;
+  color: #F15BB5;
   font-size: 0.9rem;
 }
 
 /* 🗺 Map */
 .map-container {
-  border: 2px solid #FFD700;
+  border: 2px solid rgba(155, 93, 229, 0.5);
   border-radius: 15px;
   overflow: hidden;
   margin-top: 2rem;
+  box-shadow: 0 0 20px rgba(155, 93, 229, 0.3);
   animation: fadeInUp 0.6s ease;
 }
 
@@ -97,21 +116,20 @@
   display: block;
   margin: 2rem auto;
   padding: 12px 40px;
-  background: linear-gradient(135deg, #FFD700, #e6c200);
-  color: #000;
+  background: linear-gradient(135deg, #6EC1E4, #9B5DE5, #F15BB5);
+  color: #fff;
   font-weight: bold;
   border: none;
   border-radius: 12px;
   font-size: 1.2rem;
   cursor: pointer;
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+  box-shadow: 0 0 20px rgba(155, 93, 229, 0.5);
   transition: all 0.3s ease;
 }
 
 .book-now-btn:hover {
-  background: #fff;
-  color: #000;
-  box-shadow: 0 0 25px rgba(255, 215, 0, 1);
+  background: linear-gradient(135deg, #F15BB5, #9B5DE5, #6EC1E4);
+  box-shadow: 0 0 30px rgba(241, 91, 181, 0.5);
   transform: scale(1.05);
 }
 

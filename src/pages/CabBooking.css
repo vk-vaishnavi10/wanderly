@@ -1,26 +1,26 @@
 /* 🌌 Background Section */
 .cab-booking {
-  background-color: #000;
+  background: radial-gradient(circle at top, #0b0c1a 0%, #1a103f 100%);
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 6rem 1rem 3rem; /* ✅ pushes below navbar */
+  padding: 6rem 1rem 3rem;
   font-family: "Poppins", sans-serif;
   box-sizing: border-box;
   overflow-x: hidden;
 }
 
-/* 🚕 Booking Card */
+/* 🚖 Booking Card */
 .cab-booking-card {
-  background: rgba(18, 18, 18, 0.95);
-  border: 2px solid #FFD700;
+  background: rgba(18, 15, 35, 0.92);
+  border: 2px solid rgba(155, 93, 229, 0.5);
   border-radius: 16px;
   padding: 2.2rem;
   max-width: 480px;
   width: 100%;
-  box-shadow: 0 0 30px rgba(255, 215, 0, 0.35);
-  color: #FFD700;
+  box-shadow: 0 0 30px rgba(155, 93, 229, 0.3);
+  color: #E8EAF6;
   text-align: left;
   margin-top: 1rem;
   position: relative;
@@ -28,23 +28,27 @@
 }
 
 .cab-booking-card:hover {
-  box-shadow: 0 0 35px rgba(255, 215, 0, 0.5);
+  box-shadow: 0 0 35px rgba(241, 91, 181, 0.4);
   transform: translateY(-3px);
 }
 
 /* 🏷️ Header */
 .cab-booking-card h2 {
   text-align: center;
-  font-weight: 700;
+  font-weight: 800;
   margin-bottom: 1.5rem;
-  color: #FFD700;
+  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 300%;
+  animation: dreamyFlow 8s ease-in-out infinite;
   letter-spacing: 1px;
 }
 
 .cab-booking-card p {
   text-align: center;
   margin-bottom: 1.5rem;
-  color: #ddd;
+  color: rgba(232, 234, 246, 0.85);
   font-size: 0.95rem;
 }
 
@@ -53,7 +57,7 @@
   font-weight: bold;
   margin-bottom: 0.4rem;
   display: block;
-  color: #FFD700;
+  color: #9B5DE5;
   font-size: 0.9rem;
 }
 
@@ -63,10 +67,10 @@
   width: 100%;
   padding: 0.8rem 1rem;
   border-radius: 10px;
-  border: 1px solid #FFD700;
+  border: 1px solid rgba(155, 93, 229, 0.6);
   margin-bottom: 1.3rem;
-  background: #111;
-  color: #FFD700;
+  background: rgba(10, 5, 25, 0.8);
+  color: #E8EAF6;
   font-size: 0.95rem;
   outline: none;
   transition: all 0.3s ease;
@@ -74,20 +78,20 @@
 }
 
 .cab-booking-card input::placeholder {
-  color: #999;
+  color: rgba(232, 234, 246, 0.6);
   font-style: italic;
 }
 
 .cab-booking-card input:focus,
 .cab-booking-card select:focus {
-  border-color: #fff;
-  box-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+  border-color: #F15BB5;
+  box-shadow: 0 0 14px rgba(241, 91, 181, 0.5);
 }
 
 /* 🚕 Confirm Booking Button */
 .cab-booking-card button {
-  background: linear-gradient(135deg, #FFD700, #e6c200);
-  color: #000;
+  background: linear-gradient(120deg, #6EC1E4, #9B5DE5, #F15BB5);
+  color: #fff;
   font-weight: 700;
   border: none;
   padding: 1rem;
@@ -96,23 +100,24 @@
   font-size: 1.05rem;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(155, 93, 229, 0.4);
 }
 
 .cab-booking-card button:hover {
-  background: #fff;
-  color: #000;
-  box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+  background: linear-gradient(120deg, #F15BB5, #9B5DE5, #6EC1E4);
+  box-shadow: 0 0 25px rgba(241, 91, 181, 0.5);
   transform: scale(1.04);
 }
 
-/* 💫 Floating Taxi Icon (optional aesthetic) */
+/* 💫 Floating Taxi Icon */
 .cab-booking-card::before {
-  content: "🚕";
+  content: "🚖";
   position: absolute;
   top: -18px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 1.8rem;
+  filter: drop-shadow(0 0 10px rgba(155, 93, 229, 0.6));
 }
 
 /* 📱 Responsive Design */
@@ -154,4 +159,11 @@
   .cab-booking-card button {
     padding: 0.8rem;
   }
+}
+
+/* 🌈 Aurora Gradient Animation */
+@keyframes dreamyFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }

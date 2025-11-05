@@ -1,11 +1,11 @@
 /* 🌌 Background Container */
 .car-booking {
-  background-color: #000;
+  background: radial-gradient(circle at top, #0b0c1a 0%, #1a103f 100%);
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 6rem 1rem 3rem; /* ✅ pushes below navbar */
+  padding: 6rem 1rem 3rem;
   font-family: "Poppins", sans-serif;
   box-sizing: border-box;
   animation: fadeIn 1.2s ease-in-out;
@@ -13,14 +13,14 @@
 
 /* 📝 Booking Card */
 .car-booking-card {
-  background: rgba(20, 20, 20, 0.95);
-  border: 2px solid #FFD700;
+  background: rgba(18, 15, 35, 0.92);
+  border: 2px solid rgba(155, 93, 229, 0.5);
   border-radius: 15px;
   padding: 2.2rem;
   max-width: 450px;
   width: 100%;
-  box-shadow: 0 0 25px rgba(255, 215, 0, 0.25);
-  color: #FFD700;
+  box-shadow: 0 0 25px rgba(155, 93, 229, 0.3);
+  color: #E8EAF6;
   text-align: left;
   margin-top: 1rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -28,22 +28,26 @@
 
 .car-booking-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 0 35px rgba(255, 215, 0, 0.45);
+  box-shadow: 0 0 35px rgba(241, 91, 181, 0.4);
 }
 
 /* 🏷️ Title & Subtitle */
 .car-booking-card h2 {
   text-align: center;
-  font-weight: bold;
+  font-weight: 800;
   margin-bottom: 0.8rem;
-  color: #FFD700;
+  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 300%;
+  animation: dreamyFlow 8s ease-in-out infinite;
   letter-spacing: 1px;
 }
 
 .car-booking-card p {
   text-align: center;
   margin-bottom: 1.5rem;
-  color: #fff;
+  color: rgba(232, 234, 246, 0.85);
   font-size: 0.95rem;
 }
 
@@ -59,18 +63,20 @@
   max-width: 300px;
   height: auto;
   border-radius: 15px;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+  box-shadow: 0 0 20px rgba(155, 93, 229, 0.5);
   margin-bottom: 0.6rem;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
 .selected-car-image:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 30px rgba(255, 215, 0, 0.9);
+  box-shadow: 0 0 30px rgba(241, 91, 181, 0.6);
 }
 
 .car-preview-text {
-  color: #FFD700;
+  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-weight: bold;
   font-size: 1rem;
 }
@@ -80,7 +86,7 @@
   font-weight: bold;
   margin-bottom: 0.3rem;
   display: block;
-  color: #FFD700;
+  color: #9B5DE5;
   font-size: 0.9rem;
 }
 
@@ -90,10 +96,10 @@
   width: 100%;
   padding: 0.75rem 1rem;
   border-radius: 10px;
-  border: 1px solid #FFD700;
+  border: 1px solid rgba(155, 93, 229, 0.6);
   margin-bottom: 1.2rem;
-  background: #111;
-  color: #FFD700;
+  background: rgba(10, 5, 25, 0.8);
+  color: #E8EAF6;
   font-size: 0.95rem;
   outline: none;
   transition: all 0.3s ease;
@@ -101,20 +107,20 @@
 }
 
 .car-booking-card input::placeholder {
-  color: #bbb;
+  color: rgba(232, 234, 246, 0.6);
   font-style: italic;
 }
 
 .car-booking-card input:focus,
 .car-booking-card select:focus {
-  border-color: #fff;
-  box-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+  border-color: #F15BB5;
+  box-shadow: 0 0 12px rgba(241, 91, 181, 0.4);
 }
 
-/* 🚕 Confirm Button */
+/* 🚗 Confirm Button */
 .car-booking-card button {
-  background: linear-gradient(135deg, #FFD700, #e6c200);
-  color: #000;
+  background: linear-gradient(120deg, #6EC1E4, #9B5DE5, #F15BB5);
+  color: #fff;
   font-weight: bold;
   border: none;
   padding: 0.9rem;
@@ -125,12 +131,12 @@
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 0 15px rgba(155, 93, 229, 0.3);
 }
 
 .car-booking-card button:hover {
-  background: #fff;
-  color: #000;
-  box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+  background: linear-gradient(120deg, #F15BB5, #9B5DE5, #6EC1E4);
+  box-shadow: 0 0 25px rgba(241, 91, 181, 0.5);
   transform: scale(1.03);
 }
 
@@ -138,7 +144,7 @@
   transform: scale(0.98);
 }
 
-/* ✨ Glow pulse effect */
+/* ✨ Glow Pulse Effect */
 .car-booking-card button::after {
   content: "";
   position: absolute;
@@ -146,7 +152,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.2);
   transform: skewX(-20deg);
   transition: left 0.5s ease;
 }
@@ -176,6 +182,13 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* 🌈 Gradient Animation */
+@keyframes dreamyFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* 🧠 Responsive Fixes */

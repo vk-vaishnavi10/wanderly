@@ -4,73 +4,76 @@ html, body, #root {
   padding: 0;
   width: 100%;
   min-height: 100%;
-  background: #000;
   font-family: 'Poppins', sans-serif;
-  color: #FFD700;
+  background: #0B0C1A; /* Deep adventure night tone */
+  color: #E8EAF6;
   overflow-x: hidden;
 }
 
-/* Root Reset */
+/* Root Container */
 #root {
   width: 100%;
   max-width: 100% !important;
   padding: 0;
-  text-align: initial; /* Don’t force center align globally */
+  text-align: initial;
 }
 
-/* 🌌 Global Theme */
+/* 🌅 Global Adventure Theme */
 body {
-  background-color: #000 !important;
-  color: #FFD700;
-  padding-top: 80px; /* Push below navbar */
+  background: linear-gradient(135deg, #0B0C1A 0%, #1A103F 40%, #0B0C1A 100%);
+  color: #E8EAF6;
+  padding-top: 80px;
   line-height: 1.6;
+  transition: background 0.4s ease;
 }
 
-/* ✅ Section Wrapper */
+/* ✅ Page Section Wrapper */
 .page-container {
-  background-color: #000;
-  color: #FFD700;
+  background: transparent;
+  color: #E8EAF6;
   min-height: 100vh;
   width: 100%;
   padding: 2rem;
-}
-
-/* ✨ Navbar */
-.custom-navbar-fixed {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  min-height: 55px;
-  border-radius: 0 0 12px 12px;
-  padding: 0.5rem 1rem;
-
-  /* ✅ Glassmorphism */
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-
-  border-bottom: 2px solid #FFD700;
-  z-index: 1000;
 }
 
 /* ✨ Section Headings */
 .section-heading {
   text-align: center;
   font-size: 2rem;
-  font-weight: bold;
+  font-weight: 700;
   margin: 3rem 0 2rem;
-  color: #FFD700;
-  text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 1px;
 }
 
-/* 🟨 Golden Card Theme (Shared by Flights, Hotels, Cars) */
+/* 🌌 Navbar */
+.custom-navbar-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 60px;
+  border-radius: 0 0 16px 16px;
+  padding: 0.6rem 1rem;
+
+  background: rgba(15, 12, 40, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border-bottom: 2px solid rgba(155, 93, 229, 0.6);
+  box-shadow: 0 4px 16px rgba(110, 193, 228, 0.2);
+  z-index: 1000;
+}
+
+/* 🟦 Adventure Cards */
 .card {
-  background-color: #111;
-  border: 1px solid #FFD700;
-  border-radius: 12px;
-  padding: 1rem;
-  box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+  background: rgba(20, 15, 45, 0.85);
+  border: 1px solid rgba(155, 93, 229, 0.7);
+  border-radius: 14px;
+  padding: 1.2rem;
+  box-shadow: 0 0 16px rgba(155, 93, 229, 0.25);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   height: 100%;
   display: flex;
@@ -80,7 +83,7 @@ body {
 
 .card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 0 25px rgba(255, 215, 0, 0.9);
+  box-shadow: 0 0 22px rgba(241, 91, 181, 0.6);
 }
 
 /* Card Image */
@@ -89,45 +92,48 @@ body {
   border-radius: 10px;
   margin-bottom: 1rem;
   object-fit: cover;
+  border: 1px solid rgba(110, 193, 228, 0.4);
 }
 
 /* Card Title */
 .card-title {
-  font-weight: bold;
-  font-size: 1.2rem;
-  color: #FFD700;
-  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: #6EC1E4;
+  margin-bottom: 0.6rem;
 }
 
 /* Card Text */
 .card-text {
-  color: #ccc;
+  color: #C8C9D4;
   margin-bottom: 1rem;
 }
 
 /* Card Buttons */
 .card button,
 .card .btn {
-  background: #FFD700;
-  color: #000;
+  background: linear-gradient(90deg, #6EC1E4, #9B5DE5);
+  color: #fff;
   font-weight: bold;
   border-radius: 25px;
   padding: 0.6rem 1.2rem;
+  border: none;
   transition: all 0.3s ease;
 }
 
 .card button:hover,
 .card .btn:hover {
-  background: #000;
-  color: #FFD700;
-  box-shadow: 0 0 18px rgba(255, 215, 0, 1);
+  background: linear-gradient(90deg, #F15BB5, #9B5DE5);
+  color: #fff;
+  box-shadow: 0 0 18px rgba(241, 91, 181, 0.5);
+  transform: translateY(-2px);
 }
 
-/* 🏨 Hotel Cards inside grid */
+/* 🏨 Hotel Cards */
 .stay-card {
-  background: #111;
-  border: 2px solid #FFD700;
-  border-radius: 12px;
+  background: rgba(25, 20, 55, 0.9);
+  border: 2px solid rgba(155, 93, 229, 0.6);
+  border-radius: 14px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -138,7 +144,7 @@ body {
   height: 200px;
   width: 100%;
   object-fit: cover;
-  border-bottom: 2px solid #FFD700;
+  border-bottom: 2px solid rgba(110, 193, 228, 0.6);
 }
 
 .stay-card .card-body {
@@ -149,69 +155,65 @@ body {
 
 .stay-card:hover {
   transform: scale(1.03);
-  box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+  box-shadow: 0 0 22px rgba(110, 193, 228, 0.5);
 }
 
-/* 🌐 Dropdown Menu */
+/* 🌐 Dropdowns */
 .dropdown-menu {
-  background-color: #000 !important;
-  border: 1px solid #FFD700;
-  border-radius: 8px;
-  padding: 0.3rem 0;
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+  background: rgba(15, 12, 40, 0.95);
+  border: 1px solid rgba(155, 93, 229, 0.5);
+  border-radius: 10px;
+  box-shadow: 0 8px 25px rgba(241, 91, 181, 0.3);
 }
 
 .dropdown-item {
-  color: #FFD700 !important;
+  color: #E8EAF6 !important;
   font-weight: 600;
-  padding: 0.6rem 1rem;
+  padding: 0.7rem 1.1rem;
   transition: all 0.3s ease;
 }
 
 .dropdown-item:hover {
-  background-color: #FFD700 !important;
-  color: #000 !important;
-  box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.8);
+  background: linear-gradient(90deg, #9B5DE5, #F15BB5);
+  color: #fff !important;
+  border-radius: 8px;
 }
 
-/* 🖥 Responsive Grid Fix */
+/* 🖥 Grid Spacing Fix */
 .row {
   margin-left: 0;
   margin-right: 0;
 }
 
-.col-12,
-.col-md-6,
-.col-lg-4 {
+.col-12, .col-md-6, .col-lg-4 {
   padding: 1rem;
 }
-/* 🌙 Theme Switch Styles */
+
+/* 🌙 Theme Modes */
 body.theme-dark {
-  background-color: #000 !important;
-  color: #FFD700 !important;
-  transition: all 0.4s ease;
+  background: #0B0C1A;
+  color: #E8EAF6;
 }
 
 body.theme-light {
-  background-color: #f5f5f5 !important;
-  color: #111 !important;
-  transition: all 0.4s ease;
+  background: #F8F9FF;
+  color: #222;
 }
 
 body.theme-auto {
-  background: linear-gradient(135deg, #111, #444);
-  color: #FFD700 !important;
-  transition: all 0.4s ease;
+  background: linear-gradient(135deg, #0B0C1A, #1A103F);
+  color: #E8EAF6;
 }
 
-/* Navbar contrast fix */
+/* Navbar Contrast Adjust */
 .theme-light .custom-navbar {
-  background: rgba(255, 255, 255, 0.85);
-  color: #000;
-  border-bottom: 2px solid #FFD700;
+  background: rgba(255, 255, 255, 0.9);
+  color: #222;
+  border-bottom: 2px solid #9B5DE5;
 }
 
 .theme-dark .custom-navbar {
-  background: rgba(0, 0, 0, 0.95);
-  color: #FFD700;
+  background: rgba(15, 12, 40, 0.9);
+  color: #E8EAF6;
+  border-bottom: 2px solid #9B5DE5;
 }

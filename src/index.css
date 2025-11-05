@@ -1,22 +1,22 @@
 /* ======================================================
-   🌍 WANDERLY GLOBAL THEME
-   Author: Vaishnavi 💛 (Luxe Glow Edition)
+   🌈 WANDERLY GLOBAL THEME
+   Author: Vaishnavi 💜 (Aurora Radiance Edition)
 ====================================================== */
 
 :root {
-  --bg-color: #fffef5;
-  --text-color: #111;
-  --muted-text: #444;
-  --accent: #FFD700;
-  --button-bg: linear-gradient(90deg, #FFD700, #f0c400);
-  --button-hover: linear-gradient(90deg, #ffe347, #ffcf00);
-  --card-bg: rgba(255, 255, 255, 0.85);
-  --glow: 0 0 18px rgba(255, 215, 0, 0.35);
+  --bg-color: #060015;
+  --text-color: #f6e8ff;
+  --muted-text: #b8a9d6;
+  --accent: #d57aff;
+  --button-bg: linear-gradient(90deg, #00bcd4, #8b5cf6, #ec4899, #ff6f61);
+  --button-hover: linear-gradient(90deg, #ff8fa3, #ec4899, #8b5cf6, #00bcd4);
+  --card-bg: rgba(25, 15, 50, 0.85);
+  --glow: 0 0 20px rgba(236, 72, 153, 0.45);
 
   font-family: "Poppins", system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color-scheme: light;
+  color-scheme: dark;
   background-color: var(--bg-color);
   color: var(--text-color);
   text-rendering: optimizeLegibility;
@@ -35,8 +35,8 @@ a {
 }
 
 a:hover {
-  color: #000;
-  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  color: #ff7eb9;
+  text-shadow: 0 0 12px rgba(255, 126, 185, 0.6);
 }
 
 body {
@@ -47,16 +47,18 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-image: radial-gradient(circle at top left, rgba(139, 92, 246, 0.25), transparent 60%),
+                    radial-gradient(circle at bottom right, rgba(0, 188, 212, 0.2), transparent 60%);
 }
 
 h1, h2, h3, h4, h5 {
   color: var(--text-color);
-  text-shadow: 0 0 10px rgba(255, 215, 0, 0.25);
-  letter-spacing: 0.5px;
+  text-shadow: 0 0 12px rgba(255, 126, 185, 0.4), 0 0 22px rgba(139, 92, 246, 0.25);
+  letter-spacing: 0.6px;
 }
 
 /* =========================================
-   💛 BUTTONS
+   💜 BUTTONS
 ========================================= */
 button {
   border-radius: 999px;
@@ -66,16 +68,16 @@ button {
   font-weight: 600;
   font-family: inherit;
   background: var(--button-bg);
-  color: #000;
+  color: #fff;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
-  box-shadow: 0 0 12px rgba(255, 215, 0, 0.2);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.4s ease;
+  box-shadow: 0 0 18px rgba(255, 126, 185, 0.4), 0 0 25px rgba(139, 92, 246, 0.25);
 }
 
 button:hover {
   transform: translateY(-2px);
   background: var(--button-hover);
-  box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+  box-shadow: 0 0 25px rgba(236, 72, 153, 0.7), 0 0 40px rgba(0, 188, 212, 0.5);
 }
 
 button:focus,
@@ -87,10 +89,10 @@ button:focus-visible {
    ✏️ INPUTS
 ========================================= */
 input, textarea {
-  background: rgba(255, 255, 255, 0.9);
-  border: 1.5px solid rgba(0, 0, 0, 0.15);
+  background: rgba(15, 10, 35, 0.8);
+  border: 1.5px solid rgba(139, 92, 246, 0.4);
   border-radius: 999px;
-  color: #000;
+  color: #f4edff;
   padding: 0.6em 1em;
   font-size: 1em;
   outline: none;
@@ -98,12 +100,12 @@ input, textarea {
 }
 
 input::placeholder {
-  color: #555;
+  color: #caaaff;
 }
 
 input:focus, textarea:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  border-color: #ec4899;
+  box-shadow: 0 0 14px rgba(236, 72, 153, 0.6), 0 0 22px rgba(139, 92, 246, 0.4);
 }
 
 /* =========================================
@@ -112,27 +114,27 @@ input:focus, textarea:focus {
 .search-box {
   display: flex;
   align-items: center;
-  border: 2px solid rgba(255,215,0,0.95);
+  border: 2px solid rgba(139, 92, 246, 0.9);
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.65);
+  background: rgba(10, 0, 30, 0.8);
   padding: 0.4rem 0.6rem;
   width: 100%;
   max-width: 650px;
   gap: 8px;
   position: relative;
-  box-shadow: 0 0 15px rgba(255,215,0,0.45); /* ✨ Always glowing */
+  box-shadow: 0 0 18px rgba(236, 72, 153, 0.5), 0 0 30px rgba(0, 188, 212, 0.3);
   transition: all 0.3s ease;
 }
 
 .search-box:focus-within {
-  box-shadow: 0 0 28px rgba(255,215,0,0.65);
+  box-shadow: 0 0 30px rgba(255, 126, 185, 0.7), 0 0 40px rgba(139, 92, 246, 0.6);
   transform: scale(1.02);
 }
 
 .search-box input {
   border: none;
   background: transparent;
-  color: #fff;
+  color: #f8f9ff;
   flex: 1;
   padding: 0.7rem 1rem;
   outline: none;
@@ -140,29 +142,29 @@ input:focus, textarea:focus {
 }
 
 .search-box input::placeholder {
-  color: #f5e79f;
-  opacity: 0.85;
+  color: #d8c2ff;
+  opacity: 0.9;
 }
 
 /* Search Button */
 .search-btn {
-  background: linear-gradient(90deg, #FFD700, #f0c400);
-  color: #000;
+  background: linear-gradient(90deg, #00bcd4, #8b5cf6, #ec4899);
+  color: #fff;
   font-weight: 700;
   border-radius: 999px;
   padding: 0.6rem 1.25rem;
   border: none;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 .search-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 22px rgba(255,215,0,0.4);
+  box-shadow: 0 0 25px rgba(236, 72, 153, 0.7), 0 0 35px rgba(0, 188, 212, 0.5);
 }
 
 /* =========================================
-   🌟 QUICK LINKS (Flights, Hotels, Packages)
+   🌈 QUICK LINKS (Flights, Hotels, Packages)
 ========================================= */
 .quick-links {
   display: flex;
@@ -172,22 +174,22 @@ input:focus, textarea:focus {
 }
 
 .quick-links .btn {
-  background: linear-gradient(90deg, #FFD700, #f0c400);
-  color: #000;
+  background: linear-gradient(90deg, #00bcd4, #8b5cf6, #ec4899, #ff6f61);
+  color: #fff;
   font-weight: 600;
   font-size: 0.9rem;
   border: none;
   border-radius: 999px;
   padding: 0.45rem 1.1rem;
-  box-shadow: 0 0 15px rgba(255,215,0,0.4); /* ✨ Always glowing */
+  box-shadow: 0 0 18px rgba(139, 92, 246, 0.45), 0 0 25px rgba(236, 72, 153, 0.35);
   transition: all 0.3s ease;
   cursor: pointer;
 }
 
 .quick-links .btn:hover {
   transform: scale(1.06);
-  box-shadow: 0 0 25px rgba(255,215,0,0.6);
-  background: linear-gradient(90deg, #ffe347, #ffcf00);
+  box-shadow: 0 0 28px rgba(236, 72, 153, 0.6), 0 0 40px rgba(0, 188, 212, 0.4);
+  background: linear-gradient(90deg, #ff8fa3, #ec4899, #8b5cf6, #00bcd4);
 }
 
 /* =========================================
@@ -195,16 +197,16 @@ input:focus, textarea:focus {
 ========================================= */
 .card {
   background: var(--card-bg);
-  border: 1px solid rgba(255, 215, 0, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.25);
   border-radius: 16px;
   padding: 1.5rem;
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4), 0 0 25px rgba(236, 72, 153, 0.25);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 0 30px rgba(255, 215, 0, 0.25);
+  box-shadow: 0 0 35px rgba(236, 72, 153, 0.5), 0 0 50px rgba(0, 188, 212, 0.3);
 }
 
 /* =========================================
@@ -212,37 +214,39 @@ input:focus, textarea:focus {
 ========================================= */
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-color: #000;
-    --text-color: #FFD700;
-    --accent: #FFD700;
-    --card-bg: rgba(15, 15, 15, 0.9);
+    --bg-color: #050014;
+    --text-color: #f4edff;
+    --accent: #d57aff;
+    --card-bg: rgba(20, 10, 40, 0.9);
   }
 
   body {
     background: var(--bg-color);
     color: var(--text-color);
+    background-image: radial-gradient(circle at top left, rgba(0, 188, 212, 0.25), transparent 60%),
+                      radial-gradient(circle at bottom right, rgba(236, 72, 153, 0.25), transparent 60%);
   }
 
   button {
     background: var(--button-bg);
-    color: #000;
+    color: #fff;
   }
 
   input, textarea {
-    background: rgba(20, 20, 20, 0.8);
-    border: 1.5px solid rgba(255, 215, 0, 0.25);
-    color: #FFD700;
+    background: rgba(10, 0, 25, 0.85);
+    border: 1.5px solid rgba(139, 92, 246, 0.4);
+    color: #f4edff;
   }
 
   .search-box {
-    background: rgba(0, 0, 0, 0.75);
-    border-color: rgba(255,215,0,0.95);
-    box-shadow: 0 0 20px rgba(255,215,0,0.45);
+    background: rgba(10, 0, 30, 0.75);
+    border-color: rgba(236, 72, 153, 0.95);
+    box-shadow: 0 0 25px rgba(236, 72, 153, 0.5), 0 0 35px rgba(0, 188, 212, 0.4);
   }
 
   .quick-links .btn {
-    color: #000;
-    background: linear-gradient(90deg, #FFD700, #f0c400);
-    box-shadow: 0 0 20px rgba(255,215,0,0.45);
+    color: #fff;
+    background: linear-gradient(90deg, #00bcd4, #8b5cf6, #ec4899, #ff6f61);
+    box-shadow: 0 0 25px rgba(255, 126, 185, 0.55), 0 0 35px rgba(0, 188, 212, 0.4);
   }
 }

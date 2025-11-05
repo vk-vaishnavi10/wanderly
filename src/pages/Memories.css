@@ -1,0 +1,287 @@
+/* 🌌 Memories Page Background */
+.memories-page {
+  background: radial-gradient(circle at top, rgba(155, 93, 229, 0.15), rgba(0, 0, 0, 0.95)),
+              linear-gradient(135deg, #0b0c1a 0%, #1a103f 50%, #0b0c1a 100%);
+  background-size: 200% 200%;
+  animation: auroraFlow 12s ease-in-out infinite alternate;
+  color: #E8EAF6;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  padding-top: 80px;
+}
+
+/* ✨ Background Flow */
+@keyframes auroraFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* 🌟 Profile Header */
+.profile-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.profile-pic {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 3px solid #9B5DE5;
+  box-shadow: 0 0 25px #9B5DE5, 0 0 45px rgba(155, 93, 229, 0.5);
+  transition: all 0.3s ease-in-out;
+}
+
+.profile-pic:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 40px #9B5DE5, 0 0 70px rgba(155, 93, 229, 0.7);
+}
+
+.profile-name {
+  font-size: 1.7rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.profile-bio {
+  color: #C7C9E9;
+  font-size: 0.95rem;
+  max-width: 300px;
+}
+
+.profile-stats {
+  color: #9B5DE5;
+  margin-top: 5px;
+  font-weight: 600;
+}
+
+/* 🪞 Title */
+.memories-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: glowPulse 3s infinite ease-in-out;
+}
+
+@keyframes glowPulse {
+  0%, 100% { text-shadow: 0 0 10px #9B5DE5; }
+  50% { text-shadow: 0 0 30px #F15BB5, 0 0 60px #6EC1E4; }
+}
+
+.status-text {
+  color: #CFCFE4;
+  font-size: 0.95rem;
+}
+
+/* ⏳ Time Capsule Banner */
+.timecapsule-banner {
+  background: linear-gradient(135deg, #6EC1E4, #9B5DE5, #F15BB5);
+  color: #fff;
+  border-radius: 18px;
+  padding: 15px 25px;
+  margin: 30px auto;
+  max-width: 500px;
+  box-shadow: 0 0 20px rgba(155, 93, 229, 0.5);
+  animation: floaty 3s ease-in-out infinite;
+}
+
+.timecapsule-banner img {
+  width: 90%;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+@keyframes floaty {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+
+/* 📸 Upload Box */
+.upload-box {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(155, 93, 229, 0.5);
+  border-radius: 20px;
+  padding: 25px 40px;
+  max-width: 420px;
+  margin: 30px auto;
+  box-shadow: 0 0 20px rgba(155, 93, 229, 0.2);
+}
+
+.memory-input {
+  display: block;
+  width: 100%;
+  background-color: #1a1a2f;
+  color: #E8EAF6;
+  border: 1px solid #9B5DE5;
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-bottom: 15px;
+}
+
+/* 💜 Glow Button */
+.btn-glow {
+  background: linear-gradient(135deg, #6EC1E4, #9B5DE5, #F15BB5);
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 25px;
+  font-weight: 600;
+  box-shadow: 0 0 15px rgba(155, 93, 229, 0.4);
+  transition: 0.3s ease;
+}
+.btn-glow:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 35px rgba(241, 91, 181, 0.6);
+}
+
+/* 🌠 Memory Gallery */
+.memory-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 25px;
+  margin: 50px auto;
+  padding: 0 40px;
+  max-width: 1200px;
+}
+
+.memory-card {
+  background: rgba(15, 10, 30, 0.95);
+  border: 2px solid rgba(155, 93, 229, 0.4);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(155, 93, 229, 0.25);
+  transition: all 0.3s ease;
+}
+
+.memory-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 35px rgba(241, 91, 181, 0.6);
+}
+
+.memory-card img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  filter: brightness(90%);
+  transition: all 0.3s;
+}
+
+.memory-card:hover img {
+  filter: brightness(110%) saturate(130%);
+}
+
+.memory-info {
+  padding: 10px;
+}
+
+.memory-caption {
+  background: linear-gradient(90deg, #6EC1E4, #9B5DE5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.memory-date {
+  color: #CFCFE4;
+  font-size: 0.85rem;
+}
+
+/* 🪩 Lightbox */
+.lightbox-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(10, 5, 25, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5000;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  border: 2px solid #9B5DE5;
+  border-radius: 16px;
+  box-shadow: 0 0 25px rgba(155, 93, 229, 0.6);
+}
+
+.lightbox-image {
+  width: 100%;
+  height: 80vh;
+  object-fit: contain;
+}
+
+.lightbox-caption {
+  color: #E8EAF6;
+  margin-top: 10px;
+}
+
+.btn-close-glow {
+  position: absolute;
+  top: 15px; right: 15px;
+  background: linear-gradient(135deg, #6EC1E4, #9B5DE5);
+  border: none;
+  color: #fff;
+  border-radius: 50%;
+  width: 35px; height: 35px;
+  font-weight: bold;
+  box-shadow: 0 0 15px rgba(155, 93, 229, 0.5);
+}
+
+/* ✨ Selection Mode */
+.memory-card.selected {
+  border: 3px solid #6EC1E4;
+  box-shadow: 0 0 25px #6EC1E4;
+}
+
+/* 🪐 Controls */
+.memory-controls {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.btn-outline-glow {
+  background: transparent;
+  border: 2px solid #9B5DE5;
+  color: #E8EAF6;
+  border-radius: 25px;
+  padding: 8px 20px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-glow:hover {
+  background: linear-gradient(135deg, #6EC1E4, #9B5DE5);
+  box-shadow: 0 0 20px rgba(155, 93, 229, 0.5);
+  color: #fff;
+}
+
+.btn-danger-glow {
+  background: #F15BB5;
+  border: none;
+  border-radius: 25px;
+  color: #fff;
+  padding: 8px 20px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-danger-glow:hover {
+  background: #ff7acb;
+  box-shadow: 0 0 25px rgba(241, 91, 181, 0.5);
+}
+

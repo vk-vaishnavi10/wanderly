@@ -1,0 +1,199 @@
+/* 🌌 WANDERLY SETTINGS PAGE - ROYAL GLOW DELUXE */
+.settings-section {
+    background: linear-gradient(180deg, #050014 0%, #0b0125 100%);
+    color: #e0d9ff;
+    min-height: 100vh;
+    padding: 3rem 2rem;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  /* 🌈 Quote */
+  .wander-quote {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #ffd700;
+    margin-bottom: 1.2rem;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+    font-style: italic;
+  }
+  
+  .settings-title {
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: #ffd700;
+    text-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+    text-align: center;
+  }
+  
+  .settings-subtitle {
+    color: #bda7ff;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    font-size: 1.1rem;
+  }
+  
+  /* 🪩 Settings Grid */
+  .settings-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  
+  /* 🧊 Card Base */
+  .settings-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 20px;
+    padding: 1.8rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+  }
+  
+  .settings-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 40px rgba(241, 91, 181, 0.3);
+  }
+  
+  /* Glassy */
+  .glassy {
+    backdrop-filter: blur(12px) saturate(150%);
+  }
+  
+  /* Headings */
+  .settings-card h2 {
+    color: #f15bb5;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 15px rgba(241, 91, 181, 0.8);
+  }
+  
+  /* Rows */
+  .settings-row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+  
+  .settings-row label {
+    font-weight: 600;
+    color: #d4c2ff;
+    margin-bottom: 0.4rem;
+  }
+  
+  /* Inputs & Selects */
+  .settings-row input,
+  .settings-select {
+    border: 1px solid #9b5de5;
+    border-radius: 8px;
+    padding: 0.6rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  .settings-row input:focus,
+  .settings-select:focus {
+    border-color: #f15bb5;
+    box-shadow: 0 0 10px rgba(241, 91, 181, 0.5);
+  }
+  
+  /* 🌈 Theme Preview */
+  .theme-preview {
+    height: 25px;
+    border-radius: 10px;
+    margin-top: 0.5rem;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  }
+  
+  /* Toggles */
+  .toggle {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* Buttons */
+  .settings-btn {
+    background: linear-gradient(90deg, #9b5de5, #f15bb5);
+    border: none;
+    color: #fff;
+    padding: 0.7rem 1.2rem;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 0 20px rgba(155, 93, 229, 0.4);
+  }
+  
+  .settings-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(241, 91, 181, 0.7);
+  }
+  
+  /* Variants */
+  .settings-btn.danger {
+    background: linear-gradient(90deg, #ff3b3b, #ff7676);
+  }
+  
+  .settings-btn.subtle {
+    background: linear-gradient(90deg, #ffd700, #fbc531);
+    color: #000;
+  }
+  
+  /* Session Box */
+  .session-box {
+    background: rgba(255, 255, 255, 0.06);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-top: 1rem;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+  }
+  
+  .session-box h3 {
+    color: #ffd700;
+    margin-bottom: 0.5rem;
+  }
+  
+  .session-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: #d1b3ff;
+    font-size: 0.9rem;
+  }
+  
+  /* Shortcuts */
+  .shortcut-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    justify-content: center;
+  }
+  
+  /* Footer */
+  .settings-footer {
+    text-align: center;
+    margin-top: 3rem;
+    color: #d1b3ff;
+  }
+  
+  .wanderly-link {
+    color: #9b5de5;
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+  
+  .wanderly-link:hover {
+    color: #f15bb5;
+    text-shadow: 0 0 10px rgba(241, 91, 181, 0.8);
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .settings-title {
+      font-size: 2rem;
+    }
+  }
+  

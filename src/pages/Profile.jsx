@@ -1,29 +1,60 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import axios from "axios";
 import { UserContext } from "../context/UserContext.jsx";
 import "./Profile.css";
 
 export default function Profile() {
   const { user: ctxUser, setUser } = useContext(UserContext);
 
-  // fallback user if nothing in storage/context yet
   const fallback = {
     fullName: "Kavanoor Vaishnavi",
     email: "vihanis@gmail.com",
     phone: "9390681891",
-    profilePic: null,
+    profilePic:
+      localStorage.getItem("userPhoto") ||
+      "https://i.pravatar.cc/150?img=14",
   };
 
-  const initial = ctxUser || JSON.parse(localStorage.getItem("user")) || fallback;
+  const initial =
+    ctxUser || JSON.parse(localStorage.getItem("user")) || fallback;
 
   const [user, setLocalUser] = useState(initial);
-  const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({ ...initial });
+  const [isEditing, setIsEditing] = useState(false);
   const [toast, setToast] = useState(null);
 
   const triggerToast = (msg) => {
     setToast(msg);
     setTimeout(() => setToast(null), 2500);
   };
+
+  // Load latest profile from backend (in case backend restarted)
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8085/api/user/profile?ts=${Date.now()}`)
+      .then((res) => {
+        if (res.data) {
+          const latest = {
+            fullName: res.data.name,
+            email: localStorage.getItem("userEmail") || fallback.email,
+            phone: localStorage.getItem("userPhone") || fallback.phone,
+            profilePic:
+              res.data.photo?.startsWith("http") || res.data.photo?.startsWith("data:")
+                ? `${res.data.photo}?t=${Date.now()}`
+                : fallback.profilePic,
+          };
+          setLocalUser(latest);
+          setFormData(latest);
+          setUser(latest);
+
+          // Store locally
+          localStorage.setItem("user", JSON.stringify(latest));
+          localStorage.setItem("userName", latest.fullName);
+          localStorage.setItem("userPhoto", latest.profilePic);
+        }
+      })
+      .catch(() => console.log("⚠️ Using local profile cache"));
+  }, []);
 
   const handleChange = (e) =>
     setFormData((p) => ({ ...p, [e.target.name]: e.target.value }));
@@ -33,20 +64,62 @@ export default function Profile() {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = () =>
-      setFormData((p) => ({ ...p, profilePic: reader.result }));
+      setFormData((p) => ({
+        ...p,
+        profilePic: reader.result,
+        photoFile: file,
+      }));
     reader.readAsDataURL(file);
   };
 
-  const handleSave = () => {
-    // persist
-    localStorage.setItem("user", JSON.stringify(formData));
-    setLocalUser(formData);
+  // 🌸 Save Profile (local + backend)
+  const handleSave = async () => {
+    try {
+      const data = new FormData();
+      data.append("name", formData.fullName);
+      data.append(
+        "bio",
+        "Collecting places, not things — one memory at a time."
+      );
+      if (formData.photoFile) data.append("photo", formData.photoFile);
 
-    // 🔥 update context so Navbar reacts instantly
-    setUser(formData);
+      const res = await axios.post(
+        "http://localhost:8085/api/user/update",
+        data,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
 
-    setIsEditing(false);
-    triggerToast("✅ Profile updated successfully!");
+      if (res.data) {
+        const updatedUser = {
+          fullName: res.data.name,
+          email: formData.email,
+          phone: formData.phone,
+          profilePic:
+            res.data.photo?.startsWith("http") ||
+            res.data.photo?.startsWith("data:")
+              ? `${res.data.photo}?t=${Date.now()}`
+              : fallback.profilePic,
+        };
+
+        // Update state + localStorage
+        setLocalUser(updatedUser);
+        setUser(updatedUser);
+        setFormData(updatedUser);
+
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+        localStorage.setItem("userName", updatedUser.fullName);
+        localStorage.setItem("userBio", "Collecting places, not things — one memory at a time.");
+        localStorage.setItem("userPhoto", updatedUser.profilePic);
+
+        setIsEditing(false);
+        triggerToast("✅ Profile updated successfully!");
+      }
+    } catch (err) {
+      console.error("Profile update failed:", err);
+      triggerToast("⚠️ Could not sync profile to server.");
+    }
   };
 
   const handleCancel = () => {
@@ -55,7 +128,9 @@ export default function Profile() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
+    ["user", "userName", "userBio", "userPhoto"].forEach((key) =>
+      localStorage.removeItem(key)
+    );
     setUser(null);
     window.location.href = "/signin";
   };
@@ -68,7 +143,11 @@ export default function Profile() {
         {/* Avatar */}
         <div className="avatar-circle">
           {formData.profilePic ? (
-            <img src={formData.profilePic} alt="Profile" className="profile-photo" />
+            <img
+              src={formData.profilePic}
+              alt="Profile"
+              className="profile-photo"
+            />
           ) : (
             <i className="bi bi-person-fill"></i>
           )}

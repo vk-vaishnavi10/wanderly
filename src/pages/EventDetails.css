@@ -1,23 +1,19 @@
 /* 💫 Page Container */
 .event-details {
-  color: #fff;
+  color: #E8EAF6;
   min-height: 100vh;
   padding-top: 90px;
-  background: radial-gradient(circle at top center, rgba(255, 215, 0, 0.12), rgba(0, 0, 0, 0.95)),
-              linear-gradient(135deg, #000 0%, #0a0a0a 50%, #000 100%);
+  background: radial-gradient(circle at top center, rgba(155, 93, 229, 0.15), rgba(10, 10, 25, 0.95)),
+              linear-gradient(135deg, #0b0c1a 0%, #1a103f 50%, #0b0c1a 100%);
   background-size: 200% 200%;
-  animation: goldenFlow 12s ease-in-out infinite alternate;
+  animation: auroraFlow 12s ease-in-out infinite alternate;
   overflow-x: hidden;
 }
 
-/* Shared Background Animation */
-@keyframes goldenFlow {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
-  }
+/* 🌌 Aurora Animation */
+@keyframes auroraFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
 }
 
 /* 🎬 Hero Section */
@@ -33,26 +29,20 @@
   align-items: center;
   justify-content: center;
   margin-top: 20px;
-  box-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+  box-shadow: 0 0 25px rgba(155, 93, 229, 0.3);
   animation: zoomInHero 1.2s ease forwards;
 }
 
 @keyframes zoomInHero {
-  from {
-    transform: scale(1.1);
-    opacity: 0.6;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+  from { transform: scale(1.1); opacity: 0.6; }
+  to { transform: scale(1); opacity: 1; }
 }
 
 .event-hero-card::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(10, 5, 25, 0.55);
 }
 
 /* 🌟 Hero Info */
@@ -62,54 +52,49 @@
   z-index: 2;
   max-width: 700px;
   padding: 20px;
-  border-radius: 12px;
-  background: rgba(0, 0, 0, 0.6);
+  border-radius: 14px;
+  background: rgba(15, 10, 30, 0.8);
   backdrop-filter: blur(6px);
   animation: fadeSlideUp 1s ease-in-out;
+  border: 1px solid rgba(155, 93, 229, 0.3);
+  box-shadow: 0 0 25px rgba(155, 93, 229, 0.25);
 }
 
 @keyframes fadeSlideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .event-hero-info h2 {
   font-size: 2.6rem;
-  font-weight: 700;
-  color: #FFD700;
+  font-weight: 800;
+  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: dreamyFlow 8s linear infinite;
+  text-shadow: 0 0 18px rgba(155, 93, 229, 0.4);
   margin-bottom: 10px;
-  text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
 }
 
 .event-hero-info p {
   margin: 8px 0;
   font-size: 1.1rem;
-  color: #ddd;
+  color: rgba(232, 234, 246, 0.85);
 }
 
 /* ⏳ Countdown Timer */
 .countdown {
   font-size: 1.2rem;
-  font-weight: bold;
-  color: #ffdd33;
+  font-weight: 700;
+  color: #9B5DE5;
   margin-top: 10px;
-  animation: blinkTimer 1.5s infinite alternate;
+  text-shadow: 0 0 12px rgba(155, 93, 229, 0.5);
+  animation: pulseTimer 1.6s infinite alternate;
 }
 
-@keyframes blinkTimer {
-  from {
-    opacity: 0.7;
-  }
-  to {
-    opacity: 1;
-    text-shadow: 0 0 10px #f5c518;
-  }
+@keyframes pulseTimer {
+  from { opacity: 0.8; transform: scale(1); }
+  to { opacity: 1; transform: scale(1.05); }
 }
 
 /* 🎟 Ticket Section */
@@ -119,42 +104,36 @@
 }
 
 .ticket-section h3 {
-  color: #FFD700;
   font-size: 2rem;
-  text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+  font-weight: 800;
+  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: dreamyFlow 8s ease-in-out infinite;
   text-align: center;
   margin-bottom: 35px;
-  animation: pulseGlow 2s infinite alternate;
-}
-
-@keyframes pulseGlow {
-  from {
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
-  }
-  to {
-    text-shadow: 0 0 18px rgba(255, 215, 0, 1);
-  }
+  text-shadow: 0 0 20px rgba(155, 93, 229, 0.3);
 }
 
 /* 🪩 Ticket Cards */
 .ticket-card {
-  background: rgba(17, 17, 17, 0.9);
-  border: 2px solid #FFD700;
+  background: rgba(18, 15, 35, 0.9);
+  border: 2px solid rgba(155, 93, 229, 0.4);
   border-radius: 14px;
   padding: 22px;
   text-align: center;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
   cursor: pointer;
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+  box-shadow: 0 0 20px rgba(155, 93, 229, 0.25);
 }
 
 .ticket-card:hover {
   transform: translateY(-8px) scale(1.05);
-  box-shadow: 0 0 35px rgba(255, 215, 0, 0.7);
+  box-shadow: 0 0 40px rgba(241, 91, 181, 0.4);
 }
 
 .ticket-card h5 {
-  color: #FFD700;
+  color: #E8EAF6;
   font-weight: 600;
   font-size: 1.2rem;
 }
@@ -162,7 +141,7 @@
 .ticket-price {
   font-size: 1.1rem;
   font-weight: bold;
-  color: #FFD700;
+  color: #F15BB5;
   margin: 8px 0 14px;
 }
 
@@ -171,14 +150,16 @@
   font-weight: bold;
   border-radius: 25px;
   transition: 0.3s ease;
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  background: linear-gradient(135deg, #6EC1E4, #9B5DE5, #F15BB5);
+  color: #fff;
+  box-shadow: 0 0 12px rgba(155, 93, 229, 0.4);
+  border: none;
 }
 
 .ticket-card .btn-warning:hover {
   transform: scale(1.08);
-  background: #fff;
-  color: #000;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.9);
+  background: linear-gradient(135deg, #F15BB5, #9B5DE5, #6EC1E4);
+  box-shadow: 0 0 25px rgba(241, 91, 181, 0.5);
 }
 
 /* 📱 Responsive */
@@ -194,4 +175,11 @@
   .ticket-card {
     padding: 18px;
   }
+}
+
+/* 🌈 Shared Gradient Animation */
+@keyframes dreamyFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }

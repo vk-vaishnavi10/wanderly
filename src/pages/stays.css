@@ -2,9 +2,9 @@
 html, body, #root {
   margin: 0;
   padding: 0;
-  background: #000;
+  background: #050014;
   font-family: "Poppins", sans-serif;
-  color: #FFD700;
+  color: #9b5de5;
   overflow-x: hidden;
 }
 
@@ -15,6 +15,18 @@ html, body, #root {
   height: 100vh;
   overflow: hidden;
 }
+/* 🎥 Background Video Styling */
+.stays-bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  filter: brightness(0.75) saturate(1.2);
+}
+
 
 /* 🌀 Slideshow with Fade Animation */
 .slideshow {
@@ -43,39 +55,39 @@ html, body, #root {
 
 @keyframes fade {
   0%, 100% { opacity: 0; transform: scale(1); }
-  10%, 25% { opacity: 1; transform: scale(1.08); } /* ✨ Zoom-in effect */
+  10%, 25% { opacity: 1; transform: scale(1.08); }
   40% { opacity: 0; transform: scale(1); }
 }
 
 /* ✅ Hero Overlay */
 .hero-overlay {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 80%;
+  left: 45%;
   transform: translate(-50%, -50%);
   text-align: center;
-  background: rgba(0, 0, 0, 0.65);
+  background: rgba(10, 0, 25, 0.65);
   backdrop-filter: blur(12px) saturate(150%);
   padding: 2rem 3rem;
   border-radius: 1rem;
   max-width: 700px;
   width: 90%;
   z-index: 2;
-  box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+  box-shadow: 0 0 25px rgba(155, 93, 229, 0.4);
 }
 
 .hero-overlay h1 {
   font-size: 2.8rem;
   font-weight: bold;
   margin-bottom: 1rem;
-  color: #FFD700;
-  text-shadow: 0 0 18px rgba(255, 215, 0, 0.8);
+  color: #f15bb5;
+  text-shadow: 0 0 18px rgba(241, 91, 181, 0.8);
 }
 
 .hero-overlay p {
   font-size: 1.2rem;
   margin-bottom: 1.5rem;
-  color: #eee;
+  color: #dcd7f9;
 }
 
 /* 🔍 Search Box */
@@ -83,19 +95,19 @@ html, body, #root {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid #FFD700;
+  border: 2px solid #9b5de5;
   border-radius: 50px;
-  background-color: #111;
+  background-color: #12003a;
   padding: 0.4rem;
   max-width: 600px;
   margin: 0 auto;
-  box-shadow: 0 0 18px rgba(255, 215, 0, 0.3);
+  box-shadow: 0 0 18px rgba(155, 93, 229, 0.3);
 }
 
 .search-box input {
   border: none;
   background: transparent;
-  color: #FFD700;
+  color: #9b5de5;
   flex: 1;
   padding: 0.5rem 1rem;
   outline: none;
@@ -107,8 +119,8 @@ html, body, #root {
 }
 
 .search-box button {
-  background-color: #FFD700;
-  color: #000;
+  background-color: #9b5de5;
+  color: #fff;
   font-weight: bold;
   border-radius: 50px;
   padding: 0.5rem 1.5rem;
@@ -117,8 +129,8 @@ html, body, #root {
 }
 
 .search-box button:hover {
-  background-color: #e6c200;
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.9);
+  background-color: #f15bb5;
+  box-shadow: 0 0 15px rgba(241, 91, 181, 0.9);
   transform: scale(1.08);
 }
 
@@ -128,17 +140,17 @@ html, body, #root {
   font-size: 2rem;
   font-weight: bold;
   margin: 3rem 0 2rem;
-  color: #FFD700;
-  text-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+  color: #9b5de5;
+  text-shadow: 0 0 12px rgba(241, 91, 181, 0.8);
 }
 
 /* 🏨 Hotel Cards */
 .stay-card {
-  border: 2px solid #FFD700;
+  border: 2px solid #9b5de5;
   border-radius: 1rem;
   overflow: hidden;
-  background: #111;
-  color: #FFD700;
+  background: #0f0b25;
+  color: #e8eaf6;
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
@@ -148,7 +160,7 @@ html, body, #root {
 .stay-card img {
   height: 220px;
   object-fit: cover;
-  border-bottom: 2px solid #FFD700;
+  border-bottom: 2px solid #9b5de5;
 }
 
 .stay-card .card-body {
@@ -160,28 +172,28 @@ html, body, #root {
   font-size: 1.4rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
-  color: #FFD700;
+  color: #f15bb5;
 }
 
 .stay-card p {
   margin: 0.3rem 0;
-  color: #ccc;
+  color: #bbb;
 }
 
 .stay-card strong {
-  color: #FFD700;
+  color: #9b5de5;
 }
 
 .stay-card:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
+  box-shadow: 0 0 25px rgba(155, 93, 229, 0.7);
 }
 
 /* 🟡 Book Button */
 .book-btn,
 .btn-warning {
-  background: #FFD700;
-  color: #000;
+  background: linear-gradient(135deg, #6ec1e4, #9b5de5, #f15bb5);
+  color: #fff;
   font-weight: bold;
   border-radius: 30px;
   padding: 0.6rem 1.2rem;
@@ -191,14 +203,14 @@ html, body, #root {
 
 .book-btn:hover,
 .btn-warning:hover {
-  background: #e6c200;
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+  background: linear-gradient(135deg, #f15bb5, #9b5de5, #6ec1e4);
+  box-shadow: 0 0 15px rgba(155, 93, 229, 0.7);
   transform: scale(1.05);
 }
 
 /* 🗺️ Map */
 .map-container {
-  border: 2px solid #FFD700;
+  border: 2px solid #9b5de5;
   border-radius: 10px;
   overflow: hidden;
   margin: 1rem;
@@ -210,21 +222,21 @@ html, body, #root {
 }
 
 .map-container:hover {
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+  box-shadow: 0 0 20px rgba(155, 93, 229, 0.4);
 }
 
 /* 🏙️ Nearby Attractions */
 .attractions {
   margin: 1rem;
   padding: 1rem;
-  background: #000;
+  background: #0b0820;
   border-radius: 10px;
-  border: 1px solid #FFD700;
+  border: 1px solid #9b5de5;
   text-align: left;
 }
 
 .attractions h6 {
-  color: #FFD700;
+  color: #f15bb5;
   margin-bottom: 0.5rem;
 }
 
@@ -235,7 +247,7 @@ html, body, #root {
 }
 
 .attractions li {
-  color: #ccc;
+  color: #cfcfe4;
   padding: 0.25rem 0;
 }
 

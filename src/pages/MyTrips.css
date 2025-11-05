@@ -1,10 +1,58 @@
-/* Custom Toast Theme */
-.golden-toast {
-    background: #111 !important;
-    border: 2px solid #FFD700 !important;
-    color: #FFD700 !important;
-    font-weight: bold;
-    border-radius: 10px !important;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.8) !important;
+/* 🌈 Aurora Toast Theme */
+.aurora-toast {
+  background: rgba(18, 15, 35, 0.95) !important;
+  border: 2px solid rgba(155, 93, 229, 0.6) !important;
+  color: #E8EAF6 !important;
+  font-weight: 600 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 0 25px rgba(155, 93, 229, 0.4),
+              0 0 40px rgba(241, 91, 181, 0.3) !important;
+  padding: 14px 18px !important;
+  text-align: center !important;
+  backdrop-filter: blur(8px);
+  animation: auroraToastGlow 3s ease-in-out infinite alternate;
+}
+
+/* ✨ Animated Gradient Border */
+@keyframes auroraToastGlow {
+  0% {
+    border-color: #9B5DE5;
+    box-shadow: 0 0 18px rgba(155, 93, 229, 0.4);
   }
-  
+  50% {
+    border-color: #6EC1E4;
+    box-shadow: 0 0 25px rgba(110, 193, 228, 0.5);
+  }
+  100% {
+    border-color: #F15BB5;
+    box-shadow: 0 0 30px rgba(241, 91, 181, 0.6);
+  }
+}
+
+/* 🪩 Text Gradient Glow */
+.aurora-toast span,
+.aurora-toast p {
+  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* ✅ Success Toast (optional) */
+.aurora-toast.success {
+  border-color: #6EC1E4 !important;
+  box-shadow: 0 0 25px rgba(110, 193, 228, 0.6);
+}
+
+/* ⚠️ Warning Toast (optional) */
+.aurora-toast.warning {
+  border-color: #F15BB5 !important;
+  box-shadow: 0 0 25px rgba(241, 91, 181, 0.6);
+}
+
+/* 💀 Error Toast (optional) */
+.aurora-toast.error {
+  border-color: #ff5c93 !important;
+  box-shadow: 0 0 25px rgba(255, 92, 147, 0.7);
+}

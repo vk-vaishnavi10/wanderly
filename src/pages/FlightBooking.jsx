@@ -1,4 +1,3 @@
-// ✅ src/pages/FlightBooking.jsx
 import React, { useMemo, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import flights from "../data/flights";
@@ -35,10 +34,10 @@ export default function FlightBooking() {
     return rows.flatMap((r) => cols.map((c) => `${r}${c}`));
   }, []);
 
-  // 🚫 Example of blocked seats
+  // 🚫 Blocked seats
   const blocked = useMemo(() => new Set(["B3", "B4", "C7", "E2", "F10"]), []);
 
-  // 📋 Booking state
+  // 📋 Booking form state
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -78,16 +77,16 @@ export default function FlightBooking() {
   const handleChange = (e) =>
     setFormData((s) => ({ ...s, [e.target.name]: e.target.value }));
 
-  // 💳 Handle booking
+  // 💳 Handle booking — cleaned & verified
   const handleBooking = async (e) => {
     e.preventDefault();
     if (!flight) return;
 
+    // ✅ Validate seat count
     if (selectedSeats.length === 0) {
       alert("Please select at least one seat.");
       return;
     }
-
     if (selectedSeats.length !== seatLimit) {
       alert(`Please select ${seatLimit} seat(s) before continuing.`);
       return;
@@ -98,49 +97,47 @@ export default function FlightBooking() {
         .toISOString()
         .split("T")[0];
 
-      // ✅ booking data structure
-      const bookingDetails = {
-        fullName: formData.fullName,
-        email: formData.email,
-        passengers: formData.passengers,
-        travelDate: formattedDate,
-        seat: selectedSeats.join(", "), // backend-safe singular key
-        seats: selectedSeats.join(", "), // redundant, avoids schema mismatch
-        flightName: flight.airline,
-        route: `${flight.from} → ${flight.to}`,
-        amount: flight.price,
-        status: "CONFIRMED",
-      };
+      // ✅ Force numeric price conversion
+      const rawPrice = flight.price;
+      const cleanPrice = Number(String(rawPrice).replace(/[^0-9.]/g, ""));
+      console.log("💰 Clean numeric price sent:", cleanPrice);
 
-      console.log("📦 Sending booking data:", bookingDetails);
-
-      // ✅ Try both possible backend paths
-      try {
-        await addFlightBooking(bookingDetails);
-        console.log("✅ Booking saved to backend!");
-      } catch (err) {
-        console.warn("⚠️ Primary booking API failed, falling back to /flightBookings...");
-        await fetch("http://localhost:8081/api/flightBookings", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(bookingDetails),
-        });
-        console.log("✅ Fallback API worked!");
+      if (isNaN(cleanPrice)) {
+        alert("❌ Invalid flight price. Please try again.");
+        return;
       }
 
-      // 💾 Save to localStorage
+      const bookingDetails = {
+        fullName: formData.fullName.trim(),
+        email: formData.email.trim(),
+        passengers: formData.passengers,
+        travelDate: formattedDate,
+        flightName: flight.airline,
+        route: `${flight.from} → ${flight.to}`,
+        amount: cleanPrice, // ✅ numeric only
+      };
+
+      console.log("📦 Sending booking payload:", bookingDetails);
+
+      // ✅ Send to backend
+      await addFlightBooking(bookingDetails);
+      console.log("✅ Booking saved successfully!");
+
+      // Save locally (for payment page)
       localStorage.setItem(
         "flightBooking",
-        JSON.stringify({ ...bookingDetails, flight })
+        JSON.stringify({
+          ...bookingDetails,
+          seats: selectedSeats.join(", "),
+          flight,
+        })
       );
 
-      // 🔀 Redirect to payment
-      navigate(`/payment/${flight.id}`, {
-        state: { bookingDetails, flight },
-      });
+      // Navigate to payment
+      navigate(`/payment/${flight.id}`, { state: { bookingDetails, flight } });
     } catch (error) {
       console.error("❌ Booking failed:", error);
-      alert("Server rejected your booking (400 Bad Request). Please verify backend fields.");
+      alert("Server rejected your booking (400 Bad Request). Please check backend fields.");
     }
   };
 
@@ -153,30 +150,32 @@ export default function FlightBooking() {
 
   return (
     <div
-    className="flight-booking"
-    style={{
-      "--seat-theme": themeColor, // 🎨 Airline theme color variable
-      minHeight: "100vh",
-      backgroundImage:
-        "url(https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?auto=format&fit=crop&w=1650&q=80)",
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      paddingTop: "100px",
-    }}
-  >
-  
+      className="flight-booking"
+      style={{
+        "--seat-theme": themeColor,
+        minHeight: "100vh",
+        backgroundImage:
+          "url(https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?auto=format&fit=crop&w=1650&q=80)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        paddingTop: "100px",
+      }}
+    >
       <div className="booking-container">
         {/* ✈️ Flight Summary */}
         <div className="flight-summary text-center" style={{ color: themeColor }}>
           <h2>{flight.airline} ✈️</h2>
-          <p>{flight.from} → {flight.to}</p>
-          <p><strong>₹{flight.price}</strong> | {flight.duration}</p>
+          <p>
+            {flight.from} → {flight.to}
+          </p>
+          <p>
+            <strong>₹{flight.price}</strong> | {flight.duration}
+          </p>
         </div>
 
         {/* 💺 Seat Selection */}
         <div className="seat-selection text-center">
           <h4 style={{ color: themeColor }}>Choose Your Seat</h4>
-
           <div className="legend mb-3">
             <span className="legend-box available" /> Available
             <span className="legend-box selected" /> Selected
