@@ -1,83 +1,144 @@
-/* 🌟 Dining Page Main Layout */
+/* ============================================================
+ 🍷 WANDERLY - DINING PAGE (Cinematic Luxury Glow Edition)
+ by Vaishnavi 💜 — Gold × Silver × Violet Harmony
+============================================================ */
+
+/* 🎥 Background Video */
+.dining-bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0; /* stays behind everything */
+  filter: brightness(0.4) contrast(1.1) saturate(1.1);
+  animation: zoomPan 30s ease-in-out infinite alternate;
+}
+
+/* 🪞 Overlay - soft candlelight gradient (behind cards) */
+.dining-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* stays behind visible content */
+  background: radial-gradient(
+    circle at 50% 40%,
+    rgba(255, 220, 150, 0.15) 0%,
+    rgba(10, 0, 30, 0.8) 80%
+  );
+  pointer-events: none; /* prevents blocking clicks */
+}
+
+/* 🌌 Main Page Container */
 .dining-page {
-  background: radial-gradient(circle at top, #0b0c1a 0%, #1a103f 100%);
-  color: #E8EAF6;
+  position: relative;
+  z-index: 2; /* everything above overlay */
   min-height: 100vh;
-  padding-top: 8rem; /* Prevent navbar overlap */
   font-family: "Poppins", sans-serif;
+  color: #fdf6e9;
   overflow-x: hidden;
+  padding-bottom: 5rem;
 }
 
-/* 🌈 Hero Section */
+/* 🌟 Hero Section */
 .dining-hero {
-  padding: 3rem 1rem;
-  background: linear-gradient(180deg, rgba(155, 93, 229, 0.08), transparent);
-  color: #E8EAF6;
+  position: relative;
+  z-index: 3;
+  padding: 4rem 1rem 3rem;
+  width: 85%;
+  margin: 4.5rem auto 2rem;
+  border-radius: 20px;
+  background: rgba(25, 15, 40, 0.55);
+  backdrop-filter: blur(12px) saturate(1.3);
+  box-shadow: 0 0 50px rgba(255, 220, 150, 0.15);
   text-align: center;
+  animation: fadeInUp 1.5s ease-out forwards;
 }
 
+/* ✨ Hero Heading */
 .dining-hero h1 {
   font-size: 2.8rem;
   font-weight: 800;
-  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
+  background: linear-gradient(90deg, #fffbea, #ffe29f, #fcb7d4, #bdf9ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-size: 300%;
-  animation: dreamyFlow 8s ease-in-out infinite;
-  text-shadow: 0 0 20px rgba(155, 93, 229, 0.4);
+  animation: shimmer 10s ease-in-out infinite;
+  text-shadow: 0 0 25px rgba(255, 239, 171, 0.3);
 }
 
 .dining-hero p {
-  color: rgba(232, 234, 246, 0.85);
+  color: #ffeabf;
+  font-size: 1.15rem;
   margin-top: 10px;
-  font-size: 1.1rem;
-  text-shadow: 0 0 8px rgba(110, 193, 228, 0.2);
+  text-shadow: 0 0 10px rgba(255, 239, 171, 0.3);
+}
+
+/* ✨ Section Heading */
+.section-heading {
+  text-align: center;
+  margin: 2.8rem 0 1.8rem;
+  font-size: 1.9rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #fff, #ffe29f, #bdf9ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(255, 239, 171, 0.3);
 }
 
 /* 🍽️ Dining Cards */
 .dining-card {
-  background: rgba(18, 15, 35, 0.9);
-  border: 2px solid rgba(155, 93, 229, 0.4);
-  border-radius: 15px;
+  position: relative;
+  z-index: 3; /* ensures not blurred */
+  background: rgba(25, 20, 45, 0.95);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 0 25px rgba(155, 93, 229, 0.25);
-  transition: all 0.3s ease;
+  box-shadow: 0 0 25px rgba(255, 239, 171, 0.1);
+  transition: all 0.4s ease;
+  transform: translateY(0);
+  animation: fadeInUp 1.2s ease-out forwards;
 }
 
 .dining-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 0 40px rgba(241, 91, 181, 0.35);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 0 40px rgba(255, 220, 150, 0.3),
+    0 0 20px rgba(255, 150, 220, 0.25);
 }
 
-/* 🖼️ Image Styling */
+/* 🖼️ Image */
 .dining-img {
   width: 100%;
   height: 230px;
   object-fit: cover;
-  border-bottom: 2px solid rgba(241, 91, 181, 0.5);
-  transition: transform 0.4s ease;
-  filter: brightness(0.95);
+  filter: brightness(0.9);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+  transition: transform 0.4s ease, filter 0.4s ease;
 }
 
 .dining-card:hover .dining-img {
-  transform: scale(1.05);
-  filter: brightness(1);
+  transform: scale(1.07);
+  filter: brightness(1.05);
 }
 
-/* 🧾 Text */
+/* 🧾 Card Text */
 .dining-card h4 {
   font-weight: 700;
-  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
+  font-size: 1.3rem;
+  margin: 1rem 1rem 0.4rem;
+  background: linear-gradient(90deg, #ffe29f, #ffffff, #fcb7d4);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 1.3rem;
-  margin-bottom: 8px;
-  text-shadow: 0 0 10px rgba(155, 93, 229, 0.4);
+  text-shadow: 0 0 12px rgba(255, 239, 171, 0.3);
 }
 
 .dining-card p {
-  color: rgba(232, 234, 246, 0.85);
-  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.96rem;
+  margin: 0 1rem 1.2rem;
   line-height: 1.6;
 }
 
@@ -88,34 +149,80 @@
   border: none;
   font-weight: 700;
   border-radius: 30px;
+  box-shadow: 0 0 20px rgba(155, 93, 229, 0.35);
   transition: all 0.3s ease;
-  box-shadow: 0 0 15px rgba(155, 93, 229, 0.3);
 }
 
 .btn-warning:hover {
-  background: linear-gradient(120deg, #F15BB5, #9B5DE5, #6EC1E4);
   transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(241, 91, 181, 0.4);
+  background: linear-gradient(120deg, #F15BB5, #9B5DE5, #6EC1E4);
+  box-shadow: 0 0 30px rgba(241, 91, 181, 0.5);
 }
 
-/* 📱 Responsive Fix */
-@media (max-width: 768px) {
+/* 🎞️ Animations */
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes zoomPan {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 📱 Responsive */
+@media (max-width: 992px) {
+  .dining-hero {
+    width: 90%;
+  }
   .dining-hero h1 {
-    font-size: 2rem;
+    font-size: 2.3rem;
   }
+}
 
-  .dining-card {
-    border-radius: 10px;
+@media (max-width: 768px) {
+  .section-heading {
+    font-size: 1.6rem;
   }
-
   .dining-card h4 {
     font-size: 1.1rem;
   }
+  .dining-card p {
+    font-size: 0.9rem;
+  }
 }
 
-/* 🌈 Animated Gradient Flow */
-@keyframes dreamyFlow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+@media (max-width: 480px) {
+  .dining-hero {
+    width: 90%;
+    padding: 2.5rem 1rem;
+  }
+  .dining-card {
+    border-radius: 12px;
+  }
+  .dining-hero h1 {
+    font-size: 1.8rem;
+  }
 }

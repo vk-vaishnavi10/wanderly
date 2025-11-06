@@ -7,7 +7,7 @@
 .register-bg-video {
   position: fixed;
   top: 0;
-  left: 0; /* ✅ flush-left */
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -17,28 +17,27 @@
   transition: transform 1s ease-in-out, filter 1.5s ease;
 }
 
-/* 🌌 Wrapper */
+/* 🌌 Page Wrapper */
 .register-page {
-  position: fixed; /* ✅ overlay entire viewport */
-  top: 0;
-  left: 0;
+  position: fixed;
+  inset: 0;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
   font-family: "Poppins", sans-serif;
   color: #fff;
   background: transparent;
-  z-index: 2000; /* ✅ above navbar */
+  z-index: 2000; /* higher than navbar */
 }
 
-/* 🌈 Cinematic Overlay - Flush Left */
+/* 🌈 Cinematic Overlay */
 .register-overlay {
   position: absolute;
   top: 0;
   left: 0;
-  width: 40%; /* 🩵 wide glass panel like intro */
+  width: 40%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.68);
+  background: rgba(10, 0, 30, 0.7);
   backdrop-filter: blur(10px);
   display: flex;
   justify-content: center;
@@ -61,7 +60,7 @@
   }
 }
 
-/* 🌟 Register Card (glass form) */
+/* 🌟 Register Card */
 .register-card {
   width: 100%;
   max-width: 480px;
@@ -83,7 +82,6 @@
   background: linear-gradient(90deg, #00bcd4, #9b5de5, #f15bb5, #f9c74f);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
   animation: textGlow 4s infinite ease-in-out;
 }
 
@@ -162,6 +160,25 @@
   background: linear-gradient(90deg, #f15bb5, #9b5de5, #00bcd4);
 }
 
+/* 🌈 Footer below Register */
+.register-footer {
+  margin-top: 1rem;
+  color: #dcd7ff;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.signin-link {
+  color: #ffd700;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.signin-link:hover {
+  text-shadow: 0 0 10px #ffd700, 0 0 20px #f15bb5;
+}
+
 /* 🎬 Fade-Up Animation */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(25px); }
@@ -172,11 +189,11 @@
 @media (max-width: 768px) {
   .register-overlay {
     width: 100%;
+    padding: 1rem;
     align-items: center;
     justify-content: center;
     text-align: center;
     backdrop-filter: blur(6px);
-    padding: 1rem;
   }
 
   .register-card {
@@ -185,7 +202,7 @@
   }
 
   .register-title {
-    font-size: 1.8rem;
     text-align: center;
+    font-size: 1.8rem;
   }
 }

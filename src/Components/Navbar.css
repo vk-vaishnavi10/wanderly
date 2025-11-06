@@ -10,7 +10,11 @@
   left: 0;
   height: 100vh;
   width: 320px; /* 💜 widened for cinematic feel */
-  background: linear-gradient(180deg, rgba(11, 12, 26, 0.97) 0%, rgba(26, 16, 63, 0.93) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(11, 12, 26, 0.97) 0%,
+    rgba(26, 16, 63, 0.93) 100%
+  );
   box-shadow: 0 0 45px rgba(155, 93, 229, 0.25);
   border-right: 2px solid rgba(155, 93, 229, 0.35);
   backdrop-filter: blur(14px);
@@ -19,8 +23,40 @@
   justify-content: space-between;
   padding: 1.2rem 1rem;
   z-index: 1000;
+
+  /* ✨ FIX 1 — allows dropdown & confetti to appear outside navbar */
   overflow: hidden;
+
   transition: all 0.4s ease;
+}
+/* COLLAPSED NAVBAR FIX 💎 */
+.vertical-navbar.collapsed {
+  width: 90px !important;
+  padding: 1.2rem 0.5rem;
+  align-items: center;
+}
+
+.vertical-navbar.collapsed .profile-quick-actions {
+  display: none !important; /* hide the trip/memory buttons */
+}
+
+.vertical-navbar.collapsed .profile-name-top,
+.vertical-navbar.collapsed .profile-dropdown-toggle {
+  display: none !important; /* hide name + arrow */
+}
+
+.vertical-navbar.collapsed .brand-text {
+  display: none !important; /* hide "Wanderly" text */
+}
+
+.vertical-navbar.collapsed .nav-link-vertical {
+  justify-content: center; /* center icons when collapsed */
+  font-size: 1.2rem;
+  padding: 0.8rem 0;
+}
+
+.vertical-navbar.collapsed .nav-link-vertical span {
+  display: none; /* if you wrap text in span later */
 }
 
 /* 🌌 Subtle right glow blending into video */
@@ -31,15 +67,20 @@
   right: 0;
   width: 14px;
   height: 100%;
-  background: linear-gradient(90deg, rgba(155,93,229,0.3), transparent 90%);
+  background: linear-gradient(90deg, rgba(155, 93, 229, 0.3), transparent 90%);
   filter: blur(12px);
   pointer-events: none;
   animation: softGlow 8s ease-in-out infinite alternate;
 }
 
 @keyframes softGlow {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 /* 🌈 Flowing Aurora Gradient */
@@ -51,8 +92,8 @@
   width: 300%;
   height: 300%;
   background: radial-gradient(circle at 30% 30%, #6ec1e4, transparent 40%),
-              radial-gradient(circle at 70% 50%, #9b5de5, transparent 40%),
-              radial-gradient(circle at 40% 80%, #f15bb5, transparent 45%);
+    radial-gradient(circle at 70% 50%, #9b5de5, transparent 40%),
+    radial-gradient(circle at 40% 80%, #f15bb5, transparent 45%);
   opacity: 0.25;
   filter: blur(140px);
   animation: auroraMove 20s infinite alternate linear;
@@ -60,9 +101,15 @@
 }
 
 @keyframes auroraMove {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(8%, -10%) scale(1.1); }
-  100% { transform: translate(-10%, 10%) scale(1); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(8%, -10%) scale(1.1);
+  }
+  100% {
+    transform: translate(-10%, 10%) scale(1);
+  }
 }
 
 /* ============================================================
@@ -106,8 +153,33 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   cursor: pointer;
   position: relative;
-  z-index: 1;
+  z-index: 10; /* ✨ FIX 2 — keep above video */
 }
+/* 🧭 FIXED PROFILE WRAPPER — align avatar + name + arrow horizontally */
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.profile-dropdown-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #cfd4ff;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.4rem; /* 🩵 ensures it stays below avatar */
+  transition: all 0.3s ease;
+}
+
+.profile-dropdown-toggle:hover {
+  color: #ffd700;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+}
+
 
 .profile-initials-top {
   width: 80px;
@@ -123,6 +195,34 @@
   margin: 0 auto 0.5rem;
   box-shadow: 0 0 20px rgba(155, 93, 229, 0.5);
   transition: transform 0.3s ease;
+  position: relative;
+}
+
+/* ✨ Small dropdown arrow under avatar */
+/* 🌈 Dropdown Arrow Beside Name */
+.profile-dropdown-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #cfd4ff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.profile-dropdown-toggle:hover {
+  color: #ffd700;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+}
+
+.profile-arrow {
+  font-size: 0.85rem;
+  transition: transform 0.3s ease;
+}
+
+.profile-dropdown-toggle.open .profile-arrow {
+  transform: rotate(180deg);
 }
 
 .profile-initials-top:hover {
@@ -140,10 +240,10 @@
   text-overflow: ellipsis;
   margin: 0 auto;
 }
-/* ============================================================
-   💜 PROFILE QUICK ACTION BUTTONS (Trips, Memories, Budget, Packing)
-============================================================ */
 
+/* ============================================================
+   💜 PROFILE QUICK ACTION BUTTONS
+============================================================ */
 .profile-quick-actions {
   display: flex;
   flex-wrap: wrap;
@@ -185,17 +285,6 @@
   box-shadow: 0 0 22px rgba(155, 93, 229, 0.5);
 }
 
-
-.profile-name-top:hover {
-  white-space: normal;
-  word-wrap: break-word;
-  overflow: visible;
-  background: rgba(0, 0, 0, 0.6);
-  padding: 0.3rem 0.4rem;
-  border-radius: 8px;
-  box-shadow: 0 0 15px rgba(155, 93, 229, 0.4);
-}
-
 /* ============================================================
    📋 NAVIGATION LINKS
 ============================================================ */
@@ -222,7 +311,11 @@
 
 .nav-link-vertical:hover {
   color: #fff;
-  background: linear-gradient(90deg, rgba(110, 193, 228, 0.18), rgba(155, 93, 229, 0.15));
+  background: linear-gradient(
+    90deg,
+    rgba(110, 193, 228, 0.18),
+    rgba(155, 93, 229, 0.15)
+  );
   transform: translateX(4px);
 }
 
@@ -291,14 +384,85 @@
    🌟 CONTENT ALIGNMENT (HOME & PAGES)
 ============================================================ */
 .main-content {
-  margin-left: 320px; /* 🩵 matches navbar width */
-  transition: margin-left 0.4s ease;
-  padding: 1rem 2rem;
+  margin-left: 320px;
+  transition: all 0.5s cubic-bezier(0.45, 0, 0.25, 1);
 }
+.main-content.collapsed {
+  margin-left: 90px !important;
+}
+
 
 .main-content.collapsed {
   margin-left: 90px;
 }
+
+/* ============================================================
+   🌈 PROFILE DROPDOWN MENU (Collapsed View)
+============================================================ */
+
+.profile-dropdown {
+  position: absolute;
+  top: 110px; /* ✨ FIX 3 — move dropdown below avatar */
+  left: 85px;
+  width: 200px;
+  background: rgba(25, 20, 45, 0.95);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 25px rgba(155, 93, 229, 0.35);
+  padding: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  animation: dropdownFade 0.3s ease-in-out;
+  z-index: 9999; /* 💎 FIX 4 — bring to front */
+  backdrop-filter: blur(8px) saturate(160%);
+}
+
+.dropdown-item {
+  color: #e4e4e9;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 0.5rem 0.6rem;
+  border-radius: 8px;
+  transition: all 0.25s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dropdown-item:hover {
+  background: linear-gradient(90deg, #6ec1e420, #9b5de520, #f15bb520);
+  color: #ffd700;
+  transform: translateX(4px);
+}
+
+/* ✨ Animation */
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes dropdownClose {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+.fade-out {
+  animation: dropdownClose 0.3s ease-in-out forwards;
+  pointer-events: none;
+  opacity: 0;
+}
+
 
 /* ============================================================
    📱 RESPONSIVE BEHAVIOR
@@ -315,5 +479,108 @@
   .brand-text,
   .profile-name-top {
     display: none;
+  }
+
+  .profile-dropdown {
+    left: 70px;
+    width: 160px;
+  }
+}
+/* ============================================================
+   🎛 PROFILE TOGGLE BUTTON (Near Avatar)
+============================================================ */
+.profile-toggle-btn {
+  margin-top: 0.6rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #eaeaff;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.35s ease;
+  box-shadow: 0 0 12px rgba(155, 93, 229, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-inline: auto;
+  position: relative;
+  z-index: 2;
+}
+
+.profile-toggle-btn:hover {
+  background: linear-gradient(90deg, #6ec1e4, #9b5de5, #f15bb5);
+  color: #fff;
+  transform: scale(1.08);
+  box-shadow: 0 0 20px rgba(155, 93, 229, 0.6);
+}
+
+/* ✨ Rotate when collapsed */
+.profile-toggle-btn.open {
+  transform: rotate(0deg);
+}
+
+.profile-toggle-btn.closed {
+  transform: rotate(180deg);
+  transition: transform 0.4s ease;
+}
+
+/* 🌈 Soft pulse aura behind the button */
+.profile-toggle-btn::after {
+  content: "";
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(155, 93, 229, 0.35), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.profile-toggle-btn:hover::after {
+  opacity: 1;
+  animation: pulseGlow 1.4s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.2); opacity: 0.4; }
+  100% { transform: scale(1); opacity: 0.8; }
+}
+/* 🎢 Smooth profile quick-action dropdown */
+.profile-quick-actions.slide-down {
+  animation: slideDown 0.4s ease forwards;
+}
+
+.profile-quick-actions.slide-up {
+  animation: slideUp 0.4s ease forwards;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 400px;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 400px;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+    max-height: 0;
   }
 }

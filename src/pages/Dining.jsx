@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Dining.css";
-
-// ✅ Import local image for Street Food
+import diningVideo from "../assets/videos/diningbg.mp4";
 import stImg from "../images/st.jpeg";
 
 export default function Dining() {
@@ -23,39 +22,41 @@ export default function Dining() {
       id: 3,
       title: "Street Food 🌮",
       desc: "Experience the culture through vibrant street food scenes.",
-      img: stImg, // ✅ local image used here
+      img: stImg,
     },
   ];
 
   return (
     <div className="dining-page">
-      {/* 🌟 Hero */}
-      <section className="dining-hero text-center text-light">
-        <h1 className="fw-bold">🍴 Dining & Food</h1>
-        <p className="lead text-warning">
-          Explore restaurants, cafés, and street food around your stay.
-        </p>
+      {/* 🎥 Background Video */}
+      <video className="dining-bg-video" autoPlay loop muted playsInline>
+        <source src={diningVideo} type="video/mp4" />
+      </video>
+
+      {/* 🪞 Glass Overlay */}
+      <div className="dining-overlay"></div>
+
+      {/* 🌟 Hero Section */}
+      <section className="dining-hero text-center">
+        <h1>🍴 Dining & Food</h1>
+        <p>Explore restaurants, cafés, and street food around your stay.</p>
       </section>
 
       {/* 🍽️ Dining Options */}
       <section className="container py-5">
-        <h2 className="text-center mb-4 text-warning fw-bold">
-          ✨ Popular Dining Choices
-        </h2>
-        <div className="row g-4">
-          {diningOptions.map((place) => (
-            <div key={place.id} className="col-md-4">
-              <div className="dining-card bg-dark text-light shadow-lg border border-warning rounded-3 overflow-hidden">
-                <img
-                  src={place.img}
-                  alt={place.title}
-                  className="dining-img w-100"
-                  style={{ height: "230px", objectFit: "cover" }}
-                />
+        <h2 className="section-heading">✨ Popular Dining Choices</h2>
+        <div className="row g-4 justify-content-center">
+          {diningOptions.map((place, index) => (
+            <div
+              key={place.id}
+              className="col-md-4 fade-in"
+              style={{ animationDelay: `${index * 0.2}s` }}
+            >
+              <div className="dining-card">
+                <img src={place.img} alt={place.title} className="dining-img" />
                 <div className="p-3">
-                  <h4 className="text-warning">{place.title}</h4>
+                  <h4>{place.title}</h4>
                   <p>{place.desc}</p>
-
                   <Link
                     to={`/dining/${place.id}`}
                     className="btn btn-warning w-100 fw-bold mt-2"

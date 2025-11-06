@@ -48,6 +48,14 @@ import Memories from "./pages/Memories.jsx";
 import MapPage from "./pages/Map.jsx";
 import Timeline from "./pages/Timeline.jsx";
 import Settings from "./pages/Settings.jsx";
+import HelpCenter from "./pages/HelpCenter.jsx"; 
+import CreateTicket from "./pages/help/CreateTicket.jsx";
+import LiveChat from "./pages/help/LiveChat.jsx";
+import ContactHelp from "./pages/help/ContactHelp.jsx";
+import AppStatus from "./pages/help/AppStatus.jsx";
+import Faqs from "./pages/help/Faqs.jsx";
+import MyTickets from "./pages/help/MyTickets.jsx";
+import Budget from "./pages/Budget.jsx";
 
 
 
@@ -85,7 +93,8 @@ export default function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/flights" element={<Flights />} />
             <Route path="/flights/:id" element={<FlightsDetails />} />
-            <Route path="/flights/book/:id" element={<FlightBooking />} />
+            <Route path="/flightbooking/:id" element={<FlightBooking />} />
+
             <Route path="/hotels" element={<Hotels />} />
             <Route path="/hotels/:id" element={<HotelsDetails />} />
             <Route path="/hotels/book/:id" element={<HotelBooking />} />
@@ -116,7 +125,14 @@ export default function App() {
             <Route path="/map" element={<MapPage />} />
             <Route path="/timeline" element={<Timeline />} />
             <Route path="/settings" element={<Settings />} />
-
+            <Route path="/help" element={<HelpCenter />} /> {/* 🆕 Help Center */}
+            <Route path="/help/create-ticket" element={<CreateTicket />} />
+<Route path="/help/live-chat" element={<LiveChat />} />
+<Route path="/help/contact" element={<ContactHelp />} />
+<Route path="/help/status" element={<AppStatus />} />
+<Route path="/help/faqs" element={<Faqs />} />
+<Route path="/help/tickets" element={<MyTickets />} />
+<Route path="/budget" element={<Budget />} /> {/* 💜 Budget Route */}
 
 
           </Routes>

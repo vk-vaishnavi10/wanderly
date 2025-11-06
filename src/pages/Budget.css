@@ -1,0 +1,229 @@
+/* 🌟 Premium Aurora Glass Cards - Luxe White Edition */
+.budget-card {
+    position: relative;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(18px);
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    overflow: hidden;
+    transition: all 0.4s ease;
+    padding: 2rem;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.05),
+                0 0 40px rgba(0, 255, 234, 0.08);
+  }
+  
+  /* 🌈 White Aurora Border Flow */
+  .budget-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 22px;
+    padding: 2px;
+    background: linear-gradient(
+      130deg,
+      rgba(255, 255, 255, 0.85),
+      rgba(0, 255, 204, 0.9),
+      rgba(0, 102, 255, 0.9),
+      rgba(255, 179, 255, 0.9)
+    );
+    background-size: 400% 400%;
+    animation: auroraLoop 8s ease infinite;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  /* ✨ Gentle Highlight Reflection */
+  .budget-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80%;
+    height: 45%;
+    background: radial-gradient(
+      circle at top left,
+      rgba(255, 255, 255, 0.12),
+      transparent 70%
+    );
+    opacity: 0.7;
+    z-index: 0;
+    pointer-events: none;
+  }
+  
+  /* 🌠 On Hover - Elegant White Glow */
+  .budget-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 35px rgba(255, 255, 255, 0.15),
+                0 0 60px rgba(0, 225, 255, 0.25);
+  }
+  
+  /* 🌈 Aurora Border Animation */
+  @keyframes auroraLoop {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  /* ✨ Card Headings */
+  .budget-card h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-align: left;
+    background: linear-gradient(90deg, #ffffff, #6ec1e4, #9b5de5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
+    margin-bottom: 1.4rem;
+  }
+  
+  /* 📊 Inputs, Dropdowns, Fields */
+  .budget-card input,
+  .budget-card select {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    padding: 10px 14px;
+    color: #fff;
+    width: 100%;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .budget-card input:focus,
+  .budget-card select:focus {
+    outline: none;
+    border-color: #00e1ff;
+    box-shadow: 0 0 16px rgba(0, 225, 255, 0.6);
+  }
+  
+  /* 💜 Add Expense Button */
+  .btn-glow {
+    background: linear-gradient(90deg, #ffffff, #9b5de5, #00e1ff);
+    color: #1a1a2f;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 24px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
+  }
+  .btn-glow:hover {
+    transform: scale(1.06);
+    box-shadow: 0 0 35px rgba(255, 255, 255, 0.35);
+  }
+  
+  /* 📦 Layout - 2 Cards Top, 1 Bottom */
+  .budget-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    justify-content: center;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .budget-card.analytics {
+    grid-column: span 2;
+    justify-self: center;
+    width: 80%;
+    text-align: left;
+  }
+  
+  /* 🧭 Plan Section - Align Inputs + Chart */
+  .plan-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .plan-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    flex: 1;
+  }
+  
+  .budget-plan-inputs {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .plan-chart {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    padding: 15px;
+    box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.1);
+    transition: 0.3s ease;
+  }
+  .plan-chart:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.25);
+  }
+  
+  /* 🪩 Expense & Analytics Lists */
+  .expense-list {
+    margin-top: 15px;
+    text-align: left;
+    color: #eee;
+    font-size: 0.95rem;
+  }
+  .expense-list li {
+    margin-bottom: 5px;
+    list-style: "💰 ";
+  }
+  .empty-text {
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  /* 📊 Analytics */
+  .analytics-stats p {
+    margin-bottom: 10px;
+    font-weight: 500;
+    color: #e6e6e6;
+  }
+  .analytics-stats .alert-text {
+    color: #ffb3b3;
+    font-weight: 600;
+  }
+  
+  /* 🌙 Equal Height for Top Cards */
+  .budget-card {
+    min-height: 520px;
+  }
+  
+  /* 📱 Responsive Layout */
+  @media (max-width: 900px) {
+    .budget-grid {
+      grid-template-columns: 1fr;
+    }
+    .plan-content {
+      flex-direction: column;
+      align-items: center;
+    }
+    .plan-chart {
+      width: 100%;
+      margin-top: 20px;
+    }
+    .budget-card.analytics {
+      width: 100%;
+    }
+  }
+  

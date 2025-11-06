@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext.jsx";
 import logo from "../images/travellogo.jpeg";
@@ -7,13 +7,14 @@ import "./Navbar.css";
 export default function Navbar({ onToggle }) {
   const { user, logout } = useContext(UserContext);
   const navigate = useNavigate();
-  const [expanded, setExpanded] = useState(true);
 
-  const toggleNavbar = () => {
-    setExpanded(!expanded);
-    if (onToggle) onToggle(!expanded);
-  };
+  // 🌈 States
+  const [expanded, setExpanded] = useState(true); // whole sidebar
+  const [profileExpanded, setProfileExpanded] = useState(false); // only profile toggle
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
 
+  // 🌟 Handle logout
   const handleLogout = () => {
     logout();
     navigate("/signin");
@@ -26,9 +27,16 @@ export default function Navbar({ onToggle }) {
     return nameOrEmail[0]?.toUpperCase() || "🙂";
   };
 
+  // Close dropdown outside click
   useEffect(() => {
-    if (onToggle) onToggle(expanded);
-  }, [expanded]);
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <aside className={`vertical-navbar ${expanded ? "" : "collapsed"}`}>
@@ -40,7 +48,8 @@ export default function Navbar({ onToggle }) {
 
       {/* 👤 Profile Section */}
       {user && (
-        <div className="nav-user">
+        <div className="nav-user" ref={dropdownRef}>
+          {/* Profile Avatar + Name */}
           <div className="profile-info">
             {user.profilePic ? (
               <img
@@ -53,18 +62,29 @@ export default function Navbar({ onToggle }) {
                 {initials(user.fullName || user.email)}
               </div>
             )}
+
             {expanded && (
-              <span className="profile-name-top">
-                {user.fullName || "Traveler"}
-              </span>
+              <div
+                className={`profile-dropdown-toggle ${
+                  profileExpanded ? "open" : ""
+                }`}
+                onClick={() => setProfileExpanded(!profileExpanded)}
+              >
+                <span className="profile-name-top">
+                  {user.fullName || "Traveler"}
+                </span>
+                <span className="profile-arrow">▾</span>
+              </div>
             )}
           </div>
 
-          {/* 💜 Quick Buttons under Profile */}
-          <div className="nav-divider"></div>
-
-          {expanded && (
-            <div className="profile-quick-actions">
+          {/* 🌟 Quick Actions - visible only when profileExpanded is true */}
+          {expanded && profileExpanded && (
+            <div
+              className={`profile-quick-actions ${
+                profileExpanded ? "slide-down" : "slide-up"
+              }`}
+            >
               <NavLink
                 to="/mytrips"
                 className={({ isActive }) =>
@@ -99,10 +119,9 @@ export default function Navbar({ onToggle }) {
               </NavLink>
             </div>
           )}
-       
 
+          <div className="nav-divider"></div>
         </div>
-        
       )}
 
       {/* 📋 Main Navigation */}
@@ -146,9 +165,6 @@ export default function Navbar({ onToggle }) {
             🚪 Logout
           </button>
         )}
-        <button className="collapse-btn" onClick={toggleNavbar}>
-          {expanded ? "⬅️ Collapse" : "➡️"}
-        </button>
       </div>
     </aside>
   );

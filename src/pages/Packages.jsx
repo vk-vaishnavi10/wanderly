@@ -1,14 +1,12 @@
-// src/pages/Packages.jsx
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./packages.css";
-import kashmirImg from "../images/kashmirparadise.jpg";
 import { getPackages } from "../services/api";
+import kashmirImg from "../images/kashmirparadise.jpg";
 import sinImg from "../images/sin.avif";
 import keralaImg from "../images/kerala.jpg";
+import packageVideo from "../assets/videos/packagebg.mp4";
 
-
-// ✅ Fallback sample data (used if backend is empty)
 const fallbackPackages = [
   {
     id: 1,
@@ -31,71 +29,29 @@ const fallbackPackages = [
   },
   {
     id: 3,
-    title: "Jaipur Royal Getaway 🏰",
-    description: "Flight + 2 Nights Heritage Hotel + Cab",
-    price: "₹18,500/person",
-    duration: "2 Nights / 3 Days",
-    image:
-      "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=800&q=80",
-    inclusions: ["Flights", "Breakfast", "City Tour"],
-  },
-  {
-    id: 4,
-    title: "Hyderabad Heritage Tour 🕌",
-    description: "Flight + 2 Nights in Hyderabad + City Cab",
-    price: "₹15,000/person",
-    duration: "2 Nights / 3 Days",
-    image:
-      "https://images.unsplash.com/photo-1603262110263-fb0112e7cc33?auto=format&fit=crop&w=800&q=80",
-    inclusions: ["Flights", "Hotel Stay", "Charminar & Golconda Tour"],
-  },
-  {
-    id: 5,
     title: "Kerala Backwaters Cruise 🚤",
     description: "Flight + 3 Nights in Houseboat + Cab",
     price: "₹28,000/person",
     duration: "3 Nights / 4 Days",
-    image:keralaImg,
-    
+    image: keralaImg,
     inclusions: ["Flights", "Houseboat Stay", "Meals"],
   },
   {
-    id: 6,
-    title: "Maldives Luxury Escape 🌊",
-    description: "Flight + 4 Nights Overwater Villa + Cab",
-    price: "₹85,000/person",
-    duration: "4 Nights / 5 Days",
-    image:
-      "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=800&q=80",
-    inclusions: ["Flights", "Luxury Villa", "Private Cabana"],
-  },
-  {
-    id: 7,
+    id: 4,
     title: "Singapore Family Fun 🎡",
     description: "Flight + 3 Nights Hotel + Universal Studios",
     price: "₹60,000/person",
     duration: "3 Nights / 4 Days",
-    image:sinImg,
-     
+    image: sinImg,
     inclusions: ["Flights", "Hotel", "Universal Studio Tickets"],
-  },
-  {
-    id: 8,
-    title: "Dubai Desert Adventure 🏜️",
-    description: "Flight + 3 Nights in Dubai + Desert Safari",
-    price: "₹55,000/person",
-    duration: "3 Nights / 4 Days",
-    image:
-      "https://images.unsplash.com/photo-1509043759401-136742328bb3?auto=format&fit=crop&w=800&q=80",
-    inclusions: ["Flights", "Hotel", "Desert Safari"],
   },
 ];
 
 export default function Packages() {
   const [query, setQuery] = useState("");
   const [packages, setPackages] = useState([]);
+  const [filteredPackages, setFilteredPackages] = useState([]);
 
-  // ✅ Fetch from backend
   useEffect(() => {
     async function fetchPackages() {
       try {
@@ -104,34 +60,26 @@ export default function Packages() {
           setPackages(
             res.data.map((pkg) => ({
               ...pkg,
-              image: pkg.imageUrl || kashmirImg, // fallback if no image
+              image: pkg.imageUrl || kashmirImg,
               price: `₹${pkg.price}/person`,
-              inclusions: ["Flights", "Hotels", "Cabs"], // backend has no inclusions
+              inclusions: ["Flights", "Hotels", "Cabs"],
             }))
           );
-        } else {
-          // If backend empty, fallback to static data
-          setPackages(fallbackPackages);
-        }
+        } else setPackages(fallbackPackages);
       } catch (err) {
-        console.error("❌ Failed to load packages from backend:", err);
+        console.error("❌ Failed to load packages:", err);
         setPackages(fallbackPackages);
       }
     }
     fetchPackages();
   }, []);
 
-  const [filteredPackages, setFilteredPackages] = useState([]);
-
   useEffect(() => {
     setFilteredPackages(packages);
   }, [packages]);
 
   const searchPackages = () => {
-    if (!query) {
-      setFilteredPackages(packages);
-      return;
-    }
+    if (!query) return setFilteredPackages(packages);
     const results = packages.filter((pkg) =>
       pkg.title.toLowerCase().includes(query.toLowerCase())
     );
@@ -140,14 +88,20 @@ export default function Packages() {
 
   return (
     <section className="packages-section">
-      {/* 🔥 Hero Section */}
+      {/* 🎥 Background Video */}
+      <video autoPlay loop muted playsInline className="packages-bg-video">
+        <source src={packageVideo} type="video/mp4" />
+      </video>
+
+      {/* 🌍 Elegant Hero */}
       <div className="packages-hero">
         <div className="hero-overlay">
-          <h1>🌍 Explore Travel Packages</h1>
+          <h1>Explore Travel Packages</h1>
           <p>
-            Book Flight + Hotel + Cab packages at the best prices for your dream
-            vacation.
+            Book <strong>Flight + Hotel + Cab</strong> packages at the best
+            prices for your dream vacation.
           </p>
+
           <div className="search-box">
             <input
               type="text"
@@ -162,17 +116,13 @@ export default function Packages() {
 
       {/* ✨ Featured Packages */}
       <div className="container py-5">
-        <h2 className="section-heading">✨ Featured Packages</h2>
+        <h2 className="section-heading">Featured Packages</h2>
         <div className="row g-4">
           {filteredPackages.length > 0 ? (
             filteredPackages.map((pkg) => (
               <div key={pkg.id} className="col-12 col-md-6 col-lg-4">
                 <div className="card package-card h-100">
-                  <img
-                    src={pkg.image}
-                    className="card-img-top"
-                    alt={pkg.title}
-                  />
+                  <img src={pkg.image} className="card-img-top" alt={pkg.title} />
                   <div className="card-body text-center">
                     <h5 className="card-title">{pkg.title}</h5>
                     <p className="card-text">{pkg.description}</p>

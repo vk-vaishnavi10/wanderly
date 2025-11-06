@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { useParams, useNavigate } from "react-router-dom";
 import { addTransportBooking } from "../services/api";
 import "./CarBooking.css";
 
-// 🖼️ Import Local Car Images
+// 🚘 Car Images
 import sedanImg from "../images/sedan.webp";
 import suvImg from "../images/suv.png";
 import luxuryImg from "../images/luxurycar.webp";
@@ -12,7 +12,6 @@ import luxuryImg from "../images/luxurycar.webp";
 export default function CarBooking() {
   const { id } = useParams();
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     pickupLocation: "",
     dropLocation: "",
@@ -20,12 +19,15 @@ export default function CarBooking() {
     carType: "",
   });
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // ✅ Show car preview image based on type
   const getCarImage = () => {
     switch (formData.carType) {
       case "Sedan":
@@ -41,7 +43,6 @@ export default function CarBooking() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const { pickupLocation, dropLocation, bookingDate, carType } = formData;
 
     if (!pickupLocation || !dropLocation || !bookingDate || !carType) {
@@ -51,7 +52,7 @@ export default function CarBooking() {
 
     try {
       const payload = {
-        user: { id: 1 }, // demo static user
+        user: { id: 1 },
         transport: { id: parseInt(id) },
         seats: 1,
         bookingDate: bookingDate + "T00:00:00",
@@ -60,19 +61,17 @@ export default function CarBooking() {
         carType,
       };
 
-      console.log("📤 Sending booking data:", payload);
       await addTransportBooking(payload);
 
       Swal.fire({
         title: "✅ Booking Confirmed!",
         text: `Your ${carType} car has been successfully booked!`,
         icon: "success",
-        confirmButtonColor: "#f5c518",
-        background: "#111",
-        color: "#fff",
+        confirmButtonColor: "#ffce7a",
+        background: "#15102b",
+        color: "#ffffff",
       }).then(() => navigate("/transport"));
     } catch (error) {
-      console.error("❌ Booking failed:", error.response?.data || error.message);
       Swal.fire("❌ Error", "Unable to save booking. Try again!", "error");
     }
   };
@@ -80,10 +79,9 @@ export default function CarBooking() {
   return (
     <div className="car-booking">
       <div className="car-booking-card">
-        <h2>🚗 Car Booking</h2>
-        <p>Book your perfect ride with comfort and reliability!</p>
+        <h2>🚘 Car Booking</h2>
+        <p>Book your perfect ride with comfort, class, and style ✨</p>
 
-        {/* 🖼️ Show car preview if selected */}
         {getCarImage() && (
           <div className="car-preview">
             <img
@@ -140,7 +138,7 @@ export default function CarBooking() {
             <option value="Luxury">Luxury</option>
           </select>
 
-          <button type="submit">Confirm Booking 🚀</button>
+          <button type="submit">Confirm Booking ✨</button>
         </form>
       </div>
     </div>

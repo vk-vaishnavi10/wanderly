@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import {
   GoogleMap,
   useLoadScript,
@@ -28,7 +28,21 @@ export default function MapPage() {
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [searchType, setSearchType] = useState("hotel");
   const [places, setPlaces] = useState([]);
+  const [memoryPins, setMemoryPins] = useState([]);
+  const [newMemory, setNewMemory] = useState({ lat: null, lng: null, text: "" });
+  const [showMemoryModal, setShowMemoryModal] = useState(false);
   const autocompleteRef = useRef(null);
+
+  // 🧠 Load stored pins
+  useEffect(() => {
+    const savedPins = localStorage.getItem("wanderly_memories");
+    if (savedPins) setMemoryPins(JSON.parse(savedPins));
+  }, []);
+
+  // 💾 Save pins automatically
+  useEffect(() => {
+    localStorage.setItem("wanderly_memories", JSON.stringify(memoryPins));
+  }, [memoryPins]);
 
   const onMapLoad = useCallback((mapInstance) => {
     setMap(mapInstance);
@@ -45,10 +59,9 @@ export default function MapPage() {
 
   const handleSearch = () => {
     if (!map || !autocompleteRef.current) return;
-
     const place = autocompleteRef.current.getPlace();
     if (!place || !place.geometry) {
-      alert("Please select a valid location from the suggestions!");
+      alert("Please select a valid location!");
       return;
     }
 
@@ -56,16 +69,11 @@ export default function MapPage() {
       lat: place.geometry.location.lat(),
       lng: place.geometry.location.lng(),
     };
-
     map.panTo(newCenter);
     setCenter(newCenter);
 
     const service = new window.google.maps.places.PlacesService(map);
-    const request = {
-      location: newCenter,
-      radius: 7000, // meters
-      type: [searchType],
-    };
+    const request = { location: newCenter, radius: 7000, type: [searchType] };
 
     service.nearbySearch(request, (results, status) => {
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
@@ -76,19 +84,45 @@ export default function MapPage() {
     });
   };
 
+  // 🌍 Add Memory Pin
+  const handleMapClick = (e) => {
+    const lat = e.latLng.lat();
+    const lng = e.latLng.lng();
+    setNewMemory({ lat, lng, text: "" });
+    setShowMemoryModal(true);
+  };
+
+  const saveMemory = () => {
+    if (newMemory.text.trim() !== "") {
+      setMemoryPins([...memoryPins, newMemory]);
+      setShowMemoryModal(false);
+    }
+  };
+
+  // 🗑️ Delete a pin
+  const deleteMemory = (index) => {
+    const updatedPins = memoryPins.filter((_, i) => i !== index);
+    setMemoryPins(updatedPins);
+    setSelectedPlace(null);
+  };
+
   if (!isLoaded) return <div className="text-light">🌀 Loading Wanderly Map...</div>;
 
   return (
     <section className="map-section">
       <h1 className="map-title">🌍 Explore with Wanderly</h1>
       <p className="map-subtitle">
-        Find the best restaurants, hotels, and attractions nearby.
+        Drop golden pins to mark memories that stay with you forever 💫
       </p>
 
       {/* 🔍 Search Bar */}
       <div className="map-search-box glassy">
         <Autocomplete onLoad={(ref) => (autocompleteRef.current = ref)}>
-          <input type="text" placeholder="Search a city or location..." className="map-input" />
+          <input
+            type="text"
+            placeholder="Search a city or location..."
+            className="map-input"
+          />
         </Autocomplete>
         <select
           className="map-select"
@@ -113,7 +147,9 @@ export default function MapPage() {
           center={center}
           zoom={12}
           onLoad={onMapLoad}
+          onClick={handleMapClick}
         >
+          {/* 📍 Place results */}
           {places.map((place, index) => (
             <Marker
               key={index}
@@ -129,27 +165,87 @@ export default function MapPage() {
             />
           ))}
 
+          {/* 💛 Memory Pins */}
+          {memoryPins.map((mem, i) => (
+            <Marker
+              key={i}
+              position={{ lat: mem.lat, lng: mem.lng }}
+              icon={{
+                url: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
+                scaledSize: new window.google.maps.Size(44, 44),
+              }}
+              onClick={() => setSelectedPlace({ ...mem, index: i })}
+            />
+          ))}
+
+          {/* 📜 InfoWindow for Memories or Places */}
           {selectedPlace && (
             <InfoWindow
               position={{
-                lat: selectedPlace.geometry.location.lat(),
-                lng: selectedPlace.geometry.location.lng(),
+                lat:
+                  selectedPlace.lat ||
+                  selectedPlace.geometry?.location?.lat(),
+                lng:
+                  selectedPlace.lng ||
+                  selectedPlace.geometry?.location?.lng(),
               }}
               onCloseClick={() => setSelectedPlace(null)}
             >
               <div className="info-window">
-                <h4>{selectedPlace.name}</h4>
-                <p>{selectedPlace.vicinity}</p>
+                {selectedPlace.text ? (
+                  <>
+                    <h4>📍 Your Memory</h4>
+                    <p>{selectedPlace.text}</p>
+                    <button
+                      className="delete-btn"
+                      onClick={() => deleteMemory(selectedPlace.index)}
+                    >
+                      ❌ Delete
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <h4>{selectedPlace.name}</h4>
+                    <p>{selectedPlace.vicinity}</p>
+                  </>
+                )}
               </div>
             </InfoWindow>
           )}
         </GoogleMap>
       </div>
 
+      {/* 💭 Add Memory Modal */}
+      {showMemoryModal && (
+        <div className="memory-modal-overlay">
+          <div className="memory-modal">
+            <h3>Add Memory 📍</h3>
+            <textarea
+              placeholder="Write something unforgettable..."
+              value={newMemory.text}
+              onChange={(e) =>
+                setNewMemory({ ...newMemory, text: e.target.value })
+              }
+            />
+            <div className="memory-buttons">
+              <button onClick={saveMemory} className="btn-save">
+                Save
+              </button>
+              <button
+                onClick={() => setShowMemoryModal(false)}
+                className="btn-cancel"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <footer className="map-footer">
         <p>
-          ✨ Discover more, travel smarter —{" "}
-          <span className="wanderly-link">Wanderly leads your way!</span>
+          ✨ Your stories glow across the world —{" "}
+          <span className="wanderly-link">with Wanderly 💛</span>
         </p>
       </footer>
     </section>

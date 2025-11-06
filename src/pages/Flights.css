@@ -1,25 +1,73 @@
-/* 🌌 Base Page Styling */
+/* ============================================================
+   ✈️ WANDERLY - FLIGHTS PAGE (Luxury Aurora Sky Hybrid Edition)
+============================================================ */
+
+/* 🌌 Page */
 .flights-page {
-  background-color: #0b0c1a;
+  position: relative;
+  background: linear-gradient(135deg, #090018, #14003c, #1a004a);
   min-height: 100vh;
-  margin-top: 100px;
-  padding: 2rem;
+  padding: 5rem 2rem 3rem;
   font-family: "Poppins", sans-serif;
-  color: #E8EAF6;
+  color: #f1f4ff;
   text-align: center;
+  background-size: 200% 200%;
+  animation: auroraShift 12s ease-in-out infinite alternate;
+  overflow-x: hidden;
 }
 
-/* ✈️ Section Title */
+.flights-page::before,
+.flights-page::after {
+  content: "";
+  position: absolute;
+  width: 120%;
+  height: 120%;
+  top: -10%;
+  left: -10%;
+  background:
+    radial-gradient(circle at 25% 30%, rgba(255, 204, 112, 0.15), transparent 70%),
+    radial-gradient(circle at 75% 70%, rgba(98, 211, 255, 0.12), transparent 70%);
+  mix-blend-mode: screen;
+  animation: auroraFloat 18s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+@keyframes auroraShift {
+  0% { background-position: 0% 40%; }
+  100% { background-position: 100% 60%; }
+}
+@keyframes auroraFloat {
+  0% { transform: translate(0,0); opacity:.9; }
+  50% { transform: translate(-20px,25px); opacity:1; }
+  100% { transform: translate(20px,-20px); opacity:.8; }
+}
+
+/* Title */
 .flights-page h2 {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  background: linear-gradient(90deg, #ffffff, #c5f6ff, #ffe29f);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 20px rgba(155, 93, 229, 0.6);
+  text-shadow: 0 0 25px rgba(255,255,255,.25);
+  position: relative;
+  z-index: 2;
+}
+.flights-page h2::after {
+  content: "";
+  position: absolute;
+  width: 120px;
+  height: 3px;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #ffffff, #62d3ff, #ffe29f);
+  border-radius: 3px;
+  opacity: .8;
 }
 
-/* 🔍 Search Bar Layout */
+/* 🔍 Search */
 .search-form {
   display: flex;
   justify-content: center;
@@ -28,233 +76,207 @@
   gap: 1rem;
   margin: 1.5rem auto;
   padding: 1.5rem 2rem;
-  background: rgba(15, 10, 30, 0.9);
-  border-radius: 15px;
-  border: 1px solid rgba(155, 93, 229, 0.4);
-  box-shadow: 0 0 25px rgba(155, 93, 229, 0.2);
+  background: rgba(255,255,255,.05);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,.25);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 25px rgba(255,255,255,.08), 0 0 40px rgba(0,225,255,.1);
   max-width: 950px;
-}
-
-/* ✈️ Dropdowns (From / To) */
-.search-form select {
-  flex: 1;
-  min-width: 180px;
-  padding: 0.7rem 1.2rem;
-  border: 2px solid #9B5DE5;
-  border-radius: 10px;
-  background: #0b0c1a;
-  color: #E8EAF6;
-  font-size: 1rem;
-  outline: none;
-  transition: all 0.3s ease;
-  appearance: none;
-  cursor: pointer;
-  text-align: center;
-}
-
-.search-form select:hover,
-.search-form select:focus {
-  border-color: #F15BB5;
-  box-shadow: 0 0 15px rgba(241, 91, 181, 0.4);
-  background: #151030;
-  color: #fff;
-}
-
-.search-form select option {
-  background-color: #0b0c1a !important;
-  color: #E8EAF6 !important;
-  font-size: 1rem;
-  padding: 10px;
-}
-
-.search-form select option:checked,
-.search-form select option:hover {
-  background-color: #9B5DE5 !important;
-  color: #fff !important;
-}
-
-/* 🔘 Buttons */
-.search-form button {
-  background: linear-gradient(135deg, #6EC1E4, #9B5DE5, #F15BB5);
-  color: #fff;
-  font-weight: bold;
-  border-radius: 50px;
-  padding: 0.7rem 2rem;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 12px rgba(155, 93, 229, 0.4);
-}
-
-.search-form button:hover {
-  background: linear-gradient(135deg, #F15BB5, #9B5DE5, #6EC1E4);
-  box-shadow: 0 0 20px rgba(241, 91, 181, 0.5);
-  transform: translateY(-3px);
-}
-
-/* 🟣 Reset Button Styling */
-.search-form button[type="button"] {
-  background: rgba(20, 15, 35, 0.8);
-  color: #9B5DE5;
-  border: 1px solid #9B5DE5;
-}
-
-.search-form button[type="button"]:hover {
-  background: #9B5DE5;
-  color: #fff;
-}
-
-/* 🧭 Searchable Dropdown Wrappers */
-.dropdown-wrapper {
   position: relative;
-  flex: 1;
-  min-width: 180px;
+  z-index: 2;
 }
 
-/* 🖊️ Search Inputs */
+.dropdown-wrapper { position: relative; min-width: 180px; flex: 1; }
+
 .search-input {
   width: 100%;
-  padding: 0.7rem 1rem;
-  border: none;
-  border-bottom: 2px solid #9B5DE5;
-  background: transparent;
-  color: #E8EAF6;
-  font-size: 1rem;
-  outline: none;
-  transition: all 0.3s ease;
+  padding: .8rem 1.2rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.3);
+  background: rgba(20,15,45,.8);
+  color: #f5f8ff;
   text-align: center;
+  transition: .3s;
+  box-shadow: inset 0 0 10px rgba(255,255,255,.04);
 }
 
 .search-input:focus {
-  border-bottom-color: #F15BB5;
-  color: #fff;
+  border-color: #62d3ff;
+  box-shadow: 0 0 15px rgba(98,211,255,.3);
+  background: rgba(35,20,70,.9);
 }
 
-/* 🔽 Dropdown List Styling */
 .dropdown-list {
   position: absolute;
-  top: 105%;
+  top: calc(100% + 6px);
   left: 0;
-  width: 100%;
-  background: rgba(15, 10, 30, 0.95);
-  border: 1px solid rgba(155, 93, 229, 0.4);
+  right: 0;
+  background: rgba(14,10,30,.95);
+  border: 1px solid rgba(255,255,255,.15);
   border-radius: 10px;
-  margin-top: 5px;
-  z-index: 999;
-  max-height: 200px;
+  list-style: none;
+  margin: 0;
+  padding: .4rem;
+  max-height: 220px;
   overflow-y: auto;
-  box-shadow: 0 0 15px rgba(155, 93, 229, 0.3);
-  animation: fadeIn 0.25s ease-in;
+  z-index: 20;
+  box-shadow: 0 10px 25px rgba(0,0,0,.35);
 }
 
 .dropdown-list li {
-  padding: 10px;
+  padding: .55rem .8rem;
+  border-radius: 8px;
   cursor: pointer;
-  color: #E8EAF6;
-  font-size: 0.95rem;
-  transition: all 0.2s ease;
+  color: #eaf3ff;
+}
+.dropdown-list li:hover { background: rgba(98,211,255,.12); }
+.dropdown-list .no-option { opacity: .7; cursor: default; }
+
+.search-form button {
+  background: linear-gradient(135deg, #ffffff, #9B5DE5, #00E1FF);
+  color: #1a1a1a;
+  font-weight: 700;
+  border-radius: 50px;
+  padding: .8rem 2rem;
+  border: 0;
+  cursor: pointer;
+  transition: .3s;
+  box-shadow: 0 0 15px rgba(255,255,255,.25);
+}
+.search-form button:hover {
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 0 30px rgba(255,255,255,.3);
+  background: linear-gradient(135deg, #00E1FF, #9B5DE5, #ffffff);
+}
+.reset-btn {
+  background: rgba(255,255,255,.08) !important;
+  color: #eaeaff !important;
+  border: 1px solid rgba(255,255,255,.25) !important;
 }
 
-.dropdown-list li:hover {
-  background: linear-gradient(90deg, #6EC1E4, #9B5DE5);
-  color: #fff;
-  font-weight: bold;
+/* Sort */
+.sort-label { color: #FFD700; margin-right: 10px; }
+.sort-select {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #FFD700;
+  background: #111;
+  color: #FFD700;
 }
 
-.no-option {
-  padding: 10px;
-  color: gray;
-  text-align: center;
-}
-
-/* 🧾 Summary Section */
+/* Summary */
 .summary-bar {
   margin: 1.8rem auto;
-  background: rgba(15, 10, 30, 0.9);
-  border: 1px solid rgba(155, 93, 229, 0.4);
-  border-radius: 10px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 14px;
   padding: 12px;
-  color: #E8EAF6;
-  box-shadow: 0 0 12px rgba(155, 93, 229, 0.3);
-  width: 80%;
+  color: #eaf3ff;
+  box-shadow: 0 0 25px rgba(255,255,255,.08);
+  width: 85%;
   max-width: 900px;
+  position: relative;
+  z-index: 2;
 }
 
-/* 🛫 Flight Card */
+/* 🪩 Flight Card */
 .flight-card {
-  border-radius: 1rem;
-  border: 2px solid rgba(155, 93, 229, 0.5);
+  position: relative;
+  border-radius: 20px;
   overflow: hidden;
-  background: rgba(18, 15, 35, 0.95);
-  color: #E8EAF6;
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  background: rgba(255,255,255,.06);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,.25);
+  color: #f6f9ff;
+  transition: all .45s ease;
   cursor: pointer;
+  box-shadow: 0 0 20px rgba(255,255,255,.08);
 }
 
 .flight-card:hover {
   transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 0 30px rgba(155, 93, 229, 0.5);
+  box-shadow: 0 0 35px rgba(255,255,255,.2), 0 0 30px rgba(0,225,255,.3);
 }
 
-/* 🖼 Flight Image */
+/* Glowing border animation (keeps under content) */
+.flight-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  padding: 2px;
+  background: linear-gradient(120deg, rgba(255,255,255,.9), rgba(98,211,255,.8), rgba(255,239,171,.8), rgba(252,183,212,.9));
+  background-size: 400% 400%;
+  animation: borderGlow 9s ease infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none; /* ✅ glow layer doesn’t block clicks */
+  z-index: 0;
+}
+@keyframes borderGlow {
+  0% {background-position: 0% 50%}
+  50% {background-position: 100% 50%}
+  100% {background-position: 0% 50%}
+}
+
+/* Fix clickability — make everything inside clickable */
+.flight-card {
+  pointer-events: auto; /* ✅ ensures button and link work */
+  z-index: 1;
+}
+.flight-card * {
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 2;
+}
+
+/* Image */
 .flight-card img {
   width: 100%;
-  height: 220px;
+  height: 230px;
   object-fit: cover;
-  border-bottom: 2px solid #9B5DE5;
-  transition: transform 0.4s ease;
+  border-bottom: 2px solid rgba(255,255,255,.2);
+  transition: transform .4s ease;
 }
+.flight-card:hover img { transform: scale(1.07); }
 
-.flight-card:hover img {
-  transform: scale(1.08);
-}
-
-/* 📋 Flight Details */
-.flight-card .card-body {
-  padding: 1.2rem;
-  text-align: center;
-}
-
+/* Text */
+.flight-card .card-body { padding: 1.3rem; text-align: center; }
 .flight-card h5 {
-  font-size: 1.25rem;
-  font-weight: bold;
-  margin-bottom: 0.4rem;
-  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: .4rem;
+  background: linear-gradient(90deg, #ffffff, #62d3ff, #ffe29f);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
 .flight-card p {
-  margin: 0.2rem 0;
-  font-size: 0.95rem;
-  color: #E8EAF6;
-  opacity: 0.9;
+  margin: .3rem 0;
+  font-size: .95rem;
+  color: #eaf3ff;
+  opacity: .95;
 }
+.flight-card strong { color: #ffe29f; font-weight: 700; }
 
-/* ✈️ View Details Button */
-.flight-card .btn {
+/* View Details Button */
+.view-btn {
   border-radius: 50px;
-  font-weight: bold;
-  transition: all 0.3s ease;
-  background: linear-gradient(135deg, #6EC1E4, #9B5DE5, #F15BB5);
-  color: #fff;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffffff, #9B5DE5, #00E1FF);
+  color: #1a1a1a;
   border: none;
+  transition: .35s;
+  box-shadow: 0 0 15px rgba(255,255,255,.25);
+}
+.view-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  background: linear-gradient(135deg, #00E1FF, #9B5DE5, #ffffff);
+  box-shadow: 0 0 25px rgba(255,255,255,.4);
 }
 
-.flight-card .btn:hover {
-  background: linear-gradient(135deg, #F15BB5, #9B5DE5, #6EC1E4);
-  box-shadow: 0 0 20px rgba(241, 91, 181, 0.4);
-  transform: translateY(-2px);
-}
-
-/* 🌟 Smooth Animation for dropdowns */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-5px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Responsive */
+@media (max-width: 900px) {
+  .search-form { flex-direction: column; }
+  .search-input, .search-form button { width: 100%; }
 }

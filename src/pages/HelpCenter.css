@@ -1,0 +1,201 @@
+/* ============================================================
+   🌈 WANDERLY HELP CENTER - Aurora Bliss Edition
+   Author: Vaishnavi ✨
+============================================================ */
+
+.helpcenter-page {
+    background: linear-gradient(180deg, #06001a 0%, #0d022e 100%);
+    color: #fff;
+    min-height: 100vh;
+    padding: 3rem 2rem;
+    font-family: "Poppins", sans-serif;
+    overflow-x: hidden;
+  }
+  
+  /* 🌟 Header Section */
+  .helpcenter-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .helpcenter-header h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(90deg, #ffd700, #f15bb5, #00e1ff, #b2f5ea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400%;
+    animation: gradientFlow 8s linear infinite;
+  }
+  
+  .helpcenter-header p {
+    color: #d9d9f3;
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+  }
+  
+  /* 🌈 Grid Layout */
+  .helpcenter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* ✨ Help Cards */
+  .helpcard {
+    position: relative;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    overflow: hidden;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.4s ease;
+    box-shadow: 0 0 25px rgba(155, 93, 229, 0.15);
+    backdrop-filter: blur(10px);
+  }
+  
+  .helpcard:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+    background: rgba(255, 255, 255, 0.08);
+  }
+  
+  /* 🌠 Icon */
+  .helpcard-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.8rem;
+    transition: all 0.4s ease;
+  }
+  
+  .helpcard:hover .helpcard-icon {
+    transform: scale(1.2);
+  }
+  
+  /* 🧾 Title & Description */
+  .helpcard h3 {
+    font-size: 1.4rem;
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+  }
+  
+  .helpcard p {
+    font-size: 1rem;
+    color: #dcdcf5;
+    margin-bottom: 1.2rem;
+  }
+  
+  /* 🌟 Button */
+  .helpcard button {
+    background: linear-gradient(90deg, #9b5de5, #f15bb5, #00e1ff);
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 0.6rem 1.4rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(155, 93, 229, 0.4);
+  }
+  
+  .helpcard button:hover {
+    background-position: right center;
+    transform: translateY(-2px);
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+  }
+  
+  /* 💫 Card Glow Animation */
+  .helpcard::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+      from 0deg,
+      rgba(255, 215, 0, 0.1),
+      rgba(255, 99, 132, 0.15),
+      rgba(0, 225, 255, 0.1),
+      rgba(50, 255, 150, 0.1),
+      rgba(255, 255, 255, 0.15),
+      rgba(255, 215, 0, 0.1)
+    );
+    animation: rotateGlow 15s linear infinite;
+    z-index: 0;
+  }
+  
+  .helpcard > * {
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* 🌙 Footer */
+  .helpcenter-footer {
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 0.95rem;
+    color: #ccc;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1.5rem;
+  }
+  
+  .helpcenter-footer a {
+    color: #00e1ff;
+    text-decoration: none;
+    transition: 0.3s ease;
+  }
+  
+  .helpcenter-footer a:hover {
+    color: #ffd700;
+  }
+  
+  /* 🌈 Animations */
+  @keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  @keyframes rotateGlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* 📱 Responsive */
+  @media (max-width: 768px) {
+    .helpcenter-header h1 {
+      font-size: 2.2rem;
+    }
+  
+    .helpcard {
+      padding: 1.5rem;
+    }
+  
+    .helpcard button {
+      font-size: 0.9rem;
+    }
+  }
+  .helpcard:active {
+    animation: flashGlow 0.5s ease;
+  }
+  
+  @keyframes flashGlow {
+    0% {
+      box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    }
+    50% {
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.7),
+                  0 0 35px rgba(241, 91, 181, 0.5);
+    }
+    100% {
+      box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    }
+  }
+  
+  

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
 import forestVideo from "../assets/videos/travel-intro.mp4";
 
@@ -15,13 +15,19 @@ export default function Register() {
   const [otpSent, setOtpSent] = useState(false);
 
   useEffect(() => {
-    // 🫧 Hide vertical navbar on register page
+    // 🫧 Hide vertical navbar while on this page
     const navbar = document.querySelector(".vertical-navbar");
-    if (navbar) navbar.style.display = "none";
+    if (navbar) {
+      navbar.style.opacity = "0";
+      navbar.style.pointerEvents = "none";
+      navbar.style.transition = "opacity 0.5s ease";
+    }
 
-    // Restore navbar on exit
     return () => {
-      if (navbar) navbar.style.display = "flex";
+      if (navbar) {
+        navbar.style.opacity = "1";
+        navbar.style.pointerEvents = "auto";
+      }
     };
   }, []);
 
@@ -111,9 +117,18 @@ export default function Register() {
             <button type="submit" className="wander-btn">
               Register ✨
             </button>
+
+            {/* 🌟 Sign-In Redirect */}
+            <p className="register-footer">
+              Already have a Wanderly account?{" "}
+              <Link to="/signin" className="signin-link">
+                Sign In
+              </Link>
+            </p>
           </form>
         </div>
       </div>
     </div>
   );
 }
+

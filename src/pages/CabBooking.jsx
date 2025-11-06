@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { useParams, useNavigate } from "react-router-dom";
 import { addTransportBooking } from "../services/api";
@@ -15,6 +15,10 @@ export default function CabBooking() {
     cabType: "",
   });
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -22,7 +26,6 @@ export default function CabBooking() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const { pickupLocation, dropLocation, bookingDate, cabType } = formData;
 
     if (!pickupLocation || !dropLocation || !bookingDate || !cabType) {
@@ -45,12 +48,12 @@ export default function CabBooking() {
       await addTransportBooking(payload);
 
       Swal.fire({
-        title: "🚕 Cab Booked!",
+        title: "🚖 Cab Booked!",
         text: `Your ${cabType} cab has been successfully reserved!`,
         icon: "success",
-        confirmButtonColor: "#f5c518",
-        background: "#111",
-        color: "#fff",
+        confirmButtonColor: "#ffe29f",
+        background: "#15102b",
+        color: "#ffffff",
       }).then(() => navigate("/transport"));
     } catch (error) {
       console.error("❌ Cab booking failed:", error.response?.data || error.message);
@@ -61,8 +64,8 @@ export default function CabBooking() {
   return (
     <div className="cab-booking">
       <div className="cab-booking-card">
-        <h2>🚕 Cab Booking</h2>
-        <p>Quick, reliable, and comfortable rides to your destination!</p>
+        <h2>🚖 Cab Booking</h2>
+        <p>Book your comfortable, quick, and safe ride with Wanderly ✨</p>
 
         <form onSubmit={handleSubmit}>
           <label>Pickup Location</label>
@@ -107,7 +110,7 @@ export default function CabBooking() {
             <option value="Outstation">Outstation</option>
           </select>
 
-          <button type="submit">Confirm Booking 🚕</button>
+          <button type="submit">Confirm Booking ✨</button>
         </form>
       </div>
     </div>

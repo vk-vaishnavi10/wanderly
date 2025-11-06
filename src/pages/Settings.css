@@ -1,199 +1,284 @@
-/* 🌌 WANDERLY SETTINGS PAGE - ROYAL GLOW DELUXE */
+/* 🌈 WANDERLY SETTINGS - AURORA FLASH DELUXE v2.0 */
 .settings-section {
-    background: linear-gradient(180deg, #050014 0%, #0b0125 100%);
-    color: #e0d9ff;
-    min-height: 100vh;
-    padding: 3rem 2rem;
-    font-family: "Poppins", sans-serif;
+  background: linear-gradient(180deg, #050013 0%, #0d022e 100%);
+  color: #fff;
+  min-height: 100vh;
+  padding: 3rem 2rem;
+  font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
+}
+
+/* ✨ Header */
+.settings-title {
+  text-align: center;
+  font-size: 2.8rem;
+  font-weight: 800;
+  background: linear-gradient(
+    90deg,
+    #ffd700,
+    #ff9a00,
+    #f15bb5,
+    #00e1ff,
+    #b2f5ea
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 300%;
+  animation: shimmer 6s linear infinite;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.5px;
+}
+
+.settings-subtitle {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #e6e6f9;
+  margin-bottom: 2.5rem;
+  opacity: 0.9;
+}
+
+/* 💎 Flash Grid Layout */
+.settings-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2.5rem;
+  max-width: 1150px;
+  margin: 0 auto;
+  animation: fadeIn 1.2s ease-out;
+}
+
+/* 🪩 Flash Card Styling */
+.settings-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 22px;
+  padding: 1.8rem;
+  overflow: hidden;
+  backdrop-filter: blur(16px) saturate(180%);
+  transition: all 0.4s ease;
+  border-left: 6px solid transparent;
+  border-image: linear-gradient(
+      180deg,
+      #ffd700,
+      #ff9a00,
+      #f15bb5,
+      #00e1ff,
+      #b2f5ea,
+      #98ff98
+    )
+    1;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.08);
+  transform-style: preserve-3d;
+}
+
+.settings-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.2),
+    0 0 40px rgba(255, 215, 0, 0.3), 0 0 80px rgba(155, 93, 229, 0.25);
+}
+
+/* 🌠 Animated Aurora Gradient Glow */
+.settings-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(255, 215, 0, 0.12),
+    rgba(255, 99, 132, 0.15),
+    rgba(0, 225, 255, 0.12),
+    rgba(50, 255, 150, 0.12),
+    rgba(255, 255, 255, 0.15),
+    rgba(255, 215, 0, 0.12)
+  );
+  animation: rotate 14s linear infinite;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+.settings-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* 🧩 Card Headers */
+.settings-card h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  margin-bottom: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  letter-spacing: 0.4px;
+}
+
+/* 🎯 Section Icons */
+.settings-card h2::before {
+  font-size: 1.4rem;
+}
+
+/* 🌈 Dynamic header icon colors */
+.settings-card:nth-child(1) h2::before {
+  content: "👤";
+  color: #ffd700;
+}
+.settings-card:nth-child(2) h2::before {
+  content: "🎨";
+  color: #f15bb5;
+}
+.settings-card:nth-child(3) h2::before {
+  content: "🔔";
+  color: #00e1ff;
+}
+.settings-card:nth-child(4) h2::before {
+  content: "🔒";
+  color: #98ff98;
+}
+.settings-card:nth-child(5) h2::before {
+  content: "📂";
+  color: #ff9a00;
+}
+.settings-card:nth-child(6) h2::before {
+  content: "🚀";
+  color: #ffd6f5;
+}
+
+/* 🧾 Input & Select Styles */
+.settings-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.settings-row label {
+  font-weight: 600;
+  color: #fdf6d4;
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+}
+
+.settings-row input,
+.settings-select {
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  padding: 0.65rem 0.9rem;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  outline: none;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.settings-row input:focus,
+.settings-select:focus {
+  border-color: #ffd700;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+}
+
+/* 🎛️ Unified Aurora Buttons */
+.settings-btn {
+  background: linear-gradient(90deg, #9b5de5, #f15bb5, #00e1ff);
+  border: none;
+  border-radius: 12px;
+  padding: 0.8rem 1.4rem;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-size: 250%;
+  box-shadow: 0 0 18px rgba(155, 93, 229, 0.4);
+  width: fit-content;
+  margin-top: 0.6rem;
+}
+
+.settings-btn:hover {
+  background-position: right center;
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(241, 91, 181, 0.6),
+    0 0 60px rgba(0, 225, 255, 0.3);
+}
+
+/* Remove variant colors for a consistent look */
+.settings-btn.danger,
+.settings-btn.subtle {
+  background: linear-gradient(90deg, #9b5de5, #f15bb5, #00e1ff);
+  color: #fff;
+  box-shadow: 0 0 18px rgba(155, 93, 229, 0.4);
+}
+
+
+/* ✨ Session Box */
+.session-box {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.08);
+}
+
+.session-box h3 {
+  color: #ffd700;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.session-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: #ddd;
+  font-size: 0.95rem;
+}
+
+/* 🪞 Animations */
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
   }
-  
-  /* 🌈 Quote */
-  .wander-quote {
-    text-align: center;
-    font-size: 1.1rem;
-    color: #ffd700;
-    margin-bottom: 1.2rem;
-    text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
-    font-style: italic;
+  50% {
+    background-position: 100% 50%;
   }
-  
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
   .settings-title {
-    font-size: 2.6rem;
-    font-weight: 700;
-    color: #ffd700;
-    text-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
-    text-align: center;
+    font-size: 2rem;
   }
-  
-  .settings-subtitle {
-    color: #bda7ff;
-    text-align: center;
-    margin-bottom: 2.5rem;
-    font-size: 1.1rem;
-  }
-  
-  /* 🪩 Settings Grid */
   .settings-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
-    max-width: 1100px;
-    margin: 0 auto;
+    gap: 1.5rem;
   }
-  
-  /* 🧊 Card Base */
   .settings-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    border-radius: 20px;
-    padding: 1.8rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+    padding: 1.3rem;
   }
-  
-  .settings-card:hover {
-    transform: scale(1.02);
-    box-shadow: 0 0 40px rgba(241, 91, 181, 0.3);
-  }
-  
-  /* Glassy */
-  .glassy {
-    backdrop-filter: blur(12px) saturate(150%);
-  }
-  
-  /* Headings */
-  .settings-card h2 {
-    color: #f15bb5;
-    margin-bottom: 1rem;
-    text-shadow: 0 0 15px rgba(241, 91, 181, 0.8);
-  }
-  
-  /* Rows */
-  .settings-row {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-  }
-  
-  .settings-row label {
-    font-weight: 600;
-    color: #d4c2ff;
-    margin-bottom: 0.4rem;
-  }
-  
-  /* Inputs & Selects */
-  .settings-row input,
-  .settings-select {
-    border: 1px solid #9b5de5;
-    border-radius: 8px;
-    padding: 0.6rem;
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    outline: none;
-    transition: border-color 0.3s ease;
-  }
-  
-  .settings-row input:focus,
-  .settings-select:focus {
-    border-color: #f15bb5;
-    box-shadow: 0 0 10px rgba(241, 91, 181, 0.5);
-  }
-  
-  /* 🌈 Theme Preview */
-  .theme-preview {
-    height: 25px;
-    border-radius: 10px;
-    margin-top: 0.5rem;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-  }
-  
-  /* Toggles */
-  .toggle {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  /* Buttons */
-  .settings-btn {
-    background: linear-gradient(90deg, #9b5de5, #f15bb5);
-    border: none;
-    color: #fff;
-    padding: 0.7rem 1.2rem;
-    border-radius: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
-    box-shadow: 0 0 20px rgba(155, 93, 229, 0.4);
-  }
-  
-  .settings-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 25px rgba(241, 91, 181, 0.7);
-  }
-  
-  /* Variants */
-  .settings-btn.danger {
-    background: linear-gradient(90deg, #ff3b3b, #ff7676);
-  }
-  
-  .settings-btn.subtle {
-    background: linear-gradient(90deg, #ffd700, #fbc531);
-    color: #000;
-  }
-  
-  /* Session Box */
-  .session-box {
-    background: rgba(255, 255, 255, 0.06);
-    padding: 1rem;
-    border-radius: 10px;
-    margin-top: 1rem;
-    border: 1px solid rgba(255, 215, 0, 0.2);
-  }
-  
-  .session-box h3 {
-    color: #ffd700;
-    margin-bottom: 0.5rem;
-  }
-  
-  .session-box ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    color: #d1b3ff;
-    font-size: 0.9rem;
-  }
-  
-  /* Shortcuts */
-  .shortcut-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem;
-    justify-content: center;
-  }
-  
-  /* Footer */
-  .settings-footer {
-    text-align: center;
-    margin-top: 3rem;
-    color: #d1b3ff;
-  }
-  
-  .wanderly-link {
-    color: #9b5de5;
-    font-weight: 600;
-    transition: color 0.3s ease;
-  }
-  
-  .wanderly-link:hover {
-    color: #f15bb5;
-    text-shadow: 0 0 10px rgba(241, 91, 181, 0.8);
-  }
-  
-  /* Responsive */
-  @media (max-width: 768px) {
-    .settings-title {
-      font-size: 2rem;
-    }
-  }
-  
+}

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Events.css";
+import eventsVideo from "../assets/videos/eventbg.mp4"; // 🎥 Background video
 
 // ✅ Local images
 import ocImg from "../images/oc.jpg";
@@ -10,7 +11,6 @@ import ffImg from "../images/ff.jpeg";
 export default function Events() {
   const [query, setQuery] = useState("");
 
-  // ✅ Static event data
   const events = [
     {
       id: 1,
@@ -43,19 +43,27 @@ export default function Events() {
 
   return (
     <div className="events-page position-relative">
-      {/* ✨ Floating Gold Particles */}
-      {Array.from({ length: 12 }).map((_, i) => (
-        <div key={i} className={`particle particle-${i + 1}`}></div>
+      {/* 🎥 Background Video */}
+      <video className="events-bg-video" autoPlay loop muted playsInline>
+        <source src={eventsVideo} type="video/mp4" />
+      </video>
+
+      {/* ✨ Gradient Overlay */}
+      <div className="events-overlay"></div>
+
+      {/* 🎊 Floating Confetti Sparkles */}
+      {Array.from({ length: 25 }).map((_, i) => (
+        <div key={i} className={`confetti confetti-${i + 1}`}></div>
       ))}
 
-      {/* 🎊 Hero Section */}
+      {/* 🎉 Hero Section */}
       <section className="events-hero text-center">
-        <h1 className="hero-title">🎉 Events & Experiences</h1>
+        <h1 className="hero-title">🎆 Events & Experiences</h1>
         <p className="hero-sub">
           Discover festivals, shows, and unique cultural gatherings.
         </p>
 
-        {/* ✅ Single Search Bar */}
+        {/* 🔍 Search */}
         <div className="search-box">
           <input
             type="text"
@@ -66,24 +74,22 @@ export default function Events() {
         </div>
       </section>
 
-      {/* ✨ Event Cards */}
+      {/* 🎟 Events List */}
       <section className="container py-5">
-        <h2 className="text-center mb-4 text-warning glow-heading">
-          ✨ Upcoming Events
-        </h2>
+        <h2 className="text-center mb-4 glow-heading">✨ Upcoming Events</h2>
 
         <div className="row g-4">
           {filteredEvents.length > 0 ? (
             filteredEvents.map((event) => (
-              <div key={event.id} className="col-md-4">
-                <div className="event-card shadow-lg border border-warning rounded-3 overflow-hidden">
+              <div key={event.id} className="col-md-4 fade-in">
+                <div className="event-card">
                   <img
                     src={event.imageUrl}
                     alt={event.title}
-                    className="event-img w-100"
+                    className="event-img"
                   />
-                  <div className="p-3 bg-dark text-light">
-                    <h4 className="text-warning event-title">{event.title}</h4>
+                  <div className="p-3 text-light">
+                    <h4 className="event-title">{event.title}</h4>
                     <p>{event.location}</p>
                     <p>
                       <strong>Date:</strong>{" "}

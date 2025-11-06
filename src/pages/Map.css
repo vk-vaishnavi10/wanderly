@@ -1,198 +1,181 @@
-/* 🌍 Wanderly Map Page - Royal Edition */
 .map-section {
-    text-align: center;
-    background: linear-gradient(180deg, #0b0b1f 0%, #0e1034 100%);
-    padding: 3rem 1rem;
-    color: #f8f5e6;
-    min-height: 100vh;
-    font-family: "Poppins", sans-serif;
-  }
-  
-  /* 👑 Title */
-  .map-title {
-    color: #ffd700;
-    font-size: 2.5rem;
-    font-weight: 700;
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
-    margin-bottom: 0.5rem;
-  }
-  
-  /* 🌟 Subtitle */
-  .map-subtitle {
-    color: #cfcfe4;
-    font-size: 1.1rem;
-    margin-bottom: 2rem;
-  }
-  
-  /* 🗺️ Map Container */
-  .map-container {
-    border: 2px solid rgba(255, 215, 0, 0.7);
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow:
-      0 0 25px rgba(255, 215, 0, 0.4),
-      0 0 60px rgba(0, 0, 0, 0.5);
-    transition: transform 0.3s ease, box-shadow 0.4s ease;
-  }
-  
-  .map-container:hover {
-    transform: scale(1.01);
-    box-shadow:
-      0 0 35px rgba(255, 215, 0, 0.6),
-      0 0 80px rgba(255, 255, 255, 0.2);
-  }
-  
-  /* 💫 Info Window Box */
-  .info-window {
-    color: #000;
-    background: linear-gradient(135deg, #fff8dc, #f5f0d0);
-    padding: 10px 12px;
-    border-radius: 12px;
-    box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
-    font-family: "Poppins", sans-serif;
-    text-align: left;
-    min-width: 180px;
-    border: 1px solid #d4af37;
-  }
-  
-  .info-window h4 {
-    color: #b8860b;
-    margin-bottom: 0.4rem;
-    font-size: 1rem;
-  }
-  
-  .info-window p {
-    color: #444;
-    font-size: 0.9rem;
-    margin-bottom: 0.6rem;
-  }
-  
-  /* ✨ Explore Button */
-  .explore-btn {
-    background: linear-gradient(90deg, #d4af37, #b8860b);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 6px 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .explore-btn:hover {
-    background: linear-gradient(90deg, #ffd700, #d4af37);
-    transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
-  }
-  
-  /* 🟡 Footer */
-  .map-footer {
-    margin-top: 2rem;
-    font-size: 1rem;
-    color: #e6dfb3;
-  }
-  
-  .wanderly-link {
-    color: #ffd700;
-    font-weight: 600;
-    cursor: pointer;
-    transition: color 0.3s ease;
-  }
-  
-  .wanderly-link:hover {
-    color: #fff;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
-  }
-  /* 🔍 Search Box Styling */
+  text-align: center;
+  background: linear-gradient(180deg, #0b0b1f 0%, #0e1034 100%);
+  padding: 3rem 1rem;
+  color: #f8f5e6;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+}
+
+/* 🌟 Title */
+.map-title {
+  color: #ffd700;
+  font-size: 2.6rem;
+  font-weight: 800;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+}
+
+.map-subtitle {
+  color: #d4d2e3;
+  margin-bottom: 2rem;
+}
+
+/* 🔍 Search */
 .map-search-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.8rem;
-    margin-bottom: 1.8rem;
-  }
-  
-  .map-input {
-    padding: 0.6rem 1rem;
-    border-radius: 8px;
-    border: 1px solid #ffd700;
-    background: #fffef5;
-    width: 250px;
-    font-size: 0.95rem;
-    color: #333;
-  }
-  
-  .map-select {
-    padding: 0.55rem;
-    border-radius: 8px;
-    border: 1px solid #ffd700;
-    background: #fffdf0;
-    color: #333;
-    font-weight: 600;
-  }
-  
-  .map-btn {
-    background: linear-gradient(90deg, #ffd700, #d4af37);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 0.6rem 1.2rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .map-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
-  }
-  /* 💎 Glassy Search Bar */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.8rem;
+}
+
 .glassy {
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(255, 215, 0, 0.4);
-    border-radius: 14px;
-    padding: 0.8rem 1rem;
-    backdrop-filter: blur(10px) saturate(150%);
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
-  }
-  
-  .map-input,
-  .map-select,
-  .map-btn {
-    backdrop-filter: blur(12px);
-  }
-  
-  .map-input {
-    background: rgba(255, 255, 255, 0.85);
-    border: 1px solid #ffd700;
-    border-radius: 10px;
-    padding: 0.6rem 1rem;
-    font-weight: 500;
-    color: #333;
-  }
-  
-  .map-select {
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid #ffd700;
-    border-radius: 10px;
-    padding: 0.5rem 0.8rem;
-    color: #333;
-    font-weight: 600;
-  }
-  
-  .map-btn {
-    background: linear-gradient(90deg, #ff9a00, #ffd700);
-    border: none;
-    border-radius: 10px;
-    color: #fff;
-    font-weight: 700;
-    padding: 0.6rem 1.2rem;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-    transition: 0.3s ease;
-  }
-  
-  .map-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.7);
-  }
-  
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 215, 0, 0.4);
+  border-radius: 14px;
+  padding: 0.8rem 1rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+}
+
+.map-input,
+.map-select,
+.map-btn {
+  border-radius: 10px;
+  border: 1px solid #ffd700;
+  padding: 0.6rem 1rem;
+  font-weight: 500;
+}
+
+.map-btn {
+  background: linear-gradient(90deg, #ff9a00, #ffd700);
+  color: #fff;
+  border: none;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+  transition: all 0.3s;
+}
+
+.map-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.9);
+}
+
+/* 🗺️ Map */
+.map-container {
+  border: 2px solid rgba(255, 215, 0, 0.7);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+  transition: all 0.4s ease;
+}
+
+.map-container:hover {
+  transform: scale(1.01);
+  box-shadow: 0 0 35px rgba(255, 215, 0, 0.7);
+}
+
+/* 📍 Info Window */
+.info-window {
+  background: #fff8dc;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #d4af37;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  text-align: left;
+}
+
+.info-window h4 {
+  color: #b8860b;
+  margin-bottom: 6px;
+}
+
+.delete-btn {
+  background: linear-gradient(90deg, #ff7070, #ff4444);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: 0.3s;
+}
+
+.delete-btn:hover {
+  box-shadow: 0 0 12px rgba(255, 80, 80, 0.8);
+  transform: scale(1.1);
+}
+
+/* 💭 Modal */
+.memory-modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(10, 0, 30, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+}
+
+.memory-modal {
+  background: rgba(25, 20, 45, 0.95);
+  border: 2px solid rgba(255, 215, 0, 0.5);
+  border-radius: 15px;
+  padding: 2rem;
+  max-width: 400px;
+  color: #fff9d6;
+  box-shadow: 0 0 35px rgba(255, 215, 0, 0.4);
+}
+
+.memory-modal textarea {
+  width: 100%;
+  height: 120px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  border: none;
+  padding: 10px;
+  color: #fff;
+  resize: none;
+  outline: none;
+}
+
+.memory-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.btn-save {
+  background: linear-gradient(90deg, #ffd700, #fbb034);
+  border: none;
+  border-radius: 25px;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-save:hover {
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.9);
+  transform: scale(1.05);
+}
+
+.btn-cancel {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border-radius: 25px;
+  padding: 0.6rem 1.2rem;
+}
+
+.map-footer {
+  margin-top: 2rem;
+  font-size: 1rem;
+  color: #e6dfb3;
+}
+
+.wanderly-link {
+  color: #ffd700;
+  font-weight: 600;
+}

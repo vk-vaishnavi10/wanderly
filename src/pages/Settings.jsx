@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Settings.css";
 
 export default function Settings() {
@@ -10,6 +11,7 @@ export default function Settings() {
   const [glow, setGlow] = useState("normal");
   const [language, setLanguage] = useState("English");
   const [quote, setQuote] = useState("");
+  const navigate = useNavigate();
 
   const quotes = [
     "Wander often, wonder always ✨",
@@ -167,7 +169,7 @@ export default function Settings() {
             <label>Confirm Password:</label>
             <input type="password" placeholder="Confirm password" />
           </div>
-          <button className="settings-btn danger">Update Password</button>
+          <button className="settings-btn">Update Password</button>
 
           <div className="session-box">
             <h3>🖥 Active Sessions</h3>
@@ -182,13 +184,13 @@ export default function Settings() {
         <div className="settings-card glassy">
           <h2>🧳 Data & Privacy</h2>
           <div className="settings-row">
-            <button className="settings-btn subtle">Download My Data</button>
+            <button className="settings-btn">Download My Data</button>
           </div>
           <div className="settings-row">
-            <button className="settings-btn subtle">Clear Local Cache</button>
+            <button className="settings-btn">Clear Local Cache</button>
           </div>
           <div className="settings-row">
-            <button className="settings-btn danger">Delete My Account</button>
+            <button className="settings-btn">Delete My Account</button>
           </div>
         </div>
 
@@ -196,9 +198,24 @@ export default function Settings() {
         <div className="settings-card glassy">
           <h2>✈️ Quick Access</h2>
           <div className="shortcut-links">
-            <button className="settings-btn subtle">My Trips</button>
-            <button className="settings-btn subtle">Memories</button>
-            <button className="settings-btn subtle">Budget</button>
+            <button
+              className="settings-btn"
+              onClick={() => navigate("/mytrips")}
+            >
+              My Trips
+            </button>
+            <button
+              className="settings-btn"
+              onClick={() => navigate("/memories")}
+            >
+              Memories
+            </button>
+            <button
+              className="settings-btn"
+              onClick={() => navigate("/budget")}
+            >
+              Budget
+            </button>
           </div>
         </div>
       </div>
@@ -206,7 +223,7 @@ export default function Settings() {
       <footer className="settings-footer">
         <p>
           💫 Ready for your next adventure?{" "}
-          <span className="wanderly-link"> Wanderly awaits!</span>
+          <span className="wanderly-link">Wanderly awaits!</span>
         </p>
       </footer>
     </section>

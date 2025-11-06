@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PanZoom from "react-easy-panzoom";
+import confetti from "canvas-confetti";
 import "./Memories.css";
 
 export default function Memories() {
@@ -19,24 +20,21 @@ export default function Memories() {
   const [user, setUser] = useState({
     name: "Vaishnavi 🌸",
     bio: "Collecting places, not things — one memory at a time.",
-    photo: "https://i.pravatar.cc/150?img=14",
+    photo: "/assets/profile-avatar.png", // 🌈 local fallback instead of http
   });
 
   // 🌐 Load Memories & Profile Info
   useEffect(() => {
-    // 🖼️ Fetch memories
     axios
       .get("http://localhost:8085/api/memories")
       .then((res) => setMemories(res.data))
       .catch(() => setStatus("⚠️ Offline — showing cached memories."));
 
-    // ⏳ Time capsule
     axios
       .get("http://localhost:8085/api/memories/timecapsule")
       .then((res) => setTimeCapsules(res.data))
       .catch(() => {});
 
-    // 👤 User profile
     axios
       .get(`http://localhost:8085/api/user/profile?ts=${Date.now()}`)
       .then((res) => {
@@ -44,7 +42,9 @@ export default function Memories() {
           setUser({
             name: res.data.name,
             bio: res.data.bio,
-            photo: res.data.photo ? `${res.data.photo}?t=${Date.now()}` : "https://i.pravatar.cc/150?img=14",
+            photo: res.data.photo
+              ? `${res.data.photo}?t=${Date.now()}`
+              : "/assets/profile-avatar.png",
           });
           localStorage.setItem("userName", res.data.name);
           localStorage.setItem("userBio", res.data.bio);
@@ -54,8 +54,11 @@ export default function Memories() {
       .catch(() => {
         const storedUser = {
           name: localStorage.getItem("userName") || "Vaishnavi 🌸",
-          bio: localStorage.getItem("userBio") || "Collecting places, not things — one memory at a time.",
-          photo: localStorage.getItem("userPhoto") || "https://i.pravatar.cc/150?img=14",
+          bio:
+            localStorage.getItem("userBio") ||
+            "Collecting places, not things — one memory at a time.",
+          photo:
+            localStorage.getItem("userPhoto") || "/assets/profile-avatar.png",
         };
         setUser(storedUser);
       });
@@ -74,9 +77,11 @@ export default function Memories() {
     formData.append("file", image);
 
     try {
-      const res = await axios.post("http://localhost:8085/api/memories/upload", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const res = await axios.post(
+        "http://localhost:8085/api/memories/upload",
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
 
       const newMemory = res.data;
       setMemories([newMemory, ...memories]);
@@ -86,6 +91,14 @@ export default function Memories() {
       setEmotion("💛 Joyful");
       setImage(null);
       setStatus("✅ Memory uploaded successfully!");
+
+      // 🎉 Confetti celebration
+      confetti({
+        particleCount: 120,
+        spread: 70,
+        origin: { y: 0.8 },
+        colors: ["#9b5de5", "#f15bb5", "#00e1ff", "#ffd700"],
+      });
     } catch {
       setStatus("📸 Saved offline — will sync when online.");
     }
@@ -113,8 +126,30 @@ export default function Memories() {
 
   const openImage = (m) => !selectMode && setSelectedImage(m);
 
+  // 💫 Dynamic mood background
+  const getEmotionGradient = () => {
+    switch (emotion) {
+      case "💛 Joyful":
+  return "linear-gradient(180deg, #f9d976, #f39f86, #d76d77)";
+
+      case "🌅 Peaceful":
+        return "linear-gradient(180deg, #00e1ff, #b2f5ea)";
+      case "🎉 Excited":
+        return "linear-gradient(180deg, #9b5de5, #f15bb5)";
+      case "🌧️ Nostalgic":
+        return "linear-gradient(180deg, #3b3b98, #182848)";
+      case "💖 Loved":
+        return "linear-gradient(180deg, #f15bb5, #ff9a9e)";
+      default:
+        return "linear-gradient(180deg, #9b5de5, #f15bb5)";
+    }
+  };
+
   return (
-    <div className="memories-page">
+    <div
+      className="memories-page"
+      style={{ background: `${getEmotionGradient()}` }}
+    >
       {/* 🌟 Profile Header */}
       <div className="profile-header">
         <img
@@ -185,7 +220,9 @@ export default function Memories() {
           <option value="🌧️ Nostalgic">🌧️ Nostalgic</option>
           <option value="💖 Loved">💖 Loved</option>
         </select>
-        <button type="submit" className="btn-glow">Upload Memory 🌟</button>
+        <button type="submit" className="btn-glow">
+          Upload Memory 🌟
+        </button>
       </form>
 
       {/* Controls */}
@@ -205,7 +242,9 @@ export default function Memories() {
         {memories.map((m, index) => (
           <div
             key={index}
-            className={`memory-card ${selectedItems.includes(index) ? "selected" : ""}`}
+            className={`memory-card ${
+              selectedItems.includes(index) ? "selected" : ""
+            }`}
             onClick={() => (selectMode ? toggleSelectItem(index) : openImage(m))}
           >
             <img src={m.imageUrl} alt="Memory" />
@@ -230,7 +269,10 @@ export default function Memories() {
             setZoom(1);
           }}
         >
-          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="lightbox-content"
+            onClick={(e) => e.stopPropagation()}
+          >
             <PanZoom
               minZoom={1}
               maxZoom={5}

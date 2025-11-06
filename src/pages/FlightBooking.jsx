@@ -1,15 +1,19 @@
-import React, { useMemo, useState } from "react";
+// 🌍 src/pages/FlightBooking.jsx
+import React, { useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import flights from "../data/flights";
 import "./FlighBooking.css";
 import { addFlightBooking } from "../services/api";
+
+// 🖼 Import video
+import flightVideo from "../assets/videos/flightbg.mp4";
 
 export default function FlightBooking() {
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
 
-  // 🛫 Get flight info
+  // 🛫 Find flight info
   const flight =
     location.state?.flight || flights.find((f) => f.id === parseInt(id));
 
@@ -27,191 +31,80 @@ export default function FlightBooking() {
   };
   const themeColor = airlineColors[flight?.airline] || "#FFD700";
 
-  // 🪑 Seat map generation
-  const seatMap = useMemo(() => {
-    const rows = ["A", "B", "C", "D", "E", "F"];
-    const cols = Array.from({ length: 10 }, (_, i) => i + 1);
-    return rows.flatMap((r) => cols.map((c) => `${r}${c}`));
-  }, []);
-
-  // 🚫 Blocked seats
-  const blocked = useMemo(() => new Set(["B3", "B4", "C7", "E2", "F10"]), []);
-
-  // 📋 Booking form state
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     passengers: "1 Adult",
     travelDate: "",
+    seatClass: "Economy",
   });
-  const [selectedSeats, setSelectedSeats] = useState([]);
 
-  // 🎯 Determine seat limit
-  const seatLimit = (() => {
-    const p = formData.passengers;
-    if (p === "1 Adult") return 1;
-    if (p === "2 Adults") return 2;
-    if (p === "1 Adult + 1 Child") return 2;
-    if (p === "Family (4)") return 4;
-    return 1;
-  })();
-
-  // 💺 Handle seat click
-  const handleSeatClick = (seatId) => {
-    if (blocked.has(seatId)) return;
-
-    setSelectedSeats((prev) => {
-      if (prev.includes(seatId)) {
-        return prev.filter((s) => s !== seatId);
-      } else {
-        if (prev.length >= seatLimit) {
-          alert(`You can only select ${seatLimit} seat(s).`);
-          return prev;
-        }
-        return [...prev, seatId];
-      }
-    });
-  };
-
-  // 🧾 Handle form input
   const handleChange = (e) =>
-    setFormData((s) => ({ ...s, [e.target.name]: e.target.value }));
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  // 💳 Handle booking — cleaned & verified
+  // 💳 Handle booking
   const handleBooking = async (e) => {
     e.preventDefault();
     if (!flight) return;
 
-    // ✅ Validate seat count
-    if (selectedSeats.length === 0) {
-      alert("Please select at least one seat.");
-      return;
-    }
-    if (selectedSeats.length !== seatLimit) {
-      alert(`Please select ${seatLimit} seat(s) before continuing.`);
-      return;
-    }
-
     try {
-      const formattedDate = new Date(formData.travelDate)
-        .toISOString()
-        .split("T")[0];
-
-      // ✅ Force numeric price conversion
-      const rawPrice = flight.price;
-      const cleanPrice = Number(String(rawPrice).replace(/[^0-9.]/g, ""));
-      console.log("💰 Clean numeric price sent:", cleanPrice);
-
-      if (isNaN(cleanPrice)) {
-        alert("❌ Invalid flight price. Please try again.");
-        return;
-      }
-
       const bookingDetails = {
-        fullName: formData.fullName.trim(),
-        email: formData.email.trim(),
-        passengers: formData.passengers,
-        travelDate: formattedDate,
+        ...formData,
         flightName: flight.airline,
         route: `${flight.from} → ${flight.to}`,
-        amount: cleanPrice, // ✅ numeric only
+        amount: Number(String(flight.price).replace(/[^0-9]/g, "")),
       };
 
-      console.log("📦 Sending booking payload:", bookingDetails);
-
-      // ✅ Send to backend
       await addFlightBooking(bookingDetails);
-      console.log("✅ Booking saved successfully!");
+      localStorage.setItem("flightBooking", JSON.stringify(bookingDetails));
 
-      // Save locally (for payment page)
-      localStorage.setItem(
-        "flightBooking",
-        JSON.stringify({
-          ...bookingDetails,
-          seats: selectedSeats.join(", "),
-          flight,
-        })
-      );
-
-      // Navigate to payment
       navigate(`/payment/${flight.id}`, { state: { bookingDetails, flight } });
     } catch (error) {
       console.error("❌ Booking failed:", error);
-      alert("Server rejected your booking (400 Bad Request). Please check backend fields.");
+      alert("Booking failed! Please try again later.");
     }
   };
 
   if (!flight)
     return (
       <h2 className="text-center text-light mt-5">
-        ⚠️ Flight not found! Please go back and try again.
+        ⚠️ Flight not found. Please go back and try again.
       </h2>
     );
 
   return (
-    <div
-      className="flight-booking"
-      style={{
-        "--seat-theme": themeColor,
-        minHeight: "100vh",
-        backgroundImage:
-          "url(https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?auto=format&fit=crop&w=1650&q=80)",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        paddingTop: "100px",
-      }}
-    >
-      <div className="booking-container">
-        {/* ✈️ Flight Summary */}
-        <div className="flight-summary text-center" style={{ color: themeColor }}>
-          <h2>{flight.airline} ✈️</h2>
-          <p>
-            {flight.from} → {flight.to}
+    <div className="flight-booking-page" style={{ "--theme": themeColor }}>
+      {/* 🎬 Background Video */}
+      <video
+        className="flight-bg-video"
+        autoPlay
+        loop
+        muted
+        playsInline
+        src={flightVideo}
+        type="video/mp4"
+      />
+
+      {/* Overlay for contrast */}
+      <div className="flight-overlay"></div>
+
+      <div className="booking-card-container">
+        {/* 🛩️ Flight Overview */}
+        <div className="flight-info-card">
+          <h2 style={{ color: themeColor }}>{flight.airline}</h2>
+          <p className="route">
+            {flight.from} ✈️ {flight.to}
           </p>
-          <p>
+          <p className="details">
             <strong>₹{flight.price}</strong> | {flight.duration}
           </p>
+          <div className="glow-line"></div>
         </div>
 
-        {/* 💺 Seat Selection */}
-        <div className="seat-selection text-center">
-          <h4 style={{ color: themeColor }}>Choose Your Seat</h4>
-          <div className="legend mb-3">
-            <span className="legend-box available" /> Available
-            <span className="legend-box selected" /> Selected
-            <span className="legend-box blocked" /> Booked
-          </div>
-
-          <div className="seat-grid">
-            {seatMap.map((seat) => {
-              const isBlocked = blocked.has(seat);
-              const isSelected = selectedSeats.includes(seat);
-              return (
-                <button
-                  type="button"
-                  key={seat}
-                  className={`seat ${isBlocked ? "blocked" : ""} ${
-                    isSelected ? "selected" : ""
-                  }`}
-                  disabled={isBlocked}
-                  onClick={() => handleSeatClick(seat)}
-                >
-                  {seat}
-                </button>
-              );
-            })}
-          </div>
-
-          {selectedSeats.length > 0 && (
-            <p className="text-center mt-3" style={{ color: themeColor }}>
-              ✅ Selected Seats: <strong>{selectedSeats.join(", ")}</strong>
-            </p>
-          )}
-        </div>
-
-        {/* 📝 Booking Form */}
-        <div className="booking-card shadow-lg">
-          <form className="booking-form" onSubmit={handleBooking}>
+        {/* 🧾 Booking Form */}
+        <div className="booking-form-card">
+          <h3>Confirm Your Booking</h3>
+          <form onSubmit={handleBooking} className="booking-form">
             <label>👤 Full Name</label>
             <input
               type="text"
@@ -244,6 +137,18 @@ export default function FlightBooking() {
               <option>Family (4)</option>
             </select>
 
+            <label>💺 Class</label>
+            <select
+              name="seatClass"
+              value={formData.seatClass}
+              onChange={handleChange}
+            >
+              <option>Economy</option>
+              <option>Premium Economy</option>
+              <option>Business</option>
+              <option>First Class</option>
+            </select>
+
             <label>📅 Travel Date</label>
             <input
               type="date"
@@ -255,15 +160,21 @@ export default function FlightBooking() {
 
             <button
               type="submit"
-              className="confirm-btn w-100 mt-4"
+              className="confirm-btn"
               style={{
                 background: themeColor,
-                color: "#fff",
-                fontWeight: "bold",
                 boxShadow: `0 0 15px ${themeColor}88`,
               }}
             >
-              ✅ Confirm Booking & Continue to Payment
+              ✅ Confirm & Proceed to Payment
+            </button>
+
+            <button
+              type="button"
+              onClick={() => navigate(-1)}
+              className="back-btn"
+            >
+              ⬅ Back to Flights
             </button>
           </form>
         </div>

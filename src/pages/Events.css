@@ -1,198 +1,237 @@
-/* 🌌 Events Page Base */
+/* ============================================================
+ 🎇 WANDERLY - EVENTS PAGE (Golden Confetti Edition)
+ by Vaishnavi 💜 — Gold × Magenta × Cyan Harmony
+============================================================ */
+
+/* 🎥 Background Video */
+.events-bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  filter: brightness(0.4) contrast(1.1) saturate(1.1);
+  animation: zoomPan 25s ease-in-out infinite alternate;
+}
+
+/* 🪞 Overlay */
+.events-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at 50% 35%,
+    rgba(241, 91, 181, 0.15) 0%,
+    rgba(10, 0, 30, 0.8) 80%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* 🌌 Main Page */
 .events-page {
-  background: radial-gradient(circle at top center, rgba(155, 93, 229, 0.15), rgba(10, 10, 25, 0.95)),
-              linear-gradient(135deg, #0b0c1a 0%, #1a103f 50%, #0b0c1a 100%);
-  background-size: 200% 200%;
-  animation: auroraFlow 12s ease-in-out infinite alternate;
-  color: #E8EAF6;
+  position: relative;
+  z-index: 2;
   min-height: 100vh;
-  padding-top: 90px;
   font-family: "Poppins", sans-serif;
-  overflow: hidden;
+  color: #e8eaf6;
+  overflow-x: hidden;
 }
 
-/* ✨ Background Flow Animation */
-@keyframes auroraFlow {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
-
-/* 🎉 Hero Section */
+/* 🎉 Hero */
 .events-hero {
   position: relative;
-  z-index: 1;
-  padding: 4rem 1rem 2rem;
-  text-align: center;
-  background: radial-gradient(circle at center, rgba(155, 93, 229, 0.2), transparent 70%);
-  animation: fadeInHero 1.2s ease-in-out forwards;
+  z-index: 3;
+  padding: 4rem 1rem 2.5rem;
+  width: 85%;
+  margin: 4.5rem auto 1rem;
+  border-radius: 20px;
+  background: rgba(25, 15, 40, 0.45);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 45px rgba(241, 91, 181, 0.15);
+  animation: fadeInUp 1.2s ease-out forwards;
 }
 
-@keyframes fadeInHero {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* 🌈 Hero Title */
+/* 🪩 Title — static, shimmer only */
 .hero-title {
   font-size: 2.8rem;
   font-weight: 800;
-  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
+  background: linear-gradient(90deg, #fffbea, #fcb7d4, #bdf9ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-size: 300%;
-  animation: dreamyFlow 8s ease-in-out infinite;
-  text-shadow: 0 0 25px rgba(155, 93, 229, 0.5);
+  animation: shimmer 10s ease-in-out infinite;
+  text-shadow: 0 0 25px rgba(255, 239, 171, 0.3);
+  transform: none !important; /* 🚫 No rotation */
 }
 
+/* Subtitle */
 .hero-sub {
-  color: rgba(232, 234, 246, 0.85);
+  color: #ffe9c9;
   font-size: 1.1rem;
-  margin-top: 8px;
+  margin-top: 10px;
+  text-shadow: 0 0 10px rgba(255, 220, 150, 0.3);
 }
 
-/* 🌌 Animated Gradient Flow */
-@keyframes dreamyFlow {
+/* 🔍 Search Box */
+.search-box {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-box input {
+  width: 60%;
+  max-width: 480px;
+  background: rgba(25, 20, 50, 0.6);
+  border: 1.5px solid rgba(241, 91, 181, 0.4);
+  border-radius: 35px;
+  padding: 12px 20px;
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  outline: none;
+  text-align: center;
+}
+
+.search-box input:focus {
+  border-color: #fcb7d4;
+  box-shadow: 0 0 20px rgba(241, 91, 181, 0.5);
+}
+
+/* 🌟 Section Heading */
+.glow-heading {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffe29f;
+  text-shadow: 0 0 18px rgba(255, 239, 171, 0.5);
+  animation: pulseGlow 3s infinite alternate;
+}
+
+/* 🎟 Event Cards */
+.event-card {
+  position: relative;
+  z-index: 3;
+  background: rgba(20, 15, 40, 0.95);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  transform: translateY(0);
+  box-shadow: 0 0 25px rgba(155, 93, 229, 0.15);
+}
+
+.event-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 0 40px rgba(241, 91, 181, 0.35);
+}
+
+/* 🖼 Image */
+.event-img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+  transition: transform 0.5s ease;
+}
+
+.event-card:hover .event-img {
+  transform: scale(1.07);
+}
+
+/* 🧾 Title */
+.event-title {
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+  background: linear-gradient(90deg, #6ec1e4, #9b5de5, #f15bb5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ✨ Button */
+.btn-warning {
+  background: linear-gradient(135deg, #6ec1e4, #9b5de5, #f15bb5);
+  color: #fff !important;
+  border: none;
+  border-radius: 25px;
+  font-weight: 700;
+  box-shadow: 0 0 15px rgba(155, 93, 229, 0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-warning:hover {
+  background: linear-gradient(135deg, #f15bb5, #9b5de5, #6ec1e4);
+  box-shadow: 0 0 25px rgba(241, 91, 181, 0.5);
+  transform: scale(1.05);
+}
+
+/* 🎊 Confetti Sparkles */
+.confetti {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle, #ffe29f, #f15bb5);
+  border-radius: 50%;
+  opacity: 0.8;
+  pointer-events: none;
+  animation: confettiFall linear infinite;
+  z-index: 3;
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-10vh);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
+}
+
+/* 🌈 Random Confetti Spread */
+.confetti-1 { left: 5%; animation-duration: 6s; }
+.confetti-2 { left: 15%; animation-duration: 8s; }
+.confetti-3 { left: 25%; animation-duration: 7s; }
+.confetti-4 { left: 35%; animation-duration: 9s; }
+.confetti-5 { left: 45%; animation-duration: 10s; }
+.confetti-6 { left: 55%; animation-duration: 7s; }
+.confetti-7 { left: 65%; animation-duration: 8s; }
+.confetti-8 { left: 75%; animation-duration: 9s; }
+.confetti-9 { left: 85%; animation-duration: 6.5s; }
+.confetti-10 { left: 95%; animation-duration: 8.5s; }
+
+/* ✨ Animations */
+@keyframes shimmer {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* 🔍 Search Box */
-.search-box {
-  position: relative;
-  margin-top: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2;
-}
-
-.search-box input {
-  width: 60%;
-  max-width: 500px;
-  background: rgba(155, 93, 229, 0.1);
-  border: 1.5px solid rgba(155, 93, 229, 0.5);
-  border-radius: 30px;
-  padding: 12px 22px;
-  color: #E8EAF6;
-  font-size: 1rem;
-  transition: 0.3s ease;
-  outline: none;
-  box-shadow: inset 0 0 8px rgba(155, 93, 229, 0.2);
-}
-
-.search-box input:focus {
-  background: rgba(155, 93, 229, 0.15);
-  box-shadow: 0 0 18px rgba(155, 93, 229, 0.4);
-}
-
-/* 🌟 Glow Heading */
-.glow-heading {
-  text-shadow: 0 0 18px rgba(155, 93, 229, 0.6);
-  color: #F15BB5;
-  font-weight: 700;
-  animation: pulseGlow 3s infinite alternate;
-}
-
 @keyframes pulseGlow {
-  from { text-shadow: 0 0 10px rgba(155, 93, 229, 0.5); }
-  to { text-shadow: 0 0 25px rgba(241, 91, 181, 0.9); }
+  from { text-shadow: 0 0 10px rgba(255, 239, 171, 0.3); }
+  to { text-shadow: 0 0 25px rgba(241, 91, 181, 0.6); }
 }
 
-/* 🎟 Event Cards */
-.event-card {
-  background: rgba(20, 15, 40, 0.9);
-  border: 1px solid rgba(155, 93, 229, 0.4);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 0 25px rgba(155, 93, 229, 0.2);
-  transition: all 0.4s ease;
-  animation: fadeUp 0.9s ease-in-out forwards;
-  opacity: 0;
+@keyframes zoomPan {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.07); }
 }
 
-@keyframes fadeUp {
-  from { transform: translateY(30px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(25px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
-
-.event-card:hover {
-  transform: translateY(-6px) scale(1.03);
-  box-shadow: 0 0 40px rgba(241, 91, 181, 0.4);
-}
-
-.event-img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  transition: transform 0.6s ease;
-  filter: brightness(0.9);
-}
-
-.event-card:hover .event-img { transform: scale(1.08); filter: brightness(1); }
-
-.event-title {
-  font-weight: 700;
-  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 1.3rem;
-  margin-bottom: 10px;
-  text-shadow: 0 0 15px rgba(155, 93, 229, 0.3);
-}
-
-/* ✨ Buttons */
-.event-card .btn-warning {
-  font-weight: bold;
-  border-radius: 25px;
-  transition: 0.3s ease;
-  background: linear-gradient(135deg, #6EC1E4, #9B5DE5, #F15BB5);
-  color: #fff;
-  border: none;
-  box-shadow: 0 0 10px rgba(155, 93, 229, 0.3);
-}
-
-.event-card .btn-warning:hover {
-  transform: scale(1.05);
-  background: linear-gradient(135deg, #F15BB5, #9B5DE5, #6EC1E4);
-  box-shadow: 0 0 25px rgba(241, 91, 181, 0.4);
-}
-
-/* 💫 Floating Aurora Particles */
-@keyframes floatParticles {
-  0% { transform: translate(0, 0) rotate(0deg); opacity: 0.9; }
-  50% { transform: translate(40px, -50px) rotate(180deg); opacity: 0.6; }
-  100% { transform: translate(-40px, -100px) rotate(360deg); opacity: 0; }
-}
-
-.particle {
-  position: absolute;
-  background: radial-gradient(circle, rgba(155, 93, 229, 0.9) 0%, rgba(241, 91, 181, 0.1) 70%);
-  border-radius: 50%;
-  opacity: 0.7;
-  pointer-events: none;
-  filter: blur(1px);
-}
-
-.particle:nth-child(odd) { animation: floatParticles 7s linear infinite; }
-.particle:nth-child(even) { animation: floatParticles 9s linear infinite reverse; }
-
-/* Random particle sizes & positions */
-.particle-1 { width: 6px; height: 6px; left: 5%; bottom: 10%; }
-.particle-2 { width: 9px; height: 9px; left: 20%; bottom: 25%; }
-.particle-3 { width: 12px; height: 12px; left: 35%; bottom: 15%; }
-.particle-4 { width: 8px; height: 8px; left: 55%; bottom: 10%; }
-.particle-5 { width: 10px; height: 10px; left: 70%; bottom: 20%; }
-.particle-6 { width: 5px; height: 5px; left: 80%; bottom: 5%; }
-.particle-7 { width: 7px; height: 7px; left: 10%; bottom: 30%; }
-.particle-8 { width: 10px; height: 10px; left: 45%; bottom: 25%; }
-.particle-9 { width: 12px; height: 12px; left: 60%; bottom: 35%; }
-.particle-10 { width: 6px; height: 6px; left: 75%; bottom: 15%; }
-.particle-11 { width: 8px; height: 8px; left: 90%; bottom: 10%; }
-.particle-12 { width: 9px; height: 9px; left: 50%; bottom: 40%; }
 
 /* 📱 Responsive */
 @media (max-width: 768px) {
-  .hero-title { font-size: 2rem; }
+  .hero-title { font-size: 2.2rem; }
   .search-box input { width: 80%; }
 }

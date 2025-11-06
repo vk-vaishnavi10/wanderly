@@ -1,14 +1,32 @@
-// src/pages/Signin.jsx
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import "./Signin.css";
+import oceanVideo from "../assets/videos/signbg.mp4"; // 🌊 your cinematic background
 
 export default function Signin() {
   const [wanderId, setWanderId] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useContext(UserContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // 🫧 Smoothly hide navbar
+    const navbar = document.querySelector(".vertical-navbar");
+    if (navbar) {
+      navbar.style.opacity = "0";
+      navbar.style.pointerEvents = "none";
+      navbar.style.transition = "opacity 0.6s ease";
+    }
+
+    // Restore navbar on leaving page
+    return () => {
+      if (navbar) {
+        navbar.style.opacity = "1";
+        navbar.style.pointerEvents = "auto";
+      }
+    };
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,46 +44,52 @@ export default function Signin() {
       login(savedUser);
       navigate("/home");
     } else {
-      alert("Invalid Wander ID or Password");
+      alert("Invalid Wander ID or Password ❌");
     }
   };
 
   return (
-    <div className="signin-container">
-      <div className="signin-card">
-        <h2 className="signin-title">🔐 Sign In</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
+    <div className="signin-page">
+      {/* 🌊 Background Video */}
+      <video autoPlay loop muted playsInline className="signin-bg-video">
+        <source src={oceanVideo} type="video/mp4" />
+      </video>
+
+      {/* 💎 Glass Overlay Left Panel */}
+      <div className="signin-overlay">
+        <div className="signin-card">
+          <h2 className="signin-title">🔐 Sign In</h2>
+
+          <form onSubmit={handleSubmit}>
             <input
               type="text"
-              className="form-control"
+              className="signin-input"
               placeholder="Enter Wander ID"
               value={wanderId}
               onChange={(e) => setWanderId(e.target.value)}
               required
             />
-          </div>
-          <div className="mb-3">
             <input
               type="password"
-              className="form-control"
+              className="signin-input"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-          </div>
-          <button type="submit" className="signin-btn">
-            Sign In
-          </button>
-        </form>
 
-        <p className="mt-3 text-light">
-          Don’t have an account?{" "}
-          <Link to="/register" className="text-warning fw-bold">
-            Register
-          </Link>
-        </p>
+            <button type="submit" className="signin-btn">
+              Sign In
+            </button>
+
+            <p className="signin-footer">
+              Don’t have an account?{" "}
+              <Link to="/register" className="signin-link">
+                Register
+              </Link>
+            </p>
+          </form>
+        </div>
       </div>
     </div>
   );

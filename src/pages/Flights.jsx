@@ -40,10 +40,13 @@ export default function Flights() {
 
         if (data.length === 0) {
           data = localFlights.map((f) => ({
-            id: f.id, airline: f.airline,
-            fromCity: f.from, toCity: f.to,
+            id: f.id,
+            airline: f.airline,
+            fromCity: f.from,
+            toCity: f.to,
             price: parseInt(f.price.replace(/[₹,]/g, "")),
-            duration: f.duration, image: f.image,
+            duration: f.duration,
+            image: f.image,
           }));
         }
 
@@ -65,10 +68,13 @@ export default function Flights() {
         console.error("❌ Backend unavailable — using local data:", err);
         setFlights(
           localFlights.map((f) => ({
-            id: f.id, airline: f.airline,
-            fromCity: f.from, toCity: f.to,
+            id: f.id,
+            airline: f.airline,
+            fromCity: f.from,
+            toCity: f.to,
             price: parseInt(f.price.replace(/[₹,]/g, "")),
-            duration: f.duration, image: f.image,
+            duration: f.duration,
+            image: f.image,
             departureTime: new Date().toISOString(),
             arrivalTime: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
           }))
@@ -122,12 +128,11 @@ export default function Flights() {
 
   return (
     <div className="flights-page page-container py-5">
-      <h2 className="text-center mb-4" style={{ color: "#FFD700" }}>
-        ✈️ Search Flights
-      </h2>
+      <h2 className="text-center mb-4">✈️ Search Flights</h2>
 
       <div className="search-controls">
         <div className="search-form">
+          {/* From */}
           <div className="dropdown-wrapper">
             <input
               type="text"
@@ -160,6 +165,7 @@ export default function Flights() {
             )}
           </div>
 
+          {/* To */}
           <div className="dropdown-wrapper">
             <input
               type="text"
@@ -195,23 +201,27 @@ export default function Flights() {
           <button>🔎 Search</button>
           <button
             onClick={() => {
-              setFrom(""); setTo(""); setFromQuery(""); setToQuery(""); setSort("");
+              setFrom("");
+              setTo("");
+              setFromQuery("");
+              setToQuery("");
+              setSort("");
             }}
-            style={{ marginLeft: "10px", backgroundColor: "#444", color: "#FFD700", border: "1px solid #FFD700" }}
+            className="reset-btn"
           >
             🔁 Reset
           </button>
         </div>
 
         <div className="sort-box mt-3 text-center">
-          <label htmlFor="sort" style={{ color: "#FFD700", marginRight: "10px" }}>
+          <label htmlFor="sort" className="sort-label">
             Sort by:
           </label>
           <select
             id="sort"
             value={sort}
             onChange={(e) => setSort(e.target.value)}
-            style={{ padding: "8px", borderRadius: "8px", border: "1px solid #FFD700", background: "#111", color: "#FFD700" }}
+            className="sort-select"
           >
             <option value="">-- Select --</option>
             <option value="priceLow">💰 Price: Low → High</option>
@@ -223,6 +233,7 @@ export default function Flights() {
       </div>
 
       <div className="summary-bar">{summaryText}</div>
+      {error && <p className="text-warning text-center mt-2">{error}</p>}
 
       {loading ? (
         <p className="text-light text-center mt-4">Loading flights...</p>
@@ -234,22 +245,37 @@ export default function Flights() {
                 <div className="card flight-card shadow-lg border-0">
                   <img src={flight.image} className="card-img-top" alt={flight.airline} />
                   <div className="card-body text-center">
-                    <h5 className="card-title text-warning fw-bold">{flight.airline}</h5>
-                    <p className="card-text mb-1">{flight.fromCity} ✈️ {flight.toCity}</p>
+                    <h5 className="card-title">{flight.airline}</h5>
+                    <p className="card-text mb-1">
+                      {flight.fromCity} ✈️ {flight.toCity}
+                    </p>
                     <p className="card-text text-light small">
                       <strong>₹{flight.price.toLocaleString()}</strong> • {flight.duration}
                     </p>
-                    <small className="text-muted d-block">🕓 Departure: {formatDateTime(flight.departureTime)}</small>
-                    <small className="text-muted d-block">🛬 Arrival: {formatDateTime(flight.arrivalTime)}</small>
-                    <Link to={`/flights/${flight.id}`} className="btn btn-warning w-100 mt-3 fw-bold">
-                      View Details
-                    </Link>
+                    <small className="text-muted d-block">
+                      🕓 Departure: {formatDateTime(flight.departureTime)}
+                    </small>
+                    <small className="text-muted d-block">
+                      🛬 Arrival: {formatDateTime(flight.arrivalTime)}
+                    </small>
+
+                    {/* ✅ Go to FlightBooking page (fixed) */}
+                    <Link
+  to={`/flights/book/${flight.id}`}
+  state={{ flight }}
+  className="btn view-btn w-100 mt-3 fw-bold"
+>
+  View Details
+</Link>
+
                   </div>
                 </div>
               </div>
             ))
           ) : (
-            <p className="text-light text-center mt-4">⚠️ No flights found for your search.</p>
+            <p className="text-light text-center mt-4">
+              ⚠️ No flights found for your search.
+            </p>
           )}
         </div>
       )}
