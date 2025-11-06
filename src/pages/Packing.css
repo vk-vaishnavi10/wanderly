@@ -1,0 +1,204 @@
+/* ✨ Wanderly Ultra Glow Edition */
+.packing-page {
+    position: relative;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0a0018, #1b0045, #0a0025);
+    background-size: 300% 300%;
+    animation: auroraShift 12s ease-in-out infinite alternate;
+    color: #fff;
+    padding: 4rem 2rem;
+    text-align: center;
+    overflow: hidden;
+  }
+  
+  @keyframes auroraShift {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+  
+  /* 💨 Floating icons */
+  .floating-icon {
+    position: absolute;
+    font-size: 2.2rem;
+    color: rgba(255, 255, 255, 0.08);
+    animation: floatIcon 10s ease-in-out infinite alternate;
+    z-index: 0;
+  }
+  .floating-icon:nth-child(1) { top: 10%; left: 15%; animation-delay: 0s; }
+  .floating-icon:nth-child(2) { top: 30%; left: 70%; animation-delay: 2s; }
+  .floating-icon:nth-child(3) { top: 60%; left: 25%; animation-delay: 4s; }
+  .floating-icon:nth-child(4) { top: 80%; left: 80%; animation-delay: 6s; }
+  
+  @keyframes floatIcon {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.4; }
+    100% { transform: translateY(-20px) rotate(360deg); opacity: 0.15; }
+  }
+  
+  /* 🌌 Aurora background */
+  .packing-page::before {
+    content: "";
+    position: absolute;
+    top: -20%;
+    left: -20%;
+    width: 160%;
+    height: 160%;
+    background: radial-gradient(circle at 30% 30%, #9b5de533, transparent 50%),
+                radial-gradient(circle at 70% 60%, #00e1ff33, transparent 50%),
+                radial-gradient(circle at 40% 80%, #ffd70033, transparent 55%);
+    filter: blur(100px);
+    animation: auroraFloat 14s infinite alternate ease-in-out;
+    z-index: 0;
+  }
+  
+  @keyframes auroraFloat {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+    50% { transform: translate(5%, -5%) scale(1.1); opacity: 1; }
+    100% { transform: translate(-5%, 5%) scale(1); opacity: 0.7; }
+  }
+  
+  /* ✨ Sparkles */
+  .sparkle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: radial-gradient(circle, #fff, transparent 70%);
+    border-radius: 50%;
+    opacity: 0.7;
+    animation: sparkleMove 8s infinite ease-in-out alternate;
+  }
+  .sparkle1 { top: 10%; left: 50%; animation-delay: 0s; }
+  .sparkle2 { top: 20%; left: 60%; animation-delay: 2s; }
+  .sparkle3 { top: 25%; left: 40%; animation-delay: 4s; }
+  
+  @keyframes sparkleMove {
+    0% { transform: scale(0.6); opacity: 0.3; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+    100% { transform: scale(0.6); opacity: 0.3; }
+  }
+  
+  /* 🩵 Title */
+  .packing-title {
+    font-size: 2.3rem;
+    font-weight: 800;
+    background: linear-gradient(90deg, #00e1ff, #9b5de5, #ffd700, #00ff9d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientFlow 6s ease infinite;
+    margin-bottom: 0.5rem;
+    z-index: 2;
+    position: relative;
+  }
+  .packing-subtitle {
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 2.5rem;
+    position: relative;
+    z-index: 2;
+  }
+  
+  @keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  /* 🎞 Card Entry Animation */
+  @keyframes floatIn {
+    0% { opacity: 0; transform: translateY(30px) scale(0.96); filter: blur(8px); }
+    100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+  }
+  
+  /* 🌈 Card Styling */
+  .packing-grid {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .packing-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(18px);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    border-radius: 22px;
+    padding: 2rem;
+    min-width: 300px;
+    max-width: 340px;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: floatIn 0.8s ease forwards;
+    opacity: 0;
+  }
+  
+  .packing-card:nth-child(1) { animation-delay: 0.1s; }
+  .packing-card:nth-child(2) { animation-delay: 0.3s; }
+  .packing-card:nth-child(3) { animation-delay: 0.5s; }
+  
+  .packing-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 0 35px rgba(155, 93, 229, 0.35),
+                0 0 60px rgba(0, 225, 255, 0.25);
+  }
+  
+  /* 🧠 Headings */
+  .packing-card h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #00e1ff, #9b5de5, #ff7b00, #00ff9d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientFlow 6s ease infinite;
+    margin-bottom: 1rem;
+  }
+  
+  /* 🌟 AI list fade */
+  .fade-in {
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Buttons */
+  .btn-glow, .btn-add {
+    background: linear-gradient(90deg, #ffffff, #9b5de5, #00e1ff);
+    color: #1a1a2f;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 24px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .btn-glow:hover, .btn-add:hover {
+    transform: scale(1.08);
+    background: linear-gradient(90deg, #00e1ff, #9b5de5, #ffd700);
+    box-shadow: 0 0 25px rgba(0, 225, 255, 0.6);
+  }
+  
+  /* Checklist */
+  .packing-list { text-align: left; margin-top: 1rem; font-size: 1rem; }
+  .packing-list li { margin-bottom: 8px; cursor: pointer; transition: 0.3s; }
+  .packing-list li.packed { color: #00ff9d; text-decoration: line-through; }
+  
+  /* Weight Tracker Glow */
+  .weight-ring svg circle:last-child {
+    filter: drop-shadow(0 0 8px #00e1ffcc);
+    animation: pulseRing 2s infinite ease-in-out;
+  }
+  @keyframes pulseRing {
+    0%, 100% { filter: drop-shadow(0 0 8px #00e1ffcc); }
+    50% { filter: drop-shadow(0 0 20px #00ffff); }
+  }
+  
+  .weight-status.within { color: #00ff9d; }
+  .weight-status.over-limit { color: #ff8b8b; }
+  
+  /* Responsive */
+  @media (max-width: 900px) {
+    .packing-grid { flex-direction: column; align-items: center; }
+  }
+  

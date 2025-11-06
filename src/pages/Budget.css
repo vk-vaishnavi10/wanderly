@@ -1,18 +1,57 @@
-/* 🌟 Premium Aurora Glass Cards - Luxe White Edition */
-.budget-card {
-    position: relative;
+/* 🌌 Page Layout */
+.budget-page {
+    padding: 3rem 2rem;
+    color: #fff;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    background: radial-gradient(circle at 30% 20%, #0a0018, #15003d, #080014);
+    min-height: 100vh;
+  }
+  
+  .budget-title {
+    font-size: 2rem;
+    background: linear-gradient(90deg, #6ec1e4, #9b5de5, #f15bb5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .budget-subtitle {
+    opacity: 0.8;
+    margin-bottom: 2rem;
+  }
+  
+  /* 🌈 MAIN ROW - 3 Equal Cards */
+  .budget-dashboard {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 2rem;
+    flex-wrap: nowrap;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+  
+  /* 🪩 Premium Aurora Glass Cards */
+  .budget-card {
+    flex: 1;
+    min-width: 380px;
+    min-height: 520px;
     border-radius: 22px;
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(18px);
     border: 1.5px solid rgba(255, 255, 255, 0.25);
-    overflow: hidden;
-    transition: all 0.4s ease;
     padding: 2rem;
     box-shadow: 0 0 25px rgba(255, 255, 255, 0.05),
                 0 0 40px rgba(0, 255, 234, 0.08);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   
-  /* 🌈 White Aurora Border Flow */
+  /* ✨ Aurora Border Animation */
   .budget-card::before {
     content: "";
     position: absolute;
@@ -28,58 +67,71 @@
     );
     background-size: 400% 400%;
     animation: auroraLoop 8s ease infinite;
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
+    pointer-events: none;
     z-index: 1;
-    pointer-events: none;
   }
   
-  /* ✨ Gentle Highlight Reflection */
-  .budget-card::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 80%;
-    height: 45%;
-    background: radial-gradient(
-      circle at top left,
-      rgba(255, 255, 255, 0.12),
-      transparent 70%
-    );
-    opacity: 0.7;
-    z-index: 0;
-    pointer-events: none;
+  @keyframes auroraLoop {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
   
-  /* 🌠 On Hover - Elegant White Glow */
+  /* 💜 Hover Glow */
   .budget-card:hover {
     transform: translateY(-6px);
     box-shadow: 0 0 35px rgba(255, 255, 255, 0.15),
                 0 0 60px rgba(0, 225, 255, 0.25);
   }
   
-  /* 🌈 Aurora Border Animation */
-  @keyframes auroraLoop {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-  
-  /* ✨ Card Headings */
-  .budget-card h2 {
-    font-size: 1.4rem;
-    font-weight: 700;
+  /* 🌟 Headings */
+  /* 🌈 Wanderly Aurora Gradient Titles */
+.budget-card h2 {
+    font-size: 1.45rem;
+    font-weight: 800;
     text-align: left;
-    background: linear-gradient(90deg, #ffffff, #6ec1e4, #9b5de5);
+    background: linear-gradient(
+      90deg,
+      #00e1ff,
+      #9b5de5,
+      #ffd700,
+      #ff7b00,
+      #00ff9d
+    );
+    background-size: 300% 300%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
+    animation: gradientShift 6s ease infinite;
+    letter-spacing: 0.4px;
     margin-bottom: 1.4rem;
+    text-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
   }
   
-  /* 📊 Inputs, Dropdowns, Fields */
+  /* 🌠 Gentle flowing gradient animation */
+  @keyframes gradientShift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  
+  /* 📊 Inputs + Dropdowns */
   .budget-card input,
   .budget-card select {
     background: rgba(255, 255, 255, 0.08);
@@ -90,18 +142,16 @@
     width: 100%;
     margin-bottom: 10px;
     transition: all 0.3s ease;
-    font-size: 0.95rem;
-    font-family: "Poppins", sans-serif;
   }
   
   .budget-card input:focus,
   .budget-card select:focus {
-    outline: none;
     border-color: #00e1ff;
     box-shadow: 0 0 16px rgba(0, 225, 255, 0.6);
+    outline: none;
   }
   
-  /* 💜 Add Expense Button */
+  /* 💫 Add Expense Button */
   .btn-glow {
     background: linear-gradient(90deg, #ffffff, #9b5de5, #00e1ff);
     color: #1a1a2f;
@@ -109,74 +159,15 @@
     border-radius: 30px;
     padding: 10px 24px;
     font-weight: 700;
-    letter-spacing: 0.4px;
     transition: all 0.3s ease;
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
   }
   .btn-glow:hover {
-    transform: scale(1.06);
+    transform: scale(1.05);
     box-shadow: 0 0 35px rgba(255, 255, 255, 0.35);
   }
   
-  /* 📦 Layout - 2 Cards Top, 1 Bottom */
-  .budget-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    justify-content: center;
-    align-items: start;
-    max-width: 1200px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
-  }
-  
-  .budget-card.analytics {
-    grid-column: span 2;
-    justify-self: center;
-    width: 80%;
-    text-align: left;
-  }
-  
-  /* 🧭 Plan Section - Align Inputs + Chart */
-  .plan-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  .plan-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 2rem;
-    flex: 1;
-  }
-  
-  .budget-plan-inputs {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  
-  .plan-chart {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.06);
-    border-radius: 16px;
-    padding: 15px;
-    box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.1);
-    transition: 0.3s ease;
-  }
-  .plan-chart:hover {
-    transform: scale(1.03);
-    box-shadow: 0 0 25px rgba(255, 255, 255, 0.25);
-  }
-  
-  /* 🪩 Expense & Analytics Lists */
+  /* 📋 Expense List */
   .expense-list {
     margin-top: 15px;
     text-align: left;
@@ -184,16 +175,16 @@
     font-size: 0.95rem;
   }
   .expense-list li {
-    margin-bottom: 5px;
+    margin-bottom: 6px;
     list-style: "💰 ";
   }
   .empty-text {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.6);
     text-align: center;
-    margin-top: 10px;
+    margin-top: 1rem;
   }
   
-  /* 📊 Analytics */
+  /* 📊 Analytics Text */
   .analytics-stats p {
     margin-bottom: 10px;
     font-weight: 500;
@@ -204,26 +195,61 @@
     font-weight: 600;
   }
   
-  /* 🌙 Equal Height for Top Cards */
-  .budget-card {
-    min-height: 520px;
+  /* 📈 Plan Chart Section */
+  .plan-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+  .plan-chart {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    padding: 1rem;
+    box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.1);
   }
   
-  /* 📱 Responsive Layout */
-  @media (max-width: 900px) {
-    .budget-grid {
-      grid-template-columns: 1fr;
+  /* 📱 Responsive */
+  @media (max-width: 1100px) {
+    .budget-dashboard {
+      flex-wrap: wrap;
     }
+  
+    .budget-card {
+      min-width: 90%;
+    }
+  
     .plan-content {
       flex-direction: column;
-      align-items: center;
     }
-    .plan-chart {
-      width: 100%;
-      margin-top: 20px;
+  }
+/* 🎬 Elegant Fade & Float Animation */
+@keyframes fadeUp {
+    0% {
+      opacity: 0;
+      transform: translateY(40px);
+      filter: blur(10px);
     }
-    .budget-card.analytics {
-      width: 100%;
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
     }
   }
   
+  /* 🌠 Apply to each card */
+  .budget-card {
+    animation: fadeUp 0.8s ease-out forwards;
+  }
+  
+  /* 🎞 Add slight delay for each card for cascading effect */
+  .budget-card:nth-child(1) {
+    animation-delay: 0.2s;
+  }
+  .budget-card:nth-child(2) {
+    animation-delay: 0.4s;
+  }
+  .budget-card:nth-child(3) {
+    animation-delay: 0.6s;
+  }
+    

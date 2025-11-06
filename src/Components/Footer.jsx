@@ -1,28 +1,67 @@
 import React from "react";
 import "./Footer.css";
-import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaTwitter,
+  FaLinkedinIn,
+  FaEnvelope,
+  FaMapMarkerAlt,
+  FaPhoneAlt,
+} from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer>
-      <div className="footer-container">
-        <h2>Contact Us</h2>
-        <p>Email: <a href="mailto:support@wanderly.com">support@wanderly.com</a></p>
-        <p>Phone: <a href="tel:+919876543210">+91 98765 43210</a></p>
-        <p>Location: Hyderabad, India 📍</p>
-
-        <div className="social-icons">
-          <a href="#"><FaFacebookF /></a>
-          <a href="#"><FaInstagram /></a>
-          <a href="#"><FaTwitter /></a>
+    <footer className="wanderly-footer">
+      <div className="footer-main">
+        {/* 🌈 Brand Section */}
+        <div className="footer-brand">
+          <h2 className="footer-logo">Wanderly ✈️</h2>
+          <p className="footer-tagline">Explore. Dream. Discover. 🌍</p>
+          <div className="footer-socials">
+            <a href="#"><FaInstagram /></a>
+            <a href="#"><FaTwitter /></a>
+            <a href="#"><FaFacebookF /></a>
+            <a href="#"><FaLinkedinIn /></a>
+          </div>
         </div>
 
-        <div className="footer-divider"></div>
+        {/* 🧭 Quick Links */}
+        <div className="footer-links">
+          <h4>Quick Links</h4>
+          <Link to="/stays">🏨 Stays</Link>
+          <Link to="/flights">✈️ Flights</Link>
+          <Link to="/packages">🎒 Packages</Link>
+          <Link to="/attractions">🌄 Attractions</Link>
+          <Link to="/events">🎉 Events</Link>
+        </div>
 
-        <p className="footer-tagline">🚀 Ready for your next adventure?</p>
-        <button className="join-btn">Join Wanderly Now</button>
+        {/* 💌 Contact Info */}
+        <div className="footer-contact">
+          <h4>Contact Us</h4>
+          <p>
+            <FaEnvelope /> support@wanderly.com
+          </p>
+          <p>
+            <FaPhoneAlt /> +91 98765 43210
+          </p>
+          <p>
+            <FaMapMarkerAlt /> Hyderabad, India 📍
+          </p>
+          <button className="join-btn">Join Wanderly 🚀</button>
+        </div>
+      </div>
 
-        <p className="footer-bottom">© 2025 Wanderly. All rights reserved.</p>
+      {/* 🌟 Divider */}
+      <div className="footer-divider"></div>
+
+      {/* 💜 Bottom Text */}
+      <div className="footer-bottom">
+        <p>
+          Made with 💜 by <span className="team-name">Team Wanderly</span>
+        </p>
+        <p>© 2025 Wanderly. All rights reserved.</p>
       </div>
     </footer>
   );

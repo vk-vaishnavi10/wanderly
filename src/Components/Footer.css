@@ -1,136 +1,173 @@
-footer {
-  background: linear-gradient(180deg, #1a103f 0%, #0b0c1a 100%);
-  color: #d9d9ff;
-  text-align: center;
-  padding: 50px 20px;
-  font-family: "Poppins", sans-serif;
+/* 🌌 Wanderly Compact Luxe Footer */
+.wanderly-footer {
+  background: radial-gradient(circle at 30% 80%, #1a002f, #070014, #000010);
+  color: #ccc;
+  padding: 2.5rem 2rem 1rem;
   position: relative;
+  text-align: center;
   overflow: hidden;
-  border-top: 2px solid rgba(155, 93, 229, 0.4);
-  box-shadow: 0 -4px 20px rgba(155, 93, 229, 0.25);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Aurora wave background */
-footer::before {
+/* 🌠 Floating Glow Effect */
+.wanderly-footer::before {
   content: "";
   position: absolute;
-  top: -80%;
-  left: -50%;
-  width: 200%;
-  height: 300%;
-  background: radial-gradient(circle at 40% 40%, #6ec1e4 10%, transparent 40%),
-              radial-gradient(circle at 60% 60%, #9b5de5 10%, transparent 50%),
-              radial-gradient(circle at 30% 70%, #f15bb5 8%, transparent 45%);
-  opacity: 0.2;
-  animation: auroraFlowFooter 20s infinite linear alternate;
-  filter: blur(120px);
-  z-index: 0;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(155, 93, 229, 0.4), transparent 70%);
+  filter: blur(30px);
+  animation: floatGlow 8s ease-in-out infinite alternate;
+}
+@keyframes floatGlow {
+  0% { transform: translateX(-50%) translateY(0); opacity: 0.5; }
+  100% { transform: translateX(-50%) translateY(15px); opacity: 0.8; }
 }
 
-@keyframes auroraFlowFooter {
-  0% { transform: translate(0, 0) scale(1); opacity: 0.25; }
-  50% { transform: translate(10%, -5%) scale(1.1); opacity: 0.35; }
-  100% { transform: translate(-10%, 10%) scale(1); opacity: 0.25; }
-}
-
-.footer-container {
-  max-width: 800px;
+/* 📦 Footer Grid Layout */
+.footer-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 2rem;
+  max-width: 1000px;
   margin: 0 auto;
-  position: relative;
   z-index: 2;
+  position: relative;
+  text-align: left;
 }
 
-footer h2 {
-  background: linear-gradient(90deg, #6ec1e4, #9b5de5, #f15bb5);
+/* 🌈 Brand */
+.footer-brand {
+  flex: 1;
+  min-width: 220px;
+}
+.footer-logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #ffd700, #9b5de5, #00e1ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 10px;
-  font-size: 1.8rem;
-  letter-spacing: 1px;
-  text-shadow: 0 0 12px rgba(110, 193, 228, 0.2);
+  animation: gradientFlow 6s linear infinite;
 }
-
-footer p {
-  color: #c9c9e8;
-  font-size: 1rem;
-  margin: 5px 0;
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
 }
-
-footer a {
-  color: #9b5de5;
-  text-decoration: none;
-  transition: 0.3s ease;
-  font-weight: 600;
+.footer-tagline {
+  color: #aaa;
+  font-size: 0.95rem;
+  margin-bottom: 0.8rem;
 }
-
-footer a:hover {
-  color: #f15bb5;
-  text-shadow: 0 0 8px rgba(241, 91, 181, 0.8);
-}
-
-.social-icons {
-  margin: 20px 0;
+.footer-socials {
   display: flex;
-  justify-content: center;
-  gap: 20px;
+  gap: 1rem;
+  margin-top: 0.5rem;
 }
-
-.social-icons a {
-  font-size: 1.4rem;
-  color: #c9c9e8;
+.footer-socials a {
+  color: #ccc;
+  font-size: 1.2rem;
   transition: all 0.3s ease;
 }
-
-.social-icons a:hover {
-  color: #6ec1e4;
+.footer-socials a:hover {
+  color: #00e1ff;
   transform: scale(1.2);
-  text-shadow: 0 0 10px rgba(110, 193, 228, 0.8);
+  filter: drop-shadow(0 0 8px #00e1ff);
 }
 
-.footer-divider {
-  height: 2px;
-  width: 80%;
-  margin: 25px auto;
-  background: linear-gradient(90deg, transparent, #9b5de5, transparent);
-  animation: fadeGlow 4s infinite linear;
+/* 🧭 Links */
+.footer-links {
+  flex: 1;
+  min-width: 200px;
+}
+.footer-links h4 {
+  color: #ffd700;
+  margin-bottom: 0.8rem;
+}
+.footer-links a {
+  display: block;
+  color: #aaa;
+  text-decoration: none;
+  margin: 4px 0;
+  transition: all 0.3s ease;
+}
+.footer-links a:hover {
+  color: #ffd700;
+  text-shadow: 0 0 10px #ffd700;
 }
 
-@keyframes fadeGlow {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 1; }
+/* 💌 Contact */
+.footer-contact {
+  flex: 1;
+  min-width: 230px;
 }
-
-.footer-tagline {
-  font-size: 1.1rem;
-  margin-top: 10px;
-  background: linear-gradient(90deg, #6ec1e4, #9b5de5);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: 600;
+.footer-contact h4 {
+  color: #ffd700;
+  margin-bottom: 0.8rem;
 }
-
+.footer-contact p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #bbb;
+  font-size: 0.95rem;
+  margin: 4px 0;
+}
+.footer-contact svg {
+  color: #ffd700;
+}
 .join-btn {
-  margin-top: 15px;
-  background: linear-gradient(90deg, #6ec1e4, #9b5de5);
-  color: #fff;
-  font-weight: 600;
+  background: linear-gradient(90deg, #ffd700, #9b5de5, #00e1ff);
+  color: #0b0016;
   border: none;
-  padding: 10px 25px;
   border-radius: 25px;
+  padding: 8px 20px;
+  margin-top: 0.8rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: 0.3s ease;
-  box-shadow: 0 0 12px rgba(155, 93, 229, 0.3);
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
 }
-
 .join-btn:hover {
-  background: linear-gradient(90deg, #f15bb5, #9b5de5);
-  box-shadow: 0 0 18px rgba(241, 91, 181, 0.5);
-  transform: translateY(-2px);
+  transform: scale(1.05);
+  box-shadow: 0 0 40px rgba(255, 215, 0, 0.5);
 }
 
+/* ✨ Divider */
+.footer-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #444, transparent);
+  width: 80%;
+  margin: 1.5rem auto;
+}
+
+/* 💜 Bottom Section */
 .footer-bottom {
-  margin-top: 30px;
-  font-size: 0.9rem;
-  color: #a9a9c5;
-  letter-spacing: 0.5px;
+  font-size: 0.85rem;
+  color: #888;
+}
+.team-name {
+  color: #ffd700;
+  font-weight: 600;
+}
+.footer-bottom p {
+  margin: 3px 0;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .footer-main {
+    flex-direction: column;
+    text-align: center;
+  }
+  .footer-links, .footer-contact {
+    text-align: center;
+  }
+  .footer-socials {
+    justify-content: center;
+  }
 }

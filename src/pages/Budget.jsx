@@ -61,10 +61,10 @@ export default function Budget() {
         Plan smart, spend wisely, and make every trip magical ✨
       </p>
 
-      {/* 🌈 Two Cards in Top Row */}
-      <div className="budget-grid">
+      {/* 🌈 Three Cards in One Row */}
+      <div className="budget-dashboard">
         {/* 🧭 PLAN CARD */}
-        <div className="budget-card plan-card">
+        <div className="budget-card">
           <h2>🧭 Plan Your Trip Budget</h2>
           <div className="plan-content">
             <div className="budget-plan-inputs">
@@ -95,7 +95,7 @@ export default function Budget() {
             </div>
 
             <div className="plan-chart">
-              <ResponsiveContainer width="100%" height={250}>
+              <ResponsiveContainer width="100%" height={220}>
                 <PieChart>
                   <Pie
                     data={pieData}
@@ -164,7 +164,7 @@ export default function Budget() {
         </div>
 
         {/* 📊 ANALYTICS CARD */}
-        <div className="budget-card analytics">
+        <div className="budget-card">
           <h2>📊 Analyze & Insights</h2>
           <div className="analytics-stats">
             <p>💸 Total Budget: ₹{totalBudget}</p>
@@ -175,7 +175,7 @@ export default function Budget() {
             )}
           </div>
 
-          <ResponsiveContainer width="100%" height={250}>
+          <ResponsiveContainer width="100%" height={220}>
             <BarChart data={barData}>
               <XAxis dataKey="name" />
               <Tooltip />

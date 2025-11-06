@@ -56,7 +56,7 @@ import AppStatus from "./pages/help/AppStatus.jsx";
 import Faqs from "./pages/help/Faqs.jsx";
 import MyTickets from "./pages/help/MyTickets.jsx";
 import Budget from "./pages/Budget.jsx";
-
+import Packing from "./pages/Packing.jsx";
 
 
 export default function App() {
@@ -93,7 +93,8 @@ export default function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/flights" element={<Flights />} />
             <Route path="/flights/:id" element={<FlightsDetails />} />
-            <Route path="/flightbooking/:id" element={<FlightBooking />} />
+            <Route path="/flights/book/:id" element={<FlightBooking />} />
+
 
             <Route path="/hotels" element={<Hotels />} />
             <Route path="/hotels/:id" element={<HotelsDetails />} />
@@ -133,6 +134,7 @@ export default function App() {
 <Route path="/help/faqs" element={<Faqs />} />
 <Route path="/help/tickets" element={<MyTickets />} />
 <Route path="/budget" element={<Budget />} /> {/* 💜 Budget Route */}
+<Route path="/packing" element={<Packing />} />
 
 
           </Routes>
