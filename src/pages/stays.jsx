@@ -4,8 +4,7 @@ import { Modal } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { addStayBooking } from "../services/api"; // ✅ API function
 
-// 🎥 Background Video
-import hotelbg from "../assets/videos/hotelbg.mp4";
+
 
 // 🖼️ Local Images
 import oberoi from "../images/oberoi.jpg";
@@ -17,6 +16,7 @@ import juhu from "../images/juhu.jpg";
 import lalit from "../images/lalit.jpg";
 import novotel from "../images/novotel.jpg";
 import windflower from "../images/windflower.jpg";
+const hotelbg = "/videos/hotelbg.mp4";
 
 // ✅ Predefined Hotel Data
 const hotelsData = [
@@ -205,29 +205,33 @@ export default function Stays() {
       <div className="hero-section">
         {/* 🎥 Background Video (added instead of slideshow) */}
         <video
-          className="hotel-bg-video"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-        >
-          <source src={hotelbg} type="video/mp4" />
-        </video>
+  className="hotel-bg-video"
+  autoPlay
+  muted
+  loop
+  playsInline
+  preload="auto"
+>
+  <source src={hotelbg} type="video/mp4" />
+</video>
 
-        <div className="hero-overlay">
-          <h1>🏨 Find Your Stay</h1>
-          <p>Discover luxury stays, book instantly, and explore attractions nearby.</p>
-          <div className="search-box">
-            <input
-              type="text"
-              placeholder="Enter city name..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
-            <button onClick={searchHotels}>Search</button>
-          </div>
-        </div>
+
+<div className="hero-overlay slim-hero">
+  <h1 className="slim-heading">
+    Find your perfect stay — explore hotels, villas & city escapes 🌿
+  </h1>
+
+  <div className="search-wide">
+    <input
+      type="text"
+      placeholder="Search by city, destination, or landmark..."
+      value={query}
+      onChange={(e) => setQuery(e.target.value)}
+    />
+    <button onClick={searchHotels}>🔍 Search</button>
+  </div>
+</div>
+
       </div>
 
       {/* 🏨 Hotel List */}

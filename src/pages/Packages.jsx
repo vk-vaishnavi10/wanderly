@@ -5,7 +5,8 @@ import { getPackages } from "../services/api";
 import kashmirImg from "../images/kashmirparadise.jpg";
 import sinImg from "../images/sin.avif";
 import keralaImg from "../images/kerala.jpg";
-import packageVideo from "../assets/videos/packagebg.mp4";
+const packageVideo = "/videos/packagebg.mp4"; // 🎥 from public folder
+
 
 const fallbackPackages = [
   {
@@ -89,9 +90,20 @@ export default function Packages() {
   return (
     <section className="packages-section">
       {/* 🎥 Background Video */}
-      <video autoPlay loop muted playsInline className="packages-bg-video">
-        <source src={packageVideo} type="video/mp4" />
-      </video>
+      <video
+  autoPlay
+  loop
+  muted
+  playsInline
+  preload="auto"
+  className="packages-bg-video"
+  onLoadedData={() => console.log("✅ Packages video loaded successfully")}
+  onError={(e) => console.error("❌ Packages video load error:", e)}
+>
+  <source src={packageVideo} type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+
 
       {/* 🌍 Elegant Hero */}
       <div className="packages-hero">

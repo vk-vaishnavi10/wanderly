@@ -1,64 +1,89 @@
 /* ======================================================
-   🌈 WANDERLY GLOBAL THEME
-   Author: Vaishnavi 💜 (Aurora Radiance Edition)
+   🌈 WANDERLY AURORA RADIANCE 2.0
+   Theme: Celestial Spectrum Edition
+   Author: Vaishnavi 💜
+   Palette: Violet • Cyan • Mint • Gold • Magenta • Deep Black
 ====================================================== */
 
 :root {
-  --bg-color: #060015;
-  --text-color: #f6e8ff;
-  --muted-text: #b8a9d6;
-  --accent: #d57aff;
-  --button-bg: linear-gradient(90deg, #00bcd4, #8b5cf6, #ec4899, #ff6f61);
-  --button-hover: linear-gradient(90deg, #ff8fa3, #ec4899, #8b5cf6, #00bcd4);
-  --card-bg: rgba(25, 15, 50, 0.85);
-  --glow: 0 0 20px rgba(236, 72, 153, 0.45);
+  /* === Base === */
+  --bg-color: #03000a; /* Deep aurora night black */
+  --text-color: #f2f9ff; /* Soft light bluish-white */
+  --muted-text: #a5c3e0;
+  --accent: #6ee7b7; /* Mint green shimmer */
+
+  /* === Core Glow Colors === */
+  --aurora-cyan: #00e0ff;
+  --aurora-green: #3ef3b2;
+  --aurora-pink: #ff7edb;
+  --aurora-gold: #ffd76b;
+  --aurora-violet: #a78bfa;
+
+  /* === Gradient Magics === */
+  --button-bg: linear-gradient(
+    120deg,
+    var(--aurora-cyan),
+    var(--aurora-green),
+    var(--aurora-gold),
+    var(--aurora-pink)
+  );
+  --button-hover: linear-gradient(
+    120deg,
+    var(--aurora-gold),
+    var(--aurora-pink),
+    var(--aurora-violet),
+    var(--aurora-cyan)
+  );
+
+  --card-bg: rgba(10, 8, 25, 0.85);
+  --glow: 0 0 20px rgba(0, 255, 255, 0.35);
 
   font-family: "Poppins", system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
   color-scheme: dark;
   background-color: var(--bg-color);
   color: var(--text-color);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 /* =========================================
-   🌟 BASE STYLES
+   🌟 BODY + HEADERS
+========================================= */
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  background-image: 
+    radial-gradient(circle at top left, rgba(0, 255, 255, 0.15), transparent 60%),
+    radial-gradient(circle at bottom right, rgba(255, 221, 97, 0.12), transparent 60%);
+}
+
+h1, h2, h3, h4, h5 {
+  color: var(--text-color);
+  text-shadow: 0 0 16px rgba(0, 255, 255, 0.3), 0 0 22px rgba(255, 221, 97, 0.25);
+  letter-spacing: 0.6px;
+}
+
+/* =========================================
+   💜 LINKS
 ========================================= */
 a {
+  color: var(--aurora-cyan);
   font-weight: 500;
-  color: var(--accent);
   text-decoration: none;
   transition: 0.3s ease;
 }
 
 a:hover {
-  color: #ff7eb9;
-  text-shadow: 0 0 12px rgba(255, 126, 185, 0.6);
-}
-
-body {
-  margin: 0;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-  background-image: radial-gradient(circle at top left, rgba(139, 92, 246, 0.25), transparent 60%),
-                    radial-gradient(circle at bottom right, rgba(0, 188, 212, 0.2), transparent 60%);
-}
-
-h1, h2, h3, h4, h5 {
-  color: var(--text-color);
-  text-shadow: 0 0 12px rgba(255, 126, 185, 0.4), 0 0 22px rgba(139, 92, 246, 0.25);
-  letter-spacing: 0.6px;
+  color: var(--aurora-gold);
+  text-shadow: 0 0 12px var(--aurora-cyan), 0 0 18px var(--aurora-pink);
 }
 
 /* =========================================
-   💜 BUTTONS
+   ✨ BUTTONS
 ========================================= */
 button {
   border-radius: 999px;
@@ -71,182 +96,129 @@ button {
   color: #fff;
   cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.4s ease;
-  box-shadow: 0 0 18px rgba(255, 126, 185, 0.4), 0 0 25px rgba(139, 92, 246, 0.25);
+  box-shadow: 0 0 18px rgba(0, 255, 255, 0.4), 0 0 25px rgba(255, 221, 97, 0.35);
 }
 
 button:hover {
   transform: translateY(-2px);
   background: var(--button-hover);
-  box-shadow: 0 0 25px rgba(236, 72, 153, 0.7), 0 0 40px rgba(0, 188, 212, 0.5);
+  box-shadow: 0 0 30px rgba(255, 126, 185, 0.7), 0 0 50px rgba(0, 255, 255, 0.5);
 }
 
-button:focus,
 button:focus-visible {
-  outline: 3px solid var(--accent);
+  outline: 3px solid var(--aurora-cyan);
 }
 
 /* =========================================
-   ✏️ INPUTS
+   🪞 INPUTS
 ========================================= */
 input, textarea {
-  background: rgba(15, 10, 35, 0.8);
-  border: 1.5px solid rgba(139, 92, 246, 0.4);
+  background: rgba(15, 15, 35, 0.9);
+  border: 1.5px solid rgba(0, 255, 255, 0.3);
   border-radius: 999px;
-  color: #f4edff;
+  color: #e7f5ff;
   padding: 0.6em 1em;
   font-size: 1em;
-  outline: none;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 input::placeholder {
-  color: #caaaff;
+  color: #a0dfff;
 }
 
 input:focus, textarea:focus {
-  border-color: #ec4899;
-  box-shadow: 0 0 14px rgba(236, 72, 153, 0.6), 0 0 22px rgba(139, 92, 246, 0.4);
+  border-color: var(--aurora-pink);
+  box-shadow: 0 0 14px rgba(0, 255, 255, 0.6), 0 0 22px rgba(255, 221, 97, 0.4);
 }
 
 /* =========================================
-   💫 ALWAYS-GLOWING SEARCH BOX
+   💫 SEARCH BOX (Always Glowing)
 ========================================= */
 .search-box {
   display: flex;
   align-items: center;
-  border: 2px solid rgba(139, 92, 246, 0.9);
+  border: 2px solid rgba(0, 255, 255, 0.8);
   border-radius: 999px;
-  background: rgba(10, 0, 30, 0.8);
-  padding: 0.4rem 0.6rem;
+  background: rgba(5, 5, 15, 0.8);
+  padding: 0.5rem 0.8rem;
   width: 100%;
   max-width: 650px;
-  gap: 8px;
-  position: relative;
-  box-shadow: 0 0 18px rgba(236, 72, 153, 0.5), 0 0 30px rgba(0, 188, 212, 0.3);
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.4), 0 0 40px rgba(255, 221, 97, 0.25);
   transition: all 0.3s ease;
 }
 
 .search-box:focus-within {
-  box-shadow: 0 0 30px rgba(255, 126, 185, 0.7), 0 0 40px rgba(139, 92, 246, 0.6);
+  box-shadow: 0 0 35px var(--aurora-cyan), 0 0 45px var(--aurora-pink);
   transform: scale(1.02);
 }
 
 .search-box input {
   border: none;
   background: transparent;
-  color: #f8f9ff;
+  color: #f8faff;
   flex: 1;
   padding: 0.7rem 1rem;
-  outline: none;
   font-size: 1rem;
 }
 
 .search-box input::placeholder {
-  color: #d8c2ff;
-  opacity: 0.9;
+  color: #9fe7ff;
 }
 
-/* Search Button */
 .search-btn {
-  background: linear-gradient(90deg, #00bcd4, #8b5cf6, #ec4899);
+  background: linear-gradient(90deg, var(--aurora-cyan), var(--aurora-green), var(--aurora-gold));
   color: #fff;
   font-weight: 700;
   border-radius: 999px;
   padding: 0.6rem 1.25rem;
   border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: 0.3s ease;
 }
 
 .search-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 25px rgba(236, 72, 153, 0.7), 0 0 35px rgba(0, 188, 212, 0.5);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.7), 0 0 40px rgba(255, 221, 97, 0.5);
 }
 
 /* =========================================
-   🌈 QUICK LINKS (Flights, Hotels, Packages)
-========================================= */
-.quick-links {
-  display: flex;
-  justify-content: center;
-  gap: 0.8rem;
-  margin-top: 1rem;
-}
-
-.quick-links .btn {
-  background: linear-gradient(90deg, #00bcd4, #8b5cf6, #ec4899, #ff6f61);
-  color: #fff;
-  font-weight: 600;
-  font-size: 0.9rem;
-  border: none;
-  border-radius: 999px;
-  padding: 0.45rem 1.1rem;
-  box-shadow: 0 0 18px rgba(139, 92, 246, 0.45), 0 0 25px rgba(236, 72, 153, 0.35);
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.quick-links .btn:hover {
-  transform: scale(1.06);
-  box-shadow: 0 0 28px rgba(236, 72, 153, 0.6), 0 0 40px rgba(0, 188, 212, 0.4);
-  background: linear-gradient(90deg, #ff8fa3, #ec4899, #8b5cf6, #00bcd4);
-}
-
-/* =========================================
-   🪄 CARDS
+   🌌 CARDS
 ========================================= */
 .card {
   background: var(--card-bg);
-  border: 1px solid rgba(139, 92, 246, 0.25);
+  border: 1px solid rgba(0, 255, 255, 0.25);
   border-radius: 16px;
   padding: 1.5rem;
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4), 0 0 25px rgba(236, 72, 153, 0.25);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 255, 255, 0.25);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 0 35px rgba(236, 72, 153, 0.5), 0 0 50px rgba(0, 188, 212, 0.3);
+  box-shadow: 0 0 45px rgba(0, 255, 255, 0.4), 0 0 60px rgba(255, 221, 97, 0.3);
 }
 
 /* =========================================
-   🌙 DARK MODE (Optional)
+   🌙 DARK MODE (Still More Vivid)
 ========================================= */
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-color: #050014;
-    --text-color: #f4edff;
-    --accent: #d57aff;
-    --card-bg: rgba(20, 10, 40, 0.9);
+    --bg-color: #01000c;
+    --text-color: #f1fcff;
+    --accent: #6ee7b7;
+    --card-bg: rgba(10, 10, 30, 0.9);
   }
 
   body {
     background: var(--bg-color);
     color: var(--text-color);
-    background-image: radial-gradient(circle at top left, rgba(0, 188, 212, 0.25), transparent 60%),
-                      radial-gradient(circle at bottom right, rgba(236, 72, 153, 0.25), transparent 60%);
-  }
-
-  button {
-    background: var(--button-bg);
-    color: #fff;
-  }
-
-  input, textarea {
-    background: rgba(10, 0, 25, 0.85);
-    border: 1.5px solid rgba(139, 92, 246, 0.4);
-    color: #f4edff;
+    background-image:
+      radial-gradient(circle at top left, rgba(0, 255, 255, 0.18), transparent 60%),
+      radial-gradient(circle at bottom right, rgba(255, 221, 97, 0.18), transparent 60%);
   }
 
   .search-box {
-    background: rgba(10, 0, 30, 0.75);
-    border-color: rgba(236, 72, 153, 0.95);
-    box-shadow: 0 0 25px rgba(236, 72, 153, 0.5), 0 0 35px rgba(0, 188, 212, 0.4);
-  }
-
-  .quick-links .btn {
-    color: #fff;
-    background: linear-gradient(90deg, #00bcd4, #8b5cf6, #ec4899, #ff6f61);
-    box-shadow: 0 0 25px rgba(255, 126, 185, 0.55), 0 0 35px rgba(0, 188, 212, 0.4);
+    border-color: rgba(255, 221, 97, 0.8);
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.5), 0 0 40px rgba(255, 221, 97, 0.4);
   }
 }

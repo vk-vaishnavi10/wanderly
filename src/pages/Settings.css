@@ -282,3 +282,60 @@
     padding: 1.3rem;
   }
 }
+/* 🌈 Theme Variable Support */
+:root {
+  --primary-bg: linear-gradient(180deg, #050013 0%, #0d022e 100%);
+  --accent: #f15bb5;
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --button-gradient: linear-gradient(90deg, #9b5de5, #f15bb5, #00e1ff);
+  --glow-color: rgba(155, 93, 229, 0.6);
+  --glow-strength: 1;
+}
+
+.settings-section {
+  background: var(--primary-bg) !important;
+  transition: all 0.6s ease-in-out;
+}
+
+.settings-card {
+  background: var(--card-bg) !important;
+  box-shadow: 0 0 calc(25px * var(--glow-strength)) var(--glow-color);
+  transition: 0.5s ease all;
+}
+
+.settings-btn {
+  background: var(--button-gradient) !important;
+}
+
+/* 🎉 Theme Applied Toast */
+.theme-toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--button-gradient);
+  color: #001a22;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  box-shadow: 0 0 25px var(--glow-color);
+  animation: fadeInOut 2s ease forwards;
+  z-index: 9999;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  15% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}

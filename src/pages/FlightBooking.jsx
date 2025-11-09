@@ -5,8 +5,8 @@ import flights from "../data/flights";
 import "./FlighBooking.css";
 import { addFlightBooking } from "../services/api";
 
-// 🖼 Import video
-import flightVideo from "../assets/videos/flightbg.mp4";
+// 🎬 Use public path instead of importing from assets
+const flightVideo = "/videos/flightbg.mp4";
 
 export default function FlightBooking() {
   const { id } = useParams();
@@ -81,9 +81,13 @@ export default function FlightBooking() {
         loop
         muted
         playsInline
-        src={flightVideo}
-        type="video/mp4"
-      />
+        preload="auto"
+        onLoadedData={() => console.log("✅ Flight video loaded successfully")}
+        onError={(e) => console.error("❌ Flight video load error:", e)}
+      >
+        <source src={flightVideo} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
 
       {/* Overlay for contrast */}
       <div className="flight-overlay"></div>

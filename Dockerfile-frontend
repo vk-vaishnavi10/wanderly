@@ -5,7 +5,7 @@ WORKDIR /app
 # Install git (for clone) and build tools
 RUN apk add --no-cache git
 
-# Clone your latest code from GitHub
+# Clone latest code from GitHub
 RUN git clone --branch main https://github.com/vk-vaishnavi10/wanderly ./
 
 # Install dependencies and build React
@@ -15,10 +15,10 @@ RUN npm run build
 # ✅ Stage 2 — Serve with Nginx
 FROM nginx:1.25-alpine
 
-# Copy build output
+# Copy React build output (adjust folder if using CRA -> /app/build)
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# 🟡 Copy nginx.conf from travel directory (relative to build context)
+# Copy nginx.conf
 COPY travel/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80

@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import "./Signin.css";
-import oceanVideo from "../assets/videos/signbg.mp4"; // 🌊 your cinematic background
+const oceanVideo = "/videos/introbg.mp4"; // 🌊 cinematic background from public folder
+ // 🌊 your cinematic background
 
 export default function Signin() {
   const [wanderId, setWanderId] = useState("");
@@ -51,9 +52,20 @@ export default function Signin() {
   return (
     <div className="signin-page">
       {/* 🌊 Background Video */}
-      <video autoPlay loop muted playsInline className="signin-bg-video">
-        <source src={oceanVideo} type="video/mp4" />
-      </video>
+      <video
+  autoPlay
+  loop
+  muted
+  playsInline
+  preload="auto"
+  className="signin-bg-video"
+  onLoadedData={() => console.log("✅ Signin video loaded successfully")}
+  onError={(e) => console.error("❌ Video load error:", e)}
+>
+  <source src={oceanVideo} type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+
 
       {/* 💎 Glass Overlay Left Panel */}
       <div className="signin-overlay">

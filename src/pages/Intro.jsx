@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Intro.css";
-import introVideo from "../assets/videos/introbg.mp4";
+// 🎬 Use public folder path for videos
+const introVideo = "/videos/travelintrobg.mp4";
+
+
+
 
 export default function Intro() {
   const navigate = useNavigate();
@@ -36,18 +40,19 @@ export default function Intro() {
     <div className="intro-page">
       {/* 🎥 Background Video */}
       <video
-        className="intro-bg-video"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        onLoadedData={() => console.log("✅ Video loaded successfully")}
-        onError={(e) => console.error("❌ Video load error:", e)}
-      >
-        <source src={introVideo} type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+  className="intro-bg-video"
+  autoPlay
+  muted
+  loop
+  playsInline
+  preload="auto"
+  onLoadedData={() => console.log("✅ Video loaded successfully")}
+  onError={(e) => console.error("❌ Video load error:", e)}
+>
+  <source src={introVideo} type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+
 
       {/* 🌈 Cinematic Overlay */}
       <div className="intro-overlay">

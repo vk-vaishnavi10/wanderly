@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Events.css";
-import eventsVideo from "../assets/videos/eventbg.mp4"; // 🎥 Background video
+
+// 🎬 Use video from the public/videos folder
+const eventsVideo = "/videos/eventbg.mp4";
 
 // ✅ Local images
 import ocImg from "../images/oc.jpg";
@@ -44,8 +46,18 @@ export default function Events() {
   return (
     <div className="events-page position-relative">
       {/* 🎥 Background Video */}
-      <video className="events-bg-video" autoPlay loop muted playsInline>
+      <video
+        className="events-bg-video"
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        onLoadedData={() => console.log("✅ Events video loaded successfully")}
+        onError={(e) => console.error("❌ Events video load error:", e)}
+      >
         <source src={eventsVideo} type="video/mp4" />
+        Your browser does not support the video tag.
       </video>
 
       {/* ✨ Gradient Overlay */}
@@ -58,7 +70,11 @@ export default function Events() {
 
       {/* 🎉 Hero Section */}
       <section className="events-hero text-center">
-        <h1 className="hero-title">🎆 Events & Experiences</h1>
+      <h1 className="hero-title">
+  <span className="aurora-icon">🌌</span> Events 🌟 & Experiences
+</h1>
+
+
         <p className="hero-sub">
           Discover festivals, shows, and unique cultural gatherings.
         </p>

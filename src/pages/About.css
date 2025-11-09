@@ -1,38 +1,219 @@
+/* 🌌 ABOUT PAGE — CINEMATIC GLASS EDITION */
+
 .about-page {
+  position: relative;
   min-height: 100vh;
-  background: radial-gradient(circle at top, #0b0c1a, #1a103f);
-  color: #E8EAF6;
+  color: #fff;
   font-family: "Poppins", sans-serif;
-  text-align: center;
-  padding: 60px 20px;
+  overflow: hidden;
 }
 
-/* ✨ Heading Glow */
-.about-page h1 {
-  font-size: 2.6rem;
-  font-weight: 800;
-  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
+/* 🎬 Background Video */
+.video-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -3;
+}
+
+.about-video-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.75) contrast(1.05) saturate(1.2);
+  animation: slowZoom 70s ease-in-out infinite alternate;
+}
+
+.video-overlay {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.4), rgba(10,10,30,0.85));
+  backdrop-filter: blur(2px);
+  z-index: -2;
+}
+
+/* 🌈 Aurora Lighting */
+.aurora {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(800px 400px at 20% 30%, rgba(155,93,229,0.25), transparent),
+              radial-gradient(800px 500px at 80% 70%, rgba(241,91,181,0.18), transparent);
+  z-index: -1;
+  animation: auroraDrift 20s ease-in-out infinite alternate;
+}
+
+/* 🌍 Content Layer */
+.about-content {
+  position: relative;
+  z-index: 10;
+  background: transparent;
+}
+
+/* 🪐 Hero Section */
+.about-hero {
+  text-align: center;
+  padding: 150px 20px 100px;
+}
+
+.about-hero h1 {
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-weight: 900;
+  background: linear-gradient(90deg, #ffe29f, #9b5de5, #00e1ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-size: 300%;
-  animation: dreamyFlow 8s ease-in-out infinite;
-  text-shadow: 0 0 20px rgba(155, 93, 229, 0.6);
-  margin-bottom: 20px;
+  text-shadow: 0 0 35px rgba(155,93,229,0.6);
 }
 
-/* 💫 Paragraphs */
-.about-page p {
+.about-hero p {
+  color: rgba(255,255,255,0.85);
   font-size: 1.1rem;
-  line-height: 1.8;
-  color: rgba(232, 234, 246, 0.9);
-  max-width: 800px;
-  margin: 0 auto;
-  text-shadow: 0 0 8px rgba(110, 193, 228, 0.2);
+  text-shadow: 0 0 10px rgba(255,255,255,0.25);
 }
 
-/* 🌈 Gradient Animation */
-@keyframes dreamyFlow {
+/* 🌠 Core Values — Floating Glass Panel */
+/* 🌠 Core Values — True Floating Glass Panel */
+.core-values {
+  text-align: center;
+  padding: 80px 20px;
+  background: rgba(255, 255, 255, 0.015); /* softer opacity */
+  border: 1px solid rgba(255, 215, 0, 0.12);
+  border-radius: 25px;
+  margin: 60px auto;
+  width: 90%;
+  backdrop-filter: blur(22px) saturate(1.4);
+  box-shadow:
+    0 0 60px rgba(255, 215, 0, 0.1),
+    inset 0 0 60px rgba(255, 255, 255, 0.04);
+  transition: all 0.4s ease-in-out;
+}
+
+/* 📊 Stats Section — Same Glassy Layer */
+.stats-section {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.015);
+  padding: 80px 20px;
+  margin-top: 40px;
+  border-radius: 25px;
+  border: 1px solid rgba(255, 215, 0, 0.1);
+  box-shadow:
+    0 0 60px rgba(255, 215, 0, 0.1),
+    inset 0 0 80px rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px) saturate(1.3);
+  transition: all 0.4s ease-in-out;
+}
+
+/* 💫 Glass Cards — Polished floating look */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 18px;
+  padding: 28px;
+  transition: all 0.4s ease;
+  box-shadow:
+    0 0 20px rgba(255, 255, 255, 0.08),
+    0 0 40px rgba(255, 215, 0, 0.1);
+  backdrop-filter: blur(12px) saturate(1.2);
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-10px);
+  box-shadow:
+    0 0 25px rgba(255, 255, 255, 0.25),
+    0 0 50px rgba(255, 215, 0, 0.25);
+}
+
+/* Optional shimmer hover for section */
+.core-values:hover,
+.stats-section:hover {
+  box-shadow:
+    0 0 80px rgba(255, 215, 0, 0.2),
+    inset 0 0 90px rgba(255, 255, 255, 0.06);
+}
+
+/* 📊 Stats Section — Transparent Glow */
+.stats-section {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.025);
+  padding: 80px 20px;
+  margin-top: 40px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 215, 0, 0.1);
+  box-shadow:
+    0 0 40px rgba(255, 215, 0, 0.12),
+    inset 0 0 80px rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(18px) saturate(1.3);
+  transition: all 0.4s ease-in-out;
+}
+
+/* 🪩 Stat Numbers */
+.stat-number {
+  font-size: 3rem;
+  color: #ffd700;
+  text-shadow: 0 0 25px #ffd700, 0 0 50px rgba(255,215,0,0.4);
+}
+
+.stat-label {
+  color: rgba(255,255,255,0.85);
+  font-weight: 500;
+}
+
+/* 📩 Contact Section */
+.contact-section {
+  padding: 80px 20px;
+  background: rgba(10,10,30,0.75);
+  border-top: 1px solid rgba(255,215,0,0.25);
+}
+
+.contact-section a {
+  color: #00e1ff;
+  text-decoration: none;
+}
+
+.contact-section a:hover {
+  color: #ffd700;
+}
+
+/* 🚀 CTA Button */
+.btn-glow {
+  display: inline-block;
+  background: linear-gradient(90deg, #ffcc00, #ffae00);
+  color: #000;
+  font-weight: 700;
+  border-radius: 50px;
+  padding: 12px 40px;
+  margin-top: 20px;
+  text-decoration: none;
+  box-shadow: 0 0 15px rgba(255,215,0,0.8), 0 0 30px rgba(255,215,0,0.4);
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-glow:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(255,255,255,0.9), 0 0 45px rgba(255,215,0,0.9);
+}
+
+/* 🎥 Animations */
+@keyframes slowZoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.07); }
+}
+
+@keyframes auroraDrift {
+  0% { transform: translateY(0px); opacity: 1; }
+  100% { transform: translateY(-30px); opacity: 0.85; }
+}
+
+@keyframes textFlow {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
+}
+
+/* ✨ Transparent App Background */
+main, .main-content {
+  background: transparent !important;
 }

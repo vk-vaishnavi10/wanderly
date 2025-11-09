@@ -11,7 +11,7 @@ import { useContext } from "react";
 import manImg from "../images/man.jpg";
 import ham from "../images/ham.jpg";
 import ooty from "../images/ooty.jpg";
-import homeVideo from "../assets/videos/homebg.mp4";
+
 
 // Popular Destinations
 import tajmahal from "../images/tajmahal.jpg";
@@ -21,7 +21,8 @@ import lehladakh from "../images/lehladakh.jpg";
 
 export default function Home() {
   const [query, setQuery] = useState("");
-  
+  const homeVideo = "/videos/homebg.mp4";
+
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [listening, setListening] = useState(false);
   const navigate = useNavigate();
@@ -170,10 +171,19 @@ useEffect(() => {
       >
         <section id="hero" className="hero-section" ref={heroRef}>
 
-    <video className="hero-video-bg" autoPlay loop muted playsInline>
-    <source src={homeVideo} type="video/mp4" />
-  </video>
-  <div className="hero-dark-overlay" />
+        <video
+  className="hero-video-bg"
+  autoPlay
+  loop
+  muted
+  playsInline
+  preload="auto"
+  onLoadedData={() => console.log("✅ Home video loaded successfully")}
+  onError={(e) => console.error("❌ Home video load error:", e)}
+>
+  <source src={homeVideo} type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
 
 
   {/* ✨ Floating Headline & Search */}
@@ -295,7 +305,8 @@ useEffect(() => {
           className="container py-5"
           variants={itemVariants}
         >
-          <h2 className="text-center mb-4">Popular Destinations</h2>
+          <h2 className="popular-title">✨ Popular Destinations ✨</h2>
+
           <div className="row g-4 text-center">
             {[
               { img: tajmahal, title: "Taj Mahal, Agra" },
@@ -304,17 +315,18 @@ useEffect(() => {
               { img: lehladakh, title: "Leh Ladakh" },
             ].map((place, i) => (
               <div key={i} className="col-6 col-md-3 animate-card">
-                <motion.div
-                  className="card shadow-sm h-100 destination-card"
-                  whileHover={{ scale: 1.03, y: -6 }}
-                  transition={{ type: "spring", stiffness: 140 }}
-                >
-                  <img src={place.img} className="card-img-top" alt={place.title} />
-                  <div className="card-body">
-                    <h5 className="card-title">{place.title}</h5>
-                  </div>
-                </motion.div>
-              </div>
+  <motion.div
+    className="card shadow-sm h-100 destination-card"
+    whileHover={{ scale: 1.04, rotateY: 5 }}
+    transition={{ type: "spring", stiffness: 140 }}
+  >
+    <img src={place.img} className="card-img-top" alt={place.title} />
+    <div className="card-body">
+      <h5 className="destination-name">{place.title}</h5>
+    </div>
+  </motion.div>
+</div>
+
             ))}
           </div>
         </motion.section>

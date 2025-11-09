@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
-import forestVideo from "../assets/videos/travel-intro.mp4";
+const forestVideo = "/videos/signupbg.mp4";
+
 
 export default function Register() {
   const navigate = useNavigate();
@@ -56,9 +57,20 @@ export default function Register() {
   return (
     <div className="register-page">
       {/* 🎥 Background Video */}
-      <video autoPlay loop muted playsInline className="register-bg-video">
-        <source src={forestVideo} type="video/mp4" />
-      </video>
+      <video
+  autoPlay
+  loop
+  muted
+  playsInline
+  preload="auto"
+  className="register-bg-video"
+  onLoadedData={() => console.log("✅ Register video loaded successfully")}
+  onError={(e) => console.error("❌ Video load error:", e)}
+>
+  <source src={forestVideo} type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+
 
       {/* 🌈 Cinematic Overlay (flush-left) */}
       <div className="register-overlay">

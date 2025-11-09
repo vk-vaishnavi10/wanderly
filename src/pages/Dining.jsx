@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Dining.css";
-import diningVideo from "../assets/videos/diningbg.mp4";
 import stImg from "../images/st.jpeg";
+
+// 🎬 Use public path instead of importing from assets
+const diningVideo = "/videos/diningbg.mp4";
 
 export default function Dining() {
   const diningOptions = [
@@ -29,8 +31,18 @@ export default function Dining() {
   return (
     <div className="dining-page">
       {/* 🎥 Background Video */}
-      <video className="dining-bg-video" autoPlay loop muted playsInline>
+      <video
+        className="dining-bg-video"
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        onLoadedData={() => console.log("✅ Dining video loaded")}
+        onError={(e) => console.error("❌ Dining video load error:", e)}
+      >
         <source src={diningVideo} type="video/mp4" />
+        Your browser does not support the video tag.
       </video>
 
       {/* 🪞 Glass Overlay */}

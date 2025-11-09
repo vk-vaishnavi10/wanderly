@@ -25,7 +25,7 @@
   top: -10%;
   left: -10%;
   background:
-    radial-gradient(circle at 25% 30%, rgba(255, 204, 112, 0.15), transparent 70%),
+    radial-gradient(circle at 25% 30%, rgba(146, 126, 156, 0.15), transparent 70%),
     radial-gradient(circle at 75% 70%, rgba(98, 211, 255, 0.12), transparent 70%);
   mix-blend-mode: screen;
   animation: auroraFloat 18s ease-in-out infinite alternate;
@@ -252,11 +252,79 @@
   -webkit-text-fill-color: transparent;
 }
 .flight-card p {
-  margin: .3rem 0;
-  font-size: .95rem;
-  color: #eaf3ff;
-  opacity: .95;
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+  color: #b7f7ff; /* 🌊 softer cyan-white for better contrast */
+  opacity: 1;
+  text-shadow: 0 0 8px rgba(0, 225, 255, 0.3); /* glowing readability */
 }
+/* 🕓 Departure & Arrival text (for <small> tags) */
+.flight-card small {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+  color: inherit !important;
+}
+
+/* 🌊 Departure - soft cyan glow */
+.flight-card small:nth-of-type(1) {
+  color: #5ee8ff !important;
+  text-shadow: 0 0 10px rgba(94, 232, 255, 0.6);
+}
+
+/* 🌟 Arrival - warm gold glow */
+.flight-card small:nth-of-type(2) {
+  color: #ffd47f !important;
+  text-shadow: 0 0 10px rgba(255, 212, 127, 0.6);
+}
+
+/* ✨ Gentle pulsing glow animation */
+@keyframes flightGlow {
+  0% { text-shadow: 0 0 6px rgba(255,255,255,0.2); }
+  50% { text-shadow: 0 0 14px rgba(255,255,255,0.6); }
+  100% { text-shadow: 0 0 6px rgba(255,255,255,0.2); }
+}
+
+.flight-card small:nth-of-type(1),
+.flight-card small:nth-of-type(2) {
+  animation: flightGlow 3s ease-in-out infinite alternate;
+}
+
+
+@keyframes flightGlow {
+  0% { text-shadow: 0 0 8px rgba(255,255,255,0.3); }
+  50% { text-shadow: 0 0 18px rgba(255,255,255,0.6); }
+  100% { text-shadow: 0 0 8px rgba(255,255,255,0.3); }
+}
+
+.flight-card small:nth-of-type(1),
+.flight-card small:nth-of-type(2) {
+  animation: flightGlow 3s ease-in-out infinite alternate;
+}
+
+
+/* ✈️ Highlight time details (departure/arrival icons) */
+.flight-card p span,
+.flight-card p i {
+  color: #ffe29f; /* 🌟 golden accent for icons and times */
+  font-weight: 500;
+}
+/* 💎 Highlight specific flight details */
+.flight-card p:nth-child(4) {
+  color: #5ee8ff; /* Bright cyan-blue for departure */
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(94, 232, 255, 0.5);
+}
+
+.flight-card p:nth-child(5) {
+  color: #ffd47f; /* Soft gold for arrival */
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(255, 212, 127, 0.5);
+}
+
+
 .flight-card strong { color: #ffe29f; font-weight: 700; }
 
 /* View Details Button */
@@ -280,3 +348,12 @@
   .search-form { flex-direction: column; }
   .search-input, .search-form button { width: 100%; }
 }
+@keyframes pulseGlow {
+  0% { text-shadow: 0 0 8px rgba(255,255,255,0.3); }
+  50% { text-shadow: 0 0 16px rgba(255,255,255,0.6); }
+  100% { text-shadow: 0 0 8px rgba(255,255,255,0.3); }
+}
+
+
+/* 🕓 Departure & Arrival text (for <small> tags) */
+

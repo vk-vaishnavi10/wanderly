@@ -26,6 +26,79 @@ export default function Settings() {
     setQuote(random);
   }, []);
 
+  /* 🌈 THEME CONFIGURATION - added for Apply Theme functionality */
+  const themeStyles = {
+    royal: {
+      "--primary-bg": "linear-gradient(180deg, #050013 0%, #0d022e 100%)",
+      "--accent": "#f15bb5",
+      "--card-bg": "rgba(255, 255, 255, 0.05)",
+      "--glow-color": "rgba(155, 93, 229, 0.6)",
+      "--button-gradient": "linear-gradient(90deg, #9b5de5, #f15bb5, #00e1ff)",
+    },
+    ocean: {
+      "--primary-bg": "linear-gradient(180deg, #00111f 0%, #004466 100%)",
+      "--accent": "#00e1ff",
+      "--card-bg": "rgba(0, 35, 55, 0.25)",
+      "--glow-color": "rgba(0, 225, 255, 0.5)",
+      "--button-gradient": "linear-gradient(90deg, #2193b0, #6dd5ed)",
+    },
+    sunset: {
+      "--primary-bg": "linear-gradient(180deg, #331a00 0%, #994d00 100%)",
+      "--accent": "#ff9a00",
+      "--card-bg": "rgba(255, 170, 50, 0.1)",
+      "--glow-color": "rgba(255, 154, 0, 0.5)",
+      "--button-gradient": "linear-gradient(90deg, #ee9ca7, #ffdde1)",
+    },
+    galaxy: {
+      "--primary-bg": "linear-gradient(180deg, #0f0c29 0%, #302b63 50%, #24243e 100%)",
+      "--accent": "#b2f5ea",
+      "--card-bg": "rgba(25, 15, 55, 0.3)",
+      "--glow-color": "rgba(178, 245, 234, 0.6)",
+      "--button-gradient": "linear-gradient(90deg, #0f2027, #203a43, #2c5364)",
+    },
+  };
+
+  /* 🌟 Apply Theme Function */
+  const applyTheme = () => {
+    const selectedTheme = themeStyles[theme];
+    if (!selectedTheme) return;
+
+    Object.entries(selectedTheme).forEach(([key, value]) => {
+      document.documentElement.style.setProperty(key, value);
+    });
+
+    // Glow intensity
+    const intensity =
+      glow === "low" ? 0.5 : glow === "high" ? 1.5 : 1.0;
+    document.documentElement.style.setProperty(
+      "--glow-strength",
+      intensity
+    );
+
+    localStorage.setItem("wanderlyTheme", theme);
+    localStorage.setItem("wanderlyGlow", glow);
+
+    // Fun little toast animation (visual feedback)
+    const toast = document.createElement("div");
+    toast.textContent = `🌈 ${theme.charAt(0).toUpperCase() + theme.slice(1)} theme applied!`;
+    toast.className = "theme-toast";
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2000);
+  };
+
+  /* 🧠 Auto-load theme on mount */
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("wanderlyTheme");
+    const savedGlow = localStorage.getItem("wanderlyGlow");
+    if (savedTheme) setTheme(savedTheme);
+    if (savedGlow) setGlow(savedGlow);
+    if (savedTheme && themeStyles[savedTheme]) {
+      Object.entries(themeStyles[savedTheme]).forEach(([k, v]) =>
+        document.documentElement.style.setProperty(k, v)
+      );
+    }
+  }, []);
+
   return (
     <section className="settings-section">
       {/* 🌈 Daily Wander Quote */}
@@ -122,7 +195,10 @@ export default function Settings() {
             </select>
           </div>
 
-          <button className="settings-btn">Apply Theme</button>
+          {/* 💜 Apply Theme Button now functional */}
+          <button className="settings-btn" onClick={applyTheme}>
+            Apply Theme
+          </button>
         </div>
 
         {/* 🔔 Notifications */}
