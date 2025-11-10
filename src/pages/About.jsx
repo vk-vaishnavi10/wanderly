@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./About.css";
@@ -9,54 +9,69 @@ export default function About() {
     destinations: 0,
     deals: 0,
   });
-  const [animated, setAnimated] = useState(false);
+  const animatedRef = useRef(false);
 
+  // Smooth, CPU-safe counters
   useEffect(() => {
-    const animateValue = (key, target, duration) => {
-      let start = 0;
-      const stepTime = Math.abs(Math.floor(duration / target));
-      const timer = setInterval(() => {
-        start += 1;
-        setCounters((prev) => ({ ...prev, [key]: start }));
-        if (start >= target) clearInterval(timer);
-      }, stepTime);
+    const targets = { travelers: 50000, destinations: 120, deals: 300 };
+    const duration = 2000; // ms
+    const fps = 60;
+    const stepMs = 1000 / fps; // ~16ms
+    const totalSteps = Math.max(1, Math.round(duration / stepMs));
+    const increments = {
+      travelers: Math.ceil(targets.travelers / totalSteps),
+      destinations: Math.ceil(targets.destinations / totalSteps),
+      deals: Math.ceil(targets.deals / totalSteps),
     };
 
-    const observer = new IntersectionObserver(
+    let t = 0;
+    let timer;
+
+    const startCounters = () => {
+      if (animatedRef.current) return;
+      animatedRef.current = true;
+      timer = setInterval(() => {
+        t += 1;
+        setCounters((prev) => ({
+          travelers: Math.min(targets.travelers, prev.travelers + increments.travelers),
+          destinations: Math.min(targets.destinations, prev.destinations + increments.destinations),
+          deals: Math.min(targets.deals, prev.deals + increments.deals),
+        }));
+        if (t >= totalSteps) clearInterval(timer);
+      }, stepMs);
+    };
+
+    const el = document.querySelector("#stats-section");
+    if (!el) return;
+
+    const io = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && !animated) {
-          animateValue("travelers", 50000, 2000);
-          animateValue("destinations", 120, 2000);
-          animateValue("deals", 300, 2000);
-          setAnimated(true);
-        }
+        if (entries[0].isIntersecting) startCounters();
       },
       { threshold: 0.5 }
     );
+    io.observe(el);
 
-    const target = document.querySelector("#stats-section");
-    if (target) observer.observe(target);
-    return () => observer.disconnect();
-  }, [animated]);
+    return () => {
+      io.disconnect();
+      if (timer) clearInterval(timer);
+    };
+  }, []);
 
-  // Auto Play Video Fix
+  // Force autoplay (with mute/inline) without spamming the main thread
   useEffect(() => {
-    const video = document.getElementById("about-video");
-    if (video) {
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          const tryPlay = setInterval(() => video.play().catch(() => {}), 1000);
-          setTimeout(() => clearInterval(tryPlay), 6000);
-        });
-      }
-    }
+    const v = document.getElementById("about-video");
+    if (!v) return;
+    const tryPlay = () => v.play().catch(() => {});
+    tryPlay(); // first attempt
+    const id = setTimeout(tryPlay, 600); // one gentle retry
+    return () => clearTimeout(id);
   }, []);
 
   return (
     <div className="about-page">
       {/* 🎥 Cinematic Video */}
-      <div className="video-container">
+      <div className="video-container" aria-hidden="true">
         <video
           id="about-video"
           className="about-video-bg"
@@ -67,13 +82,12 @@ export default function About() {
           preload="auto"
         >
           <source src="/videos/aboutbg.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
         </video>
-        <div className="video-overlay"></div>
+        <div className="video-overlay" />
       </div>
 
       {/* 🌈 Aurora Layer */}
-      <div className="aurora"></div>
+      <div className="aurora" />
 
       {/* 🌍 Main Content */}
       <motion.div
@@ -81,7 +95,7 @@ export default function About() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: 1.5 }}
+        transition={{ duration: 0.8 }}
       >
         {/* 🪐 Hero Section */}
         <section className="about-hero">
@@ -111,13 +125,15 @@ export default function About() {
               },
             ].map((item, i) => (
               <motion.div
-                key={i}
+                key={item.title}
                 className="col-md-4"
-                whileHover={{ scale: 1.08 }}
-                transition={{ type: "spring", stiffness: 120 }}
+                whileHover={{ scale: 1.06 }}
+                transition={{ type: "spring", stiffness: 160, damping: 12 }}
               >
                 <div className="glass-card">
-                  <h3>{item.icon} {item.title}</h3>
+                  <h3>
+                    {item.icon} {item.title}
+                  </h3>
                   <p>{item.desc}</p>
                 </div>
               </motion.div>
@@ -130,14 +146,15 @@ export default function About() {
           <h2 className="section-heading">📊 Wanderly in Numbers</h2>
           <div className="row g-5 justify-content-center">
             {[
-              { number: counters.travelers, text: "Happy Travelers", suffix: "+", max: 50000 },
-              { number: counters.destinations, text: "Destinations Covered", suffix: "+", max: 120 },
-              { number: counters.deals, text: "Exclusive Deals", suffix: "+", max: 300 },
-            ].map((stat, i) => (
-              <div key={i} className="col-md-4">
+              { number: counters.travelers, text: "Happy Travelers", suffix: "+" },
+              { number: counters.destinations, text: "Destinations Covered", suffix: "+" },
+              { number: counters.deals, text: "Exclusive Deals", suffix: "+" },
+            ].map((stat) => (
+              <div key={stat.text} className="col-md-4">
                 <div className="stat-box">
                   <h1 className="stat-number">
-                    {stat.number}{stat.suffix}
+                    {stat.number}
+                    {stat.suffix}
                   </h1>
                   <p className="stat-label">{stat.text}</p>
                 </div>
@@ -149,7 +166,9 @@ export default function About() {
         {/* 📩 Contact Section */}
         <section className="contact-section text-center">
           <h2 className="section-heading">📩 Contact Us</h2>
-          <p>Email: <a href="mailto:support@wanderly.com">support@wanderly.com</a></p>
+          <p>
+            Email: <a href="mailto:support@wanderly.com">support@wanderly.com</a>
+          </p>
           <p>Phone: +91 98765 43210</p>
           <p>Location: Hyderabad, India 🌆</p>
         </section>

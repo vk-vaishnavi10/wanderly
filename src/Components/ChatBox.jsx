@@ -5,11 +5,11 @@ import React, {
   useImperativeHandle,
   useEffect,
 } from "react";
+import { chatWithAI } from "../services/api";
 import "./ChatBox.css";
 
 const OPEN_WEATHER_KEY = "42c677b12e95fae7a92140f32c2e6b12";
 
-// ✨ Small Component for Destination Cards
 const DestCards = ({ items = [] }) => {
   if (!items.length) return null;
   return (
@@ -37,7 +37,7 @@ const ChatBox = forwardRef(({ onToggle }, ref) => {
     {
       sender: "bot",
       text:
-        "🌍 Hey traveler! I’m your Wanderly Travel Companion.\n\nI can help you plan adventures, find cool-weather escapes, or explore hidden gems.\n\nWhere do you want to wander today?",
+        "🌍 Hey traveler! I’m your *Wanderly Genie* ✨\n\nI can help you explore destinations, check weather, or plan your next trip.\n\nWhere would you like to wander today?",
       suggestions: [
         "Cool Places ❄️",
         "Adventure 🧗‍♂️",
@@ -64,7 +64,22 @@ const ChatBox = forwardRef(({ onToggle }, ref) => {
     },
   }));
 
-  // 🌦️ Weather Fetcher
+  const resetChat = () => {
+    setMessages([
+      {
+        sender: "bot",
+        text:
+          "✨ Chat reset! I'm your Wanderly Genie again 🌍\n\nAsk me anything — weather, trip ideas, or destinations!",
+        suggestions: [
+          "Plan a Goa trip 🏖️",
+          "Weather in Manali ❄️",
+          "Hidden gems 💎",
+        ],
+        cards: [],
+      },
+    ]);
+  };
+
   const fetchWeather = async (city) => {
     try {
       const res = await fetch(
@@ -80,126 +95,32 @@ const ChatBox = forwardRef(({ onToggle }, ref) => {
     }
   };
 
-  // 🌍 Preset Destination Cards
   const PRESETS = {
     cool: [
       {
         title: "Manali",
         meta: "Snow peaks & cafés",
-        img: "https://images.unsplash.com/photo-1562062569-8a9a3d1a5c22?q=80&w=800&auto=format&fit=crop",
+        img: "https://images.unsplash.com/photo-1562062569-8a9a3d1a5c22?q=80&w=800",
         badge: "❄️ Cool",
         onClick: () => sendMessage("Best spots in Manali"),
       },
       {
         title: "Coorg",
         meta: "Coffee hills & mist",
-        img: "https://images.unsplash.com/photo-1593697820934-71b69c8d1b57?q=80&w=800&auto=format&fit=crop",
+        img: "https://images.unsplash.com/photo-1593697820934-71b69c8d1b57?q=80&w=800",
         badge: "🌿 Nature",
         onClick: () => sendMessage("Best spots in Coorg"),
       },
       {
         title: "Ooty",
         meta: "Lakes & toy train",
-        img: "https://images.unsplash.com/photo-1543997385-22fe6f9c9020?q=80&w=800&auto=format&fit=crop",
+        img: "https://images.unsplash.com/photo-1543997385-22fe6f9c9020?q=80&w=800",
         badge: "🚂 Scenic",
         onClick: () => sendMessage("Best spots in Ooty"),
       },
     ],
-    adventure: [
-      {
-        title: "Rishikesh",
-        meta: "Rafting & bungee",
-        img: "https://images.unsplash.com/photo-1593697821527-f5a7d86c7a2f?q=80&w=800&auto=format&fit=crop",
-        badge: "🧗‍♂️ Thrill",
-        onClick: () => sendMessage("Plan trip Rishikesh"),
-      },
-      {
-        title: "Leh",
-        meta: "Iconic bike trails",
-        img: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=800&auto=format&fit=crop",
-        badge: "🏍️ High",
-        onClick: () => sendMessage("Weather in Leh"),
-      },
-      {
-        title: "Sikkim",
-        meta: "Epic trekking",
-        img: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=800&auto=format&fit=crop",
-        badge: "🏞️ Trails",
-        onClick: () => sendMessage("Best spots in Sikkim"),
-      },
-    ],
-    heritage: [
-      {
-        title: "Jaipur",
-        meta: "Forts & colors",
-        img: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=800&auto=format&fit=crop",
-        badge: "🏰 Royal",
-        onClick: () => sendMessage("Weather in Jaipur"),
-      },
-      {
-        title: "Hampi",
-        meta: "Ruins & legends",
-        img: "https://images.unsplash.com/photo-1602751584644-7b57a798edc2?q=80&w=800&auto=format&fit=crop",
-        badge: "🗿 Ancient",
-        onClick: () => sendMessage("Recent visits Hampi"),
-      },
-      {
-        title: "Varanasi",
-        meta: "Ghats & divinity",
-        img: "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=800&auto=format&fit=crop",
-        badge: "🕉️ Sacred",
-        onClick: () => sendMessage("Best spots in Varanasi"),
-      },
-    ],
-    beach: [
-      {
-        title: "Goa",
-        meta: "Sands & nightlife",
-        img: "https://images.unsplash.com/photo-1519046904884-53103b34b206?q=80&w=800&auto=format&fit=crop",
-        badge: "🏖️ Beach",
-        onClick: () => sendMessage("Weather in Goa"),
-      },
-      {
-        title: "Varkala",
-        meta: "Cliffs & calm",
-        img: "https://images.unsplash.com/photo-1540541338287-41700207dee6?q=80&w=800&auto=format&fit=crop",
-        badge: "🧘‍♀️ Zen",
-        onClick: () => sendMessage("Plan trip Varkala"),
-      },
-      {
-        title: "Pondicherry",
-        meta: "French vibes & cafés",
-        img: "https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=800&auto=format&fit=crop",
-        badge: "🇫🇷 Chic",
-        onClick: () => sendMessage("Best spots in Pondicherry"),
-      },
-    ],
-    hidden: [
-      {
-        title: "Gokarna",
-        meta: "Temples & tides",
-        img: "https://images.unsplash.com/photo-1526485797147-6a104e62eeb7?q=80&w=800&auto=format&fit=crop",
-        badge: "💎 Quiet",
-        onClick: () => sendMessage("Recent visits Gokarna"),
-      },
-      {
-        title: "Auroville",
-        meta: "Peace & purpose",
-        img: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=800&auto=format&fit=crop",
-        badge: "☀️ Mindful",
-        onClick: () => sendMessage("Weather in Auroville"),
-      },
-      {
-        title: "Ziro Valley",
-        meta: "Tribal meadows",
-        img: "https://images.unsplash.com/photo-1500534318627-06770bbff3d2?q=80&w=800&auto=format&fit=crop",
-        badge: "🎶 Fest",
-        onClick: () => sendMessage("Best spots in Ziro Valley"),
-      },
-    ],
   };
 
-  // 💬 Chat Logic
   const sendMessage = async (msgText) => {
     if (!msgText?.trim()) return;
 
@@ -213,41 +134,32 @@ const ChatBox = forwardRef(({ onToggle }, ref) => {
     let suggestions = [];
     let cards = [];
 
-    if (lower.includes("cool")) {
-      reply =
-        "❄️ *Chilly escapes calling you!*\n\nManali • Coorg • Ooty — pick one 👇";
-      suggestions = ["Weather in Manali", "Recent visits Manali", "Best spots Ooty"];
-      cards = PRESETS.cool;
-    } else if (lower.includes("adventure")) {
-      reply = "🧗‍♂️ *For thrill seekers!* — Rishikesh • Leh • Sikkim";
-      suggestions = ["Weather in Leh", "Plan trip Rishikesh", "Best spots Sikkim"];
-      cards = PRESETS.adventure;
-    } else if (lower.includes("heritage")) {
-      reply = "🏰 *Stories carved in stone!* — Jaipur • Hampi • Varanasi";
-      suggestions = ["Weather in Jaipur", "Recent visits Hampi", "Best spots Varanasi"];
-      cards = PRESETS.heritage;
-    } else if (lower.includes("beach")) {
-      reply = "🏖️ *Let’s chase the waves!* — Goa • Varkala • Pondicherry";
-      suggestions = ["Weather in Goa", "Plan trip Varkala", "Best spots Pondicherry"];
-      cards = PRESETS.beach;
-    } else if (lower.includes("hidden")) {
-      reply = "💎 *Offbeat treasures await!* — Gokarna • Auroville • Ziro Valley";
-      suggestions = ["Weather in Auroville", "Recent visits Gokarna", "Best spots Ziro Valley"];
-      cards = PRESETS.hidden;
-    } else if (lower.includes("weather")) {
+    if (lower.includes("weather")) {
       const city = msgText.split("in")[1]?.trim() || "India";
       reply = await fetchWeather(city);
       suggestions = ["Plan trip " + city, "Best spots " + city];
+    } else if (lower.includes("cool")) {
+      reply = "❄️ Chill vibes! Choose one 👇";
+      suggestions = ["Weather in Manali", "Best spots Ooty"];
+      cards = PRESETS.cool;
     } else {
-      reply =
-        "✨ I can help you explore destinations, check weather, or plan your next journey.\n\nTry asking:\n- 'Cool Places'\n- 'Weather in Goa'\n- 'Plan trip to Manali'";
-      suggestions = [
-        "Cool Places ❄️",
-        "Adventure 🧗‍♂️",
-        "Heritage 🏰",
-        "Beach Getaways 🏖️",
-        "Hidden Gems 💎",
-      ];
+      try {
+        const chatHistory = [
+          { role: "system", content: "You are Wanderly Genie, a fun travel planner." },
+          ...messages.map((m) => ({
+            role: m.sender === "bot" ? "assistant" : "user",
+            content: m.text,
+          })),
+          { role: "user", content: msgText },
+        ];
+        const aiResponse = await chatWithAI(chatHistory);
+        reply =
+          aiResponse?.reply ||
+          aiResponse?.content ||
+          "⚠️ AI server is taking a coffee break ☕ Please try again shortly.";
+      } catch {
+        reply = "⚠️ AI server is taking a coffee break ☕ Please try again shortly.";
+      }
     }
 
     setTimeout(() => {
@@ -259,7 +171,6 @@ const ChatBox = forwardRef(({ onToggle }, ref) => {
     }, 800);
   };
 
-  // ✨ UI Rendering
   return (
     <div className="chatbox-container">
       {!isOpen && (
@@ -269,7 +180,7 @@ const ChatBox = forwardRef(({ onToggle }, ref) => {
             setIsOpen(true);
             onToggle?.(true);
           }}
-          title="Ask Wanderly"
+          title="Ask Wanderly Genie"
         >
           💬
         </button>
@@ -278,10 +189,15 @@ const ChatBox = forwardRef(({ onToggle }, ref) => {
       {isOpen && (
         <div className="chatbox-window">
           <div className="chatbox-header">
-            <span>🌟 Wanderly Travel Companion</span>
-            <button className="close-btn" onClick={() => setIsOpen(false)}>
-              ✖
-            </button>
+            <span>🌟 Wanderly Genie</span>
+            <div className="header-buttons">
+              <button className="reset-btn" onClick={resetChat} title="Restart Chat">
+                🔄
+              </button>
+              <button className="close-btn" onClick={() => setIsOpen(false)}>
+                ✖
+              </button>
+            </div>
           </div>
 
           <div className="chatbox-messages">
@@ -307,7 +223,9 @@ const ChatBox = forwardRef(({ onToggle }, ref) => {
             {typing && (
               <div className="chat-row bot">
                 <div className="chat-msg bot typing-indicator">
-                  <span></span><span></span><span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
                 </div>
               </div>
             )}
@@ -317,7 +235,7 @@ const ChatBox = forwardRef(({ onToggle }, ref) => {
           <div className="chatbox-input">
             <input
               type="text"
-              placeholder="Ask me about your next trip..."
+              placeholder="Ask me anything — try 'Plan a Goa trip'"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
