@@ -128,7 +128,10 @@ export default function Flights() {
 
   return (
     <div className="flights-page page-container py-5">
-      <h2 className="text-center mb-4">✈️ Search Flights</h2>
+    <h2>
+  <span className="emoji">✈️</span> Search Flights
+</h2>
+
 
       <div className="search-controls">
         <div className="search-form">

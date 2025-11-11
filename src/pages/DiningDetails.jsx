@@ -1,8 +1,9 @@
+// src/pages/DiningDetails.jsx
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { addDiningReservation } from "../services/api";
-import "./Dining.css";
+import "./DiningDetails.css"; // 👉 Updated CSS import
 import stImg from "../images/st.jpeg";
 
 const diningDetails = {
@@ -47,7 +48,6 @@ export default function DiningDetails() {
 
   const [countdown, setCountdown] = useState(0);
 
-  // 🕒 Countdown animation for confirmation button
   useEffect(() => {
     if (countdown > 0) {
       const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
@@ -75,19 +75,18 @@ export default function DiningDetails() {
         pax: parseInt(reservation.pax),
       };
 
-      console.log("📤 Sending Reservation:", payload);
       await addDiningReservation(payload);
 
       Swal.fire({
-        title: "🎉 Reservation Confirmed!",
+        title: "🍽️ Reservation Confirmed!",
         text: `Your table at ${restaurant.name} is booked successfully!`,
         icon: "success",
-        confirmButtonColor: "#f5c518",
-        background: "#111",
+        confirmButtonColor: "#ffd47f",
+        background: "#0b0018",
         color: "#fff",
       }).then(() => navigate("/dining"));
 
-      setCountdown(5); // start timer after confirmation
+      setCountdown(5);
       setReservation({ dateTime: "", pax: 2 });
     } catch (error) {
       console.error("❌ Booking failed:", error.response?.data || error.message);
@@ -100,8 +99,7 @@ export default function DiningDetails() {
   }
 
   return (
-    <div className="container py-5 dining-details text-light">
-      {/* 🏙️ Hero Section */}
+    <div className="dining-details container py-5 text-light">
       <div className="dining-hero-card mb-5">
         <img src={restaurant.img} alt={restaurant.name} className="dining-hero-img" />
 
@@ -115,40 +113,32 @@ export default function DiningDetails() {
         </div>
       </div>
 
-      {/* 🗓 Reservation Form */}
-      <div className="card bg-dark border-warning shadow-lg p-4 rounded-4">
-        <h3 className="text-warning mb-3">🕓 Reserve Your Table</h3>
+      <div className="reservation-card p-4 rounded-4">
+        <h3>🕓 Reserve Your Table</h3>
 
-        <label className="form-label text-warning mt-2">🗓 Select Date & Time</label>
+        <label className="form-label">🗓 Select Date & Time</label>
         <input
           type="datetime-local"
-          className="form-control bg-dark text-light border-warning"
+          className="form-control"
           value={reservation.dateTime}
-          onChange={(e) =>
-            setReservation({ ...reservation, dateTime: e.target.value })
-          }
+          onChange={(e) => setReservation({ ...reservation, dateTime: e.target.value })}
         />
 
-        <label className="form-label text-warning mt-3">👥 Number of Guests</label>
+        <label className="form-label mt-3">👥 Number of Guests</label>
         <input
           type="number"
-          className="form-control bg-dark text-light border-warning"
+          className="form-control"
           min="1"
           value={reservation.pax}
           onChange={(e) => setReservation({ ...reservation, pax: e.target.value })}
         />
 
-        <button
-          className="btn btn-warning fw-bold w-100 mt-4 py-2 confirm-btn"
-          onClick={handleBooking}
-        >
-          Confirm Reservation 🍷
+        <button className="confirm-btn mt-4 w-100" onClick={handleBooking}>
+          🍷 Confirm Reservation
         </button>
 
         {countdown > 0 && (
-          <p className="countdown text-center mt-3">
-            ⏳ Redirecting in {countdown}s...
-          </p>
+          <p className="countdown text-center mt-3">⏳ Redirecting in {countdown}s...</p>
         )}
       </div>
     </div>

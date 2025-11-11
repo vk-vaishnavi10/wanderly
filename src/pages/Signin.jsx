@@ -2,25 +2,22 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import "./Signin.css";
-const oceanVideo = "/videos/introbg.mp4"; // 🌊 cinematic background from public folder
- // 🌊 your cinematic background
+const oceanVideo = "/videos/introbg.mp4";
 
 export default function Signin() {
   const [wanderId, setWanderId] = useState("");
   const [password, setPassword] = useState("");
+  const [showWelcome, setShowWelcome] = useState(false);
   const { login } = useContext(UserContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // 🫧 Smoothly hide navbar
     const navbar = document.querySelector(".vertical-navbar");
     if (navbar) {
       navbar.style.opacity = "0";
       navbar.style.pointerEvents = "none";
       navbar.style.transition = "opacity 0.6s ease";
     }
-
-    // Restore navbar on leaving page
     return () => {
       if (navbar) {
         navbar.style.opacity = "1";
@@ -31,7 +28,6 @@ export default function Signin() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const savedUser = JSON.parse(localStorage.getItem("registeredUser"));
     if (!savedUser) {
       alert("No user found. Please register first.");
@@ -39,44 +35,36 @@ export default function Signin() {
     }
 
     if (
-      savedUser.wanderId === wanderId.trim() &&
+      (savedUser.wanderId === wanderId.trim() ||
+        savedUser.email === wanderId.trim() ||
+        savedUser.phone === wanderId.trim()) &&
       savedUser.password === password.trim()
     ) {
       login(savedUser);
-      navigate("/home");
+      setShowWelcome(true);
+      setTimeout(() => navigate("/home"), 2800);
     } else {
-      alert("Invalid Wander ID or Password ❌");
+      alert("Invalid credentials ❌");
     }
   };
 
   return (
     <div className="signin-page">
-      {/* 🌊 Background Video */}
-      <video
-  autoPlay
-  loop
-  muted
-  playsInline
-  preload="auto"
-  className="signin-bg-video"
-  onLoadedData={() => console.log("✅ Signin video loaded successfully")}
-  onError={(e) => console.error("❌ Video load error:", e)}
->
-  <source src={oceanVideo} type="video/mp4" />
-  Your browser does not support the video tag.
-</video>
+      <video autoPlay loop muted playsInline preload="auto" className="signin-bg-video">
+        <source src={oceanVideo} type="video/mp4" />
+      </video>
 
-
-      {/* 💎 Glass Overlay Left Panel */}
       <div className="signin-overlay">
         <div className="signin-card">
-          <h2 className="signin-title">🔐 Sign In</h2>
+          <h2 className="signin-title">
+            <span className="emoji">🔐</span> Sign In
+          </h2>
 
           <form onSubmit={handleSubmit}>
             <input
               type="text"
               className="signin-input"
-              placeholder="Enter Wander ID"
+              placeholder="Enter Wander ID / Email / Phone"
               value={wanderId}
               onChange={(e) => setWanderId(e.target.value)}
               required
@@ -103,6 +91,19 @@ export default function Signin() {
           </form>
         </div>
       </div>
+
+      {showWelcome && (
+        <div className="welcome-overlay">
+          <div className="welcome-content">
+            <h1>
+              <span className="emoji">🌎</span> Welcome to <span>Wanderly</span>
+            </h1>
+            <p>
+              Thanks for journeying with us, traveler <span className="emoji">✈️</span>
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

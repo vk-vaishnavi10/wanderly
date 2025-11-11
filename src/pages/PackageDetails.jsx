@@ -2,12 +2,12 @@
 import React, { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { addPackageBooking, addPackagePayment } from "../services/api.js";
+import "./PackageDetails.css";
+
 import kashmirImg from "../images/kashmirparadise.jpg";
 import sinImg from "../images/sin.avif";
 import keralaImg from "../images/kerala.jpg";
 
-
-// 📦 package data
 const packagesData = [
   {
     id: 1,
@@ -15,8 +15,7 @@ const packagesData = [
     description: "Flight + 3 Nights at 5⭐ Resort + Cab Transfers",
     price: "₹22,000/person",
     duration: "3 Nights / 4 Days",
-    image:
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
     inclusions: ["Roundtrip Flights", "Breakfast", "Airport Pickup"],
   },
   {
@@ -30,63 +29,21 @@ const packagesData = [
   },
   {
     id: 3,
-    title: "Jaipur Royal Getaway 🏰",
-    description: "Flight + 2 Nights Heritage Hotel + Cab",
-    price: "₹18,500/person",
-    duration: "2 Nights / 3 Days",
-    image:
-      "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=800&q=80",
-    inclusions: ["Flights", "Breakfast", "City Tour"],
-  },
-  {
-    id: 4,
-    title: "Hyderabad Heritage Tour 🕌",
-    description: "Flight + 2 Nights in Hyderabad + City Cab",
-    price: "₹15,000/person",
-    duration: "2 Nights / 3 Days",
-    image:
-      "https://images.unsplash.com/photo-1603262110263-fb0112e7cc33?auto=format&fit=crop&w=800&q=80",
-    inclusions: ["Flights", "Hotel Stay", "Charminar & Golconda Tour"],
-  },
-  {
-    id: 5,
     title: "Kerala Backwaters Cruise 🚤",
     description: "Flight + 3 Nights in Houseboat + Cab",
     price: "₹28,000/person",
     duration: "3 Nights / 4 Days",
-    image:
-      keralaImg,
+    image: keralaImg,
     inclusions: ["Flights", "Houseboat Stay", "Meals"],
   },
   {
-    id: 6,
-    title: "Maldives Luxury Escape 🌊",
-    description: "Flight + 4 Nights Overwater Villa + Cab",
-    price: "₹85,000/person",
-    duration: "4 Nights / 5 Days",
-    image:
-      "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=800&q=80",
-    inclusions: ["Flights", "Luxury Villa", "Private Cabana"],
-  },
-  {
-    id: 7,
+    id: 4,
     title: "Singapore Family Fun 🎡",
     description: "Flight + 3 Nights Hotel + Universal Studios",
     price: "₹60,000/person",
     duration: "3 Nights / 4 Days",
-    image:sinImg,
-      
+    image: sinImg,
     inclusions: ["Flights", "Hotel", "Universal Studio Tickets"],
-  },
-  {
-    id: 8,
-    title: "Dubai Desert Adventure 🏜️",
-    description: "Flight + 3 Nights in Dubai + Desert Safari",
-    price: "₹55,000/person",
-    duration: "3 Nights / 4 Days",
-    image:
-      "https://images.unsplash.com/photo-1509043759401-136742328bb3?auto=format&fit=crop&w=800&q=80",
-    inclusions: ["Flights", "Hotel", "Desert Safari"],
   },
 ];
 
@@ -129,7 +86,6 @@ export default function PackageDetails() {
 
     const amount = parsePriceNumber(pkg.price);
 
-    // Booking object matching backend entity fields
     const bookingPayload = {
       userName: formData.userName,
       email: formData.email,
@@ -139,130 +95,76 @@ export default function PackageDetails() {
     };
 
     try {
-      console.log("🟡 Sending booking:", bookingPayload);
-
-      // Save booking in backend
       await addPackageBooking(bookingPayload);
-
-      console.log("✅ Booking saved!");
-
-      // Save payment in backend
-      const paymentPayload = {
-        userName: formData.userName,
-        email: formData.email,
-        packageName: pkg.title,
-        amount: amount,
+      await addPackagePayment({
+        ...bookingPayload,
         status: "SUCCESS",
-      };
+      });
 
-      await addPackagePayment(paymentPayload);
-
-      console.log("💰 Payment saved!");
-
-      alert(`✅ Booking confirmed and payment saved for ${pkg.title}`);
+      alert(`✅ Booking confirmed for ${pkg.title}`);
       navigate("/packages");
     } catch (err) {
-      console.error("❌ Booking or Payment failed:", err);
-      alert("❌ Something went wrong while saving booking or payment.");
+      console.error("❌ Error:", err);
+      alert("Something went wrong during booking.");
     }
   };
 
   return (
-    <div
-      className="container py-5"
-      style={{ backgroundColor: "black", minHeight: "100vh" }}
-    >
-      <div
-        className="card mx-auto shadow-lg border-0"
-        style={{
-          maxWidth: "800px",
-          backgroundColor: "#111",
-          color: "yellow",
-        }}
-      >
-        <img
-          src={pkg.image}
-          alt={pkg.title}
-          className="card-img-top"
-          style={{ height: "300px", objectFit: "cover" }}
-        />
-        <div className="card-body">
-          <h2>{pkg.title}</h2>
-          <h5>{pkg.price}</h5>
-          <p>{pkg.description}</p>
-          <p>{pkg.duration}</p>
-          <ul>
-            {pkg.inclusions.map((item, idx) => (
-              <li key={idx}>✅ {item}</li>
-            ))}
-          </ul>
+    <div className="package-details-page">
+      <div className="aurora-bg"></div>
+      <div className="container py-5">
+        <div className="card package-card mx-auto shadow-lg">
+          <img src={pkg.image} alt={pkg.title} className="card-img-top" />
+          <div className="card-body text-center">
+            <h2 className="package-title">🌍 {pkg.title}</h2>
+            <h4 className="package-price">{pkg.price}</h4>
+            <p className="package-description">{pkg.description}</p>
+            <p className="package-duration">🕓 {pkg.duration}</p>
+            <ul className="inclusions-list">
+              {pkg.inclusions.map((item, idx) => (
+                <li key={idx}>✨ {item}</li>
+              ))}
+            </ul>
 
-          <h4 className="mt-4">📝 Book This Package</h4>
-          <form className="mt-3" onSubmit={handleBooking}>
-            <div className="mb-3">
-              <label className="form-label">Full Name</label>
+            <h4 className="book-title">🧾 Book This Package</h4>
+            <form className="booking-form" onSubmit={handleBooking}>
               <input
                 name="userName"
                 type="text"
-                className="form-control"
-                placeholder="Your name"
+                placeholder="Full Name"
                 value={formData.userName}
                 onChange={handleChange}
               />
-            </div>
-
-            <div className="mb-3">
-              <label className="form-label">Email</label>
               <input
                 name="email"
                 type="email"
-                className="form-control"
-                placeholder="Your email"
+                placeholder="Email"
                 value={formData.email}
                 onChange={handleChange}
               />
-            </div>
-
-            <div className="mb-3">
-              <label className="form-label">Phone</label>
               <input
                 name="phone"
                 type="tel"
-                className="form-control"
-                placeholder="Your phone number"
+                placeholder="Phone Number"
                 value={formData.phone}
                 onChange={handleChange}
               />
-            </div>
-
-            <div className="mb-3">
-              <label className="form-label">Travel Date</label>
               <input
                 name="date"
                 type="date"
-                className="form-control"
                 value={formData.date}
                 onChange={handleChange}
               />
-            </div>
-
-            <button
-              type="submit"
-              className="btn btn-warning fw-bold text-dark w-100"
-            >
-              💳 Confirm Booking & Pay
-            </button>
-          </form>
+              <button type="submit">💳 Confirm Booking & Pay</button>
+            </form>
+          </div>
         </div>
-      </div>
 
-      <div className="text-center mt-4">
-        <Link
-          to="/packages"
-          className="btn btn-outline-warning fw-bold text-light"
-        >
-          ← Back to Packages
-        </Link>
+        <div className="text-center mt-4">
+          <Link to="/packages" className="back-btn">
+            ← Back to Packages
+          </Link>
+        </div>
       </div>
     </div>
   );

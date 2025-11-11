@@ -42,29 +42,24 @@
   100% { transform: translate(20px,-20px); opacity:.8; }
 }
 
-/* Title */
+/* ✈️ Keep emoji colorful and glowing in title */
 .flights-page h2 {
-  font-size: 2.5rem;
-  font-weight: 800;
-  margin-bottom: 2rem;
-  background: linear-gradient(90deg, #ffffff, #c5f6ff, #ffe29f);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 25px rgba(255,255,255,.25);
-  position: relative;
-  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  text-align: center;
 }
-.flights-page h2::after {
-  content: "";
-  position: absolute;
-  width: 120px;
-  height: 3px;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: linear-gradient(90deg, #ffffff, #62d3ff, #ffe29f);
-  border-radius: 3px;
-  opacity: .8;
+
+.emoji {
+  -webkit-text-fill-color: initial; /* restore native emoji color */
+  color: #fff;
+  font-size: 1.4em;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.6),
+               0 0 18px rgba(98, 211, 255, 0.4);
+  filter: brightness(1.15);
+  vertical-align: middle;
+  animation: planeTa
 }
 
 /* 🔍 Search */

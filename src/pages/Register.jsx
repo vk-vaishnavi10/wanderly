@@ -35,24 +35,34 @@ export default function Register() {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-
   const sendOtp = () => {
     if (!form.phone) return alert("Enter phone number first!");
+    
+    // 🌟 Generate 4-digit random OTP
+    const randomOtp = Math.floor(1000 + Math.random() * 9000).toString();
     setOtpSent(true);
-    alert("Mock OTP sent: 1234 ✅");
+  
+    // Store mock OTP in state so it can be verified
+    setForm({ ...form, otp: "" });
+    localStorage.setItem("mockOtp", randomOtp);
+  
+    alert(`📩 Mock OTP sent: ${randomOtp}`);
   };
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (form.otp !== "1234") return alert("Invalid OTP");
-
+    const savedOtp = localStorage.getItem("mockOtp");
+    if (form.otp !== savedOtp) return alert("❌ Invalid OTP");
+  
     const wanderId = "WAND-" + Math.floor(100000 + Math.random() * 900000);
     const newUser = { ...form, wanderId };
     localStorage.setItem("registeredUser", JSON.stringify(newUser));
-
+  
     alert(`✅ Registered Successfully! Your Wander ID: ${wanderId}`);
     setTimeout(() => navigate("/signin"), 1000);
   };
+  
 
   return (
     <div className="register-page">

@@ -174,3 +174,153 @@
     font-size: 1.8rem;
   }
 }
+/* 🌈 WELCOME OVERLAY - Cinematic Traveler Entry */
+.welcome-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(10, 0, 30, 0.85), rgba(5, 0, 20, 0.95));
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5000;
+  animation: fadeInOut 10s ease-in-out forwards;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  15% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.1);
+  }
+}
+
+/* ✨ Content Inside Overlay */
+.welcome-content {
+  text-align: center;
+  color: #fff;
+  animation: popIn 1s ease forwards;
+}
+.welcome-content h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  background: linear-gradient(90deg, #00e0ff, #9b5de5, #f15bb5, #ffd166);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: glowText 3s infinite ease-in-out;
+}
+
+
+.welcome-content span {
+  font-weight: 800;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.welcome-content p {
+  font-size: 1.2rem;
+  color: #dcd7ff;
+  letter-spacing: 0.5px;
+  margin-top: 0.4rem;
+  opacity: 0.9;
+}
+
+@keyframes glowText {
+  0%, 100% {
+    filter: drop-shadow(0 0 12px #9b5de5);
+  }
+  50% {
+    filter: drop-shadow(0 0 25px #f15bb5);
+  }
+}
+
+@keyframes popIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.welcome-content h1 span,
+.welcome-content h1 emoji,
+.welcome-content h1 svg,
+.welcome-content h1::before,
+.welcome-content h1::after {
+  color: revert-layer;
+}
+/* === EMOJI STYLE FIX === */
+.emoji {
+  display: inline-block;
+  color: #fff;
+  font-size: 1.1em;
+  vertical-align: middle;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.6),
+               0 0 16px rgba(155, 93, 229, 0.4);
+  filter: brightness(1.15);
+}
+
+/* Fix for Sign In Title */
+.signin-title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(90deg, #00bcd4, #9b5de5, #f15bb5, #f9c74f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  animation: textGlow 3s infinite ease-in-out;
+}
+
+.signin-title .emoji {
+  font-size: 1.4em;
+  -webkit-text-fill-color: initial;
+  text-shadow: 0 0 12px rgba(241, 91, 181, 0.7);
+}
+
+/* === Welcome Overlay Emoji Fix === */
+.welcome-content .emoji {
+  -webkit-text-fill-color: initial;
+  color: #fff;
+  font-size: 1.3em;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
+               0 0 25px rgba(155, 93, 229, 0.5);
+  filter: brightness(1.25);
+}
+
+/* Optional Soft Glow Pulse */
+@keyframes pulseGlow {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 15px rgba(155, 93, 229, 0.6));
+  }
+  50% {
+    transform: scale(1.03);
+    filter: drop-shadow(0 0 30px rgba(241, 91, 181, 0.7));
+  }
+}
+
+.welcome-content {
+  animation: popIn 1s ease forwards, pulseGlow 3s ease-in-out infinite;
+}
