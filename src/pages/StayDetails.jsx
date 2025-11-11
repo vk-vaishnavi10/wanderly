@@ -155,11 +155,13 @@ export default function StayDetails() {
     try {
       const payload = {
         user: { id: 1 }, // test user for now
-        hotel: { id: parseInt(id) },
+        stay: { id: parseInt(id) }, // ✅ corrected key
         checkInDate: booking.date,
-        nights: booking.nights,
-        guests: booking.guests,
+        nights: parseInt(booking.nights),
+        guests: parseInt(booking.guests),
       };
+      
+      
 
       await addStayBooking(payload);
 
