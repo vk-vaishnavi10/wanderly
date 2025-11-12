@@ -32,11 +32,15 @@ export default function TransportDetails() {
     try {
       // ✅ Payload for backend
       const payload = {
-        user: { id: 1 }, // static user for demo
-        transport: { id: parseInt(id) },
+        user: { id: 1 },                      // demo user
+        transport: { id: parseInt(id) },      // car or cab id
         seats: 1,
-        bookingTime: form.bookingDate,
+        bookingDate: form.bookingDate,        // use "datetime-local" field
+        pickupLocation: form.pickup,
+        dropLocation: form.drop,
+        carType: form.carType,
       };
+      
 
       console.log("📤 Sending transport booking:", payload);
       await addTransportBooking(payload);
