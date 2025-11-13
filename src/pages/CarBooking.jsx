@@ -12,11 +12,21 @@ import luxuryImg from "../images/luxurycar.webp";
 export default function CarBooking() {
   const { id } = useParams();
   const navigate = useNavigate();
+
+  // Map ID → Car Type
+  const carMap = {
+    1: "Sedan",
+    2: "SUV",
+    3: "Luxury",
+  };
+
+  const preSelectedCar = carMap[id] || "";
+
   const [formData, setFormData] = useState({
     pickupLocation: "",
     dropLocation: "",
     bookingDate: "",
-    carType: "",
+    carType: preSelectedCar,   // ⭐ AUTO-SET
   });
 
   useEffect(() => {
@@ -43,27 +53,15 @@ export default function CarBooking() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const { pickupLocation, dropLocation, bookingDate, carType } = formData;
-  
-    if (!pickupLocation || !dropLocation || !bookingDate || !carType) {
+
+    if (!pickupLocation || !dropLocation || !bookingDate) {
       Swal.fire("⚠️ Fill all fields!", "", "warning");
       return;
     }
-  
+
     try {
-      const payload = {
-        user: { id: 1 },
-        transport: { id: parseInt(id) },
-        seats: 1,
-        bookingDate: bookingDate + "T00:00:00",
-        pickupLocation,
-        dropLocation,
-        carType,
-      };
-  
-      
-  
       Swal.fire({
         title: "🚘 Booking Confirmed!",
         text: `Your ${carType} car is booked successfully!`,
@@ -83,12 +81,10 @@ export default function CarBooking() {
           },
         })
       );
-  
     } catch (error) {
       Swal.fire("❌ Error", "Unable to book car.", "error");
     }
   };
-  
 
   return (
     <div className="car-booking">
@@ -104,7 +100,7 @@ export default function CarBooking() {
               className="selected-car-image"
             />
             <p className="car-preview-text">
-              Selected Car Type: <strong>{formData.carType}</strong>
+              Selected Car: <strong>{formData.carType}</strong>
             </p>
           </div>
         )}
@@ -140,16 +136,8 @@ export default function CarBooking() {
           />
 
           <label>Car Type</label>
-          <select
-            name="carType"
-            value={formData.carType}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select Car</option>
-            <option value="Sedan">Sedan</option>
-            <option value="SUV">SUV</option>
-            <option value="Luxury">Luxury</option>
+          <select name="carType" value={formData.carType} disabled>
+            <option>{formData.carType}</option>
           </select>
 
           <button type="submit">Confirm Booking ✨</button>

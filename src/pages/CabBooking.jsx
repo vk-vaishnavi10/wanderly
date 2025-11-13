@@ -8,11 +8,20 @@ export default function CabBooking() {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  // ⭐ Map Transport ID → Cab Type
+  const cabMap = {
+    1: "Airport",
+    2: "Local",
+    3: "Outstation",
+  };
+
+  const preSelectedCab = cabMap[id] || "";
+
   const [formData, setFormData] = useState({
     pickupLocation: "",
     dropLocation: "",
     bookingDate: "",
-    cabType: "",
+    cabType: preSelectedCab, // ⭐ AUTO-FILL
   });
 
   useEffect(() => {
@@ -23,29 +32,18 @@ export default function CabBooking() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const { pickupLocation, dropLocation, bookingDate, cabType } = formData;
-  
-    if (!pickupLocation || !dropLocation || !bookingDate || !cabType) {
-      Swal.fire("⚠️ Fill all fields!", "", "warning");
+
+    if (!pickupLocation || !dropLocation || !bookingDate) {
+      Swal.fire("⚠️ Please fill all fields!", "", "warning");
       return;
     }
-  
+
     try {
-      const payload = {
-        user: { id: 1 },
-        transport: { id: parseInt(id) },
-        seats: 1,
-        bookingDate: bookingDate + "T00:00:00",
-        pickupLocation,
-        dropLocation,
-        cabType,
-      };
-  
-      
-  
       Swal.fire({
         title: "🚖 Cab Booked!",
         text: `Your ${cabType} cab is reserved!`,
@@ -65,12 +63,10 @@ export default function CabBooking() {
           },
         })
       );
-  
     } catch (error) {
       Swal.fire("❌ Error", "Cab booking failed!", "error");
     }
   };
-  
 
   return (
     <div className="cab-booking">
@@ -109,16 +105,8 @@ export default function CabBooking() {
           />
 
           <label>Cab Type</label>
-          <select
-            name="cabType"
-            value={formData.cabType}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select Cab</option>
-            <option value="Airport">Airport Cab</option>
-            <option value="Local">Local Ride</option>
-            <option value="Outstation">Outstation</option>
+          <select name="cabType" value={formData.cabType} disabled>
+            <option>{formData.cabType}</option>
           </select>
 
           <button type="submit">Confirm Booking ✨</button>
