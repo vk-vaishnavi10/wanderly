@@ -68,9 +68,10 @@ export default function App() {
   // 🚫 Hide Navbar, Footer, ChatBox, and InstallPrompt
   // on cinematic / auth screens
   const hideLayout =
-    location.pathname === "/" || // 🎬 Intro video page
-    location.pathname === "/register" || // 🪄 Registration form
-    location.pathname === "/signin"; // 🔐 Sign in page
+  location.pathname === "/intro" || // now intro
+  location.pathname === "/register" ||
+  location.pathname === "/signin";
+// 🔐 Sign in page
 
   return (
     <>
@@ -84,7 +85,7 @@ export default function App() {
         <main className="flex-grow-1">
           <Routes>
             {/* 🎥 Cinematic flow */}
-            <Route path="/" element={<Intro />} /> {/* 🌄 Intro Video Page */}
+            {/* 🌄 Intro Video Page */}
             <Route path="/register" element={<Register />} /> {/* 🪄 Register */}
             <Route path="/signin" element={<Signin />} /> {/* 🔐 Signin */}
 
@@ -95,7 +96,7 @@ export default function App() {
             <Route path="/flights/:id" element={<FlightsDetails />} />
             <Route path="/flights/book/:id" element={<FlightBooking />} />
 
-
+            <Route path="/intro" element={<Intro />} /> 
             <Route path="/hotels" element={<Hotels />} />
             <Route path="/hotels/:id" element={<HotelsDetails />} />
             //<Route path="/hotels/book/:id" element={<HotelBooking />} />
