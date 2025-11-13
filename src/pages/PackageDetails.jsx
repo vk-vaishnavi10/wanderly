@@ -78,14 +78,14 @@ export default function PackageDetails() {
 
   const handleBooking = async (e) => {
     e.preventDefault();
-
+  
     if (!formData.userName || !formData.email || !formData.date) {
-      alert("⚠️ Please fill all required fields!");
+      Swal.fire("⚠️ Please fill all required fields!", "", "warning");
       return;
     }
-
-    const amount = parsePriceNumber(pkg.price);
-
+  
+    const amount = parseInt(pkg.price.replace(/[₹,]/g, ""));
+  
     const bookingPayload = {
       userName: formData.userName,
       email: formData.email,
@@ -93,31 +93,35 @@ export default function PackageDetails() {
       amount: amount,
       status: "CONFIRMED",
     };
-
+  
     try {
       await addPackageBooking(bookingPayload);
-      await addPackagePayment({
-        ...bookingPayload,
-        status: "SUCCESS",
+  
+      Swal.fire({
+        title: `🎉 Booking Confirmed for ${pkg.title}!`,
+        icon: "success",
+        background: "#111",
+        color: "#fff",
+        confirmButtonColor: "#f5c518",
+      }).then(() => {
+        navigate("/payment", {
+          state: {
+            paymentData: {
+              type: "package",
+              title: pkg.title,
+              price: amount,
+              duration: pkg.duration,
+              details: formData,
+            },
+          },
+        });
       });
-
-      alert(`✅ Booking confirmed for ${pkg.title}`);
-      navigate("/payment", {
-        state: {
-          paymentData: {
-            type: "package",
-            title: pkg.title,
-            price: pkg.price,
-            details: formData
-          }
-        }
-      });
-      
+  
     } catch (err) {
-      console.error("❌ Error:", err);
-      alert("Something went wrong during booking.");
+      Swal.fire("❌ Error", "Something went wrong during booking.", "error");
     }
   };
+  
 
   return (
     <div className="package-details-page">

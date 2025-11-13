@@ -23,16 +23,16 @@ export default function CabBooking() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
     const { pickupLocation, dropLocation, bookingDate, cabType } = formData;
-
+  
     if (!pickupLocation || !dropLocation || !bookingDate || !cabType) {
-      Swal.fire("⚠️ Missing Info", "Please fill all the fields!", "warning");
+      Swal.fire("⚠️ Fill all fields!", "", "warning");
       return;
     }
-
+  
     try {
       const payload = {
         user: { id: 1 },
@@ -43,33 +43,34 @@ export default function CabBooking() {
         dropLocation,
         cabType,
       };
-
-      console.log("📤 Sending cab booking:", payload);
+  
       await addTransportBooking(payload);
-
+  
       Swal.fire({
         title: "🚖 Cab Booked!",
-        text: `Your ${cabType} cab has been successfully reserved!`,
+        text: `Your ${cabType} cab is reserved!`,
         icon: "success",
         confirmButtonColor: "#ffe29f",
         background: "#15102b",
         color: "#ffffff",
-      }).then(() => navigate("/payment", {
-        state: {
-          paymentData: {
-            type: "cab",
-            title: formData.cabType,
-            price: "₹800",
-            details: formData
-          }
-        }
-      }));
-      
+      }).then(() =>
+        navigate("/payment", {
+          state: {
+            paymentData: {
+              type: "cab",
+              title: cabType,
+              price: 800,
+              details: formData,
+            },
+          },
+        })
+      );
+  
     } catch (error) {
-      console.error("❌ Cab booking failed:", error.response?.data || error.message);
-      Swal.fire("❌ Error", "Unable to save booking. Try again!", "error");
+      Swal.fire("❌ Error", "Cab booking failed!", "error");
     }
   };
+  
 
   return (
     <div className="cab-booking">

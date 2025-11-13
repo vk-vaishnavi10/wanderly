@@ -25,7 +25,7 @@ export default function TransportDetails() {
   // ✅ Handle Booking
   const handleBooking = async () => {
     if (!form.email || !form.pickup || !form.drop || !form.bookingDate || !form.carType) {
-      Swal.fire("⚠️ Missing Info", "Please fill all the fields before booking!", "warning");
+      Swal.fire("⚠️ Fill all fields!", "", "warning");
       return;
     }
   
@@ -40,12 +40,11 @@ export default function TransportDetails() {
         carType: form.carType,
       };
   
-      console.log("📤 Sending transport booking:", payload);
       await addTransportBooking(payload);
   
       Swal.fire({
         title: "🚗 Booking Confirmed!",
-        text: `Your ${form.carType} has been booked successfully!`,
+        text: `Your ${form.carType} is booked!`,
         icon: "success",
         confirmButtonColor: "#f5c518",
         background: "#111",
@@ -56,7 +55,7 @@ export default function TransportDetails() {
             paymentData: {
               type: "transport",
               title: form.carType,
-              price: "₹2000",
+              price: 2000,
               details: form,
             },
           },
@@ -64,10 +63,10 @@ export default function TransportDetails() {
       });
   
     } catch (error) {
-      console.error("❌ Booking failed:", error.response?.data || error.message);
-      Swal.fire("❌ Error", "Unable to confirm your booking. Try again!", "error");
+      Swal.fire("❌ Error", "Unable to confirm booking.", "error");
     }
   };
+  
   
 
   return (

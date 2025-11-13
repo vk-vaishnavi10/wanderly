@@ -57,55 +57,47 @@ export default function DiningDetails() {
 
   const handleBooking = async () => {
     if (!reservation.dateTime || reservation.pax < 1) {
-      Swal.fire("⚠️ Missing Info", "Please select a valid date & number of guests.", "warning");
+      Swal.fire("⚠️ Select valid date & number of guests.", "", "warning");
       return;
     }
-
-    const chosenDate = new Date(reservation.dateTime);
-    if (isNaN(chosenDate.getTime()) || chosenDate < new Date()) {
-      Swal.fire("⚠️ Invalid Date", "Please choose a valid future date.", "warning");
-      return;
-    }
-
+  
     try {
       const payload = {
         user: { id: 1 },
         dining: { id: parseInt(id) },
         reservationTime: reservation.dateTime + ":00",
-
         pax: parseInt(reservation.pax),
       };
-
+  
       await addDiningReservation(payload);
-
+  
       Swal.fire({
         title: "🍽️ Reservation Confirmed!",
-        text: `Your table at ${restaurant.name} is booked successfully!`,
+        text: `Table booked at ${restaurant.name}!`,
         icon: "success",
         confirmButtonColor: "#ffd47f",
         background: "#0b0018",
         color: "#fff",
-      })..then(() =>
+      }).then(() => {
+        const price = parseInt(restaurant.priceRange.replace(/[₹,]/g, ""));
+  
         navigate("/payment", {
           state: {
             paymentData: {
               type: "dining",
               title: restaurant.name,
-              price: restaurant.priceRange,
-              details: reservation
-            }
-          }
-        })
-      );
-      
-
-      setCountdown(5);
-      setReservation({ dateTime: "", pax: 2 });
+              price: price,
+              details: reservation,
+            },
+          },
+        });
+      });
+  
     } catch (error) {
-      console.error("❌ Booking failed:", error.response?.data || error.message);
-      Swal.fire("❌ Error", "Unable to save reservation. Try again!", "error");
+      Swal.fire("❌ Error", "Unable to save reservation.", "error");
     }
   };
+  
 
   if (!restaurant) {
     return <h2 className="text-center text-warning mt-5">⚠️ Restaurant not found!</h2>;

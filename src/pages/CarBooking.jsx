@@ -43,13 +43,14 @@ export default function CarBooking() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
     const { pickupLocation, dropLocation, bookingDate, carType } = formData;
-
+  
     if (!pickupLocation || !dropLocation || !bookingDate || !carType) {
-      Swal.fire("⚠️ Missing Info", "Please fill all the fields!", "warning");
+      Swal.fire("⚠️ Fill all fields!", "", "warning");
       return;
     }
-
+  
     try {
       const payload = {
         user: { id: 1 },
@@ -60,31 +61,34 @@ export default function CarBooking() {
         dropLocation,
         carType,
       };
-
+  
       await addTransportBooking(payload);
-
+  
       Swal.fire({
-        title: "✅ Booking Confirmed!",
-        text: `Your ${carType} car has been successfully booked!`,
+        title: "🚘 Booking Confirmed!",
+        text: `Your ${carType} car is booked successfully!`,
         icon: "success",
         confirmButtonColor: "#ffce7a",
         background: "#15102b",
         color: "#ffffff",
-      }).then(() => navigate("/payment", {
-        state: {
-          paymentData: {
-            type: "car",
-            title: formData.carType,
-            price: "₹1500", // you can adjust later 
-            details: formData
-          }
-        }
-      }));
-      
+      }).then(() =>
+        navigate("/payment", {
+          state: {
+            paymentData: {
+              type: "car",
+              title: carType,
+              price: 1500,
+              details: formData,
+            },
+          },
+        })
+      );
+  
     } catch (error) {
-      Swal.fire("❌ Error", "Unable to save booking. Try again!", "error");
+      Swal.fire("❌ Error", "Unable to book car.", "error");
     }
   };
+  
 
   return (
     <div className="car-booking">
