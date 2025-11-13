@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Settings.css";
+import { UserContext } from "../context/UserContext.jsx";
+import { useContext } from "react";
+
 
 export default function Settings() {
+  const { user, updateUser } = useContext(UserContext);
   const [theme, setTheme] = useState("royal");
   const [notifications, setNotifications] = useState(true);
   const [emailAlerts, setEmailAlerts] = useState(true);
@@ -11,7 +15,13 @@ export default function Settings() {
   const [glow, setGlow] = useState("normal");
   const [language, setLanguage] = useState("English");
   const [quote, setQuote] = useState("");
+
   const navigate = useNavigate();
+
+  // ⭐ NEW — PROFILE IMAGE STATE
+  const [profileImage, setProfileImage] = useState(
+    localStorage.getItem("wanderlyProfilePic") || ""
+  );
 
   const quotes = [
     "Wander often, wonder always ✨",
@@ -26,7 +36,35 @@ export default function Settings() {
     setQuote(random);
   }, []);
 
-  /* 🌈 THEME CONFIGURATION - added for Apply Theme functionality */
+  // ⭐ HANDLE PROFILE PIC UPLOAD
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setProfileImage(reader.result);
+      localStorage.setItem("wanderlyProfilePic", reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  // ⭐ SAVE PROFILE
+  const handleSaveProfile = () => {
+    if (profileImage) {
+      localStorage.setItem("wanderlyProfilePic", profileImage);
+  
+      updateUser({
+        ...user,
+        profilePic: profileImage,
+      });
+    }
+  
+    alert("✅ Profile updated!");
+  };
+  
+
+  /* 🌈 THEME CONFIGURATION */
   const themeStyles = {
     royal: {
       "--primary-bg": "linear-gradient(180deg, #050013 0%, #0d022e 100%)",
@@ -58,40 +96,38 @@ export default function Settings() {
     },
   };
 
-  /* 🌟 Apply Theme Function */
+  /* 🌟 APPLY THEME */
   const applyTheme = () => {
-    const selectedTheme = themeStyles[theme];
-    if (!selectedTheme) return;
+    const selected = themeStyles[theme];
+    if (!selected) return;
 
-    Object.entries(selectedTheme).forEach(([key, value]) => {
-      document.documentElement.style.setProperty(key, value);
-    });
+    Object.entries(selected).forEach(([key, value]) =>
+      document.documentElement.style.setProperty(key, value)
+    );
 
-    // Glow intensity
     const intensity =
       glow === "low" ? 0.5 : glow === "high" ? 1.5 : 1.0;
-    document.documentElement.style.setProperty(
-      "--glow-strength",
-      intensity
-    );
+
+    document.documentElement.style.setProperty("--glow-strength", intensity);
 
     localStorage.setItem("wanderlyTheme", theme);
     localStorage.setItem("wanderlyGlow", glow);
 
-    // Fun little toast animation (visual feedback)
     const toast = document.createElement("div");
-    toast.textContent = `🌈 ${theme.charAt(0).toUpperCase() + theme.slice(1)} theme applied!`;
+    toast.textContent = `🌈 ${theme} theme applied!`;
     toast.className = "theme-toast";
     document.body.appendChild(toast);
     setTimeout(() => toast.remove(), 2000);
   };
 
-  /* 🧠 Auto-load theme on mount */
+  /* Auto Load Theme */
   useEffect(() => {
     const savedTheme = localStorage.getItem("wanderlyTheme");
     const savedGlow = localStorage.getItem("wanderlyGlow");
+
     if (savedTheme) setTheme(savedTheme);
     if (savedGlow) setGlow(savedGlow);
+
     if (savedTheme && themeStyles[savedTheme]) {
       Object.entries(themeStyles[savedTheme]).forEach(([k, v]) =>
         document.documentElement.style.setProperty(k, v)
@@ -101,7 +137,6 @@ export default function Settings() {
 
   return (
     <section className="settings-section">
-      {/* 🌈 Daily Wander Quote */}
       <p className="wander-quote">“{quote}”</p>
 
       <h1 className="settings-title">⚙️ Account Settings</h1>
@@ -110,25 +145,45 @@ export default function Settings() {
       </p>
 
       <div className="settings-container">
-        {/* 👤 Profile */}
+        {/* 👤 PROFILE */}
         <div className="settings-card glassy">
           <h2>👤 Profile</h2>
+
           <div className="settings-row">
             <label>Name:</label>
             <input type="text" placeholder="Vaishnavi K" />
           </div>
+
           <div className="settings-row">
             <label>Email:</label>
             <input type="email" placeholder="vk@wanderly.com" />
           </div>
+
+          {/* ⭐ Profile Picture Upload */}
           <div className="settings-row">
             <label>Profile Picture:</label>
-            <input type="file" />
+
+            {profileImage && (
+              <img
+                src={profileImage}
+                className="settings-profile-preview"
+                alt="preview"
+              />
+            )}
+
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+            />
           </div>
-          <button className="settings-btn">Save Changes</button>
+
+          <button className="settings-btn" onClick={handleSaveProfile}>
+            Save Changes
+          </button>
         </div>
 
-        {/* 🎨 Personalization */}
+        {/* 🎨 PERSONALIZATION */}
         <div className="settings-card glassy">
           <h2>🎨 Personalization</h2>
           <div className="settings-row">
@@ -144,19 +199,9 @@ export default function Settings() {
               <option value="galaxy">🌌 Galaxy Night</option>
             </select>
 
-            {/* 🌈 Live Preview */}
             <div
               className="theme-preview"
-              style={{
-                background:
-                  theme === "royal"
-                    ? "linear-gradient(90deg, #9b5de5, #f15bb5)"
-                    : theme === "ocean"
-                    ? "linear-gradient(90deg, #2193b0, #6dd5ed)"
-                    : theme === "sunset"
-                    ? "linear-gradient(90deg, #ee9ca7, #ffdde1)"
-                    : "linear-gradient(90deg, #0f2027, #203a43, #2c5364)",
-              }}
+              style={{ background: themeStyles[theme]["--accent"] }}
             ></div>
           </div>
 
@@ -195,13 +240,12 @@ export default function Settings() {
             </select>
           </div>
 
-          {/* 💜 Apply Theme Button now functional */}
           <button className="settings-btn" onClick={applyTheme}>
             Apply Theme
           </button>
         </div>
 
-        {/* 🔔 Notifications */}
+        {/* 🔔 NOTIFICATIONS */}
         <div className="settings-card glassy">
           <h2>🔔 Notifications</h2>
           <div className="settings-row toggle">
@@ -234,7 +278,7 @@ export default function Settings() {
           <button className="settings-btn">Update Preferences</button>
         </div>
 
-        {/* 🔐 Security */}
+        {/* 🔐 SECURITY */}
         <div className="settings-card glassy">
           <h2>🔐 Security</h2>
           <div className="settings-row">
@@ -256,7 +300,7 @@ export default function Settings() {
           </div>
         </div>
 
-        {/* 🧳 Data & Privacy */}
+        {/* 🧳 DATA */}
         <div className="settings-card glassy">
           <h2>🧳 Data & Privacy</h2>
           <div className="settings-row">
@@ -270,7 +314,7 @@ export default function Settings() {
           </div>
         </div>
 
-        {/* ✈️ Quick Access */}
+        {/* ✈️ QUICK ACCESS */}
         <div className="settings-card glassy">
           <h2>✈️ Quick Access</h2>
           <div className="shortcut-links">

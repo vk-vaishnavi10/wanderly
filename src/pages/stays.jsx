@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import "./stays.css";
 import { Modal } from "react-bootstrap";
 import Swal from "sweetalert2";
-import { addStayBooking } from "../services/api"; // ✅ API function
-
-
+import { useNavigate } from "react-router-dom";
 
 // 🖼️ Local Images
 import oberoi from "../images/oberoi.jpg";
@@ -16,9 +14,10 @@ import juhu from "../images/juhu.jpg";
 import lalit from "../images/lalit.jpg";
 import novotel from "../images/novotel.jpg";
 import windflower from "../images/windflower.jpg";
+
 const hotelbg = "/videos/hotelbg.mp4";
 
-// ✅ Predefined Hotel Data
+// 🔥 Predefined Hotels Data
 const hotelsData = [
   {
     id: 1,
@@ -30,8 +29,7 @@ const hotelsData = [
     image: oberoi,
     phone: "+91 22 6632 5757",
     email: "reservations@oberoi.com",
-    attractions: ["Gateway of India", "Marine Drive", "Elephanta Caves"],
-    desc: "A luxurious 5-star hotel overlooking the Arabian Sea, offering world-class dining, elegant rooms, and breathtaking sea views.",
+    desc: "A luxurious 5-star hotel overlooking the Arabian Sea."
   },
   {
     id: 2,
@@ -43,8 +41,7 @@ const hotelsData = [
     image: tajlake,
     phone: "+91 22 6665 3366",
     email: "taj.reservations@tajhotels.com",
-    attractions: ["Colaba Causeway", "Crawford Market", "Girgaum Chowpatty"],
-    desc: "An iconic heritage hotel that combines Indian tradition with modern luxury, located by the famous Gateway of India.",
+    desc: "An iconic heritage luxury hotel near Gateway of India."
   },
   {
     id: 3,
@@ -56,8 +53,7 @@ const hotelsData = [
     image: leela,
     phone: "+91 80 2521 1234",
     email: "reservations.blr@theleela.com",
-    attractions: ["Cubbon Park", "Bangalore Palace", "Lalbagh Garden"],
-    desc: "A royal experience blending traditional Indian architecture with modern amenities, surrounded by lush greenery.",
+    desc: "Traditional royal architecture blended with modern comfort."
   },
   {
     id: 4,
@@ -69,21 +65,19 @@ const hotelsData = [
     image: radisson,
     phone: "+91 832 880 2000",
     email: "reservations@radissonblu.com",
-    attractions: ["Baga Beach", "Dudhsagar Falls", "Fort Aguada"],
-    desc: "A beachside paradise with a perfect blend of modern comfort and Goan charm. Ideal for relaxation and family getaways.",
+    desc: "Beachside resort with a perfect mix of Goan charm."
   },
   {
     id: 5,
     name: "JW Marriott Juhu",
     city: "mumbai",
-    location: "Juhu, Mumbai, Maharashtra",
+    location: "Juhu, Mumbai",
     price: "₹14,000/night",
     rating: 5,
     image: juhu,
     phone: "+91 22 6693 3000",
     email: "reservations.juhu@marriott.com",
-    attractions: ["Juhu Beach", "ISKCON Temple", "Versova Beach"],
-    desc: "A luxurious beachfront resort offering serene sea views, fine dining, and a relaxing spa experience.",
+    desc: "Luxury beachfront resort with premium amenities."
   },
   {
     id: 6,
@@ -95,8 +89,7 @@ const hotelsData = [
     image: itc,
     phone: "+91 44 2220 0000",
     email: "reservations.chola@itchotels.in",
-    attractions: ["Marina Beach", "Phoenix Market City", "Kapaleeshwar Temple"],
-    desc: "An architectural marvel in Chennai offering royal luxury and signature ITC hospitality.",
+    desc: "A grand palace offering royal luxury."
   },
   {
     id: 7,
@@ -108,8 +101,7 @@ const hotelsData = [
     image: lalit,
     phone: "+91 141 664 7777",
     email: "reservations.jaipur@thelalit.com",
-    attractions: ["Hawa Mahal", "City Palace", "Amber Fort"],
-    desc: "A royal blend of Rajasthani architecture and contemporary comfort, perfect for heritage explorers.",
+    desc: "Majestic Rajasthani architecture blended with luxury."
   },
   {
     id: 8,
@@ -121,8 +113,7 @@ const hotelsData = [
     image: novotel,
     phone: "+91 40 6682 4422",
     email: "reservations.hyd@novotel.com",
-    attractions: ["Charminar", "Golconda Fort", "Hussain Sagar"],
-    desc: "A business and leisure paradise offering modern comfort near the HITEC City area.",
+    desc: "Modern comfort near HITEC City."
   },
   {
     id: 9,
@@ -134,150 +125,118 @@ const hotelsData = [
     image: windflower,
     phone: "+91 821 252 2500",
     email: "reservations@thewindflower.com",
-    attractions: ["Mysore Palace", "Chamundi Hill", "Brindavan Gardens"],
-    desc: "A tranquil escape nestled in Mysuru, ideal for wellness retreats and peaceful holidays.",
+    desc: "A peaceful wellness retreat in Mysuru."
   },
 ];
 
 export default function Stays() {
+  const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [filteredHotels, setFilteredHotels] = useState(hotelsData);
   const [selectedHotel, setSelectedHotel] = useState(null);
-  const [booking, setBooking] = useState({ checkIn: "", nights: 1, guests: 2 });
+  const [booking, setBooking] = useState({
+    checkIn: "",
+    nights: 1,
+    guests: 2,
+  });
 
-  // 🔍 Search by City
+  // 🔍 SEARCH
   const searchHotels = () => {
     if (!query.trim()) {
       setFilteredHotels(hotelsData);
       return;
     }
-    const results = hotelsData.filter((hotel) =>
-      hotel.city.toLowerCase().includes(query.toLowerCase())
+
+    setFilteredHotels(
+      hotelsData.filter((hotel) =>
+        hotel.city.toLowerCase().includes(query.toLowerCase())
+      )
     );
-    setFilteredHotels(results);
   };
 
-  // ✅ Booking Handler
-  const handleBooking = async () => {
-    if (!booking.checkIn || booking.nights < 1 || booking.guests < 1) {
-      Swal.fire("⚠️ Missing Info", "Please fill all booking details.", "warning");
+  // ⭐ PAYMENT REDIRECT HANDLER
+  const handleBooking = () => {
+    if (!booking.checkIn) {
+      Swal.fire("⚠️ Missing Info", "Please select check-in date.", "warning");
       return;
     }
 
-    const chosenDate = new Date(booking.checkIn);
-    if (isNaN(chosenDate.getTime()) || chosenDate.getFullYear() > 2100) {
-      Swal.fire("⚠️ Invalid Date", "Please choose a valid check-in date.", "warning");
-      return;
-    }
-
-    try {
-      const payload = {
-        user: { id: 1 },
-        stay: { id: selectedHotel.id },
-        checkInDate: booking.checkIn,
-        nights: parseInt(booking.nights),
-        guests: parseInt(booking.guests),
-      };
-
-      console.log("📤 Sending Stay Booking:", payload);
-      await addStayBooking(payload);
-
-      Swal.fire({
-        title: "🎉 Booking Confirmed!",
-        text: `Your stay at ${selectedHotel.name} is booked successfully!`,
-        icon: "success",
-        confirmButtonColor: "#f5c518",
-        background: "#111",
-        color: "#fff",
-      });
-
-      setSelectedHotel(null);
-      setBooking({ checkIn: "", nights: 1, guests: 2 });
-    } catch (error) {
-      console.error("❌ Booking failed:", error);
-      Swal.fire("❌ Error", "Unable to save booking. Try again!", "error");
-    }
+    navigate("/payment", {
+      state: {
+        paymentData: {
+          type: "hotel",
+          title: selectedHotel.name,
+          price: selectedHotel.price,
+          location: selectedHotel.location,
+          checkIn: booking.checkIn,
+          nights: booking.nights,
+          guests: booking.guests,
+          image: selectedHotel.image,
+        },
+      },
+    });
   };
 
   return (
     <section className="stays-section">
-      {/* 🏙 Hero Section */}
+      {/* HERO SECTION */}
       <div className="hero-section">
-        {/* 🎥 Background Video (added instead of slideshow) */}
-        <video
-  className="hotel-bg-video"
-  autoPlay
-  muted
-  loop
-  playsInline
-  preload="auto"
->
-  <source src={hotelbg} type="video/mp4" />
-</video>
+        <video className="hotel-bg-video" autoPlay muted loop playsInline>
+          <source src={hotelbg} type="video/mp4" />
+        </video>
 
+        <div className="hero-overlay slim-hero">
+          <h1 className="slim-heading">
+            Find your perfect stay — hotels, villas & escapes 🌿
+          </h1>
 
-<div className="hero-overlay slim-hero">
-  <h1 className="slim-heading">
-    Find your perfect stay — explore hotels, villas & city escapes 🌿
-  </h1>
-
-  <div className="search-wide">
-    <input
-      type="text"
-      placeholder="Search by city, destination, or landmark..."
-      value={query}
-      onChange={(e) => setQuery(e.target.value)}
-    />
-    <button onClick={searchHotels}>🔍 Search</button>
-  </div>
-</div>
-
+          <div className="search-wide">
+            <input
+              type="text"
+              placeholder="Search by city..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+            <button onClick={searchHotels}>🔍 Search</button>
+          </div>
+        </div>
       </div>
 
-      {/* 🏨 Hotel List */}
+      {/* HOTEL LIST */}
       <div className="container py-5">
         <h2 className="section-heading">Featured Hotels</h2>
-        {filteredHotels.length > 0 ? (
-          <div className="row g-4">
-            {filteredHotels.map((hotel) => (
-              <div key={hotel.id} className="col-12 col-md-6 col-lg-4">
-                <div className="card stay-card h-100 shadow-sm">
-                  <img src={hotel.image} className="card-img-top" alt={hotel.name} />
-                  <div className="card-body text-center">
-                    <h5>{hotel.name}</h5>
-                    <p>{hotel.location}</p>
-                    <p><strong>{hotel.price}</strong></p>
-                    <p>{"⭐".repeat(hotel.rating)}</p>
-                    <button
-                      className="btn book-btn w-100"
-                      onClick={() => setSelectedHotel(hotel)}
-                    >
-                      View Details
-                    </button>
-                  </div>
+
+        <div className="row g-4">
+          {filteredHotels.map((hotel) => (
+            <div key={hotel.id} className="col-md-4">
+              <div className="card stay-card shadow-sm h-100">
+                <img src={hotel.image} className="card-img-top" alt={hotel.name} />
+                <div className="card-body text-center">
+                  <h5>{hotel.name}</h5>
+                  <p>{hotel.location}</p>
+                  <strong>{hotel.price}</strong>
+                  <p>{"⭐".repeat(hotel.rating)}</p>
+
+                  <button
+                    className="btn book-btn w-100"
+                    onClick={() => setSelectedHotel(hotel)}
+                  >
+                    View Details
+                  </button>
                 </div>
               </div>
-            ))}
-          </div>
-        ) : (
-          <h4 className="text-center text-danger">⚠️ No hotels found in this city.</h4>
-        )}
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* 🏨 Modal for Booking */}
-      <Modal
-        show={!!selectedHotel}
-        onHide={() => setSelectedHotel(null)}
-        centered
-        size="lg"
-        className="hotel-modal"
-      >
+      {/* BOOKING MODAL */}
+      <Modal show={!!selectedHotel} onHide={() => setSelectedHotel(null)} centered>
         {selectedHotel && (
           <div className="modal-content bg-dark text-light border-warning">
             <div className="modal-header border-warning">
               <h5 className="modal-title text-warning">{selectedHotel.name}</h5>
               <button
-                type="button"
                 className="btn-close btn-close-white"
                 onClick={() => setSelectedHotel(null)}
               ></button>
@@ -286,51 +245,53 @@ export default function Stays() {
             <div className="modal-body">
               <img
                 src={selectedHotel.image}
-                alt={selectedHotel.name}
                 className="img-fluid rounded mb-3"
+                alt=""
               />
               <p>{selectedHotel.desc}</p>
-              <p>📍 <strong>{selectedHotel.location}</strong></p>
+              <p>📍 {selectedHotel.location}</p>
               <p>💰 {selectedHotel.price}</p>
-              <p>📞 {selectedHotel.phone}</p>
-              <p>📧 {selectedHotel.email}</p>
 
-              {/* 🗓 Inputs */}
-              <div className="mt-4">
-                <label className="form-label text-warning">🗓 Check-in Date</label>
-                <input
-                  type="date"
-                  className="form-control bg-dark text-light border-warning"
-                  value={booking.checkIn}
-                  onChange={(e) => setBooking({ ...booking, checkIn: e.target.value })}
-                />
-              </div>
+              {/* DATE */}
+              <label className="form-label text-warning mt-3">
+                🗓 Check-in Date
+              </label>
+              <input
+                type="date"
+                className="form-control bg-dark text-light"
+                value={booking.checkIn}
+                onChange={(e) =>
+                  setBooking({ ...booking, checkIn: e.target.value })
+                }
+              />
 
-              <div className="mt-3">
-                <label className="form-label text-warning">🌙 Nights</label>
-                <input
-                  type="number"
-                  min="1"
-                  className="form-control bg-dark text-light border-warning"
-                  value={booking.nights}
-                  onChange={(e) => setBooking({ ...booking, nights: e.target.value })}
-                />
-              </div>
+              {/* NIGHTS */}
+              <label className="form-label text-warning mt-3">🌙 Nights</label>
+              <input
+                type="number"
+                min="1"
+                className="form-control bg-dark text-light"
+                value={booking.nights}
+                onChange={(e) =>
+                  setBooking({ ...booking, nights: e.target.value })
+                }
+              />
 
-              <div className="mt-3">
-                <label className="form-label text-warning">👥 Guests</label>
-                <input
-                  type="number"
-                  min="1"
-                  className="form-control bg-dark text-light border-warning"
-                  value={booking.guests}
-                  onChange={(e) => setBooking({ ...booking, guests: e.target.value })}
-                />
-              </div>
+              {/* GUESTS */}
+              <label className="form-label text-warning mt-3">👥 Guests</label>
+              <input
+                type="number"
+                min="1"
+                className="form-control bg-dark text-light"
+                value={booking.guests}
+                onChange={(e) =>
+                  setBooking({ ...booking, guests: e.target.value })
+                }
+              />
             </div>
 
-            <div className="modal-footer border-warning d-flex justify-content-center">
-              <button className="btn btn-warning fw-bold px-4" onClick={handleBooking}>
+            <div className="modal-footer border-warning">
+              <button className="btn btn-warning w-100" onClick={handleBooking}>
                 Confirm Stay ✨
               </button>
             </div>

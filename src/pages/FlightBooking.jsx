@@ -1,23 +1,27 @@
-// 🌍 src/pages/FlightBooking.jsx
 import React, { useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import flights from "../data/flights";
-import "./FlighBooking.css";
+import "./FlightBooking.css"; // make sure file name matches exactly
 import { addFlightBooking } from "../services/api";
 
-// 🎬 Public path video
 const flightVideo = "/videos/flightbg.mp4";
 
-// Convert "2h 15m" to minutes
+// Convert "2h 15m" or "2h" or "45m" to minutes (robust)
 const durationToMinutes = (duration) => {
-  const h = parseInt(duration.split("h")[0]);
-  const m = parseInt(duration.split("h")[1]);
-  return h * 60 + m;
+  if (!duration || typeof duration !== "string") return 0;
+  const hoursMatch = duration.match(/(\d+)\s*h/);
+  const minsMatch = duration.match(/(\d+)\s*m/);
+  const hours = hoursMatch ? parseInt(hoursMatch[1], 10) : 0;
+  const mins = minsMatch ? parseInt(minsMatch[1], 10) : 0;
+  return hours * 60 + mins;
 };
 
-// Add minutes to time
+// Add minutes to time "HH:MM"
 const addMinutes = (time, minutes) => {
-  const [h, m] = time.split(":").map(Number);
+  if (!time) return "";
+  const [hStr, mStr] = time.split(":");
+  const h = Number(hStr || 0);
+  const m = Number(mStr || 0);
   const date = new Date();
   date.setHours(h, m + minutes);
   return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
@@ -28,25 +32,26 @@ export default function FlightBooking() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Selected flight
   const flight =
     location.state?.flight || flights.find((f) => f.id === parseInt(id));
 
-  // Airline theme color
   const airlineColors = {
     IndiGo: "#4f83ff",
     "Air India": "#ff7043",
     Vistara: "#9c27b0",
     SpiceJet: "#ff9800",
   };
-  const themeColor = airlineColors[flight?.airline] || "#FFD700";
+  const themeColor = airlineColors[flight?.airline] || "#ff7a18";
 
-  // Takeoff / Landing times
+  // guard
+  if (!flight) {
+    return <h2 className="text-light text-center mt-5">⚠️ Flight not found!</h2>;
+  }
+
   const takeoffTimes = ["06:30", "08:45", "11:20", "14:10", "17:55", "21:15"];
   const takeoff = takeoffTimes[flight.id % takeoffTimes.length];
   const landing = addMinutes(takeoff, durationToMinutes(flight.duration));
 
-  // Form data
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -58,21 +63,18 @@ export default function FlightBooking() {
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  // 🧮 SAFE PRICE CLEANER (no more errors!)
   const cleanPrice = () => {
+    if (!flight) return 0;
     if (typeof flight.price === "string") {
-      return Number(flight.price.replace(/[^0-9]/g, ""));
+      return Number(String(flight.price).replace(/[^0-9]/g, "")) || 0;
     }
-    return Number(flight.price);
+    return Number(flight.price) || 0;
   };
 
-  // 📌 BOOKING HANDLER
   const handleBooking = async (e) => {
     e.preventDefault();
-
     try {
       const amount = cleanPrice();
-
       const bookingDetails = {
         ...formData,
         flightName: flight.airline,
@@ -82,13 +84,13 @@ export default function FlightBooking() {
         landing,
       };
 
-      // Save to backend
-      await addFlightBooking(bookingDetails);
+      // If you have API, call it. Wrapped in try/catch already.
+      await addFlightBooking?.(bookingDetails);
 
-      // Save locally
+      // Save local fallback
       localStorage.setItem("flightBooking", JSON.stringify(bookingDetails));
 
-      // Redirect to payment page
+      // Navigate to payment with data
       navigate("/payment", {
         state: {
           paymentData: {
@@ -103,27 +105,33 @@ export default function FlightBooking() {
         },
       });
     } catch (err) {
-      console.error("❌ Booking error:", err);
+      console.error("❌ Booking failed:", err);
       alert("Booking failed!");
     }
   };
 
-  if (!flight)
-    return <h2 className="text-light text-center mt-5">⚠️ Flight not found!</h2>;
-
   return (
     <div className="flight-booking-page" style={{ "--theme": themeColor }}>
-      {/* BG Video */}
-      <video className="flight-bg-video" autoPlay loop muted playsInline>
+      {/* background video */}
+      <video
+        className="flight-bg-video"
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+      >
         <source src={flightVideo} type="video/mp4" />
       </video>
 
-      <div className="flight-overlay"></div>
+      {/* soft overlay (pointer-events: none so it never blocks clicks) */}
+      <div className="flight-overlay" aria-hidden="true"></div>
 
       <div className="booking-card-container">
-        {/* LEFT: Flight Info */}
+        {/* left info card */}
         <div className="flight-info-card">
           <img src={flight.image} alt={flight.airline} className="airline-logo" />
+
           <h2 className="airline-name" style={{ color: themeColor }}>
             {flight.airline}
           </h2>
@@ -137,7 +145,9 @@ export default function FlightBooking() {
               <h3>{takeoff}</h3>
               <p>Takeoff</p>
             </div>
-            <div className="time-line"></div>
+
+            <div className="time-line" aria-hidden="true"></div>
+
             <div>
               <h3>{landing}</h3>
               <p>Landing</p>
@@ -150,55 +160,76 @@ export default function FlightBooking() {
 
           <div className="stops-box">
             <h4>Stops:</h4>
-            {flight.stops?.map((s, i) => (
-              <p key={i}>
-                {s.city} ({s.airport}) — Delay {s.delay}
-              </p>
-            ))}
+            {flight.stops?.length ? (
+              flight.stops.map((s, i) => (
+                <p key={i}>
+                  {s.city} ({s.airport}) — Delay {s.delay}
+                </p>
+              ))
+            ) : (
+              <p>Direct</p>
+            )}
           </div>
 
-          <div className="glow-line"></div>
+          <div className="glow-line" aria-hidden="true" />
         </div>
 
-        {/* RIGHT: Booking Form */}
-        <div className="booking-form-card">
+        {/* right booking form */}
+        <div className="booking-form-card" role="region" aria-label="booking form">
           <h3>Confirm Your Booking</h3>
 
-          <form onSubmit={handleBooking} className="booking-form">
-            <label>👤 Full Name</label>
+          <form onSubmit={handleBooking} className="booking-form" autoComplete="on">
+            <label htmlFor="fullName">👤 Full Name</label>
             <input
+              id="fullName"
               type="text"
               name="fullName"
+              placeholder="Enter your full name"
               required
               value={formData.fullName}
               onChange={handleChange}
+              autoComplete="name"
             />
 
-            <label>📧 Email</label>
+            <label htmlFor="email">📧 Email</label>
             <input
+              id="email"
               type="email"
               name="email"
+              placeholder="Enter your email"
               required
               value={formData.email}
               onChange={handleChange}
+              autoComplete="email"
             />
 
-            <label>👥 Passengers</label>
-            <select name="passengers" onChange={handleChange}>
+            <label htmlFor="passengers">👥 Passengers</label>
+            <select
+              id="passengers"
+              name="passengers"
+              value={formData.passengers}
+              onChange={handleChange}
+            >
               <option>1 Adult</option>
               <option>2 Adults</option>
               <option>Family (4)</option>
             </select>
 
-            <label>💺 Class</label>
-            <select name="seatClass" onChange={handleChange}>
+            <label htmlFor="seatClass">💺 Class</label>
+            <select
+              id="seatClass"
+              name="seatClass"
+              value={formData.seatClass}
+              onChange={handleChange}
+            >
               <option>Economy</option>
               <option>Premium Economy</option>
               <option>Business</option>
             </select>
 
-            <label>📅 Travel Date</label>
+            <label htmlFor="travelDate">📅 Travel Date</label>
             <input
+              id="travelDate"
               type="date"
               name="travelDate"
               required
@@ -214,7 +245,11 @@ export default function FlightBooking() {
               ✈️ Confirm & Pay
             </button>
 
-            <button type="button" className="back-btn" onClick={() => navigate(-1)}>
+            <button
+              type="button"
+              className="back-btn"
+              onClick={() => navigate(-1)}
+            >
               ⬅ Back to Flights
             </button>
           </form>
@@ -223,3 +258,4 @@ export default function FlightBooking() {
     </div>
   );
 }
+
