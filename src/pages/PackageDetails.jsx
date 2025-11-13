@@ -104,6 +104,7 @@ export default function PackageDetails() {
         color: "#fff",
         confirmButtonColor: "#f5c518",
       }).then(() => {
+        // ⭐ THIS PART WAS NOT WORKING EARLIER (alert blocked it)
         navigate("/payment", {
           state: {
             paymentData: {
@@ -121,6 +122,7 @@ export default function PackageDetails() {
       Swal.fire("❌ Error", "Something went wrong during booking.", "error");
     }
   };
+  
   
 
   return (
