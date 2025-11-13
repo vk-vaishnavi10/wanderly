@@ -1,7 +1,7 @@
 // src/pages/PackageDetails.jsx
 import React, { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { addPackageBooking, addPackagePayment } from "../services/api.js";
+
 import "./PackageDetails.css";
 
 import kashmirImg from "../images/kashmirparadise.jpg";
@@ -95,7 +95,7 @@ export default function PackageDetails() {
     };
   
     try {
-      await addPackageBooking(bookingPayload);
+      
   
       Swal.fire({
         title: `🎉 Booking Confirmed for ${pkg.title}!`,

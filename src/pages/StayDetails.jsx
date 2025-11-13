@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { addStayBooking } from "../services/api";
+
 import "./stays.css";
 import oberoi from "../images/oberoi.jpg";
 import tajlake from "../images/tajlake.jpg";
@@ -163,7 +163,7 @@ export default function StayDetails() {
       
       
 
-      await addStayBooking(payload);
+      
 
       Swal.fire("🎉 Booking Confirmed!", "Your stay is successfully booked!", "success")
         .then(() => navigate("/stays"));

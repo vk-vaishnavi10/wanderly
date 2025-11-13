@@ -4,142 +4,109 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./Payment.css";
 
 export default function PaymentSuccess() {
+  const location = useLocation();
   const navigate = useNavigate();
-  const { state } = useLocation();
 
-  const paymentData = state?.paymentData;
+  // original data passed from Payment.jsx
+  const paymentData = location.state?.paymentData;
 
   if (!paymentData) {
     return (
-      <div className="payment-page text-light text-center mt-5">
-        <h2 className="text-warning">⚠️ No Payment Details Found</h2>
-        <button className="pay-btn mt-3" onClick={() => navigate("/")}>
-          Go Home 🏠
-        </button>
+      <div className="text-center text-warning mt-5">
+        ⚠️ No payment info found.
       </div>
     );
   }
 
+  const amount =
+    typeof paymentData.price === "string"
+      ? Number(paymentData.price.replace(/[₹,]/g, ""))
+      : Number(paymentData.price);
+
+  const pickup =
+    paymentData.details?.pickup ||
+    paymentData.details?.pickupLocation ||
+    "";
+
+  const drop =
+    paymentData.details?.drop ||
+    paymentData.details?.dropLocation ||
+    "";
+
+  const pax =
+    paymentData.details?.pax || paymentData.details?.guests || "";
+
   return (
-    <div className="payment-page text-light">
-      <div
-        className="payment-card"
-        style={{
-          padding: "2.5rem",
-          maxWidth: "500px",
-          animation: "fadeInUp 0.9s ease",
-        }}
-      >
-        {/* 🌟 Success Icon */}
-        <div
-          style={{
-            fontSize: "4rem",
-            marginBottom: "1rem",
-            textShadow: "0 0 20px #00ffcc",
-          }}
-        >
-          ✅
-        </div>
+    <div className="payment-page text-light" style={{ minHeight: "85vh" }}>
+      <div className="payment-card">
+        <h2 style={{ color: "#00ffcc" }}>✅ Payment Successful!</h2>
 
-        <h2
-          style={{
-            background: "linear-gradient(90deg, #00ffcc, #6EC1E4, #9B5DE5)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            fontWeight: "800",
-            marginBottom: "1rem",
-            fontSize: "2rem",
-          }}
-        >
-          Payment Successful!
-        </h2>
+        <div className="summary-box text-center">
+          <h3 style={{ color: "#ffd86b" }}>{paymentData.title}</h3>
 
-        {/* 🎉 Summary Box */}
-        <div
-          style={{
-            background: "rgba(20, 15, 40, 0.8)",
-            borderRadius: "12px",
-            border: "2px solid #6EC1E4",
-            padding: "1rem",
-            marginBottom: "1.5rem",
-            boxShadow: "0 0 20px rgba(110,193,228,0.4)",
-          }}
-        >
-          <h4
-            style={{
-              color: "#9B5DE5",
-              fontWeight: "bold",
-              marginBottom: "0.3rem",
-            }}
-          >
-            {paymentData.title}
-          </h4>
-
-          {/* 🎟 Universal Payment Summary */}
-          <p style={{ lineHeight: "1.6", color: "#dcdcf7" }}>
+          <p style={{ color: "#dcdcf7", fontSize: "1rem" }}>
             {paymentData.type === "flight" && (
-              <>
-                ✈️ Route: {paymentData.details.route} <br />
-                🛫 Airline: {paymentData.title} <br />
-              </>
+              <>✈ Flight Booking Successful!<br /></>
             )}
 
             {paymentData.type === "hotel" && (
-              <>
-                🏨 Location: {paymentData.details.location} <br />
-                👤 Guests: {paymentData.details.guests} <br />
-              </>
+              <>🏨 Your hotel stay is confirmed!<br /></>
+            )}
+
+            {paymentData.type === "package" && (
+              <>🎁 Your travel package is booked!<br /></>
             )}
 
             {paymentData.type === "dining" && (
               <>
-                🍽 Pax: {paymentData.details.pax} <br />
-                🕓 {paymentData.details.dateTime} <br />
+                🍽 Table Reserved <br />
+                Guests: {pax} <br />
               </>
             )}
 
-            {paymentData.type === "package" && (
+            {(paymentData.type === "transport" ||
+              paymentData.type === "car" ||
+              paymentData.type === "cab") && (
               <>
-                🎁 Package Date: {paymentData.details.date} <br />
-                📧 Email: {paymentData.details.email} <br />
+                🚗 Ride booked successfully! <br />
+                {pickup && drop && (
+                  <>
+                    🗺 {pickup} → {drop} <br />
+                  </>
+                )}
               </>
             )}
 
-            {paymentData.type === "event" && (
-              <>
-                🎟 Event Ticket Confirmed <br />
-                📅 Enjoy the show! <br />
-              </>
-            )}
-
-            {paymentData.type === "transport" && (
-              <>
-                🚖 {paymentData.details.carType} <br />
-                📍 {paymentData.details.pickup} →{" "}
-                {paymentData.details.drop} <br />
-              </>
-            )}
-
-            💰 <strong style={{ color: "#00ffcc" }}>
-              Amount Paid: ₹
-              {String(paymentData.price).replace(/[₹,]/g, "")}
-            </strong>
+            <strong style={{ fontSize: "1.3rem" }}>💰 Paid: ₹{amount}</strong>
           </p>
         </div>
 
-        {/* 🎯 Back Button */}
-        <button
-          onClick={() => navigate("/")}
-          className="pay-btn"
-          style={{
-            marginTop: "0.5rem",
-            fontSize: "1rem",
-            padding: "0.9rem",
-            borderRadius: "50px",
-          }}
-        >
-          🏠 Back to Home
-        </button>
+        {/* BUTTONS */}
+        <div style={{ marginTop: "20px" }}>
+          <button
+            className="pay-btn"
+            style={{
+              backgroundColor: "#00ccff",
+              border: "none",
+              fontWeight: "bold",
+            }}
+            onClick={() => navigate("/")}
+          >
+            🏠 Back to Home
+          </button>
+
+          <button
+            className="pay-btn"
+            style={{
+              marginTop: "10px",
+              backgroundColor: "#ffd86b",
+              border: "none",
+            }}
+            onClick={() => navigate(-1)}
+          >
+            🔙 Book Again
+          </button>
+        </div>
       </div>
     </div>
   );

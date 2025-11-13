@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import QRCode from "qrcode";
-import { addEventBooking } from "../services/api.js";
+
 import "./EventDetails.css";
 
 // ✅ Import local images
@@ -168,7 +168,7 @@ export default function EventDetails() {
       };
 
       console.log("Sending bookingData:", bookingData);
-      await addEventBooking(bookingData);
+      
 
       const result = await Swal.fire({
         title: "🎉 Booking Confirmed!",

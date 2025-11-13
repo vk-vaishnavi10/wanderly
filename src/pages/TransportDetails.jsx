@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import { addTransportBooking } from "../services/api";
+
 import "./Transport.css";
 
 export default function TransportDetails() {
@@ -40,7 +40,7 @@ export default function TransportDetails() {
         carType: form.carType,
       };
   
-      await addTransportBooking(payload);
+      
   
       Swal.fire({
         title: "🚗 Booking Confirmed!",

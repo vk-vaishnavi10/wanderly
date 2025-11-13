@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { useParams, useNavigate } from "react-router-dom";
-import { addTransportBooking } from "../services/api";
+
 import "./CabBooking.css";
 
 export default function CabBooking() {
@@ -44,7 +44,7 @@ export default function CabBooking() {
         cabType,
       };
   
-      await addTransportBooking(payload);
+      
   
       Swal.fire({
         title: "🚖 Cab Booked!",

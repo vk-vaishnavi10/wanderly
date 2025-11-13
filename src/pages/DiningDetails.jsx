@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { addDiningReservation } from "../services/api";
+
 import "./DiningDetails.css"; // 👉 Updated CSS import
 import stImg from "../images/st.jpeg";
 
@@ -69,7 +69,7 @@ export default function DiningDetails() {
         pax: parseInt(reservation.pax),
       };
   
-      await addDiningReservation(payload);
+      
   
       Swal.fire({
         title: "🍽️ Reservation Confirmed!",
