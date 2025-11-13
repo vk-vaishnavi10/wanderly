@@ -1,7 +1,9 @@
 // 🌍 src/App.jsx
-import React, { useRef, useState } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import React, { useRef, useState, useContext } from "react";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import "./App.css";
+
+import { UserContext } from "./context/UserContext";
 
 // 🌌 Core Components
 import Navbar from "./Components/Navbar.jsx";
@@ -20,7 +22,6 @@ import FlightsDetails from "./pages/FlightsDetails.jsx";
 import FlightBooking from "./pages/FlightBooking.jsx";
 import Hotels from "./pages/Hotels.jsx";
 import HotelsDetails from "./pages/HotelsDetails.jsx";
-import HotelBooking from "./pages/HotelBooking.jsx";
 import Packages from "./pages/Packages.jsx";
 import PackageDetails from "./pages/PackageDetails.jsx";
 import Payment from "./pages/Payment.jsx";
@@ -48,7 +49,7 @@ import Memories from "./pages/Memories.jsx";
 import MapPage from "./pages/Map.jsx";
 import Timeline from "./pages/Timeline.jsx";
 import Settings from "./pages/Settings.jsx";
-import HelpCenter from "./pages/HelpCenter.jsx"; 
+import HelpCenter from "./pages/HelpCenter.jsx";
 import CreateTicket from "./pages/help/CreateTicket.jsx";
 import LiveChat from "./pages/help/LiveChat.jsx";
 import ContactHelp from "./pages/help/ContactHelp.jsx";
@@ -58,96 +59,97 @@ import MyTickets from "./pages/help/MyTickets.jsx";
 import Budget from "./pages/Budget.jsx";
 import Packing from "./pages/Packing.jsx";
 
+// ⭐ Protected Route
+function ProtectedRoute({ children }) {
+  const { user } = useContext(UserContext);
+  return user ? children : <Navigate to="/signin" replace />;
+}
+
 export default function App() {
   const chatRef = useRef(null);
   const [navExpanded, setNavExpanded] = useState(true);
   const location = useLocation();
 
-  // ⭐ Hide layout ONLY on these pages
-  const hideLayout =
-    location.pathname === "/" ||
-    location.pathname === "/register" ||
-    location.pathname === "/signin";
+  // ⭐ Hide layout on intro/auth screens
+  const hideLayout = ["/", "/register", "/signin"].includes(location.pathname);
 
   return (
     <>
-      {/* Show Navbar only on main pages */}
-      {!hideLayout && (
-        <Navbar onToggle={(expanded) => setNavExpanded(expanded)} />
-      )}
+      {/* 🧭 Navbar only after login */}
+      {!hideLayout && <Navbar onToggle={(expanded) => setNavExpanded(expanded)} />}
 
       <div className={`main-content ${navExpanded ? "" : "collapsed"}`}>
         <main className="flex-grow-1">
           <Routes>
-            {/* Default intro route */}
+            {/* PUBLIC ROUTES */}
             <Route path="/" element={<Intro />} />
-
             <Route path="/register" element={<Register />} />
             <Route path="/signin" element={<Signin />} />
 
-            {/* Main pages */}
-            <Route path="/home" element={<Home />} />
-            <Route path="/profile" element={<Profile />} />
+            {/* PROTECTED ROUTES */}
+            <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            <Route path="/flights" element={<ProtectedRoute><Flights /></ProtectedRoute>} />
+            <Route path="/flights/:id" element={<ProtectedRoute><FlightsDetails /></ProtectedRoute>} />
+            <Route path="/flights/book/:id" element={<ProtectedRoute><FlightBooking /></ProtectedRoute>} />
 
-            <Route path="/flights" element={<Flights />} />
-            <Route path="/flights/:id" element={<FlightsDetails />} />
-            <Route path="/flights/book/:id" element={<FlightBooking />} />
+            <Route path="/hotels" element={<ProtectedRoute><Hotels /></ProtectedRoute>} />
+            <Route path="/hotels/:id" element={<ProtectedRoute><HotelsDetails /></ProtectedRoute>} />
 
-            <Route path="/hotels" element={<Hotels />} />
-            <Route path="/hotels/:id" element={<HotelsDetails />} />
+            <Route path="/packages" element={<ProtectedRoute><Packages /></ProtectedRoute>} />
+            <Route path="/packages/:id" element={<ProtectedRoute><PackageDetails /></ProtectedRoute>} />
 
-            <Route path="/packages" element={<Packages />} />
-            <Route path="/packages/:id" element={<PackageDetails />} />
+            <Route path="/payment" element={<ProtectedRoute><Payment /></ProtectedRoute>} />
+            <Route path="/payment/success" element={<ProtectedRoute><PaymentSuccess /></ProtectedRoute>} />
 
-            <Route path="/payment" element={<Payment />} />
-            <Route path="/payment/success" element={<PaymentSuccess />} />
+            <Route path="/mytrips" element={<ProtectedRoute><MyTrips /></ProtectedRoute>} />
+            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/admin" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
 
-            <Route path="/mytrips" element={<MyTrips />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/admin" element={<AdminPanel />} />
+            <Route path="/stays" element={<ProtectedRoute><Stays /></ProtectedRoute>} />
+            <Route path="/stays/:id" element={<ProtectedRoute><StayDetails /></ProtectedRoute>} />
 
-            <Route path="/stays" element={<Stays />} />
-            <Route path="/stays/:id" element={<StayDetails />} />
+            <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
 
-            <Route path="/users" element={<Users />} />
+            <Route path="/attractions" element={<ProtectedRoute><Attractions /></ProtectedRoute>} />
+            <Route path="/attractions/:id" element={<ProtectedRoute><AttractionDetails /></ProtectedRoute>} />
 
-            <Route path="/attractions" element={<Attractions />} />
-            <Route path="/attractions/:id" element={<AttractionDetails />} />
+            <Route path="/transport" element={<ProtectedRoute><Transport /></ProtectedRoute>} />
+            <Route path="/transport/car/:id" element={<ProtectedRoute><CarBooking /></ProtectedRoute>} />
+            <Route path="/transport/cab/:id" element={<ProtectedRoute><CabBooking /></ProtectedRoute>} />
+            <Route path="/transport/:type/:id" element={<ProtectedRoute><TransportDetails /></ProtectedRoute>} />
 
-            <Route path="/transport" element={<Transport />} />
-            <Route path="/transport/car/:id" element={<CarBooking />} />
-            <Route path="/transport/cab/:id" element={<CabBooking />} />
-            <Route path="/transport/:type/:id" element={<TransportDetails />} />
+            <Route path="/dining" element={<ProtectedRoute><Dining /></ProtectedRoute>} />
+            <Route path="/dining/:id" element={<ProtectedRoute><DiningDetails /></ProtectedRoute>} />
 
-            <Route path="/dining" element={<Dining />} />
-            <Route path="/dining/:id" element={<DiningDetails />} />
+            <Route path="/events" element={<ProtectedRoute><Events /></ProtectedRoute>} />
+            <Route path="/events/:id" element={<ProtectedRoute><EventDetails /></ProtectedRoute>} />
 
-            <Route path="/events" element={<Events />} />
-            <Route path="/events/:id" element={<EventDetails />} />
+            <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
+            <Route path="/destination/:name" element={<ProtectedRoute><DestinationPage /></ProtectedRoute>} />
 
-            <Route path="/about" element={<About />} />
-            <Route path="/destination/:name" element={<DestinationPage />} />
+            <Route path="/wander-tracker" element={<ProtectedRoute><WanderTracker /></ProtectedRoute>} />
+            <Route path="/memories" element={<ProtectedRoute><Memories /></ProtectedRoute>} />
+            <Route path="/map" element={<ProtectedRoute><MapPage /></ProtectedRoute>} />
 
-            <Route path="/wander-tracker" element={<WanderTracker />} />
-            <Route path="/memories" element={<Memories />} />
-            <Route path="/map" element={<MapPage />} />
-            <Route path="/timeline" element={<Timeline />} />
-            <Route path="/settings" element={<Settings />} />
+            <Route path="/timeline" element={<ProtectedRoute><Timeline /></ProtectedRoute>} />
+            <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
 
-            <Route path="/help" element={<HelpCenter />} />
-            <Route path="/help/create-ticket" element={<CreateTicket />} />
-            <Route path="/help/live-chat" element={<LiveChat />} />
-            <Route path="/help/contact" element={<ContactHelp />} />
-            <Route path="/help/status" element={<AppStatus />} />
-            <Route path="/help/faqs" element={<Faqs />} />
-            <Route path="/help/tickets" element={<MyTickets />} />
+            <Route path="/help" element={<ProtectedRoute><HelpCenter /></ProtectedRoute>} />
+            <Route path="/help/create-ticket" element={<ProtectedRoute><CreateTicket /></ProtectedRoute>} />
+            <Route path="/help/live-chat" element={<ProtectedRoute><LiveChat /></ProtectedRoute>} />
+            <Route path="/help/contact" element={<ProtectedRoute><ContactHelp /></ProtectedRoute>} />
+            <Route path="/help/status" element={<ProtectedRoute><AppStatus /></ProtectedRoute>} />
+            <Route path="/help/faqs" element={<ProtectedRoute><Faqs /></ProtectedRoute>} />
+            <Route path="/help/tickets" element={<ProtectedRoute><MyTickets /></ProtectedRoute>} />
 
-            <Route path="/budget" element={<Budget />} />
-            <Route path="/packing" element={<Packing />} />
+            <Route path="/budget" element={<ProtectedRoute><Budget /></ProtectedRoute>} />
+            <Route path="/packing" element={<ProtectedRoute><Packing /></ProtectedRoute>} />
+
           </Routes>
         </main>
 
-        {/* Footer + Chat only on main pages */}
+        {/* ⭐ FOOTER + CHATBOX ONLY AFTER LOGIN */}
         {!hideLayout && (
           <>
             <Footer />

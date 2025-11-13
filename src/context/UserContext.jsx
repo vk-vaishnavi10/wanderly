@@ -1,4 +1,3 @@
-// src/context/UserContext.jsx
 import React, { createContext, useState, useEffect } from "react";
 
 export const UserContext = createContext();
@@ -9,21 +8,23 @@ export const UserProvider = ({ children }) => {
   );
 
   useEffect(() => {
-    if (user) localStorage.setItem("wanderUser", JSON.stringify(user));
+    if (user) {
+      localStorage.setItem("wanderUser", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("wanderUser");
+    }
   }, [user]);
 
   const login = (userData) => {
     setUser(userData);
-    localStorage.setItem("wanderUser", JSON.stringify(userData));
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem("wanderUser");
   };
 
   return (
-    <UserContext.Provider value={{ user, setUser, login, logout }}>
+    <UserContext.Provider value={{ user, login, logout }}>
       {children}
     </UserContext.Provider>
   );
