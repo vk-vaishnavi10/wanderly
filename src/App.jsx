@@ -10,7 +10,7 @@ import ChatBox from "./Components/ChatBox.jsx";
 import InstallPrompt from "./Components/InstallPrompt.jsx";
 
 // 🧭 Pages
-import Intro from "./pages/Intro.jsx"; // 🎥 NEW cinematic intro page
+import Intro from "./pages/Intro.jsx";
 import Register from "./pages/Register.jsx";
 import Signin from "./pages/Signin.jsx";
 import Home from "./pages/Home.jsx";
@@ -58,95 +58,100 @@ import MyTickets from "./pages/help/MyTickets.jsx";
 import Budget from "./pages/Budget.jsx";
 import Packing from "./pages/Packing.jsx";
 
-
 export default function App() {
   const chatRef = useRef(null);
-  const [chatOpen, setChatOpen] = useState(false);
   const [navExpanded, setNavExpanded] = useState(true);
   const location = useLocation();
 
-  // 🚫 Hide Navbar, Footer, ChatBox, and InstallPrompt
-  // on cinematic / auth screens
+  // ⭐ Hide layout ONLY on these pages
   const hideLayout =
-  location.pathname === "/intro" || // now intro
-  location.pathname === "/register" ||
-  location.pathname === "/signin";
-// 🔐 Sign in page
+    location.pathname === "/" ||
+    location.pathname === "/register" ||
+    location.pathname === "/signin";
 
   return (
     <>
-      {/* 🧭 Navbar visible only on main pages */}
+      {/* Show Navbar only on main pages */}
       {!hideLayout && (
         <Navbar onToggle={(expanded) => setNavExpanded(expanded)} />
       )}
 
-      {/* 🌌 Main Page Content */}
       <div className={`main-content ${navExpanded ? "" : "collapsed"}`}>
         <main className="flex-grow-1">
           <Routes>
-            {/* 🎥 Cinematic flow */}
-            {/* 🌄 Intro Video Page */}
-            <Route path="/register" element={<Register />} /> {/* 🪄 Register */}
-            <Route path="/signin" element={<Signin />} /> {/* 🔐 Signin */}
+            {/* Default intro route */}
+            <Route path="/" element={<Intro />} />
 
-            {/* 🏠 Main Application Pages */}
+            <Route path="/register" element={<Register />} />
+            <Route path="/signin" element={<Signin />} />
+
+            {/* Main pages */}
             <Route path="/home" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
+
             <Route path="/flights" element={<Flights />} />
             <Route path="/flights/:id" element={<FlightsDetails />} />
             <Route path="/flights/book/:id" element={<FlightBooking />} />
 
-            <Route path="/intro" element={<Intro />} /> 
             <Route path="/hotels" element={<Hotels />} />
             <Route path="/hotels/:id" element={<HotelsDetails />} />
-            //<Route path="/hotels/book/:id" element={<HotelBooking />} />
+
             <Route path="/packages" element={<Packages />} />
             <Route path="/packages/:id" element={<PackageDetails />} />
-            <Route path="/payment" element={<Payment />} />
 
+            <Route path="/payment" element={<Payment />} />
             <Route path="/payment/success" element={<PaymentSuccess />} />
+
             <Route path="/mytrips" element={<MyTrips />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/admin" element={<AdminPanel />} />
+
             <Route path="/stays" element={<Stays />} />
             <Route path="/stays/:id" element={<StayDetails />} />
+
             <Route path="/users" element={<Users />} />
+
             <Route path="/attractions" element={<Attractions />} />
             <Route path="/attractions/:id" element={<AttractionDetails />} />
+
             <Route path="/transport" element={<Transport />} />
             <Route path="/transport/car/:id" element={<CarBooking />} />
             <Route path="/transport/cab/:id" element={<CabBooking />} />
             <Route path="/transport/:type/:id" element={<TransportDetails />} />
+
             <Route path="/dining" element={<Dining />} />
             <Route path="/dining/:id" element={<DiningDetails />} />
+
             <Route path="/events" element={<Events />} />
             <Route path="/events/:id" element={<EventDetails />} />
+
             <Route path="/about" element={<About />} />
             <Route path="/destination/:name" element={<DestinationPage />} />
+
             <Route path="/wander-tracker" element={<WanderTracker />} />
             <Route path="/memories" element={<Memories />} />
             <Route path="/map" element={<MapPage />} />
             <Route path="/timeline" element={<Timeline />} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/help" element={<HelpCenter />} /> {/* 🆕 Help Center */}
+
+            <Route path="/help" element={<HelpCenter />} />
             <Route path="/help/create-ticket" element={<CreateTicket />} />
-<Route path="/help/live-chat" element={<LiveChat />} />
-<Route path="/help/contact" element={<ContactHelp />} />
-<Route path="/help/status" element={<AppStatus />} />
-<Route path="/help/faqs" element={<Faqs />} />
-<Route path="/help/tickets" element={<MyTickets />} />
-<Route path="/budget" element={<Budget />} /> {/* 💜 Budget Route */}
-<Route path="/packing" element={<Packing />} />
+            <Route path="/help/live-chat" element={<LiveChat />} />
+            <Route path="/help/contact" element={<ContactHelp />} />
+            <Route path="/help/status" element={<AppStatus />} />
+            <Route path="/help/faqs" element={<Faqs />} />
+            <Route path="/help/tickets" element={<MyTickets />} />
 
-
+            <Route path="/budget" element={<Budget />} />
+            <Route path="/packing" element={<Packing />} />
           </Routes>
         </main>
 
-        {/* 🧩 Footer + ChatBox + Install Prompt (hidden on intro/auth) */}
+        {/* Footer + Chat only on main pages */}
         {!hideLayout && (
           <>
             <Footer />
-            <ChatBox ref={chatRef} onToggle={(open) => setChatOpen(open)} />
+            <ChatBox ref={chatRef} />
             <InstallPrompt />
           </>
         )}
