@@ -71,7 +71,8 @@ export default function DiningDetails() {
       const payload = {
         user: { id: 1 },
         dining: { id: parseInt(id) },
-        reservationTime: reservation.dateTime,
+        reservationTime: reservation.dateTime + ":00",
+
         pax: parseInt(reservation.pax),
       };
 
