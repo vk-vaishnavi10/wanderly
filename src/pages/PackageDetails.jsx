@@ -1,7 +1,7 @@
 // src/pages/PackageDetails.jsx
 import React, { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-
+import Swal from "sweetalert2"; 
 import "./PackageDetails.css";
 
 import kashmirImg from "../images/kashmirparadise.jpg";
@@ -104,7 +104,6 @@ export default function PackageDetails() {
         color: "#fff",
         confirmButtonColor: "#f5c518",
       }).then(() => {
-        // ⭐ THIS PART WAS NOT WORKING EARLIER (alert blocked it)
         navigate("/payment", {
           state: {
             paymentData: {
@@ -117,6 +116,7 @@ export default function PackageDetails() {
           },
         });
       });
+      
   
     } catch (err) {
       Swal.fire("❌ Error", "Something went wrong during booking.", "error");
