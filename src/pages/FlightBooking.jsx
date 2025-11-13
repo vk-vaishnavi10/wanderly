@@ -8,14 +8,14 @@ import { addFlightBooking } from "../services/api";
 // 🎬 Public path video
 const flightVideo = "/videos/flightbg.mp4";
 
-// Helper: Convert "2h 15m" into minutes
+// Convert "2h 15m" to minutes
 const durationToMinutes = (duration) => {
   const h = parseInt(duration.split("h")[0]);
   const m = parseInt(duration.split("h")[1]);
   return h * 60 + m;
 };
 
-// Helper: Add minutes to base time
+// Add minutes to time
 const addMinutes = (time, minutes) => {
   const [h, m] = time.split(":").map(Number);
   const date = new Date();
@@ -28,27 +28,25 @@ export default function FlightBooking() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Find selected flight
+  // Selected flight
   const flight =
     location.state?.flight || flights.find((f) => f.id === parseInt(id));
 
-  // Theme colors for airlines
+  // Airline theme color
   const airlineColors = {
     IndiGo: "#4f83ff",
     "Air India": "#ff7043",
     Vistara: "#9c27b0",
     SpiceJet: "#ff9800",
   };
-
   const themeColor = airlineColors[flight?.airline] || "#FFD700";
 
-  // Takeoff time (random but consistent)
+  // Takeoff / Landing times
   const takeoffTimes = ["06:30", "08:45", "11:20", "14:10", "17:55", "21:15"];
   const takeoff = takeoffTimes[flight.id % takeoffTimes.length];
-
-  // Calculate landing time from duration
   const landing = addMinutes(takeoff, durationToMinutes(flight.duration));
 
+  // Form data
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -60,38 +58,50 @@ export default function FlightBooking() {
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  // Booking handler
+  // 🧮 SAFE PRICE CLEANER (no more errors!)
+  const cleanPrice = () => {
+    if (typeof flight.price === "string") {
+      return Number(flight.price.replace(/[^0-9]/g, ""));
+    }
+    return Number(flight.price);
+  };
+
+  // 📌 BOOKING HANDLER
   const handleBooking = async (e) => {
     e.preventDefault();
 
     try {
+      const amount = cleanPrice();
+
       const bookingDetails = {
         ...formData,
         flightName: flight.airline,
         route: `${flight.from} → ${flight.to}`,
-        amount: Number(String(flight.price).replace(/[^0-9]/g, "")),
+        amount,
         takeoff,
         landing,
       };
 
+      // Save to backend
       await addFlightBooking(bookingDetails);
 
+      // Save locally
       localStorage.setItem("flightBooking", JSON.stringify(bookingDetails));
 
+      // Redirect to payment page
       navigate("/payment", {
         state: {
           paymentData: {
             type: "flight",
             title: flight.airline,
-            price: Number(flight.price.replace(/[^0-9]/g, "")),
+            price: amount,
             details: {
               route: `${flight.from} → ${flight.to}`,
-              ...bookingDetails
-            }
-          }
-        }
+              ...bookingDetails,
+            },
+          },
+        },
       });
-      
     } catch (err) {
       console.error("❌ Booking error:", err);
       alert("Booking failed!");
@@ -103,28 +113,25 @@ export default function FlightBooking() {
 
   return (
     <div className="flight-booking-page" style={{ "--theme": themeColor }}>
-      {/* Background */}
+      {/* BG Video */}
       <video className="flight-bg-video" autoPlay loop muted playsInline>
         <source src={flightVideo} type="video/mp4" />
       </video>
+
       <div className="flight-overlay"></div>
 
       <div className="booking-card-container">
-        {/* LEFT — Flight Info */}
+        {/* LEFT: Flight Info */}
         <div className="flight-info-card">
-          {/* Airline Logo */}
           <img src={flight.image} alt={flight.airline} className="airline-logo" />
-
           <h2 className="airline-name" style={{ color: themeColor }}>
             {flight.airline}
           </h2>
 
-          {/* Route */}
           <p className="flight-route">
             {flight.from} <span className="plane-icon">✈️</span> {flight.to}
           </p>
 
-          {/* Times */}
           <div className="time-box">
             <div>
               <h3>{takeoff}</h3>
@@ -137,12 +144,10 @@ export default function FlightBooking() {
             </div>
           </div>
 
-          {/* Price + Duration */}
           <p className="price-duration">
             <strong>{flight.price}</strong> • {flight.duration}
           </p>
 
-          {/* Stops */}
           <div className="stops-box">
             <h4>Stops:</h4>
             {flight.stops?.map((s, i) => (
@@ -155,7 +160,7 @@ export default function FlightBooking() {
           <div className="glow-line"></div>
         </div>
 
-        {/* RIGHT — Booking Form */}
+        {/* RIGHT: Booking Form */}
         <div className="booking-form-card">
           <h3>Confirm Your Booking</h3>
 
