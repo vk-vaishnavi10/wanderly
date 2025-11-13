@@ -175,9 +175,28 @@ export default function HotelDetails() {
               <label className="form-label">Guests</label>
               <input type="number" min="1" className="form-control mb-3" defaultValue="2" />
 
-              <button type="submit" className="btn btn-warning w-100">
-                Book Now
-              </button>
+              <button
+  type="button"
+  className="btn btn-warning w-100"
+  onClick={() =>
+    navigate("/payment", {
+      state: {
+        paymentData: {
+          type: "hotel",
+          title: hotel.name,
+          price: hotel.price,
+          details: {
+            location: hotel.location,
+            guests: 2,
+          }
+        }
+      }
+    })
+  }
+>
+  Book Now
+</button>
+
             </form>
           </div>
         </div>

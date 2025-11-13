@@ -54,7 +54,17 @@ export default function CabBooking() {
         confirmButtonColor: "#ffe29f",
         background: "#15102b",
         color: "#ffffff",
-      }).then(() => navigate("/transport"));
+      }).then(() => navigate("/payment", {
+        state: {
+          paymentData: {
+            type: "cab",
+            title: formData.cabType,
+            price: "₹800",
+            details: formData
+          }
+        }
+      }));
+      
     } catch (error) {
       console.error("❌ Cab booking failed:", error.response?.data || error.message);
       Swal.fire("❌ Error", "Unable to save booking. Try again!", "error");

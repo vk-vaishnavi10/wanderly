@@ -85,7 +85,19 @@ export default function DiningDetails() {
         confirmButtonColor: "#ffd47f",
         background: "#0b0018",
         color: "#fff",
-      }).then(() => navigate("/dining"));
+      })..then(() =>
+        navigate("/payment", {
+          state: {
+            paymentData: {
+              type: "dining",
+              title: restaurant.name,
+              price: restaurant.priceRange,
+              details: reservation
+            }
+          }
+        })
+      );
+      
 
       setCountdown(5);
       setReservation({ dateTime: "", pax: 2 });

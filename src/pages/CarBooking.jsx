@@ -70,7 +70,17 @@ export default function CarBooking() {
         confirmButtonColor: "#ffce7a",
         background: "#15102b",
         color: "#ffffff",
-      }).then(() => navigate("/transport"));
+      }).then(() => navigate("/payment", {
+        state: {
+          paymentData: {
+            type: "car",
+            title: formData.carType,
+            price: "₹1500", // you can adjust later 
+            details: formData
+          }
+        }
+      }));
+      
     } catch (error) {
       Swal.fire("❌ Error", "Unable to save booking. Try again!", "error");
     }

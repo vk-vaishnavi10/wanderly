@@ -102,7 +102,17 @@ export default function PackageDetails() {
       });
 
       alert(`✅ Booking confirmed for ${pkg.title}`);
-      navigate("/packages");
+      navigate("/payment", {
+        state: {
+          paymentData: {
+            type: "package",
+            title: pkg.title,
+            price: pkg.price,
+            details: formData
+          }
+        }
+      });
+      
     } catch (err) {
       console.error("❌ Error:", err);
       alert("Something went wrong during booking.");
