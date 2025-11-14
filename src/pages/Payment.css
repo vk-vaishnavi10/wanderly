@@ -1,4 +1,4 @@
-/* 🌌 Background image */
+/* 🌌 BACKGROUND IMAGE */
 .payment-page {
   background: url("/payment.webp") no-repeat center center fixed;
   background-size: cover;
@@ -10,155 +10,199 @@
   font-family: "Poppins", sans-serif;
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(4px);
 }
 
-/* ✨ Aurora Overlay */
+/* ✨ AURORA OVERLAY */
 .payment-page::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at top, rgba(155, 93, 229, 0.18), rgba(0, 0, 0, 0.8)),
-              linear-gradient(135deg, rgba(241, 91, 181, 0.15), rgba(110, 193, 228, 0.15));
+  background: radial-gradient(
+      circle at top,
+      rgba(155, 93, 229, 0.18),
+      rgba(0, 0, 0, 0.8)
+    ),
+    linear-gradient(
+      135deg,
+      rgba(241, 91, 181, 0.15),
+      rgba(110, 193, 228, 0.15)
+    );
   background-size: 200% 200%;
   animation: auroraFlow 12s ease-in-out infinite alternate;
   z-index: 1;
 }
 
 @keyframes auroraFlow {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
 }
 
-/* 💳 Payment Card */
+/* 💳 PAYMENT CARD */
 .payment-card {
   position: relative;
   z-index: 2;
   background: rgba(15, 10, 30, 0.92);
-  border: 2px solid rgba(155, 93, 229, 0.6);
-  border-radius: 18px;
-  padding: 2rem;
-  max-width: 460px;
+  border: 2px solid rgba(155, 93, 229, 0.5);
+  border-radius: 20px;
+  padding: 2.2rem;
+  max-width: 470px;
   width: 100%;
   text-align: center;
-  color: #E8EAF6;
+  color: #e8eaf6;
+
   box-shadow: 0 0 25px rgba(155, 93, 229, 0.4),
-              0 0 45px rgba(241, 91, 181, 0.25);
-  backdrop-filter: blur(8px);
+    0 0 45px rgba(241, 91, 181, 0.25), inset 0 0 20px rgba(0, 0, 0, 0.4);
+
+  backdrop-filter: blur(10px);
   animation: fadeInUp 1s ease;
+  transition: 0.4s ease;
+}
+
+.payment-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 35px rgba(155, 93, 229, 0.6),
+    0 0 55px rgba(241, 91, 181, 0.45);
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(25px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* 🪙 Headings */
+/* ✨ HEADING GLOW */
 .payment-card h2,
 .payment-card h4 {
-  font-weight: bold;
-  background: linear-gradient(90deg, #6EC1E4, #9B5DE5, #F15BB5);
+  font-weight: 700;
+  background: linear-gradient(90deg, #6ec1e4, #9b5de5, #f15bb5);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 15px rgba(155, 93, 229, 0.6);
   margin-bottom: 1rem;
 }
 
-/* ✈️ Flight Info */
+/* INFO TEXT */
 .payment-card p {
-  color: #CFCFE4;
-  font-weight: 500;
+  color: #d8d9f3;
   font-size: 1rem;
+  font-weight: 500;
   text-shadow: 0 0 5px rgba(110, 193, 228, 0.4);
 }
 
-/* 💫 Payment Options */
+/* SUMMARY BOX */
+.summary-box {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 1.2rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 0 15px rgba(155, 93, 229, 0.25);
+  margin-bottom: 1.2rem;
+}
+
+/* 💫 PAYMENT METHODS */
 .payment-methods {
-  margin: 1.2rem 0;
+  margin: 1.3rem 0;
   text-align: left;
 }
 
 .payment-methods label {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  color: #E8EAF6;
+  gap: 0.55rem;
+  color: #ececff;
   font-size: 1rem;
-  margin-bottom: 0.5rem;
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: 0.3s ease;
 }
 
 .payment-methods label:hover {
-  color: #9B5DE5;
+  color: #9b5de5;
 }
 
-/* 🧾 Input Fields */
+/* 🧾 FORM INPUTS */
 .payment-form input,
 .payment-form select {
   width: 100%;
-  padding: 0.8rem;
-  margin-top: 0.6rem;
-  border: 1px solid rgba(155, 93, 229, 0.5);
+  padding: 0.85rem;
+  margin-top: 0.7rem;
+
   border-radius: 10px;
-  background: rgba(20, 15, 40, 0.9);
-  color: #E8EAF6;
+  border: 1px solid rgba(155, 93, 229, 0.4);
+  background: rgba(20, 15, 40, 0.95);
+  color: #edf0ff;
   font-size: 0.95rem;
-  outline: none;
-  transition: all 0.3s ease;
+
+  transition: 0.3s ease;
 }
 
 .payment-form input:focus,
 .payment-form select:focus {
-  border-color: #6EC1E4;
-  box-shadow: 0 0 10px rgba(110, 193, 228, 0.5);
+  border-color: #6ec1e4;
+  box-shadow: 0 0 15px rgba(110, 193, 228, 0.55);
+  outline: none;
 }
 
 .payment-form input::placeholder {
   color: #aaa;
 }
 
+/* CARD ROW */
 .card-row {
   display: flex;
   gap: 1rem;
 }
 
-/* 🔷 UPI QR Code */
+/* 🔷 UPI QR BOX */
 .upi-qr {
-  width: 160px;
-  height: 160px;
+  width: 170px;
+  height: 170px;
   margin: 15px auto;
-  display: block;
   background: #fff;
   padding: 8px;
-  border-radius: 10px;
-  border: 3px solid #9B5DE5;
-  box-shadow: 0 0 20px rgba(155, 93, 229, 0.5);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  border-radius: 12px;
+
+  border: 3px solid #9b5de5;
+  box-shadow: 0 0 25px rgba(155, 93, 229, 0.6);
+
+  transition: 0.4s ease;
 }
 
 .upi-qr:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 35px rgba(241, 91, 181, 0.6);
+  transform: scale(1.06);
+  box-shadow: 0 0 40px rgba(241, 91, 181, 0.6);
 }
 
-/* 🌈 Pay Button */
+/* 🌈 PAY BUTTON */
 .pay-btn {
-  margin-top: 1.4rem;
-  padding: 0.9rem;
+  margin-top: 1.5rem;
+  padding: 0.95rem;
   border-radius: 50px;
-  font-weight: bold;
-  font-size: 1.05rem;
-  background: linear-gradient(135deg, #6EC1E4, #9B5DE5, #F15BB5);
-  border: none;
+
+  font-size: 1.1rem;
+  font-weight: 700;
   color: #fff;
+
+  background: linear-gradient(135deg, #6ec1e4, #9b5de5, #f15bb5);
+  border: none;
   width: 100%;
+
+  box-shadow: 0 0 20px rgba(155, 93, 229, 0.45);
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 20px rgba(155, 93, 229, 0.4);
+  transition: 0.3s ease;
 }
 
 .pay-btn:hover {
-  background: linear-gradient(135deg, #F15BB5, #9B5DE5, #6EC1E4);
-  box-shadow: 0 0 35px rgba(241, 91, 181, 0.6);
-  transform: scale(1.05);
+  background: linear-gradient(135deg, #f15bb5, #9b5de5, #6ec1e4);
+  box-shadow: 0 0 35px rgba(241, 91, 181, 0.7);
+  transform: scale(1.06);
 }

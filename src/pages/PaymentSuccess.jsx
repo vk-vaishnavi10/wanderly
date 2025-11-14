@@ -18,10 +18,13 @@ export default function PaymentSuccess() {
     );
   }
 
-  const amount =
-    typeof paymentData.price === "string"
-      ? Number(paymentData.price.replace(/[₹,]/g, ""))
-      : Number(paymentData.price);
+  // ⭐ FIX: PRICE NaN issue (clean any ₹, commas)
+  const cleanAmount = (value) => {
+    if (!value) return 0;
+    return Number(String(value).replace(/[^0-9]/g, ""));
+  };
+
+  const amount = cleanAmount(paymentData.price);
 
   const pickup =
     paymentData.details?.pickup ||
@@ -39,22 +42,32 @@ export default function PaymentSuccess() {
   return (
     <div className="payment-page text-light" style={{ minHeight: "85vh" }}>
       <div className="payment-card">
-        <h2 style={{ color: "#00ffcc" }}>✅ Payment Successful!</h2>
+        <h2 style={{ color: "#00ffcc" }}>🎉 Payment Successful!</h2>
 
         <div className="summary-box text-center">
           <h3 style={{ color: "#ffd86b" }}>{paymentData.title}</h3>
 
           <p style={{ color: "#dcdcf7", fontSize: "1rem" }}>
+            {/* TYPE BASED MESSAGES */}
             {paymentData.type === "flight" && (
-              <>✈ Flight Booking Successful!<br /></>
+              <>
+                ✈ Flight Booking Successful!
+                <br />
+              </>
             )}
 
             {paymentData.type === "hotel" && (
-              <>🏨 Your hotel stay is confirmed!<br /></>
+              <>
+                🏨 Your hotel stay is confirmed!
+                <br />
+              </>
             )}
 
             {paymentData.type === "package" && (
-              <>🎁 Your travel package is booked!<br /></>
+              <>
+                🎁 Your travel package is booked!
+                <br />
+              </>
             )}
 
             {paymentData.type === "dining" && (
@@ -77,12 +90,14 @@ export default function PaymentSuccess() {
               </>
             )}
 
+            {/* FIXED PRICE DISPLAY */}
             <strong style={{ fontSize: "1.3rem" }}>💰 Paid: ₹{amount}</strong>
           </p>
         </div>
 
         {/* BUTTONS */}
         <div style={{ marginTop: "20px" }}>
+          {/* ⭐ FIXED: BACK TO HOME SHOULD GO TO /home OR /stays */}
           <button
             className="pay-btn"
             style={{
@@ -90,7 +105,7 @@ export default function PaymentSuccess() {
               border: "none",
               fontWeight: "bold",
             }}
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/home")}   // 🔥 Changed from "/" to "/home"
           >
             🏠 Back to Home
           </button>
