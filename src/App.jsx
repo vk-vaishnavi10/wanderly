@@ -8,7 +8,8 @@ import { UserContext } from "./context/UserContext";
 // 🌌 Core Components
 import Navbar from "./Components/Navbar.jsx";
 import Footer from "./Components/Footer.jsx";
-import ChatBox from "./Components/ChatBox.jsx";
+import ChatBox from "./Components/Chatbox/ChatBox.jsx";
+
 import InstallPrompt from "./Components/InstallPrompt.jsx";
 
 // 🧭 Pages
