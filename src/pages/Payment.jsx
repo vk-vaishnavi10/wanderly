@@ -9,10 +9,8 @@ export default function Payment() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // data received from other pages
   const paymentData = location.state?.paymentData;
 
-  // if no state → error
   if (!paymentData) {
     return (
       <div className="text-center text-warning mt-5">
@@ -21,11 +19,10 @@ export default function Payment() {
     );
   }
 
-  // normalize price
-  const amount =
-    typeof paymentData.price === "string"
-      ? Number(paymentData.price.replace(/[₹,]/g, ""))
-      : Number(paymentData.price);
+  // 🔹 Normalize price safely
+  const cleanNumber = (v) => Number(String(v || "0").replace(/[^0-9]/g, ""));
+  const amount = cleanNumber(paymentData?.price);
+  
 
   // ---- PAYMENT STATES ----
   const [method, setMethod] = useState("card");
@@ -39,7 +36,7 @@ export default function Payment() {
   const [generatedOtp, setGeneratedOtp] = useState("");
   const [otpSent, setOtpSent] = useState(false);
 
-  // ----------- NORMALIZE DETAILS (to avoid undefined errors) -------------
+  // ----------- NORMALIZE DETAILS -------------
   const pickup =
     paymentData.details?.pickup ||
     paymentData.details?.pickupLocation ||
@@ -63,13 +60,9 @@ export default function Payment() {
           paymentData.details?.userName ||
           paymentData.details?.fullName ||
           "Guest",
-
         email: paymentData.details?.email || "unknown@example.com",
-
-        // backend fields
-        flightName: paymentData.title, // general use title
+        flightName: paymentData.title,
         route: pickup && drop ? `${pickup} → ${drop}` : "",
-
         amount: amount,
         status: "SUCCESS",
       };
@@ -86,7 +79,6 @@ export default function Payment() {
     }
   };
 
-  // ---- SEND OTP ----
   const handleSendOtp = () => {
     if (!phone) return alert("Enter phone number first.");
 
@@ -96,7 +88,6 @@ export default function Payment() {
     alert(`📩 OTP (mock): ${code}`);
   };
 
-  // ---- VERIFY OTP ----
   const handleVerifyOtp = () => {
     if (otp === generatedOtp) {
       alert("✅ OTP Verified");
@@ -107,189 +98,208 @@ export default function Payment() {
   };
 
   return (
-    <div className="payment-page text-light" style={{ minHeight: "85vh" }}>
-      <div className="payment-card">
-        <h2>💳 Payment</h2>
+    <div
+      className="payment-page text-light"
+      style={{ minHeight: "85vh" }}
+    >
+      {/* 🔮 PORTAL WRAPPER */}
+      <div className="payment-portal-shell">
+        <div className="portal-circle portal-circle-1" />
+        <div className="portal-circle portal-circle-2" />
+        <div className="portal-circle portal-circle-3" />
 
-        {/* SUMMARY BOX */}
-        <div className="summary-box">
-          <h4>{paymentData.title}</h4>
-          <p style={{ color: "#dcdcf7" }}>
-            {paymentData.type === "flight" && (
-              <>✈ {paymentData.details?.route} <br /></>
-            )}
+        {/* 💳 ACTUAL PAYMENT CARD */}
+        <div className="payment-card portal-card">
+          <h2>💳 Payment</h2>
 
-            {paymentData.type === "hotel" && (
-              <>🏨 {paymentData.details?.location} <br /></>
-            )}
+          {/* SUMMARY BOX */}
+          <div className="summary-box">
+            <h4>{paymentData.title}</h4>
+            <p style={{ color: "#dcdcf7" }}>
+              {paymentData.type === "flight" && (
+                <>
+                  ✈ {paymentData.details?.route} <br />
+                </>
+              )}
 
-            {paymentData.type === "package" && (
-              <>🎁 {paymentData.duration} <br /></>
-            )}
+              {paymentData.type === "hotel" && (
+                <>
+                  🏨 {paymentData.details?.location} <br />
+                </>
+              )}
 
-            {paymentData.type === "dining" && (
-              <>🍽 Guests: {pax} <br /></>
-            )}
+              {paymentData.type === "package" && (
+                <>
+                  🎁 {paymentData.duration} <br />
+                </>
+              )}
 
-            {paymentData.type === "transport" && (
+              {paymentData.type === "dining" && (
+                <>
+                  🍽 Guests: {pax} <br />
+                </>
+              )}
+
+              {paymentData.type === "transport" && (
+                <>
+                  🚗 {paymentData.details?.carType} <br />
+                  🗺 {pickup} → {drop} <br />
+                </>
+              )}
+
+              {paymentData.type === "car" && (
+                <>
+                  🚘 {paymentData.details?.carType} <br />
+                  🗺 {pickup} → {drop} <br />
+                </>
+              )}
+
+              {paymentData.type === "cab" && (
+                <>
+                  🚖 {paymentData.details?.cabType} <br />
+                  🗺 {pickup} → {drop} <br />
+                </>
+              )}
+
+              <strong>💰 ₹{amount}</strong>
+            </p>
+          </div>
+
+          {/* PAYMENT METHODS */}
+          <div className="payment-methods">
+            <label>
+              <input
+                type="radio"
+                value="card"
+                checked={method === "card"}
+                onChange={() => setMethod("card")}
+              />
+              💳 Card
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                value="upi"
+                checked={method === "upi"}
+                onChange={() => setMethod("upi")}
+              />
+              📱 UPI
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                value="netbanking"
+                checked={method === "netbanking"}
+                onChange={() => {
+                  setMethod("netbanking");
+                  setStep(1);
+                }}
+              />
+              🏦 Net Banking
+            </label>
+          </div>
+
+          {/* MAIN PAYMENT FORM */}
+          <form className="payment-form" onSubmit={handlePayment}>
+            {/* CARD */}
+            {method === "card" && (
               <>
-                🚗 {paymentData.details?.carType} <br />
-                🗺 {pickup} → {drop} <br />
+                <input type="text" placeholder="Card Number" required />
+                <input type="text" placeholder="Card Holder Name" required />
+                <div className="card-row">
+                  <input type="text" placeholder="MM/YY" required />
+                  <input type="password" placeholder="CVV" required />
+                </div>
+
+                <button type="submit" className="pay-btn" disabled={loading}>
+                  {loading ? "Processing..." : `Pay ₹${amount}`}
+                </button>
               </>
             )}
 
-            {paymentData.type === "car" && (
+            {/* UPI */}
+            {method === "upi" && (
               <>
-                🚘 {paymentData.details?.carType} <br />
-                🗺 {pickup} → {drop} <br />
+                <p>Scan QR to pay</p>
+                <img src={qrImg} className="upi-qr" alt="upi qr" />
+                <button
+                  type="button"
+                  className="pay-btn"
+                  onClick={handlePayment}
+                >
+                  {loading ? "Processing..." : `Pay ₹${amount}`}
+                </button>
               </>
             )}
 
-            {paymentData.type === "cab" && (
+            {/* NET BANKING */}
+            {method === "netbanking" && (
               <>
-                🚖 {paymentData.details?.cabType} <br />
-                🗺 {pickup} → {drop} <br />
+                {step === 1 && (
+                  <>
+                    <select
+                      value={bank}
+                      onChange={(e) => setBank(e.target.value)}
+                    >
+                      <option value="">Select Bank</option>
+                      <option>SBI</option>
+                      <option>HDFC</option>
+                      <option>ICICI</option>
+                      <option>Axis Bank</option>
+                    </select>
+
+                    <button
+                      type="button"
+                      className="pay-btn"
+                      disabled={!bank}
+                      onClick={() => setStep(2)}
+                    >
+                      Continue
+                    </button>
+                  </>
+                )}
+
+                {step === 2 && (
+                  <>
+                    <input
+                      type="text"
+                      placeholder="Phone Number"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                    />
+                    <button
+                      type="button"
+                      className="pay-btn"
+                      onClick={handleSendOtp}
+                    >
+                      Send OTP
+                    </button>
+                  </>
+                )}
+
+                {otpSent && (
+                  <>
+                    <input
+                      type="text"
+                      placeholder="Enter OTP"
+                      value={otp}
+                      onChange={(e) => setOtp(e.target.value)}
+                    />
+                    <button
+                      type="button"
+                      className="pay-btn"
+                      onClick={handleVerifyOtp}
+                    >
+                      Verify & Pay ₹{amount}
+                    </button>
+                  </>
+                )}
               </>
             )}
-
-            <strong>💰 ₹{amount}</strong>
-          </p>
+          </form>
         </div>
-
-        {/* PAYMENT METHODS */}
-        <div className="payment-methods">
-          <label>
-            <input
-              type="radio"
-              value="card"
-              checked={method === "card"}
-              onChange={() => setMethod("card")}
-            />
-            💳 Card
-          </label>
-
-          <label>
-            <input
-              type="radio"
-              value="upi"
-              checked={method === "upi"}
-              onChange={() => setMethod("upi")}
-            />
-            📱 UPI
-          </label>
-
-          <label>
-            <input
-              type="radio"
-              value="netbanking"
-              checked={method === "netbanking"}
-              onChange={() => {
-                setMethod("netbanking");
-                setStep(1);
-              }}
-            />
-            🏦 Net Banking
-          </label>
-        </div>
-
-        {/* MAIN PAYMENT FORM */}
-        <form className="payment-form" onSubmit={handlePayment}>
-          {/* CARD */}
-          {method === "card" && (
-            <>
-              <input type="text" placeholder="Card Number" required />
-              <input type="text" placeholder="Card Holder Name" required />
-              <div className="card-row">
-                <input type="text" placeholder="MM/YY" required />
-                <input type="password" placeholder="CVV" required />
-              </div>
-
-              <button type="submit" className="pay-btn" disabled={loading}>
-                {loading ? "Processing..." : `Pay ₹${amount}`}
-              </button>
-            </>
-          )}
-
-          {/* UPI */}
-          {method === "upi" && (
-            <>
-              <p>Scan QR to pay</p>
-              <img src={qrImg} className="upi-qr" alt="upi qr" />
-              <button
-                type="button"
-                className="pay-btn"
-                onClick={handlePayment}
-              >
-                {loading ? "Processing..." : `Pay ₹${amount}`}
-              </button>
-            </>
-          )}
-
-          {/* NET BANKING */}
-          {method === "netbanking" && (
-            <>
-              {step === 1 && (
-                <>
-                  <select
-                    value={bank}
-                    onChange={(e) => setBank(e.target.value)}
-                  >
-                    <option value="">Select Bank</option>
-                    <option>SBI</option>
-                    <option>HDFC</option>
-                    <option>ICICI</option>
-                    <option>Axis Bank</option>
-                  </select>
-
-                  <button
-                    type="button"
-                    className="pay-btn"
-                    disabled={!bank}
-                    onClick={() => setStep(2)}
-                  >
-                    Continue
-                  </button>
-                </>
-              )}
-
-              {step === 2 && (
-                <>
-                  <input
-                    type="text"
-                    placeholder="Phone Number"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                  />
-                  <button
-                    type="button"
-                    className="pay-btn"
-                    onClick={handleSendOtp}
-                  >
-                    Send OTP
-                  </button>
-                </>
-              )}
-
-              {otpSent && (
-                <>
-                  <input
-                    type="text"
-                    placeholder="Enter OTP"
-                    value={otp}
-                    onChange={(e) => setOtp(e.target.value)}
-                  />
-                  <button
-                    type="button"
-                    className="pay-btn"
-                    onClick={handleVerifyOtp}
-                  >
-                    Verify & Pay ₹{amount}
-                  </button>
-                </>
-              )}
-            </>
-          )}
-        </form>
       </div>
     </div>
   );

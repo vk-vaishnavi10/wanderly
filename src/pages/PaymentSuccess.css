@@ -1,0 +1,118 @@
+.payment-success-page {
+    height: 100vh;
+    background: linear-gradient(150deg, #0b061a, #1a103d);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Envelope */
+  .envelope {
+    width: 320px;
+    height: 240px;
+    position: relative;
+    perspective: 900px;
+  }
+  
+  .envelope-body {
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.35);
+    position: absolute;
+  }
+  
+  .envelope-flap {
+    width: 100%;
+    height: 60%;
+    background: #9b5de5;
+    border-radius: 14px 14px 0 0;
+    position: absolute;
+    top: 0;
+    transform-origin: top;
+    transform: rotateX(0deg);
+    transition: transform 1s ease-in-out;
+    z-index: 3;
+  }
+  
+  .envelope.open .envelope-flap {
+    transform: rotateX(160deg);
+  }
+  
+  /* Success card */
+  .success-card {
+    width: 270px;
+    padding: 20px;
+    background: linear-gradient(130deg, #00e0ff, #9b5de5);
+    color: #fff;
+    border-radius: 16px;
+    text-align: center;
+    font-weight: 600;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    opacity: 0;
+    transform: translate(-50%, 50%) scale(0.7);
+    transition: 0.9s cubic-bezier(.17,.67,.53,1.47);
+    box-shadow: 0px 12px 30px rgba(0, 255, 255, 0.3);
+    z-index: 2;
+  }
+  
+  .envelope.open .success-card {
+    transform: translate(-50%, -130%) scale(1);
+    opacity: 1;
+  }
+  
+  /* Glow effect */
+  .success-card.glow {
+    animation: glowPulse 1.6s infinite ease-in-out;
+  }
+  
+  @keyframes glowPulse {
+    0% { box-shadow: 0 0 12px rgba(0,255,255,0.4); }
+    50% { box-shadow: 0 0 28px rgba(255,255,255,0.7); }
+    100% { box-shadow: 0 0 12px rgba(0,255,255,0.4); }
+  }
+  
+  .title {
+    font-size: 1.2rem;
+    margin: 10px 0;
+  }
+  
+  .details {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    opacity: 0.9;
+  }
+  
+  .buttons {
+    margin-top: 14px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .btn {
+    border: none;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+  }
+  
+  .home-btn {
+    background: #00e0ff;
+    color: #031216;
+  }
+  
+  .repeat-btn {
+    background: #ffd86b;
+    color: #3b2b00;
+  }
+  
+  .btn:hover {
+    transform: translateY(-4px);
+  }
+  

@@ -1,14 +1,14 @@
 // ✅ src/pages/PaymentSuccess.jsx
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import "./Payment.css";
+import "./PaymentSuccess.css";
 
 export default function PaymentSuccess() {
   const location = useLocation();
   const navigate = useNavigate();
-
-  // original data passed from Payment.jsx
   const paymentData = location.state?.paymentData;
+
+  const [openEnvelope, setOpenEnvelope] = useState(false);
 
   if (!paymentData) {
     return (
@@ -18,12 +18,9 @@ export default function PaymentSuccess() {
     );
   }
 
-  // ⭐ FIX: PRICE NaN issue (clean any ₹, commas)
-  const cleanAmount = (value) => {
-    if (!value) return 0;
-    return Number(String(value).replace(/[^0-9]/g, ""));
-  };
-
+  // Clean amount again (safety)
+  const cleanAmount = (value) =>
+    Number(String(value ?? 0).replace(/[^\d]/g, "")) || 0;
   const amount = cleanAmount(paymentData.price);
 
   const pickup =
@@ -37,90 +34,83 @@ export default function PaymentSuccess() {
     "";
 
   const pax =
-    paymentData.details?.pax || paymentData.details?.guests || "";
+    paymentData.details?.pax ||
+    paymentData.details?.guests ||
+    "";
+
+  // Open envelope after a short delay
+  useEffect(() => {
+    const t = setTimeout(() => setOpenEnvelope(true), 600);
+    return () => clearTimeout(t);
+  }, []);
+
+  // Simple confetti pieces
+  const confettiPieces = Array.from({ length: 60 });
 
   return (
-    <div className="payment-page text-light" style={{ minHeight: "85vh" }}>
-      <div className="payment-card">
-        <h2 style={{ color: "#00ffcc" }}>🎉 Payment Successful!</h2>
+    <div className="payment-success-page">
+      {/* Confetti */}
+      <div className="confetti-container">
+        {confettiPieces.map((_, i) => (
+          <span key={i} className="confetti-piece" />
+        ))}
+      </div>
 
-        <div className="summary-box text-center">
-          <h3 style={{ color: "#ffd86b" }}>{paymentData.title}</h3>
+      {/* Envelope + card */}
+      <div className={`envelope ${openEnvelope ? "open" : ""}`}>
+        <div className="envelope-body" />
+        <div className="envelope-flap" />
 
-          <p style={{ color: "#dcdcf7", fontSize: "1rem" }}>
-            {/* TYPE BASED MESSAGES */}
+        <div className="success-card glow">
+          <div>✨ Wanderly Booking</div>
+          <div className="title">Payment Successful!</div>
+
+          <div className="details">
+            <div>{paymentData.title}</div>
+
             {paymentData.type === "flight" && (
-              <>
-                ✈ Flight Booking Successful!
-                <br />
-              </>
+              <div>✈ Flight Booking Confirmed</div>
             )}
-
             {paymentData.type === "hotel" && (
-              <>
-                🏨 Your hotel stay is confirmed!
-                <br />
-              </>
+              <div>🏨 Hotel Stay Confirmed</div>
             )}
-
             {paymentData.type === "package" && (
-              <>
-                🎁 Your travel package is booked!
-                <br />
-              </>
+              <div>🎁 Package Booked</div>
             )}
-
             {paymentData.type === "dining" && (
-              <>
-                🍽 Table Reserved <br />
-                Guests: {pax} <br />
-              </>
+              <div>🍽 Table Reserved — Guests: {pax}</div>
             )}
-
             {(paymentData.type === "transport" ||
               paymentData.type === "car" ||
               paymentData.type === "cab") && (
-              <>
-                🚗 Ride booked successfully! <br />
+              <div>
+                🚗 Ride Confirmed
                 {pickup && drop && (
                   <>
-                    🗺 {pickup} → {drop} <br />
+                    <br />
+                    🗺 {pickup} → {drop}
                   </>
                 )}
-              </>
+              </div>
             )}
 
-            {/* FIXED PRICE DISPLAY */}
-            <strong style={{ fontSize: "1.3rem" }}>💰 Paid: ₹{amount}</strong>
-          </p>
-        </div>
+            <div style={{ marginTop: "8px" }}>💰 Paid: ₹{amount}</div>
+          </div>
 
-        {/* BUTTONS */}
-        <div style={{ marginTop: "20px" }}>
-          {/* ⭐ FIXED: BACK TO HOME SHOULD GO TO /home OR /stays */}
-          <button
-            className="pay-btn"
-            style={{
-              backgroundColor: "#00ccff",
-              border: "none",
-              fontWeight: "bold",
-            }}
-            onClick={() => navigate("/home")}   // 🔥 Changed from "/" to "/home"
-          >
-            🏠 Back to Home
-          </button>
-
-          <button
-            className="pay-btn"
-            style={{
-              marginTop: "10px",
-              backgroundColor: "#ffd86b",
-              border: "none",
-            }}
-            onClick={() => navigate(-1)}
-          >
-            🔙 Book Again
-          </button>
+          <div className="buttons">
+            <button
+              className="btn home-btn"
+              onClick={() => navigate("/home")}
+            >
+              🏠 Back to Home
+            </button>
+            <button
+              className="btn repeat-btn"
+              onClick={() => navigate(-1)}
+            >
+              🔁 Book Again
+            </button>
+          </div>
         </div>
       </div>
     </div>

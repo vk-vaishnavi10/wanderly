@@ -1,10 +1,17 @@
+// src/pages/Stays.jsx
 import React, { useState } from "react";
 import "./stays.css";
-import { Modal } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
-// 🖼️ Local Images
+// Hero Background
+import heroHotelBg from "../images/hotel.jpg";
+
+// Mascot & Envelope Popup
+import CuteEnvelopeMascot from "../Components/CuteEnvelopeMascot";
+import EnvelopePopup from "../Components/EnvelopePopup";
+
+// Hotel images
 import oberoi from "../images/oberoi.jpg";
 import tajlake from "../images/tajlake.jpg";
 import leela from "../images/leela.jpg";
@@ -15,9 +22,7 @@ import lalit from "../images/lalit.jpg";
 import novotel from "../images/novotel.jpg";
 import windflower from "../images/windflower.jpg";
 
-const hotelbg = "/videos/hotelbg.mp4";
-
-// 🔥 Predefined Hotels Data
+// Hotels Data
 const hotelsData = [
   {
     id: 1,
@@ -27,9 +32,7 @@ const hotelsData = [
     price: "₹12,500/night",
     rating: 5,
     image: oberoi,
-    phone: "+91 22 6632 5757",
-    email: "reservations@oberoi.com",
-    desc: "A luxurious 5-star hotel overlooking the Arabian Sea."
+    desc: "A luxurious 5-star hotel overlooking the Arabian Sea.",
   },
   {
     id: 2,
@@ -39,9 +42,7 @@ const hotelsData = [
     price: "₹18,000/night",
     rating: 5,
     image: tajlake,
-    phone: "+91 22 6665 3366",
-    email: "taj.reservations@tajhotels.com",
-    desc: "An iconic heritage luxury hotel near Gateway of India."
+    desc: "An iconic heritage luxury hotel near Gateway of India.",
   },
   {
     id: 3,
@@ -51,9 +52,7 @@ const hotelsData = [
     price: "₹10,000/night",
     rating: 4,
     image: leela,
-    phone: "+91 80 2521 1234",
-    email: "reservations.blr@theleela.com",
-    desc: "Traditional royal architecture blended with modern comfort."
+    desc: "Traditional royal architecture blended with modern comfort.",
   },
   {
     id: 4,
@@ -63,9 +62,7 @@ const hotelsData = [
     price: "₹7,500/night",
     rating: 4,
     image: radisson,
-    phone: "+91 832 880 2000",
-    email: "reservations@radissonblu.com",
-    desc: "Beachside resort with a perfect mix of Goan charm."
+    desc: "Beachside resort with Goan charm.",
   },
   {
     id: 5,
@@ -75,9 +72,7 @@ const hotelsData = [
     price: "₹14,000/night",
     rating: 5,
     image: juhu,
-    phone: "+91 22 6693 3000",
-    email: "reservations.juhu@marriott.com",
-    desc: "Luxury beachfront resort with premium amenities."
+    desc: "Luxury beachfront resort with premium amenities.",
   },
   {
     id: 6,
@@ -87,9 +82,7 @@ const hotelsData = [
     price: "₹11,500/night",
     rating: 5,
     image: itc,
-    phone: "+91 44 2220 0000",
-    email: "reservations.chola@itchotels.in",
-    desc: "A grand palace offering royal luxury."
+    desc: "A grand palace offering royal luxury.",
   },
   {
     id: 7,
@@ -99,9 +92,7 @@ const hotelsData = [
     price: "₹9,000/night",
     rating: 4,
     image: lalit,
-    phone: "+91 141 664 7777",
-    email: "reservations.jaipur@thelalit.com",
-    desc: "Majestic Rajasthani architecture blended with luxury."
+    desc: "Majestic Rajasthani architecture blended with luxury.",
   },
   {
     id: 8,
@@ -111,9 +102,7 @@ const hotelsData = [
     price: "₹8,000/night",
     rating: 4,
     image: novotel,
-    phone: "+91 40 6682 4422",
-    email: "reservations.hyd@novotel.com",
-    desc: "Modern comfort near HITEC City."
+    desc: "Modern comfort near HITEC City.",
   },
   {
     id: 9,
@@ -123,16 +112,17 @@ const hotelsData = [
     price: "₹6,500/night",
     rating: 4,
     image: windflower,
-    phone: "+91 821 252 2500",
-    email: "reservations@thewindflower.com",
-    desc: "A peaceful wellness retreat in Mysuru."
+    desc: "A peaceful wellness retreat in Mysuru.",
   },
 ];
 
 export default function Stays() {
   const navigate = useNavigate();
+
   const [query, setQuery] = useState("");
+  const [dropdown, setDropdown] = useState("");
   const [filteredHotels, setFilteredHotels] = useState(hotelsData);
+
   const [selectedHotel, setSelectedHotel] = useState(null);
   const [booking, setBooking] = useState({
     checkIn: "",
@@ -140,24 +130,44 @@ export default function Stays() {
     guests: 2,
   });
 
-  // 🔍 SEARCH
+  // 🔍 Search logic (dropdown + text)
   const searchHotels = () => {
-    if (!query.trim()) {
-      setFilteredHotels(hotelsData);
-      return;
-    }
+    const q = query.toLowerCase().trim();
+    const selectedCity = dropdown.toLowerCase();
 
-    setFilteredHotels(
-      hotelsData.filter((hotel) =>
-        hotel.city.toLowerCase().includes(query.toLowerCase())
-      )
-    );
+    const results = hotelsData.filter((hotel) => {
+      const matchesText =
+        !q ||
+        hotel.city.includes(q) ||
+        hotel.location.toLowerCase().includes(q) ||
+        hotel.name.toLowerCase().includes(q);
+
+      const matchesDropdown = selectedCity ? hotel.city === selectedCity : true;
+
+      return matchesText && matchesDropdown;
+    });
+
+    setFilteredHotels(results);
   };
 
-  // ⭐ PAYMENT REDIRECT HANDLER
+  // 🐱 Mascot click → open first result
+  const handleMascotClick = () => {
+    if (filteredHotels.length === 0) {
+      Swal.fire("😿", "No hotels found!", "info");
+      return;
+    }
+    setSelectedHotel(filteredHotels[0]);
+  };
+
+  // 💳 Booking & redirect
   const handleBooking = () => {
     if (!booking.checkIn) {
       Swal.fire("⚠️ Missing Info", "Please select check-in date.", "warning");
+      return;
+    }
+
+    if (!selectedHotel) {
+      Swal.fire("⚠️ No Hotel", "Please select a hotel first.", "warning");
       return;
     }
 
@@ -179,38 +189,77 @@ export default function Stays() {
 
   return (
     <section className="stays-section">
-      {/* HERO SECTION */}
-      <div className="hero-section">
-        <video className="hotel-bg-video" autoPlay muted loop playsInline>
-          <source src={hotelbg} type="video/mp4" />
-        </video>
+      {/* 🌌 HERO with right-side big black box */}
+      <div
+        className="hero-image"
+        style={{ backgroundImage: `url(${heroHotelBg})` }}
+      >
+        {/* floating cat mascott */}
+        <CuteEnvelopeMascot onClick={handleMascotClick} />
 
-        <div className="hero-overlay slim-hero">
-          <h1 className="slim-heading">
-            Find your perfect stay — hotels, villas & escapes 🌿
+        <div className="hero-big-box">
+          <div className="bigbox-dots" />
+
+          <h1 className="hero-big-title">
+            Find your perfect stay —{" "}
+            <span>hotels, villas & escapes 💙</span>
           </h1>
 
-          <div className="search-wide">
+          {/* quote / subtitle */}
+          <p className="big-discover">
+            Discover stays crafted for cozy nights, workcations and dreamy
+            weekend getaways.
+          </p>
+
+          {/* dropdown + search + button */}
+          <div className="big-search-bar">
+            <select
+              className="big-dropdown"
+              value={dropdown}
+              onChange={(e) => setDropdown(e.target.value)}
+            >
+              <option value="">City</option>
+              <option value="mumbai">Mumbai</option>
+              <option value="goa">Goa</option>
+              <option value="hyderabad">Hyderabad</option>
+              <option value="chennai">Chennai</option>
+              <option value="mysuru">Mysuru</option>
+              <option value="jaipur">Jaipur</option>
+              <option value="bengaluru">Bengaluru</option>
+            </select>
+
             <input
               type="text"
-              placeholder="Search by city..."
+              className="big-input"
+              placeholder="Search by city or hotel name..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && searchHotels()}
             />
-            <button onClick={searchHotels}>🔍 Search</button>
+
+            <button className="big-search-btn" onClick={searchHotels}>
+              🔍 Search
+            </button>
           </div>
         </div>
       </div>
 
-      {/* HOTEL LIST */}
+      {/* 🏨 HOTEL LIST */}
       <div className="container py-5">
         <h2 className="section-heading">Featured Hotels</h2>
 
         <div className="row g-4">
+          {filteredHotels.length === 0 && (
+            <p className="text-center text-light">
+              No hotels found. Try another city ✨
+            </p>
+          )}
+
           {filteredHotels.map((hotel) => (
             <div key={hotel.id} className="col-md-4">
               <div className="card stay-card shadow-sm h-100">
-                <img src={hotel.image} className="card-img-top" alt={hotel.name} />
+                <img src={hotel.image} alt={hotel.name} />
+
                 <div className="card-body text-center">
                   <h5>{hotel.name}</h5>
                   <p>{hotel.location}</p>
@@ -221,7 +270,7 @@ export default function Stays() {
                     className="btn book-btn w-100"
                     onClick={() => setSelectedHotel(hotel)}
                   >
-                    View Details
+                    View Details 💌
                   </button>
                 </div>
               </div>
@@ -230,74 +279,14 @@ export default function Stays() {
         </div>
       </div>
 
-      {/* BOOKING MODAL */}
-      <Modal show={!!selectedHotel} onHide={() => setSelectedHotel(null)} centered>
-        {selectedHotel && (
-          <div className="modal-content bg-dark text-light border-warning">
-            <div className="modal-header border-warning">
-              <h5 className="modal-title text-warning">{selectedHotel.name}</h5>
-              <button
-                className="btn-close btn-close-white"
-                onClick={() => setSelectedHotel(null)}
-              ></button>
-            </div>
-
-            <div className="modal-body">
-              <img
-                src={selectedHotel.image}
-                className="img-fluid rounded mb-3"
-                alt=""
-              />
-              <p>{selectedHotel.desc}</p>
-              <p>📍 {selectedHotel.location}</p>
-              <p>💰 {selectedHotel.price}</p>
-
-              {/* DATE */}
-              <label className="form-label text-warning mt-3">
-                🗓 Check-in Date
-              </label>
-              <input
-                type="date"
-                className="form-control bg-dark text-light"
-                value={booking.checkIn}
-                onChange={(e) =>
-                  setBooking({ ...booking, checkIn: e.target.value })
-                }
-              />
-
-              {/* NIGHTS */}
-              <label className="form-label text-warning mt-3">🌙 Nights</label>
-              <input
-                type="number"
-                min="1"
-                className="form-control bg-dark text-light"
-                value={booking.nights}
-                onChange={(e) =>
-                  setBooking({ ...booking, nights: e.target.value })
-                }
-              />
-
-              {/* GUESTS */}
-              <label className="form-label text-warning mt-3">👥 Guests</label>
-              <input
-                type="number"
-                min="1"
-                className="form-control bg-dark text-light"
-                value={booking.guests}
-                onChange={(e) =>
-                  setBooking({ ...booking, guests: e.target.value })
-                }
-              />
-            </div>
-
-            <div className="modal-footer border-warning">
-              <button className="btn btn-warning w-100" onClick={handleBooking}>
-                Confirm Stay ✨
-              </button>
-            </div>
-          </div>
-        )}
-      </Modal>
+      {/* 💌 ENVELOPE POPUP */}
+      <EnvelopePopup
+        hotel={selectedHotel}
+        booking={booking}
+        setBooking={setBooking}
+        onClose={() => setSelectedHotel(null)}
+        onConfirm={handleBooking}
+      />
     </section>
   );
 }

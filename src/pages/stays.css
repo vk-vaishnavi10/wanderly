@@ -1,10 +1,12 @@
 /* ==========================================================
-   🌌 Wanderly Stays Page — Aurora Radiance Spectrum Edition
-   Designed by Vaishnavi 💖 (Violet–Cyan–Gold Premium Glow)
+   🌌 Wanderly Stays Page — Right Hero Big Box
+   Designed by Vaishnavi 💖
 ========================================================== */
 
 /* 🌍 Global Reset */
-html, body, #root {
+html,
+body,
+#root {
   margin: 0;
   padding: 0;
   background: #030012;
@@ -13,184 +15,219 @@ html, body, #root {
   overflow-x: hidden;
 }
 
-/* 🔥 Hero Section */
-.hero-section {
-  position: relative;
-  width: 100vw;
+/* Whole page wrapper */
+.stays-section {
+  min-height: 100vh;
+  background: radial-gradient(
+      circle at top left,
+      rgba(155, 93, 229, 0.18),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(110, 193, 228, 0.16),
+      transparent 60%
+    ),
+    #030012;
+}
+
+/* ==========================================================
+   🌄 HERO BACKGROUND + AURORA
+========================================================== */
+
+.hero-image {
+  width: 100%;
   height: 100vh;
+  background-size: cover !important;
+  background-position: center !important;
+  position: relative;
+  display: flex;
+  justify-content: flex-end; /* right-aligned box */
+  align-items: center;
+  padding-right: 5%;
   overflow: hidden;
 }
 
-/* 🎥 Background Video */
-.stays-bg-video,
-.hotel-bg-video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
-  filter: brightness(0.8) saturate(1.3);
-}
-
-/* 🌀 Fallback Slideshow (Optional) */
-.slideshow {
+/* Soft aurora glow overlay */
+.hero-image::after {
+  content: "";
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
+  background: radial-gradient(
+      circle at 30% 20%,
+      rgba(0, 255, 255, 0.22),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 70% 80%,
+      rgba(255, 215, 0, 0.22),
+      transparent 65%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(140, 0, 255, 0.28),
+      transparent 70%
+    );
+  animation: auroraMove 20s linear infinite alternate;
+  pointer-events: none;
 }
 
-.slide {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  opacity: 0;
-  animation: fade 20s infinite ease-in-out;
-  transform: scale(1);
-  transition: transform 2s ease-in-out;
-}
-
-.slide:nth-child(1) { animation-delay: 0s; }
-.slide:nth-child(2) { animation-delay: 5s; }
-.slide:nth-child(3) { animation-delay: 10s; }
-.slide:nth-child(4) { animation-delay: 15s; }
-
-@keyframes fade {
-  0%, 100% { opacity: 0; transform: scale(1); }
-  10%, 25% { opacity: 1; transform: scale(1.08); }
-  40% { opacity: 0; transform: scale(1); }
-}
-
-/* 🌈 Hero Overlay (Find Your Stay) */
-.hero-overlay {
-  position: absolute;
-  top: 78%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  background: rgba(10, 8, 25, 0.55);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  padding: 2.5rem 3rem;
-  border-radius: 1.5rem;
-  max-width: 700px;
-  width: 90%;
-  z-index: 2;
-  border: 1.2px solid rgba(0, 255, 255, 0.4);
-  box-shadow: 0 0 45px rgba(0, 255, 255, 0.25),
-              0 0 65px rgba(255, 221, 97, 0.25);
-  animation: auroraPulse 7s ease-in-out infinite alternate;
-}
-
-/* 🌟 Animated Aurora Glow */
-@keyframes auroraPulse {
-  from {
-    box-shadow: 0 0 35px rgba(0, 255, 255, 0.25),
-                0 0 55px rgba(255, 221, 97, 0.2);
+@keyframes auroraMove {
+  0% {
+    transform: translate(0, 0) scale(1);
   }
-  to {
-    box-shadow: 0 0 55px rgba(255, 221, 97, 0.4),
-                0 0 70px rgba(0, 255, 255, 0.4);
+  50% {
+    transform: translate(20px, -20px) scale(1.05);
+  }
+  100% {
+    transform: translate(-15px, 25px) scale(1);
   }
 }
 
-/* 🌸 Title */
-.hero-overlay h1 {
-  font-size: 2.8rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  background: linear-gradient(90deg, #712dbd, #6ee7b7, #ffd76b, #ff7edb);
+/* ==========================================================
+   ⭐ BIG RIGHT-SIDE BLACK BOX (Option 2 – Large Hero)
+========================================================== */
+
+.hero-big-box {
+  position: relative;
+  z-index: 5;
+  width: 600px; /* bigger than flights card */
+  min-height: 45vh; /* hero height */
+  padding: 3rem 2.8rem 2.6rem;
+  border-radius: 28px;
+
+  background: rgba(0, 0, 0, 0.85); /* glossy black */
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  border: 1.6px solid rgba(0, 255, 255, 0.35);
+
+  box-shadow: 0 0 35px rgba(0, 255, 255, 0.35),
+    0 0 55px rgba(255, 221, 97, 0.22);
+
+  animation: fadeUp 1.2s ease;
+}
+
+/* L-SHAPE BLACK DOTTED BORDER */
+.bigbox-dots {
+  position: absolute;
+  top: -22px;
+  left: -22px;
+  width: 135px;
+  height: 135px;
+
+  background-image: radial-gradient(circle, #000 2px, transparent 2px);
+  background-size: 12px 12px;
+  background-repeat: repeat;
+
+  /* L shape cutout */
+  mask: linear-gradient(90deg, #e7e3e3 0 70px, transparent 70px),
+    linear-gradient(#f2e9e9 0 70px, transparent 70px);
+  -webkit-mask: linear-gradient(90deg, #000 0 70px, transparent 70px),
+    linear-gradient(#000 0 70px, transparent 70px);
+}
+
+/* Title inside big box */
+.hero-big-title {
+  font-size: 2.2rem;
+  line-height: 1.4;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+
+  background: linear-gradient(90deg, #a16cff, #6ee7b7, #ffd76b);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 18px rgba(0, 255, 255, 0.5);
 }
 
-/* 💫 Aurora Icon */
-.aurora-icon {
-  display: inline-block;
-  font-size: 2.6rem;
-  margin-right: 10px;
-  background: linear-gradient(90deg, #00e0ff, #6ee7b7, #ffd76b, #f97eff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 18px rgba(0, 255, 255, 0.6),
-               0 0 28px rgba(255, 221, 97, 0.5);
-  animation: glowCycle 6s infinite alternate ease-in-out;
+/* different colour for span if needed */
+.hero-big-title span {
+  color: #96f4ff;
 }
 
-@keyframes glowCycle {
-  from {
-    text-shadow: 0 0 18px rgba(0, 255, 255, 0.4),
-                 0 0 28px rgba(255, 221, 97, 0.3);
-  }
-  to {
-    text-shadow: 0 0 28px rgba(255, 221, 97, 0.6),
-                 0 0 38px rgba(0, 255, 255, 0.5);
-  }
+/* Discover / quote line */
+.big-discover {
+  margin-top: 0.3rem;
+  margin-bottom: 1.4rem;
+  font-size: 0.97rem;
+  color: #b8d8ff;
 }
 
-/* 💬 Subtitle */
-.hero-overlay p {
-  font-size: 1.15rem;
-  margin-bottom: 1.8rem;
-  color: #d6ecff;
-  letter-spacing: 0.4px;
-}
+/* ==========================================================
+   🔍 SEARCH BAR INSIDE BIG BOX
+========================================================== */
 
-/* 🔍 Search Box */
-.search-box {
+.big-search-bar {
+  margin-top: 0.4rem;
   display: flex;
-  justify-content: center;
   align-items: center;
-  border: 1.5px solid rgba(0, 255, 255, 0.8);
+  gap: 0.6rem;
+
+  padding: 0.78rem;
   border-radius: 999px;
-  background: linear-gradient(145deg, rgba(5, 10, 25, 0.85), rgba(15, 25, 45, 0.85));
-  padding: 0.5rem;
-  max-width: 500px;
-  margin: 0 auto;
-  box-shadow: 0 0 25px rgba(0, 255, 255, 0.35),
-              0 0 45px rgba(255, 221, 97, 0.25);
-  transition: all 0.3s ease;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1.6px solid rgba(0, 255, 255, 0.35);
+  box-shadow: inset 0 0 15px rgba(0, 255, 255, 0.18);
 }
 
-.search-box input {
-  border: none;
-  background: transparent;
-  color: #e8faff;
-  flex: 1;
-  padding: 0.6rem 1rem;
+/* Dropdown */
+.big-dropdown {
+  width: 30%;
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+
+  background: rgba(15, 18, 45, 0.9);
+  color: #ffffff;
+  border: 1px solid rgba(0, 255, 255, 0.35);
+  font-weight: 500;
   outline: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.big-dropdown option {
+  background: #0a0d1f;
+  color: #eaffff;
+}
+
+/* Input field */
+.big-input {
+  flex: 1;
+  padding: 0.78rem 1rem;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #eaffff;
   font-size: 1rem;
 }
 
-.search-box input::placeholder {
-  color: #b3ebff;
-  opacity: 0.9;
+.big-input::placeholder {
+  color: #b9e5f9;
+  opacity: 0.85;
 }
 
-.search-box button {
-  background: linear-gradient(90deg, #00e0ff, #6ee7b7, #ffd76b);
-  color: #001a22;
-  font-weight: 700;
+/* Search Button */
+.big-search-btn {
+  padding: 0.8rem 1.5rem;
   border-radius: 999px;
-  padding: 0.6rem 1.5rem;
   border: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.35);
+  cursor: pointer;
+
+  background: linear-gradient(90deg, #00e0ff, #6ee7b7, #ffd76b);
+  color: #00151b;
+  font-weight: 600;
+
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.35);
+  transition: 0.3s;
 }
 
-.search-box button:hover {
-  transform: translateY(-2px);
-  background: linear-gradient(90deg, #ffd76b, #3ef3b2, #00e0ff);
-  box-shadow: 0 0 40px rgba(255, 221, 97, 0.55),
-              0 0 55px rgba(0, 255, 255, 0.4);
+.big-search-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.45);
 }
 
-/* ✨ Section Heading */
+/* ==========================================================
+   🏨 HOTEL CARDS
+========================================================== */
+
 .section-heading {
   text-align: center;
   font-size: 2rem;
@@ -198,10 +235,9 @@ html, body, #root {
   margin: 3rem 0 2rem;
   color: #ffd76b;
   text-shadow: 0 0 14px rgba(0, 255, 255, 0.6),
-               0 0 22px rgba(255, 221, 97, 0.5);
+    0 0 22px rgba(255, 221, 97, 0.5);
 }
 
-/* 🏨 Hotel Cards */
 .stay-card {
   border: 2px solid rgba(0, 255, 255, 0.3);
   border-radius: 1rem;
@@ -216,6 +252,7 @@ html, body, #root {
 }
 
 .stay-card img {
+  width: 100%;
   height: 230px;
   object-fit: cover;
   border-bottom: 2px solid rgba(0, 255, 255, 0.4);
@@ -247,7 +284,7 @@ html, body, #root {
 .stay-card:hover {
   transform: translateY(-8px) scale(1.03);
   box-shadow: 0 0 35px rgba(0, 255, 255, 0.6),
-              0 0 45px rgba(255, 221, 97, 0.4);
+    0 0 45px rgba(255, 221, 97, 0.4);
 }
 
 /* 🟡 Book Button */
@@ -266,141 +303,18 @@ html, body, #root {
 .btn-warning:hover {
   background: linear-gradient(135deg, #ffd76b, #3ef3b2, #00e0ff);
   box-shadow: 0 0 20px rgba(255, 221, 97, 0.6),
-              0 0 35px rgba(0, 255, 255, 0.5);
+    0 0 35px rgba(0, 255, 255, 0.5);
   transform: scale(1.05);
 }
 
-/* 🏨 Modal Styling */
-.hotel-modal .modal-content {
-  background: rgba(10, 8, 25, 0.85);
-  border: 1.5px solid rgba(0, 255, 255, 0.4);
-  box-shadow: 0 0 35px rgba(0, 255, 255, 0.4),
-              0 0 50px rgba(255, 221, 97, 0.25);
-  backdrop-filter: blur(18px);
-}
+/* ==========================================================
+   📱 RESPONSIVE
+========================================================== */
 
-.hotel-modal .modal-header {
-  border-bottom: 1px solid rgba(0, 255, 255, 0.4);
-}
-
-.hotel-modal .modal-title {
-  background: linear-gradient(90deg, #00e0ff, #6ee7b7, #ffd76b);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.hotel-modal .form-label {
-  color: #ffd76b;
-}
-
-/* 📱 Responsive Design */
-@media (max-width: 768px) {
-  .hero-overlay {
-    padding: 1.5rem 2rem;
-  }
-  .hero-overlay h1 {
-    font-size: 2rem;
-  }
-  .search-box input {
-    width: 150px;
-  }
-  .stay-card img {
-    height: 180px;
-  }
-}
-/* 🌿 Slim Hero Redesign */
-/* 🌿 Slim Hero Redesign — Left-aligned Light Float */
-.slim-hero {
-  position: absolute;
-  top: 18%; /* Slightly higher */
-  left: 26%; /* Move everything towards left edge */
-  text-align: left; /* Align text and inputs to left */
-  background: rgba(10, 0, 25, 0.15); /* lighter, soft blur */
-  backdrop-filter: blur(12px) saturate(140%);
-  -webkit-backdrop-filter: blur(12px) saturate(140%);
-  border: 1px solid rgba(0, 255, 255, 0.25);
-  border-radius: 30px;
-  padding: 2.2rem 2.5rem;
-  width: 100%; /* Left box width — enough for text and bar */
-  max-width: 1100px;
-  color: #e8faff;
-  box-shadow: 0 0 25px rgba(0, 255, 255, 0.15);
-  animation: fadeInUp 1.4s ease;
-  z-index: 2;
-  transition: all 0.4s ease-in-out;
-}
-
-.slim-hero:hover {
-  background: rgba(10, 0, 25, 0.25);
-  box-shadow: 0 0 40px rgba(0, 255, 255, 0.25);
-}
-
-/* ✨ Heading line */
-.slim-heading {
-  color: #dffbff;
-  font-size: 1.8rem;
-  font-weight: 600;
-  text-align: left;
-  line-height: 1.4;
-  margin-bottom: 1.2rem;
-  text-shadow: 0 0 14px rgba(0, 255, 255, 0.4);
-  background: linear-gradient(90deg, #00e0ff, #6ee7b7, #ffd76b, #a02590);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* 🧠 Long Search Bar */
-.search-wide {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 999px;
-  background: rgba(20, 25, 45, 0.65);
-  border: 1.5px solid rgba(0, 255, 255, 0.3);
-  overflow: hidden;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.15);
-  transition: all 0.4s ease;
-  width: 100%;
-}
-
-.search-wide input {
-  flex: 1;
-  padding: 1rem 1.2rem;
-  border: none;
-  outline: none;
-  background: transparent;
-  color: #eaffff;
-  font-size: 1.05rem;
-  letter-spacing: 0.3px;
-}
-
-.search-wide input::placeholder {
-  color: #aadff7;
-  opacity: 0.8;
-}
-
-.search-wide button {
-  background: linear-gradient(90deg, #00e0ff, #6ee7b7, #ffd76b);
-  color: #001a22;
-  font-weight: 600;
-  border: none;
-  padding: 1rem 2rem;
-  cursor: pointer;
-  border-radius: 0 999px 999px 0;
-  transition: all 0.3s ease;
-}
-
-.search-wide button:hover {
-  background: linear-gradient(90deg, #ffd76b, #00e0ff);
-  transform: scale(1.05);
-  box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
-}
-
-/* 🪄 Smooth Entrance Animation */
-@keyframes fadeInUp {
+@keyframes fadeUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(25px);
   }
   to {
     opacity: 1;
@@ -408,167 +322,36 @@ html, body, #root {
   }
 }
 
-/* 📱 Responsive (mobile view) */
+@media (max-width: 1024px) {
+  .hero-image {
+    justify-content: center;
+    padding-right: 0;
+  }
+
+  .hero-big-box {
+    width: 90%;
+    min-height: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero-big-title {
+    font-size: 1.9rem;
+  }
+
+  .big-search-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .big-dropdown,
+  .big-search-btn {
+    width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
-  .slim-hero {
-    top: 15%;
-    left: 5%;
-    width: 85%;
-    padding: 1.5rem;
+  .stay-card img {
+    height: 200px;
   }
-  .slim-heading {
-    font-size: 1.3rem;
-  }
-  .search-wide button {
-    padding: 0.8rem 1.5rem;
-  }
-}
-/* ==========================================================
-   🌃 Wanderly Stay Modal — Cinematic Glass Upgrade (v2)
-   Designed for Vaishnavi 💜
-========================================================== */
-
-/* Modal Backdrop */
-.modal-backdrop.show {
-  background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.75), rgba(5, 5, 20, 0.95));
-  backdrop-filter: blur(6px);
-}
-
-/* 🔷 Modal Container */
-.hotel-modal .modal-dialog {
-  animation: slideUp 0.8s ease;
-  transform-origin: center bottom;
-}
-
-@keyframes slideUp {
-  0% {
-    transform: translateY(80px) scale(0.95);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
-}
-
-/* 🌌 Modal Content */
-.hotel-modal .modal-content {
-  background: rgba(15, 12, 35, 0.85);
-  border: 1.5px solid rgba(255, 215, 0, 0.3);
-  border-radius: 20px;
-  backdrop-filter: blur(20px) saturate(1.3);
-  box-shadow: 0 0 35px rgba(0, 255, 255, 0.25),
-              0 0 60px rgba(255, 215, 0, 0.25);
-  overflow: hidden;
-  transition: all 0.4s ease-in-out;
-}
-
-.hotel-modal .modal-content:hover {
-  box-shadow: 0 0 45px rgba(255, 215, 0, 0.3),
-              0 0 75px rgba(0, 255, 255, 0.3);
-}
-
-/* ✨ Modal Header */
-.hotel-modal .modal-header {
-  border: none;
-  background: linear-gradient(90deg, rgba(0, 255, 255, 0.15), rgba(255, 215, 0, 0.15));
-  padding: 1.2rem 1.5rem;
-}
-
-.hotel-modal .modal-title {
-  font-size: 1.6rem;
-  font-weight: 700;
-  background: linear-gradient(90deg, #00e0ff, #6ee7b7, #ffd76b);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
-}
-
-.hotel-modal .btn-close {
-  filter: invert(1) brightness(0.9);
-}
-
-/* 🖼️ Hotel Image */
-.hotel-modal img {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 15px;
-  box-shadow: 0 0 30px rgba(0, 255, 255, 0.15);
-  margin-bottom: 1rem;
-}
-
-/* 🏨 Hotel Description */
-.hotel-modal p {
-  font-size: 1rem;
-  color: #dbefff;
-  line-height: 1.6;
-}
-
-.hotel-modal strong {
-  color: #ffd76b;
-  font-weight: 600;
-}
-
-/* 📅 Inputs Section */
-.hotel-modal input.form-control {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(0, 255, 255, 0.3);
-  color: #eaffff;
-  border-radius: 10px;
-  padding: 0.6rem 0.9rem;
-  transition: all 0.3s ease-in-out;
-}
-
-.hotel-modal input.form-control:focus {
-  border-color: #ffd76b;
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
-  background: rgba(255, 255, 255, 0.1);
-}
-
-/* 🌙 Label */
-.hotel-modal .form-label {
-  color: #ffd76b;
-  font-weight: 500;
-  margin-bottom: 0.4rem;
-}
-
-/* 🎇 Confirm Button */
-.hotel-modal .modal-footer .btn-warning {
-  background: linear-gradient(90deg, #00e0ff, #6ee7b7, #ffd76b);
-  color: #001a22;
-  font-weight: bold;
-  border-radius: 30px;
-  padding: 0.8rem 2rem;
-  border: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 25px rgba(0, 255, 255, 0.3),
-              0 0 40px rgba(255, 215, 0, 0.2);
-}
-
-.hotel-modal .modal-footer .btn-warning:hover {
-  background: linear-gradient(90deg, #ffd76b, #3ef3b2, #00e0ff);
-  transform: scale(1.05);
-  box-shadow: 0 0 45px rgba(255, 215, 0, 0.45),
-              0 0 65px rgba(0, 255, 255, 0.4);
-}
-
-/* 🌟 Modal Glow Border */
-.hotel-modal::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 25px;
-  background: radial-gradient(
-    800px 400px at 20% 30%,
-    rgba(0, 255, 255, 0.15),
-    transparent
-  ),
-  radial-gradient(
-    800px 400px at 80% 70%,
-    rgba(255, 215, 0, 0.1),
-    transparent
-  );
-  pointer-events: none;
-  z-index: -1;
 }

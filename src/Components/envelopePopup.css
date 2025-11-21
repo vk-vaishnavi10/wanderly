@@ -1,0 +1,267 @@
+ /* ==========================================================
+   💌 Envelope Popup – Premium Layout
+   Cat on RIGHT SIDE + Hotel Image at Bottom Center
+   ==========================================================*/
+
+/* OVERLAY */
+.envelope-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(10px);
+    z-index: 6000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* MAIN CARD */
+  .envelope-popup-card {
+    position: relative;
+    width: min(900px, 95vw);
+    background: linear-gradient(135deg, #070422, #14042d);
+    border-radius: 25px;
+    border: 1.5px solid rgba(0,255,255,0.38);
+    box-shadow: 0 0 60px rgba(0,255,255,0.4),
+                0 0 70px rgba(255,215,0,0.35);
+    overflow: hidden;
+    animation: popupUp 0.6s ease-out;
+  }
+  
+  @keyframes popupUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* ENVELOPE TOP */
+  .envelope-top-flap {
+    width: 100%;
+    height: 80px;
+    background: linear-gradient(135deg, #ffd76b, #ff7edb);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.45);
+  }
+  
+  /* LAYOUT */
+  .envelope-layout {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 2.2rem 3rem;
+  }
+  
+  /* LEFT DETAILS */
+  .details-section {
+    width: 100%;
+    padding-bottom: 1.4rem;
+  }
+  
+  .hotel-title-popup {
+    font-size: 1.9rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #00e0ff, #6ee7b7, #ffd76b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .hotel-location-popup,
+  .hotel-desc-popup,
+  .hotel-price-popup,
+  .hotel-rating-popup {
+    color: #e8eaff;
+    margin-bottom: 0.4rem;
+  }
+  
+  .rating-text {
+    color: #b8e4ff;
+    margin-left: 6px;
+  }
+  
+  /* FORM */
+  .envelope-form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .form-label-popup {
+    font-size: 0.85rem;
+    color: #ffd76b;
+  }
+  
+  .form-group-popup input {
+    border-radius: 50px;
+    border: 1px solid rgba(0,255,255,0.35);
+    padding: 0.55rem 1rem;
+    background: rgba(6,8,25,0.92);
+    color: #e8faff;
+    outline: none;
+  }
+  
+  .form-group-popup input:focus {
+    border-color: #ffd76b;
+    box-shadow: 0 0 12px rgba(255,215,0,0.4);
+  }
+  
+  /* BUTTONS */
+  .envelope-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.4rem;
+  }
+  
+  .btn-confirm {
+    flex: 1;
+    padding: 0.8rem 1.4rem;
+    border: none;
+    border-radius: 50px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #00e0ff, #6ee7b7, #ffd76b);
+    color: #00141a;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(0,255,255,0.4);
+  }
+  
+  .btn-confirm:hover {
+    background: linear-gradient(90deg, #ffd76b, #3ef3b2, #00e0ff);
+    transform: scale(1.04);
+  }
+  
+  .btn-cancel {
+    padding: 0.8rem 1.3rem;
+    border-radius: 50px;
+    border: 1px solid rgba(255,255,255,0.35);
+    background: transparent;
+    color: #e8eaff;
+    cursor: pointer;
+  }
+  
+  .btn-cancel:hover {
+    background: rgba(255,255,255,0.1);
+  }
+  
+  /* HOTEL IMAGE (BOTTOM CENTER) */
+  .image-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1.4rem;
+  }
+  
+  .hotel-image-wrapper-bottom {
+    width: 92%;
+    padding: 4px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #00e0ff, #ffd76b);
+    box-shadow: 0 0 26px rgba(0,255,255,0.35);
+  }
+  
+  .hotel-image-popup-bottom {
+    width: 100%;
+    height: 230px;
+    border-radius: 12px;
+    object-fit: cover;
+  }
+  
+  /* CAT FLOATING ON RIGHT EDGE */
+  .popup-cat-floating {
+    position: absolute;
+    right: -45px;      /* half outside */
+    bottom: 35px;
+    width: 130px;
+    height: 130px;
+    pointer-events: none;
+    animation: catFloat 3s ease-in-out infinite;
+  }
+  
+  @keyframes catFloat {
+    0%,100% { transform: translateY(0); }
+    50%     { transform: translateY(-6px); }
+  }
+  
+  /* CAT PARTS */
+  .popup-cat-floating .cat-ear {
+    width: 22px;
+    height: 22px;
+    background: linear-gradient(135deg, #7700cc, #ff88df);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    position: absolute;
+    top: -6px;
+  }
+  
+  .popup-cat-floating .ear-left  { left: 18px; }
+  .popup-cat-floating .ear-right { right: 18px; }
+  
+  .popup-cat-floating .cat-face {
+    width: 95px;
+    height: 75px;
+    background: linear-gradient(135deg, #1c0030, #33005e);
+    border-radius: 45px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 10px;
+  }
+  
+  .eye {
+    width: 14px;
+    height: 14px;
+    background: #fff5d6;
+    border-radius: 50%;
+    position: absolute;
+    top: 28px;
+  }
+  
+  .eye-left { left: 20px; }
+  .eye-right { right: 20px; }
+  
+  .mouth {
+    width: 20px;
+    height: 12px;
+    border-bottom: 3px solid #ffd76b;
+    position: absolute;
+    bottom: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .cat-body {
+    width: 75px;
+    height: 42px;
+    background: linear-gradient(135deg, #150021, #290033);
+    border-radius: 22px;
+    position: absolute;
+    bottom: -20px;
+    left: 28px;
+  }
+  
+  .cat-tail {
+    width: 18px;
+    height: 68px;
+    background: linear-gradient(135deg, #ffd76b, #ff7edb);
+    border-radius: 20px;
+    position: absolute;
+    right: -18px;
+    bottom: -20px;
+    transform-origin: top;
+    animation: tailWag 1.2s infinite ease-in-out;
+  }
+  
+  @keyframes tailWag {
+    0%   { transform: rotate(0deg); }
+    50%  { transform: rotate(25deg); }
+    100% { transform: rotate(0deg); }
+  }
+  
+  /* MOBILE */
+  @media (max-width: 768px) {
+    .envelope-form {
+      grid-template-columns: 1fr;
+    }
+    .popup-cat-floating {
+      right: -25px;
+      bottom: 10px;
+      transform: scale(0.8);
+    }
+  }
+  
