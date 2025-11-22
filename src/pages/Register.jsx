@@ -1,8 +1,9 @@
+// src/pages/Register.jsx
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
-const forestVideo = "/videos/signupbg.mp4";
 
+const forestVideo = "/videos/signupbg.mp4";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -35,64 +36,69 @@ export default function Register() {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+
   const sendOtp = () => {
-    if (!form.phone) return alert("Enter phone number first!");
-    
+    if (!form.phone) {
+      alert("Enter phone number first!");
+      return;
+    }
+
     // 🌟 Generate 4-digit random OTP
     const randomOtp = Math.floor(1000 + Math.random() * 9000).toString();
     setOtpSent(true);
-  
-    // Store mock OTP in state so it can be verified
-    setForm({ ...form, otp: "" });
+
+    // Store mock OTP in localStorage so it can be verified
     localStorage.setItem("mockOtp", randomOtp);
-  
+    // Clear input so user types it manually
+    setForm((prev) => ({ ...prev, otp: "" }));
+
     alert(`📩 Mock OTP sent: ${randomOtp}`);
   };
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const savedOtp = localStorage.getItem("mockOtp");
-    if (form.otp !== savedOtp) return alert("❌ Invalid OTP");
-  
+    if (!savedOtp || form.otp !== savedOtp) {
+      alert("❌ Invalid OTP");
+      return;
+    }
+
     const wanderId = "WAND-" + Math.floor(100000 + Math.random() * 900000);
     const newUser = { ...form, wanderId };
     localStorage.setItem("registeredUser", JSON.stringify(newUser));
-  
+
     alert(`✅ Registered Successfully! Your Wander ID: ${wanderId}`);
     setTimeout(() => navigate("/signin"), 1000);
   };
-  
 
   return (
     <div className="register-page">
       {/* 🎥 Background Video */}
       <video
-  autoPlay
-  loop
-  muted
-  playsInline
-  preload="auto"
-  className="register-bg-video"
-  onLoadedData={() => console.log("✅ Register video loaded successfully")}
-  onError={(e) => console.error("❌ Video load error:", e)}
->
-  <source src={forestVideo} type="video/mp4" />
-  Your browser does not support the video tag.
-</video>
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        className="register-bg-video"
+      >
+        <source src={forestVideo} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
 
-
-      {/* 🌈 Cinematic Overlay (flush-left) */}
+      {/* 🌈 Cinematic Overlay (form area) */}
       <div className="register-overlay">
         <div className="register-card">
           <h1 className="register-title">
             Create Your <span>Wanderly</span> Account
           </h1>
+
           <form onSubmit={handleSubmit}>
             <input
               type="text"
               name="fullName"
               placeholder="Full Name"
+              value={form.fullName}
               onChange={handleChange}
               required
             />
@@ -100,6 +106,7 @@ export default function Register() {
               type="email"
               name="email"
               placeholder="Email"
+              value={form.email}
               onChange={handleChange}
               required
             />
@@ -107,6 +114,7 @@ export default function Register() {
               type="password"
               name="password"
               placeholder="Password"
+              value={form.password}
               onChange={handleChange}
               required
             />
@@ -114,6 +122,7 @@ export default function Register() {
               type="tel"
               name="phone"
               placeholder="Phone Number"
+              value={form.phone}
               onChange={handleChange}
               required
             />
@@ -123,6 +132,7 @@ export default function Register() {
                 type="text"
                 name="otp"
                 placeholder="Enter OTP"
+                value={form.otp}
                 onChange={handleChange}
                 required
               />
@@ -150,7 +160,51 @@ export default function Register() {
           </form>
         </div>
       </div>
+
+      {/* 🐱✨ Hybrid big cat assistant (Option C style, BIG size) */}
+      <div className="register-cat-entrance">
+        <div className="cat-aura" />
+
+        <div className="big-cat">
+          <div className="big-cat-ears">
+            <div className="cat-ear ear-left" />
+            <div className="cat-ear ear-right" />
+          </div>
+
+          <div className="cat-head">
+            <div className="cat-eye eye-left">
+              <div className="cat-eye-shine" />
+              <div className="cat-pupil" />
+            </div>
+            <div className="cat-eye eye-right">
+              <div className="cat-eye-shine" />
+              <div className="cat-pupil" />
+            </div>
+
+            <div className="cat-blush blush-left" />
+            <div className="cat-blush blush-right" />
+
+            <div className="cat-nose" />
+            <div className="cat-mouth" />
+          </div>
+
+          <div className="cat-body">
+            <div className="cat-belly" />
+            <div className="cat-paws-row">
+              <div className="cat-paw back-paw" />
+              <div className="cat-paw front-paw waving-paw" />
+            </div>
+          </div>
+
+          <div className="cat-tail" />
+        </div>
+
+        <div className="cat-speech">
+          Hi traveller! I&apos;ll help you
+          <br />
+          sign up 💜
+        </div>
+      </div>
     </div>
   );
 }
-

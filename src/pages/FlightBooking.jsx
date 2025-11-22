@@ -1,12 +1,13 @@
+// src/pages/FlightBooking.jsx
 import React, { useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import flights from "../data/flights";
-import "./FlightBooking.css"; // make sure file name matches exactly
+import "./FlightBooking.css";
 import { addFlightBooking } from "../services/api";
 
 const flightVideo = "/videos/flightbg.mp4";
 
-// Convert "2h 15m" or "2h" or "45m" to minutes (robust)
+// Convert "2h 15m" or "2h" or "45m" to minutes
 const durationToMinutes = (duration) => {
   if (!duration || typeof duration !== "string") return 0;
   const hoursMatch = duration.match(/(\d+)\s*h/);
@@ -45,7 +46,11 @@ export default function FlightBooking() {
 
   // guard
   if (!flight) {
-    return <h2 className="text-light text-center mt-5">⚠️ Flight not found!</h2>;
+    return (
+      <h2 className="text-light text-center mt-5">
+        ⚠️ Flight not found!
+      </h2>
+    );
   }
 
   const takeoffTimes = ["06:30", "08:45", "11:20", "14:10", "17:55", "21:15"];
@@ -84,13 +89,10 @@ export default function FlightBooking() {
         landing,
       };
 
-      // If you have API, call it. Wrapped in try/catch already.
       await addFlightBooking?.(bookingDetails);
 
-      // Save local fallback
       localStorage.setItem("flightBooking", JSON.stringify(bookingDetails));
 
-      // Navigate to payment with data
       navigate("/payment", {
         state: {
           paymentData: {
@@ -111,8 +113,11 @@ export default function FlightBooking() {
   };
 
   return (
-    <div className="flight-booking-page" style={{ "--theme": themeColor }}>
-      {/* background video */}
+    <div
+      className="flight-booking-page"
+      style={{ "--theme": themeColor }}
+    >
+      {/* 🎥 Background video */}
       <video
         className="flight-bg-video"
         autoPlay
@@ -124,20 +129,26 @@ export default function FlightBooking() {
         <source src={flightVideo} type="video/mp4" />
       </video>
 
-      {/* soft overlay (pointer-events: none so it never blocks clicks) */}
+      {/* soft overlay */}
       <div className="flight-overlay" aria-hidden="true"></div>
 
+      {/* main booking content */}
       <div className="booking-card-container">
         {/* left info card */}
         <div className="flight-info-card">
-          <img src={flight.image} alt={flight.airline} className="airline-logo" />
+          <img
+            src={flight.image}
+            alt={flight.airline}
+            className="airline-logo"
+          />
 
           <h2 className="airline-name" style={{ color: themeColor }}>
             {flight.airline}
           </h2>
 
           <p className="flight-route">
-            {flight.from} <span className="plane-icon">✈️</span> {flight.to}
+            {flight.from} <span className="plane-icon">✈️</span>{" "}
+            {flight.to}
           </p>
 
           <div className="time-box">
@@ -175,10 +186,18 @@ export default function FlightBooking() {
         </div>
 
         {/* right booking form */}
-        <div className="booking-form-card" role="region" aria-label="booking form">
+        <div
+          className="booking-form-card"
+          role="region"
+          aria-label="booking form"
+        >
           <h3>Confirm Your Booking</h3>
 
-          <form onSubmit={handleBooking} className="booking-form" autoComplete="on">
+          <form
+            onSubmit={handleBooking}
+            className="booking-form"
+            autoComplete="on"
+          >
             <label htmlFor="fullName">👤 Full Name</label>
             <input
               id="fullName"
@@ -255,7 +274,51 @@ export default function FlightBooking() {
           </form>
         </div>
       </div>
+
+      {/* 🌈 Neon chubby welcome cat */}
+      <NeonBookingCat />
     </div>
   );
 }
 
+/* 🐱 Neon chubby black cat component (pure CSS drawing) */
+const NeonBookingCat = () => {
+  return (
+    <div className="neon-cat-container" aria-hidden="true">
+      {/* glowing ribbon the cat is "pulling" */}
+      <div className="cat-ribbon" />
+
+      {/* cat body */}
+      <div className="neon-cat">
+        <div className="cat-head">
+          <div className="cat-ear ear-left" />
+          <div className="cat-ear ear-right" />
+          <div className="cat-face">
+            <span className="cat-eye eye-left" />
+            <span className="cat-eye eye-right" />
+            <span className="cat-blush blush-left" />
+            <span className="cat-blush blush-right" />
+            <span className="cat-mouth" />
+          </div>
+        </div>
+
+        <div className="cat-body">
+          <div className="cat-belly" />
+          <div className="cat-paws">
+            <span className="cat-paw paw-left" />
+            <span className="cat-paw paw-right paw-wave" />
+          </div>
+          <div className="cat-tail" />
+        </div>
+
+        <div className="cat-glow-orb" />
+      </div>
+
+      {/* speech bubble */}
+      <div className="cat-speech-bubble">
+        <span className="line-1">Hello traveller! ✈️</span>
+        <span className="line-2">Welcome to your flight booking 💜</span>
+      </div>
+    </div>
+  );
+};
