@@ -70,6 +70,7 @@ body,
     );
   animation: auroraMove 20s linear infinite alternate;
   pointer-events: none;
+  z-index: 0;
 }
 
 @keyframes auroraMove {
@@ -85,15 +86,15 @@ body,
 }
 
 /* ==========================================================
-   ⭐ BIG RIGHT-SIDE BLACK BOX (Option 2 – Large Hero)
+   ⭐ BIG RIGHT-SIDE BLACK BOX (hero container)
 ========================================================== */
 
 .hero-big-box {
   position: relative;
   z-index: 5;
-  width: 600px; /* bigger than flights card */
-  min-height: 45vh; /* hero height */
-  padding: 3rem 2.8rem 2.6rem;
+  width: 650px;
+  min-height: 65vh;
+  padding: 3.5rem 3rem 3rem;
   border-radius: 28px;
 
   background: rgba(0, 0, 0, 0.85); /* glossy black */
@@ -105,6 +106,9 @@ body,
     0 0 55px rgba(255, 221, 97, 0.22);
 
   animation: fadeUp 1.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem; /* space between inner boxes */
 }
 
 /* L-SHAPE BLACK DOTTED BORDER */
@@ -120,33 +124,62 @@ body,
   background-repeat: repeat;
 
   /* L shape cutout */
-  mask: linear-gradient(90deg, #e7e3e3 0 70px, transparent 70px),
-    linear-gradient(#f2e9e9 0 70px, transparent 70px);
+  mask: linear-gradient(90deg, #000 0 70px, transparent 70px),
+    linear-gradient(#000 0 70px, transparent 70px);
   -webkit-mask: linear-gradient(90deg, #000 0 70px, transparent 70px),
     linear-gradient(#000 0 70px, transparent 70px);
 }
 
+/* ==========================================================
+   🧊 INNER BOXES (4 transparent cards inside big box)
+========================================================== */
+
+.hero-inner-box {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 1.1rem 1.4rem;
+  border-radius: 16px;
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+}
+
+/* Quote box */
+.quote-box {
+  padding: 0.9rem 1.4rem;
+}
+
+.quote-text {
+  margin: 0;
+  font-size: 0.86rem;
+  letter-spacing: 0.02em;
+  color: #e9f4ff;
+  opacity: 0.88;
+}
+
+/* Title box */
+.title-box {
+  padding: 1.4rem 1.5rem;
+}
+
 /* Title inside big box */
 .hero-big-title {
+  margin: 0;
   font-size: 2.2rem;
   line-height: 1.4;
   font-weight: 700;
-  margin-bottom: 1.2rem;
 
   background: linear-gradient(90deg, #a16cff, #6ee7b7, #ffd76b);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* different colour for span if needed */
 .hero-big-title span {
   color: #96f4ff;
 }
 
-/* Discover / quote line */
+/* Discover / quote line (bottom box) */
 .big-discover {
-  margin-top: 0.3rem;
-  margin-bottom: 1.4rem;
+  margin: 0;
   font-size: 0.97rem;
   color: #b8d8ff;
 }
@@ -155,11 +188,14 @@ body,
    🔍 SEARCH BAR INSIDE BIG BOX
 ========================================================== */
 
+.search-box {
+  padding: 1.2rem 1.4rem;
+}
+
 .big-search-bar {
-  margin-top: 0.4rem;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.7rem;
 
   padding: 0.78rem;
   border-radius: 999px;
@@ -168,19 +204,33 @@ body,
   box-shadow: inset 0 0 15px rgba(0, 255, 255, 0.18);
 }
 
+/* City pill with heart icon + select */
+.city-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ff6fb1, #ffb86b);
+  box-shadow: 0 0 18px rgba(255, 143, 214, 0.5);
+  flex-shrink: 0;
+}
+
+.city-heart {
+  font-size: 1rem;
+}
+
 /* Dropdown */
 .big-dropdown {
-  width: 30%;
-  padding: 0.75rem 1rem;
-  border-radius: 999px;
-
-  background: rgba(15, 18, 45, 0.9);
-  color: #ffffff;
-  border: 1px solid rgba(0, 255, 255, 0.35);
-  font-weight: 500;
+  border: none;
   outline: none;
+  background: transparent;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding-right: 0.4rem;
   cursor: pointer;
-  font-size: 0.95rem;
+  appearance: none;
 }
 
 .big-dropdown option {
@@ -196,7 +246,7 @@ body,
   border: none;
   outline: none;
   color: #eaffff;
-  font-size: 1rem;
+  font-size: 0.98rem;
 }
 
 .big-input::placeholder {
@@ -206,7 +256,7 @@ body,
 
 /* Search Button */
 .big-search-btn {
-  padding: 0.8rem 1.5rem;
+  padding: 0.8rem 1.6rem;
   border-radius: 999px;
   border: none;
   cursor: pointer;
@@ -308,7 +358,7 @@ body,
 }
 
 /* ==========================================================
-   📱 RESPONSIVE
+   ✨ ANIMATIONS
 ========================================================== */
 
 @keyframes fadeUp {
@@ -322,7 +372,11 @@ body,
   }
 }
 
-@media (max-width: 1024px) {
+/* ==========================================================
+   📱 RESPONSIVE
+========================================================== */
+
+@media (max-width: 1200px) {
   .hero-image {
     justify-content: center;
     padding-right: 0;
@@ -330,11 +384,15 @@ body,
 
   .hero-big-box {
     width: 90%;
-    min-height: auto;
   }
 }
 
 @media (max-width: 900px) {
+  .hero-big-box {
+    min-height: auto;
+    padding: 2.4rem 1.7rem 2.1rem;
+  }
+
   .hero-big-title {
     font-size: 1.9rem;
   }
@@ -344,9 +402,10 @@ body,
     align-items: stretch;
   }
 
-  .big-dropdown,
+  .city-pill,
   .big-search-btn {
     width: 100%;
+    justify-content: center;
   }
 }
 

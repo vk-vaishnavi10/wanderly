@@ -1,3 +1,4 @@
+// src/pages/Memories.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PanZoom from "react-easy-panzoom";
@@ -12,18 +13,21 @@ export default function Memories() {
   const [location, setLocation] = useState("");
   const [story, setStory] = useState("");
   const [emotion, setEmotion] = useState("💛 Joyful");
-  const [status, setStatus] = useState("✨ Relive your favorite travel moments...");
+  const [status, setStatus] = useState(
+    "✨ Relive your favorite travel moments..."
+  );
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectMode, setSelectMode] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
   const [zoom, setZoom] = useState(1);
+
   const [user, setUser] = useState({
     name: "Vaishnavi 🌸",
     bio: "Collecting places, not things — one memory at a time.",
-    photo: "/assets/profile-avatar.png", // 🌈 local fallback instead of http
+    photo: "/assets/profile-avatar.png",
   });
 
-  // 🌐 Load Memories & Profile Info
+  // 🌐 Load Memories, Time Capsules & Profile Info
   useEffect(() => {
     axios
       .get("http://localhost:8085/api/memories")
@@ -39,16 +43,19 @@ export default function Memories() {
       .get(`http://localhost:8085/api/user/profile?ts=${Date.now()}`)
       .then((res) => {
         if (res.data) {
-          setUser({
+          const nextUser = {
             name: res.data.name,
             bio: res.data.bio,
             photo: res.data.photo
               ? `${res.data.photo}?t=${Date.now()}`
               : "/assets/profile-avatar.png",
-          });
-          localStorage.setItem("userName", res.data.name);
-          localStorage.setItem("userBio", res.data.bio);
-          localStorage.setItem("userPhoto", res.data.photo);
+          };
+
+          setUser(nextUser);
+
+          localStorage.setItem("userName", nextUser.name);
+          localStorage.setItem("userBio", nextUser.bio);
+          localStorage.setItem("userPhoto", res.data.photo || "");
         }
       })
       .catch(() => {
@@ -67,7 +74,10 @@ export default function Memories() {
   // 📤 Upload Memory
   const handleUpload = async (e) => {
     e.preventDefault();
-    if (!image) return alert("Please select a photo!");
+    if (!image) {
+      alert("Please select a photo!");
+      return;
+    }
 
     const formData = new FormData();
     formData.append("caption", caption);
@@ -104,16 +114,18 @@ export default function Memories() {
     }
   };
 
-  // ✨ Select/Delete Memories
+  // ✨ Select / Delete Memories
   const toggleSelectMode = () => {
-    setSelectMode(!selectMode);
+    setSelectMode((prev) => !prev);
     setSelectedItems([]);
   };
 
   const toggleSelectItem = (index) => {
-    if (selectedItems.includes(index))
+    if (selectedItems.includes(index)) {
       setSelectedItems(selectedItems.filter((i) => i !== index));
-    else setSelectedItems([...selectedItems, index]);
+    } else {
+      setSelectedItems([...selectedItems, index]);
+    }
   };
 
   const handleDeleteSelected = () => {
@@ -124,14 +136,15 @@ export default function Memories() {
     setSelectMode(false);
   };
 
-  const openImage = (m) => !selectMode && setSelectedImage(m);
+  const openImage = (m) => {
+    if (!selectMode) setSelectedImage(m);
+  };
 
-  // 💫 Dynamic mood background
+  // 💫 Dynamic mood background (used as extra layer)
   const getEmotionGradient = () => {
     switch (emotion) {
       case "💛 Joyful":
-  return "linear-gradient(180deg, #f9d976, #f39f86, #d76d77)";
-
+        return "linear-gradient(180deg, #f9d976, #f39f86, #d76d77)";
       case "🌅 Peaceful":
         return "linear-gradient(180deg, #00e1ff, #b2f5ea)";
       case "🎉 Excited":
@@ -148,8 +161,123 @@ export default function Memories() {
   return (
     <div
       className="memories-page"
-      style={{ background: `${getEmotionGradient()}` }}
+      style={{ background: getEmotionGradient() }}
     >
+      {/* 🦋 + 🐱 Ambient critters layer (behind everything) */}
+      <div className="memories-critters">
+        {/* FAIRY BUTTERFLIES (sharp wings, pastel colors) */}
+        <div className="butterfly-layer">
+          {/* Main medium butterflies */}
+          <div className="butterfly b1 outline">
+            <div className="body" />
+            <div className="wing l top" />
+            <div className="wing l bottom" />
+            <div className="wing r top" />
+            <div className="wing r bottom" />
+          </div>
+
+          <div className="butterfly b2 glow">
+            <div className="body" />
+            <div className="wing l top" />
+            <div className="wing l bottom" />
+            <div className="wing r top" />
+            <div className="wing r bottom" />
+          </div>
+
+          <div className="butterfly b3 glow">
+            <div className="body" />
+            <div className="wing l top" />
+            <div className="wing l bottom" />
+            <div className="wing r top" />
+            <div className="wing r bottom" />
+          </div>
+
+          <div className="butterfly b4 outline">
+            <div className="body" />
+            <div className="wing l top" />
+            <div className="wing l bottom" />
+            <div className="wing r top" />
+            <div className="wing r bottom" />
+          </div>
+
+          {/* Tiny depth butterflies */}
+          <div className="butterfly b5 tiny glow">
+            <div className="body" />
+            <div className="wing l top" />
+            <div className="wing l bottom" />
+            <div className="wing r top" />
+            <div className="wing r bottom" />
+          </div>
+
+          <div className="butterfly b6 tiny outline">
+            <div className="body" />
+            <div className="wing l top" />
+            <div className="wing l bottom" />
+            <div className="wing r top" />
+            <div className="wing r bottom" />
+          </div>
+        </div>
+
+        {/* Hello cats at bottom corners */}
+        <div className="hello-cats-row">
+          {/* Left cat */}
+          <div className="hello-cat cat-left">
+            <div className="cat-shadow" />
+            <div className="cat-body-wrapper">
+              <div className="cat-head">
+                <div className="cat-ear ear-left" />
+                <div className="cat-ear ear-right" />
+                <div className="cat-face">
+                  <span className="cat-eye eye-left" />
+                  <span className="cat-eye eye-right" />
+                  <span className="cat-nose" />
+                  <span className="cat-mouth" />
+                  <span className="cat-blush blush-left" />
+                  <span className="cat-blush blush-right" />
+                </div>
+              </div>
+              <div className="cat-body">
+                <div className="cat-belly" />
+                <div className="cat-paws">
+                  <span className="cat-paw paw-left" />
+                  <span className="cat-paw paw-right waving-paw" />
+                </div>
+                <div className="cat-tail" />
+              </div>
+            </div>
+            <div className="cat-speech-bubble">hi, memory keeper! 💌</div>
+          </div>
+
+          {/* Right cat (mirrored) */}
+          <div className="hello-cat cat-right">
+            <div className="cat-shadow" />
+            <div className="cat-body-wrapper">
+              <div className="cat-head">
+                <div className="cat-ear ear-left" />
+                <div className="cat-ear ear-right" />
+                <div className="cat-face">
+                  <span className="cat-eye eye-left" />
+                  <span className="cat-eye eye-right" />
+                  <span className="cat-nose" />
+                  <span className="cat-mouth" />
+                  <span className="cat-blush blush-left" />
+                  <span className="cat-blush blush-right" />
+                </div>
+              </div>
+              <div className="cat-body">
+                <div className="cat-belly" />
+                <div className="cat-paws">
+                  <span className="cat-paw paw-left waving-paw" />
+                  <span className="cat-paw paw-right" />
+                </div>
+                <div className="cat-tail" />
+              </div>
+            </div>
+            <div className="cat-speech-bubble">keep shining, Vaishnavi ✨</div>
+          </div>
+        </div>
+      </div>
+
       {/* 🌟 Profile Header */}
       <div className="profile-header">
         <img
@@ -164,7 +292,9 @@ export default function Memories() {
         <div>
           <h2 className="profile-name">{user.name}</h2>
           <p className="profile-bio">“{user.bio}”</p>
-          <p className="profile-stats">{memories.length} moments captured ✨</p>
+          <p className="profile-stats">
+            {memories.length} moments captured ✨
+          </p>
         </div>
       </div>
 
@@ -180,7 +310,7 @@ export default function Memories() {
         </div>
       )}
 
-      {/* Upload Form */}
+      {/* 📤 Upload Form */}
       <form onSubmit={handleUpload} className="upload-box">
         <input
           type="file"
@@ -225,19 +355,22 @@ export default function Memories() {
         </button>
       </form>
 
-      {/* Controls */}
+      {/* 🛠 Controls */}
       <div className="memory-controls">
         <button onClick={toggleSelectMode} className="btn-outline-glow">
           {selectMode ? "❌ Cancel Selection" : "🪄 Select Memories"}
         </button>
         {selectMode && selectedItems.length > 0 && (
-          <button onClick={handleDeleteSelected} className="btn-danger-glow">
+          <button
+            onClick={handleDeleteSelected}
+            className="btn-danger-glow"
+          >
             🗑️ Delete Selected ({selectedItems.length})
           </button>
         )}
       </div>
 
-      {/* Memory Gallery */}
+      {/* 📚 Memory Gallery */}
       <div className="memory-gallery">
         {memories.map((m, index) => (
           <div
@@ -245,7 +378,9 @@ export default function Memories() {
             className={`memory-card ${
               selectedItems.includes(index) ? "selected" : ""
             }`}
-            onClick={() => (selectMode ? toggleSelectItem(index) : openImage(m))}
+            onClick={() =>
+              selectMode ? toggleSelectItem(index) : openImage(m)
+            }
           >
             <img src={m.imageUrl} alt="Memory" />
             <div className="memory-info">
@@ -260,7 +395,7 @@ export default function Memories() {
         ))}
       </div>
 
-      {/* Fullscreen Zoom */}
+      {/* 🔍 Fullscreen Zoom */}
       {selectedImage && (
         <div
           className="lightbox-overlay"

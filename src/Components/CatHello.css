@@ -1,0 +1,160 @@
+/* floating movement for multiple cats */
+.cat-float {
+    position: absolute;
+    animation: floatCat 28s linear infinite;
+    pointer-events: none;
+  }
+  
+  @keyframes floatCat {
+    0% { transform: translateX(-200px) translateY(0); opacity: 0.8; }
+    50% { opacity: 1; }
+    100% { transform: translateX(calc(100vw + 200px)) translateY(0); opacity: 0.9; }
+  }
+  
+  /* main cat structure */
+  .cat {
+    position: relative;
+    width: 90px;
+    height: 110px;
+  }
+  
+  /* head */
+  .cat-head {
+    position: relative;
+    width: 80px;
+    height: 70px;
+    background: #ffffff;
+    border-radius: 50px;
+    box-shadow: 0 0 18px rgba(255,255,255,0.5);
+    animation: headBob 1.5s ease-in-out infinite;
+  }
+  
+  @keyframes headBob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+  
+  /* ears */
+  .cat-ear {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background: #ffffff;
+    border-radius: 50%;
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    top: -10px;
+  }
+  
+  .ear-left { left: 5px; transform: rotate(-10deg); }
+  .ear-right { right: 5px; transform: rotate(10deg); }
+  
+  /* eyes */
+  .eye {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #000;
+    border-radius: 50%;
+    top: 26px;
+  }
+  
+  .eye-left { left: 22px; }
+  .eye-right { right: 22px; }
+  
+  /* nose + mouth */
+  .nose {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    width: 7px;
+    height: 6px;
+    background: #ff9bb5;
+    border-radius: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .mouth {
+    position: absolute;
+    top: 48px;
+    left: 50%;
+    width: 12px;
+    height: 8px;
+    border-bottom: 2px solid #000;
+    border-radius: 0 0 10px 10px;
+    transform: translateX(-50%);
+  }
+  
+  /* whiskers */
+  .whiskers {
+    position: absolute;
+    top: 42px;
+    width: 26px;
+    height: 2px;
+    background: #000;
+  }
+  
+  .whisker-left { left: -12px; }
+  .whisker-right { right: -12px; }
+  
+  /* body */
+  .cat-body {
+    position: relative;
+    width: 60px;
+    height: 50px;
+    background: #f8f8f8;
+    border-radius: 40px;
+    margin: -4px auto;
+  }
+  
+  /* arms */
+  .arm {
+    position: absolute;
+    width: 16px;
+    height: 28px;
+    background: #ffffff;
+    border-radius: 10px;
+    top: 5px;
+  }
+  
+  .arm-left { left: -5px; animation: wave 1.4s ease-in-out infinite; transform-origin: top right; }
+  .arm-right { right: -5px; }
+  
+  /* waving */
+  @keyframes wave {
+    0% { transform: rotate(0deg); }
+    50% { transform: rotate(20deg); }
+    100% { transform: rotate(0deg); }
+  }
+  
+  /* envelope the cat holds */
+  .envelope {
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    width: 30px;
+    height: 18px;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #ffe8b5, #ffc2df);
+    border-radius: 4px;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 65%, 0 100%);
+  }
+  
+  /* hello bubble */
+  .cat-bubble {
+    position: absolute;
+    left: 80px;
+    top: 10px;
+    background: rgba(255,255,255,0.85);
+    padding: 4px 10px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    color: #4a2a5b;
+    box-shadow: 0 0 6px rgba(255,255,255,0.6);
+    animation: bubbleFade 1.8s infinite;
+  }
+  
+  @keyframes bubbleFade {
+    0%, 100% { opacity: 0.8; transform: translateY(0); }
+    50% { opacity: 1; transform: translateY(-3px); }
+  }
+  

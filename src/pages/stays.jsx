@@ -194,52 +194,73 @@ export default function Stays() {
         className="hero-image"
         style={{ backgroundImage: `url(${heroHotelBg})` }}
       >
-        {/* floating cat mascott */}
+        {/* floating cat mascot */}
         <CuteEnvelopeMascot onClick={handleMascotClick} />
 
         <div className="hero-big-box">
+          {/* dotted L border */}
           <div className="bigbox-dots" />
 
-          <h1 className="hero-big-title">
-            Find your perfect stay —{" "}
-            <span>hotels, villas & escapes 💙</span>
-          </h1>
+          {/* 1️⃣ Quote box */}
+          <div className="hero-inner-box quote-box">
+            <p className="quote-text">
+              “Every stay is a story. Let&apos;s find your next chapter.”
+            </p>
+          </div>
 
-          {/* quote / subtitle */}
-          <p className="big-discover">
-            Discover stays crafted for cozy nights, workcations and dreamy
-            weekend getaways.
-          </p>
+          {/* 2️⃣ Main title box */}
+          <div className="hero-inner-box title-box">
+            <h1 className="hero-big-title">
+              Find your perfect stay —{" "}
+              <span>hotels, villas &amp; escapes 💙</span>
+            </h1>
+          </div>
 
-          {/* dropdown + search + button */}
-          <div className="big-search-bar">
-            <select
-              className="big-dropdown"
-              value={dropdown}
-              onChange={(e) => setDropdown(e.target.value)}
-            >
-              <option value="">City</option>
-              <option value="mumbai">Mumbai</option>
-              <option value="goa">Goa</option>
-              <option value="hyderabad">Hyderabad</option>
-              <option value="chennai">Chennai</option>
-              <option value="mysuru">Mysuru</option>
-              <option value="jaipur">Jaipur</option>
-              <option value="bengaluru">Bengaluru</option>
-            </select>
+          {/* 3️⃣ Search box */}
+          <div className="hero-inner-box search-box">
+            <div className="big-search-bar">
+              {/* city dropdown pill with heart icon */}
+              <div className="city-pill">
+                <span className="city-heart">🤍</span>
+                <select
+                  className="big-dropdown"
+                  value={dropdown}
+                  onChange={(e) => setDropdown(e.target.value)}
+                >
+                  <option value="">City</option>
+                  <option value="mumbai">Mumbai</option>
+                  <option value="goa">Goa</option>
+                  <option value="hyderabad">Hyderabad</option>
+                  <option value="chennai">Chennai</option>
+                  <option value="mysuru">Mysuru</option>
+                  <option value="jaipur">Jaipur</option>
+                  <option value="bengaluru">Bengaluru</option>
+                </select>
+              </div>
 
-            <input
-              type="text"
-              className="big-input"
-              placeholder="Search by city or hotel name..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && searchHotels()}
-            />
+              {/* text input */}
+              <input
+                type="text"
+                className="big-input"
+                placeholder="Search by city or hotel name..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && searchHotels()}
+              />
 
-            <button className="big-search-btn" onClick={searchHotels}>
-              🔍 Search
-            </button>
+              {/* search button */}
+              <button className="big-search-btn" onClick={searchHotels}>
+                Search
+              </button>
+            </div>
+          </div>
+
+          {/* 4️⃣ Discover box */}
+          <div className="hero-inner-box discover-box">
+            <p className="big-discover">
+              Discover stays crafted for cozy nights, dreamy weekend getaways
+              and workcations with a view.
+            </p>
           </div>
         </div>
       </div>
