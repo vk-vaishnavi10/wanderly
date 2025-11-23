@@ -1,0 +1,108 @@
+/* ============================================================
+   ☁️ CLOUD MASCOTS — Used on Transport, Car & Cab pages
+============================================================ */
+
+.transport-cloud-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+  
+  .transport-cloud-mascot {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    animation:
+      cloudFloat 4s ease-in-out infinite alternate,
+      cloudDrift 28s linear infinite;
+  }
+  
+  /* cloud body */
+  .transport-cloud {
+    width: 130px;
+    height: 75px;
+    position: relative;
+  }
+  
+  .puff {
+    position: absolute;
+    background: radial-gradient(circle at 30% 20%, #fff, #e8f6ff);
+    border-radius: 50%;
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.9);
+  }
+  
+  .p1 { width: 80px; height: 60px; left: 28px; top: 8px; }
+  .p2 { width: 60px; height: 48px; left: 0; top: 26px; }
+  .p3 { width: 60px; height: 48px; right: 0; top: 26px; }
+  
+  /* face */
+  .transport-cloud-face {
+    width: 70px;
+    height: 40px;
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .transport-cloud-eye {
+    width: 12px;
+    height: 12px;
+    background: #000;
+    border-radius: 50%;
+    position: absolute;
+    top: 10px;
+    animation: blink 4s infinite;
+  }
+  
+  .transport-cloud-eye.e1 { left: 12px; }
+  .transport-cloud-eye.e2 { right: 12px; }
+  
+  .transport-cloud-mouth {
+    width: 22px;
+    height: 10px;
+    background: #000;
+    border-radius: 0 0 16px 16px;
+    position: absolute;
+    top: 23px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  /* speech bubble */
+  .transport-cloud-bubble {
+    padding: 6px 14px;
+    background: white;
+    border-radius: 16px;
+    font-size: 0.75rem;
+    color: #333;
+    box-shadow:
+      0 0 14px rgba(255,255,255,0.9),
+      0 0 20px rgba(90,210,255,0.6);
+    animation: bubbleFloat 4s ease-in-out infinite alternate;
+  }
+  
+  /* animations */
+  @keyframes cloudFloat {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-8px); }
+  }
+  
+  @keyframes cloudDrift {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(40px); }
+  }
+  
+  @keyframes blink {
+    0%, 95%, 100% { transform: scaleY(1); }
+    97% { transform: scaleY(0.1); }
+  }
+  
+  @keyframes bubbleFloat {
+    0% { transform: translateY(0); opacity: 0.9; }
+    100% { transform: translateY(-3px); opacity: 1; }
+  }
+  

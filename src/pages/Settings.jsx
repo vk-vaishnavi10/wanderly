@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+// 🌍 src/pages/Settings.jsx
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Settings.css";
 import { UserContext } from "../context/UserContext.jsx";
-import { useContext } from "react";
 
+// ⭐ Your cute anime image
+import settingImg from "../assets/setting.png";
 
 export default function Settings() {
   const { user, updateUser } = useContext(UserContext);
+
   const [theme, setTheme] = useState("royal");
   const [notifications, setNotifications] = useState(true);
   const [emailAlerts, setEmailAlerts] = useState(true);
@@ -15,13 +18,11 @@ export default function Settings() {
   const [glow, setGlow] = useState("normal");
   const [language, setLanguage] = useState("English");
   const [quote, setQuote] = useState("");
-
-  const navigate = useNavigate();
-
-  // ⭐ NEW — PROFILE IMAGE STATE
   const [profileImage, setProfileImage] = useState(
     localStorage.getItem("wanderlyProfilePic") || ""
   );
+
+  const navigate = useNavigate();
 
   const quotes = [
     "Wander often, wonder always ✨",
@@ -32,15 +33,13 @@ export default function Settings() {
   ];
 
   useEffect(() => {
-    const random = quotes[Math.floor(Math.random() * quotes.length)];
-    setQuote(random);
+    setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
   }, []);
 
-  // ⭐ HANDLE PROFILE PIC UPLOAD
+  // ⭐ Upload profile picture
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
     const reader = new FileReader();
     reader.onloadend = () => {
       setProfileImage(reader.result);
@@ -49,65 +48,54 @@ export default function Settings() {
     reader.readAsDataURL(file);
   };
 
-  // ⭐ SAVE PROFILE
+  // ⭐ Save profile
   const handleSaveProfile = () => {
     if (profileImage) {
       localStorage.setItem("wanderlyProfilePic", profileImage);
-  
       updateUser({
         ...user,
         profilePic: profileImage,
       });
     }
-  
     alert("✅ Profile updated!");
   };
-  
 
-  /* 🌈 THEME CONFIGURATION */
+  /* 🌈 THEME CONFIG */
   const themeStyles = {
     royal: {
       "--primary-bg": "linear-gradient(180deg, #050013 0%, #0d022e 100%)",
       "--accent": "#f15bb5",
-      "--card-bg": "rgba(255, 255, 255, 0.05)",
-      "--glow-color": "rgba(155, 93, 229, 0.6)",
-      "--button-gradient": "linear-gradient(90deg, #9b5de5, #f15bb5, #00e1ff)",
+      "--card-bg": "rgba(255,255,255,0.05)",
+      "--button-gradient": "linear-gradient(90deg,#9b5de5,#f15bb5,#00e1ff)"
     },
     ocean: {
-      "--primary-bg": "linear-gradient(180deg, #00111f 0%, #004466 100%)",
+      "--primary-bg": "linear-gradient(180deg,#00111f 0%,#004466 100%)",
       "--accent": "#00e1ff",
-      "--card-bg": "rgba(0, 35, 55, 0.25)",
-      "--glow-color": "rgba(0, 225, 255, 0.5)",
-      "--button-gradient": "linear-gradient(90deg, #2193b0, #6dd5ed)",
+      "--card-bg": "rgba(0,35,55,0.25)",
+      "--button-gradient": "linear-gradient(90deg,#2193b0,#6dd5ed)"
     },
     sunset: {
-      "--primary-bg": "linear-gradient(180deg, #331a00 0%, #994d00 100%)",
+      "--primary-bg": "linear-gradient(180deg,#331a00 0%,#994d00 100%)",
       "--accent": "#ff9a00",
-      "--card-bg": "rgba(255, 170, 50, 0.1)",
-      "--glow-color": "rgba(255, 154, 0, 0.5)",
-      "--button-gradient": "linear-gradient(90deg, #ee9ca7, #ffdde1)",
+      "--card-bg": "rgba(255,170,50,0.1)",
+      "--button-gradient": "linear-gradient(90deg,#ee9ca7,#ffdde1)"
     },
     galaxy: {
-      "--primary-bg": "linear-gradient(180deg, #0f0c29 0%, #302b63 50%, #24243e 100%)",
+      "--primary-bg": "linear-gradient(180deg,#0f0c29 0%,#302b63 50%,#24243e 100%)",
       "--accent": "#b2f5ea",
-      "--card-bg": "rgba(25, 15, 55, 0.3)",
-      "--glow-color": "rgba(178, 245, 234, 0.6)",
-      "--button-gradient": "linear-gradient(90deg, #0f2027, #203a43, #2c5364)",
-    },
+      "--card-bg": "rgba(25,15,55,0.3)",
+      "--button-gradient": "linear-gradient(90deg,#0f2027,#203a43,#2c5364)"
+    }
   };
 
-  /* 🌟 APPLY THEME */
+  /* APPLY THEME */
   const applyTheme = () => {
     const selected = themeStyles[theme];
-    if (!selected) return;
-
     Object.entries(selected).forEach(([key, value]) =>
       document.documentElement.style.setProperty(key, value)
     );
 
-    const intensity =
-      glow === "low" ? 0.5 : glow === "high" ? 1.5 : 1.0;
-
+    const intensity = glow === "low" ? 0.5 : glow === "high" ? 1.5 : 1.0;
     document.documentElement.style.setProperty("--glow-strength", intensity);
 
     localStorage.setItem("wanderlyTheme", theme);
@@ -120,7 +108,7 @@ export default function Settings() {
     setTimeout(() => toast.remove(), 2000);
   };
 
-  /* Auto Load Theme */
+  /* LOAD THEME */
   useEffect(() => {
     const savedTheme = localStorage.getItem("wanderlyTheme");
     const savedGlow = localStorage.getItem("wanderlyGlow");
@@ -137,6 +125,12 @@ export default function Settings() {
 
   return (
     <section className="settings-section">
+      
+      {/* 🖼️ Cute Anime Image */}
+      <div className="settings-img-wrapper">
+        <img src={settingImg} alt="settings mascot" className="settings-img" />
+      </div>
+
       <p className="wander-quote">“{quote}”</p>
 
       <h1 className="settings-title">⚙️ Account Settings</h1>
@@ -145,7 +139,8 @@ export default function Settings() {
       </p>
 
       <div className="settings-container">
-        {/* 👤 PROFILE */}
+
+        {/* PROFILE CARD */}
         <div className="settings-card glassy">
           <h2>👤 Profile</h2>
 
@@ -159,10 +154,8 @@ export default function Settings() {
             <input type="email" placeholder="vk@wanderly.com" />
           </div>
 
-          {/* ⭐ Profile Picture Upload */}
           <div className="settings-row">
             <label>Profile Picture:</label>
-
             {profileImage && (
               <img
                 src={profileImage}
@@ -170,12 +163,7 @@ export default function Settings() {
                 alt="preview"
               />
             )}
-
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
-            />
+            <input type="file" accept="image/*" onChange={handleImageUpload} />
           </div>
 
           <button className="settings-btn" onClick={handleSaveProfile}>
@@ -183,9 +171,10 @@ export default function Settings() {
           </button>
         </div>
 
-        {/* 🎨 PERSONALIZATION */}
+        {/* PERSONALIZATION */}
         <div className="settings-card glassy">
           <h2>🎨 Personalization</h2>
+
           <div className="settings-row">
             <label>Theme:</label>
             <select
@@ -245,9 +234,10 @@ export default function Settings() {
           </button>
         </div>
 
-        {/* 🔔 NOTIFICATIONS */}
+        {/* NOTIFICATIONS */}
         <div className="settings-card glassy">
           <h2>🔔 Notifications</h2>
+
           <div className="settings-row toggle">
             <label>Email Alerts</label>
             <input
@@ -278,17 +268,20 @@ export default function Settings() {
           <button className="settings-btn">Update Preferences</button>
         </div>
 
-        {/* 🔐 SECURITY */}
+        {/* SECURITY */}
         <div className="settings-card glassy">
           <h2>🔐 Security</h2>
+
           <div className="settings-row">
             <label>Change Password:</label>
             <input type="password" placeholder="Enter new password" />
           </div>
+
           <div className="settings-row">
             <label>Confirm Password:</label>
             <input type="password" placeholder="Confirm password" />
           </div>
+
           <button className="settings-btn">Update Password</button>
 
           <div className="session-box">
@@ -300,44 +293,32 @@ export default function Settings() {
           </div>
         </div>
 
-        {/* 🧳 DATA */}
+        {/* DATA */}
         <div className="settings-card glassy">
           <h2>🧳 Data & Privacy</h2>
-          <div className="settings-row">
-            <button className="settings-btn">Download My Data</button>
-          </div>
-          <div className="settings-row">
-            <button className="settings-btn">Clear Local Cache</button>
-          </div>
-          <div className="settings-row">
-            <button className="settings-btn">Delete My Account</button>
-          </div>
+
+          <button className="settings-btn">Download My Data</button>
+          <button className="settings-btn">Clear Local Cache</button>
+          <button className="settings-btn">Delete My Account</button>
         </div>
 
-        {/* ✈️ QUICK ACCESS */}
+        {/* QUICK ACCESS */}
         <div className="settings-card glassy">
           <h2>✈️ Quick Access</h2>
-          <div className="shortcut-links">
-            <button
-              className="settings-btn"
-              onClick={() => navigate("/mytrips")}
-            >
-              My Trips
-            </button>
-            <button
-              className="settings-btn"
-              onClick={() => navigate("/memories")}
-            >
-              Memories
-            </button>
-            <button
-              className="settings-btn"
-              onClick={() => navigate("/budget")}
-            >
-              Budget
-            </button>
-          </div>
+
+          <button className="settings-btn" onClick={() => navigate("/mytrips")}>
+            My Trips
+          </button>
+
+          <button className="settings-btn" onClick={() => navigate("/memories")}>
+            Memories
+          </button>
+
+          <button className="settings-btn" onClick={() => navigate("/budget")}>
+            Budget
+          </button>
         </div>
+
       </div>
 
       <footer className="settings-footer">

@@ -1,9 +1,11 @@
 // src/pages/DiningDetails.jsx
-import React, { useState, useEffect } from "react";
+
+import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-import "./DiningDetails.css"; // 👉 Updated CSS import
+import "./DiningDetails.css"; 
+import CatMouseMascot from "../components/CatMouseMascot";
 import stImg from "../images/st.jpeg";
 
 const diningDetails = {
@@ -46,67 +48,34 @@ export default function DiningDetails() {
     pax: 2,
   });
 
-  const [countdown, setCountdown] = useState(0);
-
-  useEffect(() => {
-    if (countdown > 0) {
-      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [countdown]);
-
-  const handleBooking = async () => {
-    if (!reservation.dateTime || reservation.pax < 1) {
-      Swal.fire("⚠️ Select valid date & number of guests.", "", "warning");
-      return;
-    }
-  
-    try {
-      const payload = {
-        user: { id: 1 },
-        dining: { id: parseInt(id) },
-        reservationTime: reservation.dateTime + ":00",
-        pax: parseInt(reservation.pax),
-      };
-  
-      
-  
-      Swal.fire({
-        title: "🍽️ Reservation Confirmed!",
-        text: `Table booked at ${restaurant.name}!`,
-        icon: "success",
-        confirmButtonColor: "#ffd47f",
-        background: "#0b0018",
-        color: "#fff",
-      }).then(() => {
-        const price = parseInt(restaurant.priceRange.replace(/[₹,]/g, ""));
-  
-        navigate("/payment", {
-          state: {
-            paymentData: {
-              type: "dining",
-              title: restaurant.name,
-              price: price,
-              details: reservation,
-            },
-          },
-        });
-      });
-  
-    } catch (error) {
-      Swal.fire("❌ Error", "Unable to save reservation.", "error");
-    }
-  };
-  
-
   if (!restaurant) {
     return <h2 className="text-center text-warning mt-5">⚠️ Restaurant not found!</h2>;
   }
 
+  const handleBooking = () => {
+    if (!reservation.dateTime || reservation.pax < 1) {
+      Swal.fire("⚠️ Please fill all fields correctly.", "", "warning");
+      return;
+    }
+
+    Swal.fire({
+      title: "🍽️ Reservation Confirmed!",
+      text: `Table booked at ${restaurant.name}!`,
+      icon: "success",
+      background: "#0b0018",
+      color: "#fff",
+      confirmButtonColor: "#ffd47f",
+    }).then(() => navigate("/payment"));
+  };
+
   return (
-    <div className="dining-details container py-5 text-light">
+    <div className="dining-details container py-5">
+
+      {/* ⭐ CSS MASCOT */}
+      <CatMouseMascot />
+
       <div className="dining-hero-card mb-5">
-        <img src={restaurant.img} alt={restaurant.name} className="dining-hero-img" />
+        <img src={restaurant.img} className="dining-hero-img" alt="Dining" />
 
         <div className="dining-hero-info">
           <h2>{restaurant.name}</h2>
@@ -132,20 +101,17 @@ export default function DiningDetails() {
         <label className="form-label mt-3">👥 Number of Guests</label>
         <input
           type="number"
-          className="form-control"
           min="1"
+          className="form-control"
           value={reservation.pax}
           onChange={(e) => setReservation({ ...reservation, pax: e.target.value })}
         />
 
-        <button className="confirm-btn mt-4 w-100" onClick={handleBooking}>
+        <button className="confirm-btn w-100 mt-4" onClick={handleBooking}>
           🍷 Confirm Reservation
         </button>
-
-        {countdown > 0 && (
-          <p className="countdown text-center mt-3">⏳ Redirecting in {countdown}s...</p>
-        )}
       </div>
+
     </div>
   );
 }

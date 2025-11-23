@@ -1,5 +1,5 @@
 /* ============================================================
-   🌍 WANDERLY - REGISTER PAGE (Dream Voyage + Big Cat)
+   🌍 WANDERLY - REGISTER PAGE (Dream Voyage)
    Author: Vaishnavi ✨
 ============================================================ */
 
@@ -46,8 +46,6 @@
   z-index: 2;
   padding: 3rem;
   box-shadow: 12px 0 50px rgba(0, 0, 0, 0.6);
-
-  /* entrance + later gentle pull when cat tugs it */
   animation:
     slideInLeft 1.1s ease forwards,
     overlayNudge 3.4s ease 1.4s forwards;
@@ -64,7 +62,6 @@
   }
 }
 
-/* small nudge when cat "pulls" the panel */
 @keyframes overlayNudge {
   0%, 35% {
     transform: translateX(0);
@@ -260,337 +257,87 @@
     font-size: 1.8rem;
   }
 
-  .register-cat-entrance {
-    display: none; /* hide big cat on very small screens */
+  /* hide cat illustration on very small screens */
+  .register-cat-illustration {
+    display: none;
   }
 }
-
 /* ============================================================
-   🐱 BIG HYBRID CAT (Option C) + ENTRANCE ANIMATION
+   🐱 WANDERLY CAT ILLUSTRATION (IMAGE VERSION) — TOP RIGHT
 ============================================================ */
 
-.register-cat-entrance {
+.register-cat-illustration {
   position: fixed;
-  bottom: 4vh;
-  left: calc(30% - 40px); /* sit right next to overlay edge */
-  width: 260px;
-  height: 260px;
-  pointer-events: none; /* allow clicking through */
-  z-index: 3;
+  top: 5vh;           /* move to top */
+  right: 3vw;         /* move to right */
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.4rem;
-
-  /* full entrance: from video side ➝ peek ➝ pull ➝ float */
-  animation: catEntrance 4s ease 0.8s forwards;
+  z-index: 5;
+  pointer-events: none; /* doesn't block clicks */
+  animation: catFloat 4s ease-in-out infinite;
 }
 
-@keyframes catEntrance {
+.register-cat-image {
+  width: 400px;       /* bigger because more space */
+  max-width: 400px;
+  filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.9));
+  animation: catWave 1.6s ease-in-out infinite alternate;
+}
+
+/* floating animation */
+@keyframes catFloat {
   0% {
-    transform: translate(160px, 40px) scale(0.85);
-    opacity: 0;
-  }
-  20% {
-    transform: translate(40px, 10px) scale(0.9);
-    opacity: 1; /* peek */
-  }
-  35% {
-    transform: translate(10px, 0px) scale(0.96);
+    transform: translateY(0);
   }
   50% {
-    transform: translate(-6px, -6px) scale(1); /* pulling overlay */
-  }
-  65% {
-    transform: translate(0px, -2px) scale(1);
+    transform: translateY(-10px);
   }
   100% {
-    transform: translate(0px, 0px) scale(1);
+    transform: translateY(0);
   }
 }
 
-/* glowing aurora behind cat */
-.register-cat-entrance .cat-aura {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  width: 220px;
-  height: 220px;
-  transform: translateX(-50%);
-  background:
-    radial-gradient(circle at 30% 20%, rgba(0, 255, 255, 0.4), transparent 60%),
-    radial-gradient(circle at 70% 80%, rgba(255, 105, 180, 0.45), transparent 65%);
-  filter: blur(10px);
-  opacity: 0.9;
-  z-index: -1;
-  animation: catAuraPulse 5s ease-in-out infinite alternate;
-}
-
-@keyframes catAuraPulse {
-  0% {
-    opacity: 0.7;
-    transform: translateX(-50%) scale(0.95);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(-50%) scale(1.05);
-  }
-}
-
-/* main cat wrapper */
-.register-cat-entrance .big-cat {
-  position: relative;
-  width: 200px;
-  height: 200px;
-}
-
-/* ---------------- HEAD + EARS ---------------- */
-.register-cat-entrance .big-cat-ears {
-  position: absolute;
-  top: 12px;
-  left: 50%;
-  width: 140px;
-  height: 60px;
-  transform: translateX(-50%);
-}
-
-.register-cat-entrance .cat-ear {
-  position: absolute;
-  width: 55px;
-  height: 60px;
-  background: #fff7ff;
-  border-radius: 70% 70% 10% 10%;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
-}
-
-.register-cat-entrance .ear-left {
-  left: 0;
-  transform: rotate(-12deg);
-}
-.register-cat-entrance .ear-right {
-  right: 0;
-  transform: rotate(12deg);
-}
-
-.register-cat-entrance .cat-ear::after {
-  content: "";
-  position: absolute;
-  inset: 12px;
-  border-radius: inherit;
-  background: radial-gradient(circle at 30% 20%, #ff9acb, #ff6aa8);
-}
-
-/* head */
-.register-cat-entrance .cat-head {
-  position: absolute;
-  top: 35px;
-  left: 50%;
-  width: 150px;
-  height: 130px;
-  transform: translateX(-50%);
-  background: #ffffff;
-  border-radius: 60% 60% 55% 55%;
-  box-shadow:
-    0 0 20px rgba(255, 255, 255, 0.9),
-    0 0 35px rgba(153, 102, 255, 0.6);
-}
-
-/* ---------------- EYES ---------------- */
-.register-cat-entrance .cat-eye {
-  position: absolute;
-  top: 40px;
-  width: 46px;
-  height: 46px;
-  background: radial-gradient(circle at 30% 30%, #a9ffff, #00a3ff 60%, #004b8f);
-  border-radius: 50%;
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
-  overflow: hidden;
-  animation: catBlink 5s infinite;
-}
-
-.register-cat-entrance .eye-left {
-  left: 24px;
-}
-.register-cat-entrance .eye-right {
-  right: 24px;
-}
-
-.register-cat-entrance .cat-pupil {
-  position: absolute;
-  inset: 8px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 20%, #ffffff, #000000);
-  transform: scale(0.55);
-}
-
-.register-cat-entrance .cat-eye-shine {
-  position: absolute;
-  top: 8px;
-  left: 10px;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.8);
-  filter: blur(1px);
-}
-
-@keyframes catBlink {
-  0%,
-  92%,
-  100% {
-    transform: scaleY(1);
-  }
-  95% {
-    transform: scaleY(0.12);
-  }
-}
-
-/* blush */
-.register-cat-entrance .cat-blush {
-  position: absolute;
-  top: 82px;
-  width: 30px;
-  height: 18px;
-  background: radial-gradient(circle, rgba(255, 160, 200, 0.85), transparent);
-  border-radius: 50%;
-}
-.register-cat-entrance .blush-left {
-  left: 18px;
-}
-.register-cat-entrance .blush-right {
-  right: 18px;
-}
-
-/* nose + mouth */
-.register-cat-entrance .cat-nose {
-  position: absolute;
-  top: 78px;
-  left: 50%;
-  width: 16px;
-  height: 12px;
-  transform: translateX(-50%);
-  background: #ff86b5;
-  border-radius: 50% 50% 60% 60%;
-  box-shadow: 0 0 6px rgba(255, 134, 181, 0.7);
-}
-
-.register-cat-entrance .cat-mouth {
-  position: absolute;
-  top: 90px;
-  left: 50%;
-  width: 32px;
-  height: 18px;
-  transform: translateX(-50%);
-  border-bottom: 3px solid #4a1848;
-  border-radius: 0 0 18px 18px;
-}
-
-/* ---------------- BODY + PAWS ---------------- */
-.register-cat-entrance .cat-body {
-  position: absolute;
-  bottom: 8px;
-  left: 50%;
-  width: 120px;
-  height: 100px;
-  transform: translateX(-50%);
-  background: #ffffff;
-  border-radius: 60% 60% 55% 55%;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-}
-
-.register-cat-entrance .cat-belly {
-  position: absolute;
-  inset: 25px 18px 14px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 10%, #ffffff, #f3f1ff);
-}
-
-/* paws row */
-.register-cat-entrance .cat-paws-row {
-  position: absolute;
-  bottom: -4px;
-  left: 50%;
-  width: 100px;
-  display: flex;
-  justify-content: space-between;
-  transform: translateX(-50%);
-}
-
-.register-cat-entrance .cat-paw {
-  width: 32px;
-  height: 28px;
-  background: #ffffff;
-  border-radius: 50% 50% 40% 40%;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.18);
-}
-
-/* front paw waves */
-.register-cat-entrance .front-paw {
-  transform-origin: top center;
-}
-
-/* Wave animation starts after entrance */
-.register-cat-entrance .waving-paw {
-  animation: catWave 0.85s ease-in-out 3.2s infinite alternate;
-}
-
+/* waving rotation animation */
 @keyframes catWave {
-  from {
-    transform: rotate(0deg) translateY(0);
+  0% {
+    transform: rotate(0deg);
   }
-  to {
-    transform: rotate(22deg) translateY(-4px);
+  50% {
+    transform: rotate(4deg);
   }
-}
-
-/* ---------------- TAIL ---------------- */
-.register-cat-entrance .cat-tail {
-  position: absolute;
-  right: -16px;
-  bottom: 14px;
-  width: 26px;
-  height: 110px;
-  background: #ffffff;
-  border-radius: 60px;
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
-  transform-origin: top center;
-  transform: rotate(25deg);
-  animation: tailSway 1.4s ease-in-out 2.8s infinite alternate;
-}
-
-@keyframes tailSway {
-  from {
-    transform: rotate(18deg);
-  }
-  to {
-    transform: rotate(35deg);
+  100% {
+    transform: rotate(-3deg);
   }
 }
 
-/* ---------------- SPEECH BUBBLE ---------------- */
-.register-cat-entrance .cat-speech {
-  margin-top: 0.2rem;
-  padding: 6px 14px;
-  border-radius: 14px;
-  font-size: 0.78rem;
+/* speech bubble – now right-side friendly */
+.register-cat-bubble {
+  padding: 8px 16px;
+  margin-top: 6px;
+  border-radius: 16px;
+  font-size: 0.8rem;
   text-align: center;
-  background: rgba(35, 0, 60, 0.86);
+  color: #fff;
+  background: rgba(35, 0, 60, 0.85);
   box-shadow:
-    0 0 10px rgba(155, 93, 229, 0.8),
+    0 0 10px rgba(155, 93, 229, 0.9),
     0 0 25px rgba(0, 255, 255, 0.35);
   border: 1px solid rgba(185, 140, 255, 0.7);
   backdrop-filter: blur(8px);
   line-height: 1.25;
-  animation: bubbleFloat 4s ease-in-out 2.4s infinite alternate;
+  animation: bubbleFloat 3.6s ease-in-out infinite alternate;
 }
 
+/* bubble float animation */
 @keyframes bubbleFloat {
   0% {
     transform: translateY(0);
     opacity: 0.9;
   }
   100% {
-    transform: translateY(-4px);
+    transform: translateY(-6px);
     opacity: 1;
   }
 }

@@ -1,129 +1,68 @@
 /* ============================================================
-   🚕 WANDERLY - CAB BOOKING PAGE (Luxury Aurora Edition)
-   Designed by Vaishnavi ✨ — Silver × Cyan × Gold × Rose × Violet Harmony
+   🚕 WANDERLY - CAB BOOKING PAGE (Aurora Edition)
 ============================================================ */
 
-/* 🌌 Background Section */
 .cab-booking {
-  background: radial-gradient(circle at top, #0a0020 0%, #13003a 60%, #090018 100%);
+  background: radial-gradient(circle at top, #8128e6 0%, #47cbcf 60%, #090018 100%);
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   padding: 6rem 1rem 3rem;
   font-family: "Poppins", sans-serif;
-  box-sizing: border-box;
-  overflow-x: hidden;
-  background-size: 200% 200%;
   animation: auroraShift 10s ease-in-out infinite alternate;
+  background-size: 200% 200%;
+  position: relative;
 }
 
-/* 🚖 Booking Card */
+/* Booking Card */
 .cab-booking-card {
   background: rgba(20, 15, 45, 0.9);
   border: 1.5px solid rgba(255, 255, 255, 0.25);
   border-radius: 18px;
   padding: 2.5rem;
-  max-width: 480px;
+  max-width: 650px;
   width: 100%;
-  box-shadow: 0 0 35px rgba(255, 236, 180, 0.25),
-    0 0 25px rgba(98, 211, 255, 0.2);
   color: #f5f8ff;
   text-align: left;
   margin-top: 1rem;
-  transition: all 0.35s ease;
   position: relative;
+  z-index: 10;
 }
 
-.cab-booking-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 0 45px rgba(255, 236, 180, 0.4),
-    0 0 25px rgba(100, 230, 255, 0.3);
-}
-
-/* 💫 Floating Icon */
-.cab-booking-card::before {
-  content: "🚖";
-  position: absolute;
-  top: -22px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1.9rem;
-  filter: drop-shadow(0 0 10px rgba(255, 239, 171, 0.6));
-}
-
-/* 🏷️ Header */
 .cab-booking-card h2 {
   text-align: center;
   font-weight: 800;
-  margin-bottom: 1rem;
   font-size: 1.9rem;
-  background: linear-gradient(
-    90deg,
-    #c5f6ff,
-    #ffffff,
-    #ffe29f,
-    #fcb7d4,
-    #bca7ff
-  );
+  background: linear-gradient(90deg, #c5f6ff, #ffffff, #ffe29f, #fcb7d4);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  letter-spacing: 1px;
-  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
 }
 
-.cab-booking-card p {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  color: #eaeaf9;
-  font-size: 0.95rem;
+/* Labels */
+.cab-booking-card label {
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  display: block;
+  color: #bdf9ff;
 }
 
-/* ✏️ Input & Select Fields */
+/* Inputs */
 .cab-booking-card input,
 .cab-booking-card select {
   width: 100%;
   padding: 0.8rem 1rem;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.25);
-  margin-bottom: 1.3rem;
   background: rgba(15, 10, 30, 0.85);
   color: #f6f9ff;
-  font-size: 0.95rem;
-  outline: none;
-  transition: 0.3s ease;
+  margin-bottom: 1.3rem;
+  font-size: 1rem;
 }
 
-.cab-booking-card input::placeholder {
-  color: rgba(230, 230, 245, 0.6);
-  font-style: italic;
-}
-
-.cab-booking-card input:focus,
-.cab-booking-card select:focus {
-  border-color: #ffe29f;
-  box-shadow: 0 0 14px rgba(255, 239, 171, 0.5);
-}
-
-/* 🏷 Labels */
-.cab-booking-card label {
-  font-weight: 600;
-  margin-bottom: 0.4rem;
-  display: block;
-  color: #bdf9ff;
-  font-size: 0.9rem;
-}
-
-/* 🚕 Confirm Booking Button */
+/* Submit Button */
 .cab-booking-card button {
-  background: linear-gradient(
-    90deg,
-    #62d3ff,
-    #ffe29f,
-    #ffc76e,
-    #fcb7d4,
-    #bca7ff
-  );
+  background: linear-gradient(90deg, #62d3ff, #ffe29f, #ffc76e, #fcb7d4);
   color: #1a1a1a;
   font-weight: 700;
   border: none;
@@ -132,71 +71,121 @@
   border-radius: 12px;
   font-size: 1.05rem;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 20px rgba(255, 239, 171, 0.25),
-    0 0 15px rgba(98, 211, 255, 0.2);
+  transition: 0.3s ease;
 }
 
 .cab-booking-card button:hover {
   transform: scale(1.05);
-  background: linear-gradient(
-    90deg,
-    #ffc76e,
-    #ffe29f,
-    #62d3ff,
-    #fcb7d4,
-    #bca7ff
-  );
-  box-shadow: 0 0 25px rgba(255, 239, 171, 0.5),
-    0 0 20px rgba(100, 230, 255, 0.4);
 }
 
-/* 🌈 Aurora Background Animation */
+/* Back Button */
+.back-transport-btn {
+  margin-top: 1.5rem;
+  width: 100%;
+  padding: 0.8rem;
+  font-weight: 700;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffe29f;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: 0.3s;
+}
+
+.back-transport-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+  transform: scale(1.03);
+}
+
+/* ============================================================
+   ☁ CLOUD MASCOT
+============================================================ */
+
+.cab-cloud-mascot {
+  position: fixed;
+  top: 3rem;
+  left: 20rem;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: cloudFloat 4s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.cloud {
+  position: relative;
+  width: 130px;
+  height: 75px;
+}
+
+.puff {
+  position: absolute;
+  background: radial-gradient(circle, #fff, #e8f6ff);
+  border-radius: 50%;
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.9);
+}
+
+.p1 { width: 80px; height: 60px; left: 28px; top: 8px; }
+.p2 { width: 60px; height: 48px; left: 0; top: 26px; }
+.p3 { width: 60px; height: 48px; right: 0; top: 26px; }
+
+.cloud-face {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  width: 70px;
+  height: 40px;
+  transform: translateX(-50%);
+}
+
+.cloud-eye {
+  width: 12px;
+  height: 12px;
+  background: #000;
+  border-radius: 50%;
+  position: absolute;
+  top: 10px;
+}
+
+.e1 { left: 14px; }
+.e2 { right: 14px; }
+
+.cloud-mouth {
+  width: 20px;
+  height: 8px;
+  background: #000;
+  border-radius: 0 0 12px 12px;
+  position: absolute;
+  left: 50%;
+  top: 23px;
+  transform: translateX(-50%);
+}
+
+/* Speech Bubble */
+.cloud-speech {
+  margin-top: 0.4rem;
+  padding: 6px 14px;
+  background: #fff;
+  border-radius: 16px;
+  font-size: 0.75rem;
+  color: #333;
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.9);
+  animation: bubbleFloat 3s ease-in-out infinite alternate;
+}
+
+@keyframes cloudFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-6px); }
+}
+
+@keyframes bubbleFloat {
+  0% { transform: translateY(0); opacity: 0.9; }
+  100% { transform: translateY(-6px); opacity: 1; }
+}
+
+/* Aurora animation */
 @keyframes auroraShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
-  }
-}
-
-/* 🧠 Responsive Design */
-@media (max-width: 768px) {
-  .cab-booking {
-    padding: 5rem 1rem 2rem;
-  }
-
-  .cab-booking-card {
-    max-width: 90%;
-    padding: 1.8rem;
-  }
-
-  .cab-booking-card h2 {
-    font-size: 1.5rem;
-  }
-
-  .cab-booking-card button {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .cab-booking {
-    padding: 4.5rem 1rem 2rem;
-  }
-
-  .cab-booking-card {
-    padding: 1.5rem;
-  }
-
-  .cab-booking-card input,
-  .cab-booking-card select {
-    padding: 0.7rem 0.9rem;
-    font-size: 0.9rem;
-  }
-
-  .cab-booking-card button {
-    padding: 0.8rem;
-  }
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
 }

@@ -1,0 +1,216 @@
+/* ============================================================
+   🐱🐭 PURE CSS CAT + MOUSE DINING MASCOT
+============================================================ */
+
+.catmouse-mascot {
+    position: fixed;
+    top: 6rem;
+    left: 16rem;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: cmFloat 3.5s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  
+  /* ---------- CAT ---------- */
+  
+  .cm-cat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .cm-cat-head {
+    width: 80px;
+    height: 70px;
+    position: relative;
+  }
+  
+  .cm-cat-ear {
+    width: 26px;
+    height: 32px;
+    background: white;
+    border-radius: 70% 70% 0 0;
+    position: absolute;
+    top: -8px;
+  }
+  
+  .cm-cat-ear-left { left: 5px; transform: rotate(-12deg); }
+  .cm-cat-ear-right { right: 5px; transform: rotate(12deg); }
+  
+  .cm-cat-ear::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    background: #ffafc1;
+    border-radius: inherit;
+  }
+  
+  .cm-cat-face {
+    position: absolute;
+    inset: 6px 4px;
+    background: #ffffff;
+    border-radius: 50px;
+    box-shadow: 0 0 15px rgba(255,255,255,0.9);
+  }
+  
+  .cm-cat-eye {
+    position: absolute;
+    width: 14px;
+    height: 18px;
+    border-radius: 50%;
+    background: radial-gradient(circle, white, #baffb4, #3e732d, black);
+    top: 24px;
+  }
+  
+  .cm-cat-eye-left { left: 20px; }
+  .cm-cat-eye-right { right: 20px; }
+  
+  .cm-cat-mouth {
+    width: 28px;
+    height: 16px;
+    background: #ff7fa0;
+    border-radius: 0 0 20px 20px;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .cm-cat-cheek {
+    width: 16px;
+    height: 10px;
+    background: #ffbfd1;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 16px;
+  }
+  
+  .cm-cat-cheek-left { left: 12px; }
+  .cm-cat-cheek-right { right: 12px; }
+  
+  .cm-cat-paws {
+    display: flex;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  
+  .cm-cat-paw {
+    width: 26px;
+    height: 18px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 0 8px rgba(255,255,255,0.7);
+  }
+  
+  /* ---------- MOUSE ---------- */
+  
+  .cm-mouse {
+    margin-top: 4px;
+    position: relative;
+  }
+  
+  .cm-mouse-head {
+    width: 48px;
+    height: 44px;
+    position: relative;
+  }
+  
+  .cm-mouse-ear {
+    width: 20px;
+    height: 20px;
+    background: #ffd9b0;
+    border-radius: 50%;
+    position: absolute;
+    top: -8px;
+  }
+  
+  .cm-mouse-ear-left { left: 4px; }
+  .cm-mouse-ear-right { right: 4px; }
+  
+  .cm-mouse-ear::before {
+    content: "";
+    inset: 4px;
+    position: absolute;
+    background: #ffb98f;
+    border-radius: inherit;
+  }
+  
+  .cm-mouse-face {
+    inset: 4px 3px;
+    position: absolute;
+    background: #ffd2a2;
+    border-radius: 40px;
+  }
+  
+  .cm-mouse-eye {
+    width: 8px;
+    height: 10px;
+    background: black;
+    border-radius: 50%;
+    position: absolute;
+    top: 14px;
+  }
+  
+  .cm-mouse-eye-left { left: 12px; }
+  .cm-mouse-eye-right { right: 12px; }
+  
+  .cm-mouse-mouth {
+    width: 16px;
+    height: 6px;
+    background: #7a2b16;
+    border-radius: 0 0 10px 10px;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .cm-mouse-arm {
+    width: 26px;
+    height: 10px;
+    background: #ffd2a2;
+    border-radius: 20px;
+    position: absolute;
+    bottom: -4px;
+    left: 8px;
+    transform: rotate(18deg);
+  }
+  
+  /* ---------- Bubble ---------- */
+  
+  .cm-bubble {
+    margin-top: 0.4rem;
+    background: white;
+    padding: 6px 14px;
+    border-radius: 16px;
+    font-size: 0.78rem;
+    color: #333;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(255,255,255,1);
+    animation: cmBubble 3s ease-in-out infinite alternate;
+  }
+  
+  /* ---------- Animations ---------- */
+  
+  @keyframes cmFloat {
+    from { transform: translateY(0); }
+    to { transform: translateY(-6px); }
+  }
+  
+  @keyframes cmBubble {
+    from { transform: translateY(0); opacity: .92; }
+    to { transform: translateY(-3px); opacity: 1; }
+  }
+  
+  /* Mobile */
+  @media (max-width: 768px) {
+    .catmouse-mascot {
+      left: 10rem;
+      top: 5rem;
+      transform: scale(.85);
+    }
+  }
+  

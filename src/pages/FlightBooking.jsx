@@ -7,25 +7,21 @@ import { addFlightBooking } from "../services/api";
 
 const flightVideo = "/videos/flightbg.mp4";
 
-// Convert "2h 15m" or "2h" or "45m" to minutes
+// Convert "2h 15m" to minutes
 const durationToMinutes = (duration) => {
   if (!duration || typeof duration !== "string") return 0;
-  const hoursMatch = duration.match(/(\d+)\s*h/);
-  const minsMatch = duration.match(/(\d+)\s*m/);
-  const hours = hoursMatch ? parseInt(hoursMatch[1], 10) : 0;
-  const mins = minsMatch ? parseInt(minsMatch[1], 10) : 0;
+  const hours = parseInt(duration.match(/(\d+)h/)?.[1] || 0);
+  const mins = parseInt(duration.match(/(\d+)m/)?.[1] || 0);
   return hours * 60 + mins;
 };
 
-// Add minutes to time "HH:MM"
+// Add minutes to time
 const addMinutes = (time, minutes) => {
   if (!time) return "";
-  const [hStr, mStr] = time.split(":");
-  const h = Number(hStr || 0);
-  const m = Number(mStr || 0);
-  const date = new Date();
-  date.setHours(h, m + minutes);
-  return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  const [h, m] = time.split(":").map(Number);
+  const d = new Date();
+  d.setHours(h, m + minutes);
+  return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 };
 
 export default function FlightBooking() {
@@ -44,13 +40,8 @@ export default function FlightBooking() {
   };
   const themeColor = airlineColors[flight?.airline] || "#ff7a18";
 
-  // guard
   if (!flight) {
-    return (
-      <h2 className="text-light text-center mt-5">
-        ⚠️ Flight not found!
-      </h2>
-    );
+    return <h2 className="text-light text-center mt-5">⚠️ Flight not found!</h2>;
   }
 
   const takeoffTimes = ["06:30", "08:45", "11:20", "14:10", "17:55", "21:15"];
@@ -69,11 +60,7 @@ export default function FlightBooking() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const cleanPrice = () => {
-    if (!flight) return 0;
-    if (typeof flight.price === "string") {
-      return Number(String(flight.price).replace(/[^0-9]/g, "")) || 0;
-    }
-    return Number(flight.price) || 0;
+    return Number(String(flight.price).replace(/[^0-9]/g, "")) || 0;
   };
 
   const handleBooking = async (e) => {
@@ -99,56 +86,32 @@ export default function FlightBooking() {
             type: "flight",
             title: flight.airline,
             price: amount,
-            details: {
-              route: `${flight.from} → ${flight.to}`,
-              ...bookingDetails,
-            },
+            details: bookingDetails,
           },
         },
       });
     } catch (err) {
-      console.error("❌ Booking failed:", err);
       alert("Booking failed!");
     }
   };
 
   return (
-    <div
-      className="flight-booking-page"
-      style={{ "--theme": themeColor }}
-    >
-      {/* 🎥 Background video */}
-      <video
-        className="flight-bg-video"
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-      >
+    <div className="flight-booking-page" style={{ "--theme": themeColor }}>
+      {/* Background Video */}
+      <video className="flight-bg-video" autoPlay loop muted playsInline>
         <source src={flightVideo} type="video/mp4" />
       </video>
 
-      {/* soft overlay */}
-      <div className="flight-overlay" aria-hidden="true"></div>
+      <div className="flight-overlay"></div>
 
-      {/* main booking content */}
       <div className="booking-card-container">
-        {/* left info card */}
         <div className="flight-info-card">
-          <img
-            src={flight.image}
-            alt={flight.airline}
-            className="airline-logo"
-          />
+          <img src={flight.image} alt={flight.airline} className="airline-logo" />
 
-          <h2 className="airline-name" style={{ color: themeColor }}>
-            {flight.airline}
-          </h2>
+          <h2 className="airline-name">{flight.airline}</h2>
 
           <p className="flight-route">
-            {flight.from} <span className="plane-icon">✈️</span>{" "}
-            {flight.to}
+            {flight.from} <span className="plane-icon">✈️</span> {flight.to}
           </p>
 
           <div className="time-box">
@@ -157,7 +120,7 @@ export default function FlightBooking() {
               <p>Takeoff</p>
             </div>
 
-            <div className="time-line" aria-hidden="true"></div>
+            <div className="time-line"></div>
 
             <div>
               <h3>{landing}</h3>
@@ -172,32 +135,20 @@ export default function FlightBooking() {
           <div className="stops-box">
             <h4>Stops:</h4>
             {flight.stops?.length ? (
-              flight.stops.map((s, i) => (
-                <p key={i}>
-                  {s.city} ({s.airport}) — Delay {s.delay}
-                </p>
-              ))
+              flight.stops.map((s, i) => <p key={i}>{s.city} ({s.airport})</p>)
             ) : (
               <p>Direct</p>
             )}
           </div>
 
-          <div className="glow-line" aria-hidden="true" />
+          <div className="glow-line" />
         </div>
 
-        {/* right booking form */}
-        <div
-          className="booking-form-card"
-          role="region"
-          aria-label="booking form"
-        >
+        {/* Booking Form */}
+        <div className="booking-form-card">
           <h3>Confirm Your Booking</h3>
 
-          <form
-            onSubmit={handleBooking}
-            className="booking-form"
-            autoComplete="on"
-          >
+          <form onSubmit={handleBooking} className="booking-form">
             <label htmlFor="fullName">👤 Full Name</label>
             <input
               id="fullName"
@@ -207,7 +158,6 @@ export default function FlightBooking() {
               required
               value={formData.fullName}
               onChange={handleChange}
-              autoComplete="name"
             />
 
             <label htmlFor="email">📧 Email</label>
@@ -219,7 +169,6 @@ export default function FlightBooking() {
               required
               value={formData.email}
               onChange={handleChange}
-              autoComplete="email"
             />
 
             <label htmlFor="passengers">👥 Passengers</label>
@@ -256,68 +205,40 @@ export default function FlightBooking() {
               onChange={handleChange}
             />
 
-            <button
-              type="submit"
-              className="confirm-btn"
-              style={{ background: themeColor }}
-            >
+            <button type="submit" className="confirm-btn">
               ✈️ Confirm & Pay
             </button>
 
-            <button
-              type="button"
-              className="back-btn"
-              onClick={() => navigate(-1)}
-            >
+            <button type="button" className="back-btn" onClick={() => navigate(-1)}>
               ⬅ Back to Flights
             </button>
           </form>
         </div>
       </div>
 
-      {/* 🌈 Neon chubby welcome cat */}
-      <NeonBookingCat />
+      {/* ☁️ Cloud Helper (CSS only) */}
+      <CloudHelper />
     </div>
   );
 }
 
-/* 🐱 Neon chubby black cat component (pure CSS drawing) */
-const NeonBookingCat = () => {
+/* ☁️ CLOUD COMPONENT */
+const CloudHelper = () => {
   return (
-    <div className="neon-cat-container" aria-hidden="true">
-      {/* glowing ribbon the cat is "pulling" */}
-      <div className="cat-ribbon" />
-
-      {/* cat body */}
-      <div className="neon-cat">
-        <div className="cat-head">
-          <div className="cat-ear ear-left" />
-          <div className="cat-ear ear-right" />
-          <div className="cat-face">
-            <span className="cat-eye eye-left" />
-            <span className="cat-eye eye-right" />
-            <span className="cat-blush blush-left" />
-            <span className="cat-blush blush-right" />
-            <span className="cat-mouth" />
-          </div>
+    <div className="flight-cloud-helper" aria-hidden="true">
+      <div className="cloud">
+        <div className="puff p1" />
+        <div className="puff p2" />
+        <div className="puff p3" />
+        <div className="cloud-face">
+          <div className="cloud-eye" />
+          <div className="cloud-eye" />
+          <div className="cloud-mouth" />
         </div>
-
-        <div className="cat-body">
-          <div className="cat-belly" />
-          <div className="cat-paws">
-            <span className="cat-paw paw-left" />
-            <span className="cat-paw paw-right paw-wave" />
-          </div>
-          <div className="cat-tail" />
-        </div>
-
-        <div className="cat-glow-orb" />
       </div>
 
-      {/* speech bubble */}
-      <div className="cat-speech-bubble">
-        <span className="line-1">Hello traveller! ✈️</span>
-        <span className="line-2">Welcome to your flight booking 💜</span>
+      <div className="cloud-speech">
+        Hello traveller! ✈️<br />Ready to book your flight? 💜
       </div>
     </div>
   );

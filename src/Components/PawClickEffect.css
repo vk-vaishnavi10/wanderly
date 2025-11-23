@@ -1,0 +1,27 @@
+.paw-print {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-image: url("/src/assets/dog.png"); /* Your dog paw or icon */
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    opacity: 1;
+  
+    transform: scale(0.6) rotate(0deg);
+    animation: pawFade 1.2s ease forwards;
+    z-index: 9999;
+  }
+  
+  /* Fade + float animation */
+  @keyframes pawFade {
+    0% {
+      opacity: 1;
+      transform: scale(0.7) translateY(0px);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.2) translateY(-20px);
+    }
+  }
+  

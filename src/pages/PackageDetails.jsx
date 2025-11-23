@@ -1,7 +1,7 @@
 // src/pages/PackageDetails.jsx
 import React, { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2"; 
+import Swal from "sweetalert2";
 import "./PackageDetails.css";
 
 import kashmirImg from "../images/kashmirparadise.jpg";
@@ -15,7 +15,8 @@ const packagesData = [
     description: "Flight + 3 Nights at 5⭐ Resort + Cab Transfers",
     price: "₹22,000/person",
     duration: "3 Nights / 4 Days",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+    image:
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
     inclusions: ["Roundtrip Flights", "Breakfast", "Airport Pickup"],
   },
   {
@@ -73,69 +74,54 @@ export default function PackageDetails() {
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const parsePriceNumber = (priceStr) =>
-    Number(priceStr.replace(/[₹,]/g, "").split("/")[0]);
-
-  const handleBooking = async (e) => {
+  const handleBooking = (e) => {
     e.preventDefault();
-  
+
     if (!formData.userName || !formData.email || !formData.date) {
       Swal.fire("⚠️ Please fill all required fields!", "", "warning");
       return;
     }
-  
-    const amount = parseInt(pkg.price.replace(/[₹,]/g, ""));
-  
-    const bookingPayload = {
-      userName: formData.userName,
-      email: formData.email,
-      packageName: pkg.title,
-      amount: amount,
-      status: "CONFIRMED",
-    };
-  
-    try {
-      
-  
-      Swal.fire({
-        title: `🎉 Booking Confirmed for ${pkg.title}!`,
-        icon: "success",
-        background: "#111",
-        color: "#fff",
-        confirmButtonColor: "#f5c518",
-      }).then(() => {
-        navigate("/payment", {
-          state: {
-            paymentData: {
-              type: "package",
-              title: pkg.title,
-              price: amount,
-              duration: pkg.duration,
-              details: formData,
-            },
+
+    const amount = Number(
+      String(pkg.price).replace(/[₹,]/g, "").split("/")[0]
+    );
+
+    Swal.fire({
+      title: `🎉 Booking Confirmed for ${pkg.title}!`,
+      icon: "success",
+      background: "#111",
+      color: "#fff",
+      confirmButtonColor: "#f5c518",
+    }).then(() => {
+      navigate("/payment", {
+        state: {
+          paymentData: {
+            type: "package",
+            title: pkg.title,
+            price: amount,
+            duration: pkg.duration,
+            details: formData,
           },
-        });
+        },
       });
-      
-  
-    } catch (err) {
-      Swal.fire("❌ Error", "Something went wrong during booking.", "error");
-    }
+    });
   };
-  
-  
 
   return (
     <div className="package-details-page">
-      <div className="aurora-bg"></div>
+      {/* ☁️ MANY CLOUD MASCOTS */}
+      <CloudMascots />
+
       <div className="container py-5">
         <div className="card package-card mx-auto shadow-lg">
           <img src={pkg.image} alt={pkg.title} className="card-img-top" />
+
           <div className="card-body text-center">
             <h2 className="package-title">🌍 {pkg.title}</h2>
             <h4 className="package-price">{pkg.price}</h4>
             <p className="package-description">{pkg.description}</p>
             <p className="package-duration">🕓 {pkg.duration}</p>
+
             <ul className="inclusions-list">
               {pkg.inclusions.map((item, idx) => (
                 <li key={idx}>✨ {item}</li>
@@ -143,6 +129,7 @@ export default function PackageDetails() {
             </ul>
 
             <h4 className="book-title">🧾 Book This Package</h4>
+
             <form className="booking-form" onSubmit={handleBooking}>
               <input
                 name="userName"
@@ -185,3 +172,35 @@ export default function PackageDetails() {
     </div>
   );
 }
+
+/* ☁️ MANY CLOUD MASCOTS WITH FACES + BUBBLES */
+const CloudMascots = () => {
+  const bubbles = [
+    "Hi traveller! ✨ Book your package 💜",
+    "Ready for a snowy escape? ❄️",
+    "Adventure is calling! 🌍",
+    "Let’s lock your dream trip ✈️",
+    "Memories are waiting, book now 💫",
+  ];
+
+  return (
+    <div className="pkg-cloud-layer" aria-hidden="true">
+      {bubbles.map((text, idx) => (
+        <div key={idx} className={`pkg-cloud-mascot m${idx + 1}`}>
+          <div className="pkg-cloud">
+            <div className="puff p1" />
+            <div className="puff p2" />
+            <div className="puff p3" />
+            <div className="pkg-cloud-face">
+              <div className="pkg-cloud-eye e1" />
+              <div className="pkg-cloud-eye e2" />
+              <div className="pkg-cloud-mouth" />
+            </div>
+          </div>
+
+          <div className="pkg-cloud-bubble">{text}</div>
+        </div>
+      ))}
+    </div>
+  );
+};

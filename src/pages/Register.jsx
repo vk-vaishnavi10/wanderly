@@ -5,6 +5,9 @@ import "./Register.css";
 
 const forestVideo = "/videos/signupbg.mp4";
 
+// 🐱 Transparent cat illustration
+import registerCat from "../assets/cat.png";
+
 export default function Register() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -161,45 +164,14 @@ export default function Register() {
         </div>
       </div>
 
-      {/* 🐱✨ Hybrid big cat assistant (Option C style, BIG size) */}
-      <div className="register-cat-entrance">
-        <div className="cat-aura" />
-
-        <div className="big-cat">
-          <div className="big-cat-ears">
-            <div className="cat-ear ear-left" />
-            <div className="cat-ear ear-right" />
-          </div>
-
-          <div className="cat-head">
-            <div className="cat-eye eye-left">
-              <div className="cat-eye-shine" />
-              <div className="cat-pupil" />
-            </div>
-            <div className="cat-eye eye-right">
-              <div className="cat-eye-shine" />
-              <div className="cat-pupil" />
-            </div>
-
-            <div className="cat-blush blush-left" />
-            <div className="cat-blush blush-right" />
-
-            <div className="cat-nose" />
-            <div className="cat-mouth" />
-          </div>
-
-          <div className="cat-body">
-            <div className="cat-belly" />
-            <div className="cat-paws-row">
-              <div className="cat-paw back-paw" />
-              <div className="cat-paw front-paw waving-paw" />
-            </div>
-          </div>
-
-          <div className="cat-tail" />
-        </div>
-
-        <div className="cat-speech">
+      {/* 🐱✨ Cute transparent cat helper */}
+      <div className="register-cat-illustration">
+        <img
+          src={registerCat}
+          alt="Wanderly cat assistant"
+          className="register-cat-image"
+        />
+        <div className="register-cat-bubble">
           Hi traveller! I&apos;ll help you
           <br />
           sign up 💜

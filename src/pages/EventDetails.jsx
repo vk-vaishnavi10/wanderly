@@ -1,3 +1,4 @@
+// src/pages/EventDetails.jsx
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -11,6 +12,9 @@ import "./EventDetails.css";
 import ocImg from "../images/oc.jpg";
 import royalImg from "../images/royal.jpg";
 import ffImg from "../images/ff.jpeg";
+
+// ⭐ Event cute dog mascot
+import EventDogMascot from "../Components/EventDogMascot";
 
 const eventsData = {
   1: {
@@ -61,6 +65,7 @@ export default function EventDetails() {
 
   const [countdown, setCountdown] = useState("");
 
+  // Countdown Timer
   useEffect(() => {
     if (!event) return;
     const targetDate = new Date(event.date);
@@ -84,10 +89,11 @@ export default function EventDetails() {
     return () => clearInterval(interval);
   }, [event]);
 
-  if (!event)
+  if (!event) {
     return <h2 className="text-center text-warning mt-5">Event not found!</h2>;
+  }
 
-  // 🎟 CLICK → GO TO PAYMENT PAGE
+  // BOOK TICKET → Payment Page
   const handleBooking = (ticket) => {
     const paymentData = {
       type: "event",
@@ -107,7 +113,11 @@ export default function EventDetails() {
 
   return (
     <div className="event-details text-light">
-      {/* HERO */}
+
+      {/* ⭐ Cute Music Party Dog Mascot */}
+      <EventDogMascot />
+
+      {/* HERO CARD */}
       <div
         className="event-hero-card"
         style={{
@@ -129,13 +139,13 @@ export default function EventDetails() {
       {/* TICKETS */}
       <section className="ticket-section container py-5">
         <h3 className="text-center text-warning mb-4">🎟 Available Tickets</h3>
+
         <div className="row g-4">
           {event.tickets.map((ticket, i) => (
             <div key={i} className="col-md-4">
               <div className="ticket-card bg-dark border border-warning text-center p-3 rounded-4 shadow">
                 <h5 className="text-warning">{ticket.type}</h5>
                 <p className="ticket-price">₹{ticket.price}</p>
-
                 <button
                   className="btn btn-warning fw-bold w-100"
                   onClick={() => handleBooking(ticket)}
@@ -146,6 +156,7 @@ export default function EventDetails() {
             </div>
           ))}
         </div>
+
       </section>
     </div>
   );

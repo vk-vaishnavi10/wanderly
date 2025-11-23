@@ -1,0 +1,367 @@
+/* ============================================================
+   🎧 PARTY DOG MASCOT FOR EVENTS PAGE (PURE CSS)
+   Cute corgi-style dog with headphones & music notes
+============================================================ */
+
+.event-dog-mascot {
+    position: fixed;
+    bottom: 2.5rem;
+    right: 20rem;
+    z-index: 40;
+    pointer-events: none;
+    font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  
+  .edog-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: edogFloat 3.3s ease-in-out infinite alternate;
+  }
+  
+  /* Small floating music notes */
+  .edog-note {
+    position: absolute;
+    font-size: 1.2rem;
+    opacity: 0.9;
+    animation: edogNoteFloat 4s ease-in-out infinite;
+  }
+  
+  .edog-note.n1 {
+    top: -2.5rem;
+    right: 0.2rem;
+    animation-delay: 0s;
+  }
+  
+  .edog-note.n2 {
+    top: -3.2rem;
+    left: 0;
+    animation-delay: 0.8s;
+  }
+  
+  .edog-note.n3 {
+    top: -4rem;
+    right: 1.8rem;
+    animation-delay: 1.4s;
+  }
+  
+  @keyframes edogNoteFloat {
+    0% {
+      transform: translateY(4px);
+      opacity: 0.7;
+    }
+    100% {
+      transform: translateY(-6px);
+      opacity: 1;
+    }
+  }
+  
+  /* ================== DOG BASE ================== */
+  
+  .edog-dog {
+    position: relative;
+    width: 130px;
+    height: 130px;
+  }
+  
+  /* Headphones */
+  .edog-headphones {
+    position: absolute;
+    top: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 86px;
+    height: 40px;
+  }
+  
+  .edog-band {
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    border-top: 6px solid #6ec1e4;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+  }
+  
+  .edog-cup {
+    position: absolute;
+    top: 16px;
+    width: 20px;
+    height: 26px;
+    background: radial-gradient(circle at 30% 30%, #ffffff, #9b5de5);
+    border-radius: 999px;
+    box-shadow: 0 0 8px rgba(110, 193, 228, 0.7);
+  }
+  
+  .edog-cup.cup-left {
+    left: -4px;
+  }
+  
+  .edog-cup.cup-right {
+    right: -4px;
+  }
+  
+  /* Ears */
+  .edog-ear {
+    position: absolute;
+    top: 10px;
+    width: 32px;
+    height: 38px;
+    background: #ffb45b;
+    border-radius: 999px 999px 20px 20px;
+    transform-origin: bottom center;
+  }
+  
+  .edog-ear::before {
+    content: "";
+    position: absolute;
+    inset: 7px 7px 10px;
+    background: #ffdfb5;
+    border-radius: inherit;
+  }
+  
+  .edog-ear.ear-left {
+    left: 12px;
+    transform: rotate(-10deg);
+  }
+  
+  .edog-ear.ear-right {
+    right: 12px;
+    transform: rotate(10deg);
+  }
+  
+  /* Head + Face */
+  .edog-head {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    width: 92px;
+    height: 70px;
+    transform: translateX(-50%);
+    background: #ffb45b;
+    border-radius: 60px;
+    box-shadow: 0 0 14px rgba(255, 180, 91, 0.9);
+  }
+  
+  .edog-face {
+    position: absolute;
+    inset: 10px 10px 8px;
+    background: #ffe1b4;
+    border-radius: 50px;
+  }
+  
+  /* Eyes */
+  .edog-eye {
+    position: absolute;
+    top: 20px;
+    width: 10px;
+    height: 14px;
+    background: #222;
+    border-radius: 999px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+  }
+  
+  .edog-eye::before {
+    /* tiny sparkle */
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 3px;
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 50%;
+  }
+  
+  .edog-eye.eye-left {
+    left: 18px;
+  }
+  
+  .edog-eye.eye-right {
+    right: 18px;
+  }
+  
+  /* Blush */
+  .edog-blush {
+    position: absolute;
+    bottom: 12px;
+    width: 16px;
+    height: 8px;
+    background: rgba(255, 137, 164, 0.6);
+    border-radius: 999px;
+    filter: blur(0.4px);
+  }
+  
+  .edog-blush.blush-left {
+    left: 15px;
+  }
+  
+  .edog-blush.blush-right {
+    right: 15px;
+  }
+  
+  /* Snout + mouth */
+  .edog-snout {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    width: 32px;
+    height: 24px;
+    transform: translateX(-50%);
+    background: #ffe9ce;
+    border-radius: 60px 60px 40px 40px;
+  }
+  
+  .edog-nose {
+    position: absolute;
+    top: 2px;
+    left: 50%;
+    width: 12px;
+    height: 8px;
+    transform: translateX(-50%);
+    background: #3b2221;
+    border-radius: 999px 999px 60% 60%;
+  }
+  
+  .edog-mouth {
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    width: 18px;
+    height: 10px;
+    transform: translateX(-50%);
+    background: #ff6b89;
+    border-radius: 0 0 18px 18px;
+  }
+  
+  /* Body */
+  .edog-body {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 80px;
+    height: 64px;
+    transform: translateX(-50%);
+    background: #ffb45b;
+    border-radius: 40px 40px 26px 26px;
+    box-shadow: 0 0 10px rgba(255, 180, 91, 0.7);
+  }
+  
+  .edog-belly {
+    position: absolute;
+    inset: 14px 18px 10px;
+    background: #ffe1b4;
+    border-radius: 999px;
+  }
+  
+  /* Sitting paws */
+  .edog-paw {
+    position: absolute;
+    bottom: -8px;
+    width: 26px;
+    height: 18px;
+    background: #ffe1b4;
+    border-radius: 999px;
+    box-shadow: 0 0 6px rgba(255, 225, 180, 0.8);
+  }
+  
+  .edog-paw.paw-left {
+    left: 6px;
+  }
+  
+  .edog-paw.paw-right {
+    right: 6px;
+  }
+  
+  /* Waving paw (front) */
+  .edog-paw.paw-wave {
+    bottom: 12px;
+    right: -6px;
+    transform-origin: top left;
+    animation: edogWave 0.9s ease-in-out infinite alternate;
+  }
+  
+  .edog-paw-pad {
+    position: absolute;
+    inset: 4px 6px 4px 4px;
+    background: #ffd2a2;
+    border-radius: inherit;
+  }
+  
+  /* Tail */
+  .edog-tail {
+    position: absolute;
+    bottom: 18px;
+    left: 6px;
+    width: 26px;
+    height: 14px;
+    border-radius: 999px;
+    background: #ffb45b;
+    transform-origin: right center;
+    animation: edogTail 1.2s ease-in-out infinite alternate;
+  }
+  
+  /* Speech bubble */
+  .edog-bubble {
+    margin-top: 0.4rem;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 16px;
+    font-size: 0.78rem;
+    color: #333;
+    text-align: center;
+    box-shadow: 0 0 18px rgba(255, 255, 255, 1),
+      0 0 26px rgba(155, 93, 229, 0.6);
+    animation: edogBubble 3s ease-in-out infinite alternate;
+  }
+  
+  /* ================== ANIMATIONS ================== */
+  
+  @keyframes edogFloat {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-6px);
+    }
+  }
+  
+  @keyframes edogWave {
+    0% {
+      transform: rotate(10deg);
+    }
+    100% {
+      transform: rotate(-18deg);
+    }
+  }
+  
+  @keyframes edogTail {
+    0% {
+      transform: rotate(10deg);
+    }
+    100% {
+      transform: rotate(-15deg);
+    }
+  }
+  
+  @keyframes edogBubble {
+    0% {
+      transform: translateY(0);
+      opacity: 0.9;
+    }
+    100% {
+      transform: translateY(-4px);
+      opacity: 1;
+    }
+  }
+  
+  /* Mobile tweak */
+  @media (max-width: 768px) {
+    .event-dog-mascot {
+      bottom: 1.3rem;
+      right: 1.2rem;
+      transform: scale(0.85);
+    }
+  }
+  

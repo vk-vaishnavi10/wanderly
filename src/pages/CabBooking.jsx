@@ -1,3 +1,4 @@
+// src/pages/CabBooking.jsx
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { useParams, useNavigate } from "react-router-dom";
@@ -8,7 +9,6 @@ export default function CabBooking() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // ⭐ Map Transport ID → Cab Type
   const cabMap = {
     1: "Airport",
     2: "Local",
@@ -21,55 +21,51 @@ export default function CabBooking() {
     pickupLocation: "",
     dropLocation: "",
     bookingDate: "",
-    cabType: preSelectedCab, // ⭐ AUTO-FILL
+    cabType: preSelectedCab,
   });
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    const { pickupLocation, dropLocation, bookingDate, cabType } = formData;
-
-    if (!pickupLocation || !dropLocation || !bookingDate) {
+    if (!formData.pickupLocation || !formData.dropLocation || !formData.bookingDate) {
       Swal.fire("⚠️ Please fill all fields!", "", "warning");
       return;
     }
 
-    try {
-      Swal.fire({
-        title: "🚖 Cab Booked!",
-        text: `Your ${cabType} cab is reserved!`,
-        icon: "success",
-        confirmButtonColor: "#ffe29f",
-        background: "#15102b",
-        color: "#ffffff",
-      }).then(() =>
-        navigate("/payment", {
-          state: {
-            paymentData: {
-              type: "cab",
-              title: cabType,
-              price: 800,
-              details: formData,
-            },
+    Swal.fire({
+      title: "🚖 Cab Booked!",
+      text: `Your ${formData.cabType} cab is reserved!`,
+      icon: "success",
+      confirmButtonColor: "#ffe29f",
+      background: "#15102b",
+      color: "#ffffff",
+    }).then(() =>
+      navigate("/payment", {
+        state: {
+          paymentData: {
+            type: "cab",
+            title: formData.cabType,
+            price: 800,
+            details: formData,
           },
-        })
-      );
-    } catch (error) {
-      Swal.fire("❌ Error", "Cab booking failed!", "error");
-    }
+        },
+      })
+    );
   };
 
   return (
     <div className="cab-booking">
+
+      {/* ☁ Floating Cloud Mascot */}
+      <CloudMascot />
+
       <div className="cab-booking-card">
         <h2>🚖 Cab Booking</h2>
         <p>Book your comfortable, quick, and safe ride with Wanderly ✨</p>
@@ -111,7 +107,36 @@ export default function CabBooking() {
 
           <button type="submit">Confirm Booking ✨</button>
         </form>
+
+        {/* 🔙 Back Button */}
+        <button className="back-transport-btn" onClick={() => navigate("/transport")}>
+          ← Back to Transport
+        </button>
       </div>
     </div>
   );
 }
+
+/* ☁ CLOUD MASCOT COMPONENT */
+const CloudMascot = () => {
+  return (
+    <div className="cab-cloud-mascot">
+      <div className="cloud">
+        <div className="puff p1"></div>
+        <div className="puff p2"></div>
+        <div className="puff p3"></div>
+
+        <div className="cloud-face">
+          <div className="cloud-eye e1"></div>
+          <div className="cloud-eye e2"></div>
+          <div className="cloud-mouth"></div>
+        </div>
+      </div>
+
+      <div className="cloud-speech">
+        Hello traveller! ☁💙 <br />
+        Need a cab today?
+      </div>
+    </div>
+  );
+};

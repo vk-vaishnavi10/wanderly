@@ -26,7 +26,7 @@ export default function CarBooking() {
     pickupLocation: "",
     dropLocation: "",
     bookingDate: "",
-    carType: preSelectedCar,   // ⭐ AUTO-SET
+    carType: preSelectedCar,
   });
 
   useEffect(() => {
@@ -34,8 +34,7 @@ export default function CarBooking() {
   }, []);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const getCarImage = () => {
@@ -61,33 +60,42 @@ export default function CarBooking() {
       return;
     }
 
-    try {
-      Swal.fire({
-        title: "🚘 Booking Confirmed!",
-        text: `Your ${carType} car is booked successfully!`,
-        icon: "success",
-        confirmButtonColor: "#ffce7a",
-        background: "#15102b",
-        color: "#ffffff",
-      }).then(() =>
-        navigate("/payment", {
-          state: {
-            paymentData: {
-              type: "car",
-              title: carType,
-              price: 1500,
-              details: formData,
-            },
+    Swal.fire({
+      title: "🚘 Booking Confirmed!",
+      text: `Your ${carType} car is booked successfully!`,
+      icon: "success",
+      confirmButtonColor: "#ffce7a",
+      background: "#15102b",
+      color: "#ffffff",
+    }).then(() =>
+      navigate("/payment", {
+        state: {
+          paymentData: {
+            type: "car",
+            title: carType,
+            price: 1500,
+            details: formData,
           },
-        })
-      );
-    } catch (error) {
-      Swal.fire("❌ Error", "Unable to book car.", "error");
-    }
+        },
+      })
+    );
   };
 
   return (
     <div className="car-booking">
+      {/* 🌥️ CUTE CHUBBY CLOUD MASCOT (ᵔᴥᵔ) */}
+      <div className="cloud-mascot">
+        <div className="cloud-body">
+          <div className="cloud-eye eye1"></div>
+          <div className="cloud-eye eye2"></div>
+          <div className="cloud-mouth"></div>
+        </div>
+        <div className="cloud-speech">
+          Hello traveller! 💙<br />
+          Ready to book your ride?
+        </div>
+      </div>
+
       <div className="car-booking-card">
         <h2>🚘 Car Booking</h2>
         <p>Book your perfect ride with comfort, class, and style ✨</p>
@@ -142,6 +150,11 @@ export default function CarBooking() {
 
           <button type="submit">Confirm Booking ✨</button>
         </form>
+
+        {/* Back Button */}
+        <button className="back-btn" onClick={() => navigate("/transport")}>
+          ← Back to Transport
+        </button>
       </div>
     </div>
   );

@@ -1,203 +1,463 @@
 /* ============================================================
-   🍷 WANDERLY - DINING DETAILS (Luxury Aurora Culinary Edition)
-   Designed for Vaishnavi ✨
+   🍷 WANDERLY - DINING DETAILS (Luxury Aurora Edition)
+   Full CSS + CatMouse Mascot Integration
 ============================================================ */
 
 .dining-details {
-  font-family: "Poppins", sans-serif;
-  min-height: 100vh;
-  overflow-x: hidden;
-  position: relative;
-  padding-top: 6rem;
-  color: #f1f4ff;
-}
-
-/* 🌌 Aurora Gradient Background */
-.dining-details::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    #d03aa3,
-    #acca33,
-    #38298698,
-    #52009e,
-    #811919,
-    #ffb86b,
-    #ff758c
-  );
-  background-size: 300% 300%;
-  animation: auroraMove 12s ease-in-out infinite alternate;
-  z-index: 0;
-  opacity: 0.9;
-  filter: brightness(0.9);
-}
-
-@keyframes auroraMove {
-  0% {
-    background-position: 0% 40%;
+    font-family: "Poppins", sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    padding-top: 6rem;
+    color: #f1f4ff;
   }
-  100% {
-    background-position: 100% 60%;
+  
+  /* 🌌 Animated Aurora Background */
+  .dining-details::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      #d03aa3,
+      #acca33,
+      #38298698,
+      #52009e,
+      #811919,
+      #ffb86b,
+      #ff758c
+    );
+    background-size: 300% 300%;
+    animation: auroraMove 12s ease-in-out infinite alternate;
+    z-index: 0;
+    opacity: 0.9;
+    filter: brightness(0.9);
   }
-}
-
-/* 🌆 Hero Section */
-.dining-hero-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(15px);
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
-  position: relative;
-  z-index: 2;
-  transition: all 0.4s ease;
-}
-
-.dining-hero-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 0 40px rgba(255, 255, 255, 0.2),
-    0 0 25px rgba(255, 215, 150, 0.3);
-}
-
-/* 🖼️ Image */
-.dining-hero-img {
-  width: 45%;
-  height: 380px;
-  object-fit: cover;
-  border-radius: 15px;
-  border: 2px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
-  transition: all 0.5s ease;
-}
-
-.dining-hero-img:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 45px rgba(255, 212, 127, 0.35);
-}
-
-/* 🪩 Info */
-.dining-hero-info {
-  flex: 1;
-  color: rgba(240, 243, 255, 0.9);
-}
-
-.dining-hero-info h2 {
-  font-size: 2.2rem;
-  font-weight: 700;
-  background: linear-gradient(90deg, #ffe29f, #fff, #62d3ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
-}
-
-.dining-hero-info p {
-  margin: 0.4rem 0;
-  color: rgba(230, 235, 255, 0.85);
-  line-height: 1.6;
-}
-
-.price-range {
-  color: #ffd47f;
-  font-weight: 600;
-}
-
-.rating {
-  color: #ff8cc6;
-  font-weight: 600;
-}
-
-/* 🕓 Reservation Box */
-.reservation-card {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(15px);
-  border-radius: 20px;
-  box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
-  z-index: 2;
-  position: relative;
-}
-
-.reservation-card h3 {
-  font-weight: 700;
-  background: linear-gradient(90deg, #c5f6ff, #ffffff, #ffe29f);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 1.2rem;
-}
-
-/* Inputs */
-.form-control {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 12px;
-  padding: 0.8rem 1rem;
-  transition: 0.3s;
-}
-
-.form-control:focus {
-  border-color: #62d3ff;
-  box-shadow: 0 0 12px rgba(98, 211, 255, 0.4);
-}
-
-/* 🍷 Confirm Button */
-.confirm-btn {
-  background: linear-gradient(135deg, #00e1ff, #9b5de5, #ffd47f);
-  color: #000;
-  border: none;
-  border-radius: 50px;
-  padding: 0.9rem;
-  font-weight: 700;
-  font-size: 1rem;
-  transition: 0.3s ease;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
-}
-
-.confirm-btn:hover {
-  transform: translateY(-3px) scale(1.05);
-  background: linear-gradient(135deg, #ffd47f, #9b5de5, #00e1ff);
-  box-shadow: 0 0 35px rgba(255, 255, 255, 0.3);
-}
-
-/* Countdown */
-.countdown {
-  color: #9b5de5;
-  font-weight: 600;
-  text-shadow: 0 0 12px rgba(155, 93, 229, 0.5);
-  animation: pulseGlow 1.5s infinite alternate;
-}
-
-@keyframes pulseGlow {
-  from {
-    transform: scale(1);
-    opacity: 0.8;
+  
+  @keyframes auroraMove {
+    0% {
+      background-position: 0% 40%;
+    }
+    100% {
+      background-position: 100% 60%;
+    }
   }
-  to {
-    transform: scale(1.05);
-    opacity: 1;
-  }
-}
-
-/* 📱 Responsive */
-@media (max-width: 992px) {
+  
+  /* ============================================================
+     🌆 HERO CARD
+  ============================================================ */
+  
   .dining-hero-card {
-    flex-direction: column;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
+    position: relative;
+    z-index: 2;
+    transition: all 0.4s ease;
   }
-
+  
+  .dining-hero-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.2),
+      0 0 25px rgba(255, 215, 150, 0.3);
+  }
+  
   .dining-hero-img {
-    width: 100%;
-    height: 320px;
+    width: 45%;
+    height: 380px;
+    object-fit: cover;
+    border-radius: 15px;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
+    transition: all 0.5s ease;
   }
-
+  
+  .dining-hero-img:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 45px rgba(255, 212, 127, 0.35);
+  }
+  
+  .dining-hero-info {
+    flex: 1;
+    color: rgba(240, 243, 255, 0.9);
+  }
+  
   .dining-hero-info h2 {
-    font-size: 1.6rem;
+    font-size: 2.2rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #ffe29f, #fff, #62d3ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
   }
-}
+  
+  .dining-hero-info p {
+    margin: 0.4rem 0;
+    color: rgba(230, 235, 255, 0.85);
+    line-height: 1.6;
+  }
+  
+  .price-range {
+    color: #ffd47f;
+    font-weight: 600;
+  }
+  
+  .rating {
+    color: #ff8cc6;
+    font-weight: 600;
+  }
+  
+  /* ============================================================
+     🕓 RESERVATION CARD
+  ============================================================ */
+  
+  .reservation-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+    z-index: 2;
+    position: relative;
+  }
+  
+  .reservation-card h3 {
+    font-weight: 700;
+    background: linear-gradient(90deg, #c5f6ff, #ffffff, #ffe29f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1.2rem;
+  }
+  
+  .form-label {
+    font-weight: 500;
+  }
+  
+  .form-control {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    padding: 0.8rem 1rem;
+    transition: 0.3s;
+  }
+  
+  .form-control:focus {
+    border-color: #62d3ff;
+    box-shadow: 0 0 12px rgba(98, 211, 255, 0.4);
+  }
+  
+  /* 🍷 Confirm Button */
+  .confirm-btn {
+    background: linear-gradient(135deg, #00e1ff, #9b5de5, #ffd47f);
+    color: #000;
+    border: none;
+    border-radius: 50px;
+    padding: 0.9rem;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: 0.3s ease;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
+  }
+  
+  .confirm-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    background: linear-gradient(135deg, #ffd47f, #9b5de5, #00e1ff);
+    box-shadow: 0 0 35px rgba(255, 255, 255, 0.3);
+  }
+  
+  .countdown {
+    color: #9b5de5;
+    font-weight: 600;
+    text-shadow: 0 0 12px rgba(155, 93, 229, 0.5);
+    animation: pulseGlow 1.5s infinite alternate;
+  }
+  
+  @keyframes pulseGlow {
+    from {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+    to {
+      transform: scale(1.05);
+      opacity: 1;
+    }
+  }
+  
+  /* ============================================================
+     🐱🐭 PURE CSS CAT + MOUSE MASCOT (Cute Version)
+  ============================================================ */
+  
+  .catmouse-mascot {
+    position: fixed;
+    top: 6rem;
+    left: 16rem;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: cmFloat 3.5s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  
+  /* ---------------- CAT ---------------- */
+  
+  .cm-cat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .cm-cat-head {
+    width: 80px;
+    height: 70px;
+    position: relative;
+  }
+  
+  .cm-cat-ear {
+    width: 26px;
+    height: 32px;
+    background: white;
+    border-radius: 70% 70% 0 0;
+    position: absolute;
+    top: -8px;
+  }
+  
+  .cm-cat-ear-left {
+    left: 5px;
+    transform: rotate(-12deg);
+  }
+  
+  .cm-cat-ear-right {
+    right: 5px;
+    transform: rotate(12deg);
+  }
+  
+  .cm-cat-ear::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    background: #ffafc1;
+    border-radius: inherit;
+  }
+  
+  .cm-cat-face {
+    position: absolute;
+    inset: 6px 4px;
+    background: #ffffff;
+    border-radius: 50px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
+  }
+  
+  .cm-cat-eye {
+    position: absolute;
+    width: 14px;
+    height: 18px;
+    border-radius: 50%;
+    background: radial-gradient(circle, white, #baffb4, #3e732d, black);
+    top: 24px;
+  }
+  
+  .cm-cat-eye-left {
+    left: 20px;
+  }
+  
+  .cm-cat-eye-right {
+    right: 20px;
+  }
+  
+  .cm-cat-mouth {
+    position: absolute;
+    width: 28px;
+    height: 16px;
+    background: #ff7fa0;
+    border-radius: 0 0 20px 20px;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .cm-cat-cheek {
+    width: 16px;
+    height: 10px;
+    background: #ffbfd1;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 16px;
+  }
+  
+  .cm-cat-cheek-left {
+    left: 12px;
+  }
+  
+  .cm-cat-cheek-right {
+    right: 12px;
+  }
+  
+  .cm-cat-paws {
+    display: flex;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  
+  .cm-cat-paw {
+    width: 26px;
+    height: 18px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+  }
+  
+  /* ---------------- MOUSE ---------------- */
+  
+  .cm-mouse {
+    margin-top: 4px;
+    position: relative;
+  }
+  
+  .cm-mouse-head {
+    width: 48px;
+    height: 44px;
+    position: relative;
+  }
+  
+  .cm-mouse-ear {
+    width: 20px;
+    height: 20px;
+    background: #ffd9b0;
+    border-radius: 50%;
+    position: absolute;
+    top: -8px;
+  }
+  
+  .cm-mouse-ear-left {
+    left: 4px;
+  }
+  
+  .cm-mouse-ear-right {
+    right: 4px;
+  }
+  
+  .cm-mouse-ear::before {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    background: #ffb98f;
+    border-radius: inherit;
+  }
+  
+  .cm-mouse-face {
+    position: absolute;
+    inset: 4px 3px;
+    background: #ffd2a2;
+    border-radius: 40px;
+  }
+  
+  .cm-mouse-eye {
+    width: 8px;
+    height: 10px;
+    background: black;
+    border-radius: 50%;
+    position: absolute;
+    top: 14px;
+  }
+  
+  .cm-mouse-eye-left {
+    left: 12px;
+  }
+  
+  .cm-mouse-eye-right {
+    right: 12px;
+  }
+  
+  .cm-mouse-mouth {
+    width: 16px;
+    height: 6px;
+    background: #7a2b16;
+    border-radius: 0 0 10px 10px;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .cm-mouse-arm {
+    width: 26px;
+    height: 10px;
+    background: #ffd2a2;
+    border-radius: 20px;
+    position: absolute;
+    bottom: -4px;
+    left: 8px;
+    transform: rotate(18deg);
+  }
+  
+  /* ---------------- SPEECH BUBBLE ---------------- */
+  
+  .cm-bubble {
+    margin-top: 0.4rem;
+    background: white;
+    padding: 6px 14px;
+    border-radius: 16px;
+    font-size: 0.78rem;
+    color: #333;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 1);
+    animation: cmBubble 3s ease-in-out infinite alternate;
+  }
+  
+  /* ---------------- ANIMATIONS ---------------- */
+  
+  @keyframes cmFloat {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-6px);
+    }
+  }
+  
+  @keyframes cmBubble {
+    from {
+      transform: translateY(0);
+      opacity: 0.92;
+    }
+    to {
+      transform: translateY(-3px);
+      opacity: 1;
+    }
+  }
+  
+  /* ---------------- MOBILE ---------------- */
+  
+  @media (max-width: 992px) {
+    .dining-hero-card {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .dining-hero-img {
+      width: 100%;
+      height: 320px;
+    }
+  
+    .dining-hero-info h2 {
+      font-size: 1.6rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .catmouse-mascot {
+      left: 10rem;
+      top: 5rem;
+      transform: scale(0.85);
+    }
+  }
+  

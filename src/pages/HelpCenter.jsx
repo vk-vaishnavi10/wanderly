@@ -1,13 +1,14 @@
 // 🌍 src/pages/HelpCenter.jsx
 import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import confetti from "canvas-confetti";
 import "./HelpCenter.css";
+
+import pigeonImg from "../assets/pigeon.png"; // 🕊️ your PNG mascot
 
 export default function HelpCenter() {
   const navigate = useNavigate();
 
-  // 🎉 Confetti burst when card clicked
   const triggerConfetti = (path) => {
     confetti({
       particleCount: 80,
@@ -15,7 +16,7 @@ export default function HelpCenter() {
       origin: { y: 0.7 },
       colors: ["#ffd700", "#f15bb5", "#00e1ff", "#b2f5ea", "#9b5de5"],
     });
-    setTimeout(() => navigate(path), 300); // small delay for effect
+    setTimeout(() => navigate(path), 300);
   };
 
   const helpOptions = [
@@ -65,6 +66,15 @@ export default function HelpCenter() {
 
   return (
     <div className="helpcenter-page">
+      
+      {/* 🕊️ Pigeon Mascot PNG */}
+      <div className="pigeon-container">
+        <img src={pigeonImg} alt="pigeon mascot" className="pigeon-img" />
+        <div className="pigeon-bubble">
+          🕊️ “Hi Traveller! We’re here to help you!”
+        </div>
+      </div>
+
       {/* 🌈 Header */}
       <header className="helpcenter-header">
         <h1>💫 Wanderly Help Center</h1>
@@ -75,14 +85,13 @@ export default function HelpCenter() {
       <div className="helpcenter-grid">
         {helpOptions.map((option, i) => (
           <div key={i} className="helpcard">
-            <div
-              className="helpcard-icon"
-              style={{ color: option.color }}
-            >
+            <div className="helpcard-icon" style={{ color: option.color }}>
               {option.icon}
             </div>
+
             <h3>{option.title}</h3>
             <p>{option.desc}</p>
+
             <button onClick={() => triggerConfetti(option.link)}>
               ✨ Explore
             </button>
