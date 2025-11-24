@@ -10,17 +10,18 @@
 
 /* 🖼️ Cute Anime Image */
 .settings-img-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1.5rem;
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  z-index: 5;
 }
 
 .settings-img {
-  width: 160px;
+  width: 200px;
   height: auto;
-  filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));
   animation: floatUp 4s ease-in-out infinite;
 }
+
 
 @keyframes floatUp {
   0% { transform: translateY(0px); }

@@ -1,7 +1,9 @@
+// 🌍 src/pages/Signin.jsx
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import "./Signin.css";
+
 const oceanVideo = "/videos/introbg.mp4";
 
 export default function Signin() {
@@ -94,12 +96,16 @@ export default function Signin() {
 
       {showWelcome && (
         <div className="welcome-overlay">
+          <div className="bird bird1"></div>
+          <div className="bird bird2"></div>
+          <div className="bird bird3"></div>
+
           <div className="welcome-content">
             <h1>
               <span className="emoji">🌎</span> Welcome to <span>Wanderly</span>
             </h1>
             <p>
-              Thanks for journeying with us, traveler <span className="emoji">✈️</span>
+              A little flock flew in just to say hello, traveller <span className="emoji">✈️</span>
             </p>
           </div>
         </div>
