@@ -1,7 +1,3 @@
-/* ============================================================
-   🌌 WANDERLY - SIGN-IN PAGE (Aurora Voyage Edition)
-============================================================ */
-
 /* 🎥 Background Video */
 .signin-bg-video {
   position: fixed;
@@ -24,43 +20,35 @@
   color: #fff;
 }
 
-/* 💎 Left Overlay */
+/* LEFT LOGIN PANEL */
 .signin-overlay {
   position: absolute;
   left: 0;
   top: 0;
   width: 38%;
   height: 100%;
-  background: rgba(10, 0, 25, 0.7);
+  background: rgba(10, 0, 25, 0.65);
   backdrop-filter: blur(12px);
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 3rem;
-  box-shadow: 12px 0 40px rgba(0, 0, 0, 0.6);
-  animation: slideInLeft 1s ease forwards;
+  box-shadow: 10px 0 40px rgba(0, 0, 0, 0.6);
+  z-index: 2;
 }
 
-/* Slide-in */
-@keyframes slideInLeft {
-  from { transform: translateX(-100%); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
-}
-
-/* 🔐 Card */
+/* LOGIN CARD */
 .signin-card {
   width: 100%;
   max-width: 420px;
   background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 20px;
-  padding: 2rem 2.2rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 22px;
+  padding: 2rem;
   backdrop-filter: blur(15px);
-  box-shadow: 0 0 25px rgba(155,93,229,0.3);
-  animation: fadeUp 1s ease;
+  box-shadow: 0 0 35px rgba(200,100,255,0.4);
 }
 
-/* Title */
 .signin-title {
   font-size: 2rem;
   font-weight: 700;
@@ -68,142 +56,74 @@
   background: linear-gradient(90deg,#00bcd4,#9b5de5,#f15bb5,#ffd166);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: textGlow 3s infinite ease-in-out;
 }
 
-@keyframes textGlow {
-  0%,100% { filter: drop-shadow(0 0 10px #9b5de5); }
-  50% { filter: drop-shadow(0 0 25px #f15bb5); }
-}
-
-/* Inputs */
 .signin-input {
   width: 100%;
-  padding: 0.8rem 1rem;
+  padding: 0.85rem 1rem;
   margin-bottom: 1rem;
-  border-radius: 50px;
-  background: rgba(255,255,255,0.12);
-  color: #fff;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.13);
   border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
 }
 
-/* Button */
 .signin-btn {
   width: 100%;
-  padding: 0.9rem 1.6rem;
-  margin-top: 0.5rem;
-  border-radius: 50px;
+  padding: 0.9rem;
+  border-radius: 12px;
+  margin-top: 0.4rem;
   background: linear-gradient(90deg,#00bcd4,#9b5de5,#f15bb5);
   color: #fff;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
+  border: none;
 }
 
-.signin-btn:hover {
-  transform: scale(1.08);
-}
+.signin-btn:hover { transform: scale(1.05); }
 
-/* 📩 Footer */
 .signin-footer {
   text-align: center;
   margin-top: 1rem;
 }
 
-/* Fade */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(25px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* 🌈 Welcome Overlay */
-.welcome-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(5,0,20,0.92);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  backdrop-filter: blur(10px);
-  animation: fadeInOut 2.8s ease forwards;
-  z-index: 5000;
-}
-
-/* Birds Wrapper */
-.bird {
+/* GIRL + BUBBLE */
+.signin-girl-wrapper {
   position: absolute;
-  width: 28px;
-  height: 22px;
-  background: white;
-  border-radius: 50%;
-  box-shadow: 0 0 10px rgba(255,255,255,0.8);
-  animation: flyAcross 8s linear forwards, float 3s ease-in-out infinite;
-}
-
-/* Bird head */
-.bird::before {
-  content: "";
-  position: absolute;
-  width: 14px;
-  height: 12px;
-  background: white;
-  border-radius: 50%;
-  left: -10px;
-  top: 4px;
-}
-
-/* Bird wing */
-.bird::after {
-  content: "";
-  position: absolute;
-  width: 18px;
-  height: 12px;
-  background: white;
-  border-radius: 50%;
-  left: 5px;
-  top: -4px;
-  transform-origin: left bottom;
-  animation: flap 0.6s infinite ease-in-out;
-}
-
-/* Birds positions & delay */
-.bird1 { top: 40%; left: -100px; animation-delay: 0.2s; }
-.bird2 { top: 50%; left: -140px; animation-delay: 0.5s; transform: scale(0.9); }
-.bird3 { top: 60%; left: -180px; animation-delay: 0.8s; transform: scale(0.8); }
-
-/* Animations */
-@keyframes flap {
-  0% { transform: rotate(0deg); }
-  50% { transform: rotate(25deg); }
-  100% { transform: rotate(0deg); }
-}
-
-@keyframes float {
-  0%,100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-}
-
-@keyframes flyAcross {
-  0% { transform: translateX(0); opacity: 0; }
-  15% { opacity: 1; }
-  100% { transform: translateX(120vw); opacity: 0; }
-}
-
-/* Welcome Text */
-.welcome-content {
+  bottom: 40px;
+  left: 600px;
   text-align: center;
-  color: #fff;
-  animation: popIn 1s ease forwards;
+  z-index: 5;
 }
 
-.welcome-content h1 {
-  font-size: 2.8rem;
-  background: linear-gradient(90deg,#00e0ff,#9b5de5,#f15bb5,#ffd166);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.signin-girl {
+  width: 240px;
+  filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));
 }
 
-@keyframes popIn {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+/* SPEECH BUBBLE */
+.signin-bubble {
+  margin-top: 10px;
+  background: rgba(255,255,255,0.92);
+  padding: 10px 20px;
+  border-radius: 20px;
+  color: #222;
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: inline-block;
+  box-shadow: 0 0 15px rgba(255,255,255,0.6);
+  position: relative;
 }
+
+/* tiny tail */
+.signin-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 28px;
+  width: 14px;
+  height: 14px;
+  background: rgba(255,255,255,0.92);
+  transform: rotate(45deg);
+}
+

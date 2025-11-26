@@ -1,586 +1,247 @@
 /* ============================================================
-   🌈 WANDERLY - NAVBAR (Aurora Flow Cinematic Edition)
-   Author: Vaishnavi ✨
+   🌟 PREMIUM GLASS ESPRESSO SIDEBAR + MOBILE NAV
 ============================================================ */
 
-/* 🌠 Aurora Base */
+/* --------------------------- */
+/* MAIN SIDEBAR                */
+/* --------------------------- */
+
 .vertical-navbar {
   position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 320px; /* 💜 widened for cinematic feel */
-  background: linear-gradient(
-    180deg,
-    rgba(11, 12, 26, 0.97) 0%,
-    rgba(26, 16, 63, 0.93) 100%
-  );
-  box-shadow: 0 0 45px rgba(155, 93, 229, 0.25);
-  border-right: 2px solid rgba(155, 93, 229, 0.35);
-  backdrop-filter: blur(14px);
+  top: 20px;
+  left: 20px;
+  height: calc(100vh - 40px);
+  width: 240px;
+
+  padding: 18px 16px;
+  border-radius: 22px;
+
+  background: rgba(20, 16, 16, 0.45);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  box-shadow:
+    0 12px 28px rgba(0,0,0,0.5),
+    0 0 40px rgba(212,166,87,0.25);
+
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 1.2rem 1rem;
-  z-index: 1000;
+  gap: 20px;
+  z-index: 1500;
 
-  /* ✨ FIX 1 — allows dropdown & confetti to appear outside navbar */
-  overflow: hidden;
-
-  transition: all 0.4s ease;
+  transition: width 0.35s ease, padding 0.35s ease;
 }
-/* COLLAPSED NAVBAR FIX 💎 */
+
 .vertical-navbar.collapsed {
-  width: 90px !important;
-  padding: 1.2rem 0.5rem;
-  align-items: center;
+  width: 85px;
+  padding: 18px 10px;
 }
 
-.vertical-navbar.collapsed .profile-quick-actions {
-  display: none !important; /* hide the trip/memory buttons */
-}
-
-.vertical-navbar.collapsed .profile-name-top,
-.vertical-navbar.collapsed .profile-dropdown-toggle {
-  display: none !important; /* hide name + arrow */
-}
-
-.vertical-navbar.collapsed .brand-text {
-  display: none !important; /* hide "Wanderly" text */
-}
-
-.vertical-navbar.collapsed .nav-link-vertical {
-  justify-content: center; /* center icons when collapsed */
-  font-size: 1.2rem;
-  padding: 0.8rem 0;
-}
-
-.vertical-navbar.collapsed .nav-link-vertical span {
-  display: none; /* if you wrap text in span later */
-}
-
-/* 🌌 Subtle right glow blending into video */
-.vertical-navbar::after {
-  content: "";
+/* Collapse Toggle Button */
+.nav-toggle {
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 14px;
-  height: 100%;
-  background: linear-gradient(90deg, rgba(155, 93, 229, 0.3), transparent 90%);
-  filter: blur(12px);
-  pointer-events: none;
-  animation: softGlow 8s ease-in-out infinite alternate;
+  right: -16px;
+  top: 14px;
+  background: #2a1c18;
+  border-radius: 50%;
+  padding: 6px 8px;
+  color: #f7efe3;
+  font-weight: bold;
+  cursor: pointer;
+
+  border: 1px solid rgba(212,166,87,0.6);
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.45);
 }
 
-@keyframes softGlow {
-  0%,
-  100% {
-    opacity: 0.6;
-  }
-  50% {
-    opacity: 1;
-  }
-}
+/* --------------------------- */
+/* LOGO                        */
+/* --------------------------- */
 
-/* 🌈 Flowing Aurora Gradient */
-.vertical-navbar::before {
-  content: "";
-  position: absolute;
-  top: -100%;
-  left: -100%;
-  width: 300%;
-  height: 300%;
-  background: radial-gradient(circle at 30% 30%, #6ec1e4, transparent 40%),
-    radial-gradient(circle at 70% 50%, #9b5de5, transparent 40%),
-    radial-gradient(circle at 40% 80%, #f15bb5, transparent 45%);
-  opacity: 0.25;
-  filter: blur(140px);
-  animation: auroraMove 20s infinite alternate linear;
-  z-index: 0;
-}
-
-@keyframes auroraMove {
-  0% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(8%, -10%) scale(1.1);
-  }
-  100% {
-    transform: translate(-10%, 10%) scale(1);
-  }
-}
-
-/* ============================================================
-   🌟 HEADER (LOGO + BRAND)
-============================================================ */
 .nav-header {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  position: relative;
-  z-index: 1;
+  cursor: pointer;
 }
 
 .nav-logo {
   height: 48px;
-  border-radius: 10px;
-  transition: transform 0.3s ease;
-}
-
-.nav-logo:hover {
-  transform: scale(1.1);
+  border-radius: 14px;
 }
 
 .brand-text {
-  background: linear-gradient(90deg, #6ec1e4, #9b5de5, #f15bb5);
+  font-weight: 800;
+  font-size: 1.25rem;
+  background: linear-gradient(90deg, #f6d48b, #caa172);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-weight: 800;
-  font-size: 1.5rem;
-  letter-spacing: 0.5px;
 }
 
-/* ============================================================
-   👤 PROFILE SECTION
-============================================================ */
-.nav-user {
-  text-align: center;
-  padding: 1.5rem 0 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  cursor: pointer;
-  position: relative;
-  z-index: 10; /* ✨ FIX 2 — keep above video */
+/* --------------------------- */
+/* PROFILE                     */
+/* --------------------------- */
+
+.profile-initials-top,
+.profile-pic-top {
+  width: 65px;
+  height: 65px;
+  border-radius: 999px;
+
+  background: radial-gradient(circle at 40% 35%, #ffffff, #c3b49b);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.35);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.3rem;
+  color: #2a1c18;
 }
-/* 🧭 FIXED PROFILE WRAPPER — align avatar + name + arrow horizontally */
+
 .profile-info {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  position: relative;
+  gap: 12px;
 }
 
 .profile-dropdown-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  color: #cfd4ff;
-  font-weight: 600;
+  color: #d8cfc7;
+  font-size: 0.9rem;
   cursor: pointer;
-  margin-top: 0.4rem; /* 🩵 ensures it stays below avatar */
-  transition: all 0.3s ease;
-}
-
-.profile-dropdown-toggle:hover {
-  color: #ffd700;
-  text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
-}
-
-
-.profile-initials-top {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: linear-gradient(90deg, #9b5de5, #00bcd4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #fff;
-  margin: 0 auto 0.5rem;
-  box-shadow: 0 0 20px rgba(155, 93, 229, 0.5);
-  transition: transform 0.3s ease;
-  position: relative;
-}
-
-/* ✨ Small dropdown arrow under avatar */
-/* 🌈 Dropdown Arrow Beside Name */
-.profile-dropdown-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  color: #cfd4ff;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.profile-dropdown-toggle:hover {
-  color: #ffd700;
-  text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
 }
 
 .profile-arrow {
-  font-size: 0.85rem;
-  transition: transform 0.3s ease;
+  font-size: 0.75rem;
 }
 
-.profile-dropdown-toggle.open .profile-arrow {
-  transform: rotate(180deg);
-}
-
-.profile-initials-top:hover {
-  transform: scale(1.08);
-}
-
-.profile-name-top {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #cfd4ff;
-  letter-spacing: 0.4px;
-  max-width: 160px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  margin: 0 auto;
-}
-
-/* ============================================================
-   💜 PROFILE QUICK ACTION BUTTONS
-============================================================ */
 .profile-quick-actions {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 0.8rem;
-  padding: 0 0.4rem;
+  gap: 8px;
+  margin-top: 8px;
 }
 
 .quick-btn {
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(155, 93, 229, 0.4);
-  color: #dcdcff;
-  font-size: 0.8rem;
-  font-weight: 600;
-  padding: 0.4rem 0.8rem;
-  border-radius: 20px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  box-shadow: 0 0 12px rgba(155, 93, 229, 0.25);
-  backdrop-filter: blur(6px);
-}
+  padding: 5px 10px;
+  border-radius: 16px;
 
-/* 🌈 Gradient Hover Effect */
-.quick-btn:hover {
-  background: linear-gradient(90deg, #00bcd4, #9b5de5, #f15bb5);
+  background: rgba(255,255,255,0.12);
   color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 0 18px rgba(155, 93, 229, 0.6);
+  font-size: 0.78rem;
+
+  border: 1px solid rgba(255,255,255,0.18);
 }
 
-/* 🌟 Active State */
-.quick-btn.active {
-  background: linear-gradient(90deg, #6ec1e4, #9b5de5);
-  color: #fff;
-  font-weight: 700;
-  box-shadow: 0 0 22px rgba(155, 93, 229, 0.5);
-}
+/* --------------------------- */
+/* NAV LINKS                   */
+/* --------------------------- */
 
-/* ============================================================
-   📋 NAVIGATION LINKS
-============================================================ */
 .nav-links {
-  list-style: none;
-  margin-top: 1.5rem;
-  padding: 0;
-  flex-grow: 1;
-  position: relative;
-  z-index: 1;
+  margin-top: 12px;
+  width: 100%;
 }
 
 .nav-link-vertical {
+  width: 100%;
+  padding: 15px 22px;
+
+  background: linear-gradient(135deg, #2a1c18, #1c1614 85%);
+  border-radius: 22px;
+
+  border: 1px solid rgba(210,168,95,0.5);
+  color: #f3e8d6;
+  font-weight: 600;
+  font-size: 0.95rem;
+
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 0.9rem 1.1rem;
-  color: #cbd5ff;
-  text-decoration: none;
-  font-weight: 600;
-  border-radius: 10px;
-  transition: all 0.3s ease;
+  transition: 0.25s;
+  box-shadow:
+    0 10px 18px rgba(0,0,0,0.45),
+    0 0 15px rgba(155,93,229,0.35);
 }
 
 .nav-link-vertical:hover {
-  color: #fff;
-  background: linear-gradient(
-    90deg,
-    rgba(110, 193, 228, 0.18),
-    rgba(155, 93, 229, 0.15)
-  );
-  transform: translateX(4px);
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 14px 24px rgba(0,0,0,0.55),
+    0 0 28px rgba(155,93,229,0.65),
+    0 0 35px rgba(212,166,87,0.65);
 }
 
 .nav-link-vertical.active {
-  background: linear-gradient(90deg, #6ec1e4, #9b5de5);
-  color: #fff;
+  border: 2px solid rgba(212,166,87,0.9);
+  background: linear-gradient(135deg, #33221b, #201720);
+  transform: translateY(-4px) scale(1.03);
+
+  box-shadow:
+    0 18px 32px rgba(0,0,0,0.7),
+    0 0 36px rgba(155,93,229,0.7),
+    0 0 50px rgba(212,166,87,0.8);
+}
+
+/* --------------------------- */
+/* LOGOUT                      */
+/* --------------------------- */
+
+.logout-btn {
+  margin-top: auto;
+  padding: 12px 20px;
+
+  background: #3b2923;
+  border-radius: 18px;
+
+  color: #eadbc7;
   font-weight: 700;
-  box-shadow: 0 0 25px rgba(155, 93, 229, 0.45);
-  border-left: 3px solid #f15bb5;
+  border: 1px solid rgba(212,166,87,0.7);
 }
 
 /* ============================================================
-   🚪 BOTTOM BUTTONS
-============================================================ */
-.nav-bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.9rem;
-  position: relative;
-  z-index: 1;
-}
-
-/* 🔐 Login / Logout */
-.logout-btn,
-.login-btn {
-  width: 100%;
-  background: none;
-  border: 2px solid #9b5de5;
-  color: #9b5de5;
-  border-radius: 10px;
-  font-weight: 600;
-  padding: 0.6rem 1.2rem;
-  transition: 0.3s ease;
-  text-align: center;
-}
-
-.logout-btn:hover,
-.login-btn:hover {
-  background: linear-gradient(90deg, #6ec1e4, #9b5de5);
-  color: #fff;
-  box-shadow: 0 0 20px rgba(155, 93, 229, 0.6);
-}
-
-/* ⬅️ Collapse Button */
-.collapse-btn {
-  width: 100%;
-  background: rgba(255, 255, 255, 0.08);
-  border: none;
-  color: #b8c7ff;
-  padding: 0.5rem;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.collapse-btn:hover {
-  background: linear-gradient(90deg, #6ec1e4, #9b5de5);
-  color: #fff;
-}
-
-/* ============================================================
-   🌟 CONTENT ALIGNMENT (HOME & PAGES)
-============================================================ */
-.main-content {
-  margin-left: 320px;
-  transition: all 0.5s cubic-bezier(0.45, 0, 0.25, 1);
-}
-.main-content.collapsed {
-  margin-left: 90px !important;
-}
-
-
-.main-content.collapsed {
-  margin-left: 90px;
-}
-
-/* ============================================================
-   🌈 PROFILE DROPDOWN MENU (Collapsed View)
+   MOBILE BOTTOM NAV
 ============================================================ */
 
-.profile-dropdown {
-  position: absolute;
-  top: 110px; /* ✨ FIX 3 — move dropdown below avatar */
-  left: 85px;
-  width: 200px;
-  background: rgba(25, 20, 45, 0.95);
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 25px rgba(155, 93, 229, 0.35);
-  padding: 0.6rem;
-  display: flex;
-  flex-direction: column;
-  animation: dropdownFade 0.3s ease-in-out;
-  z-index: 9999; /* 💎 FIX 4 — bring to front */
-  backdrop-filter: blur(8px) saturate(160%);
+.mobile-nav {
+  display: none;
 }
 
-.dropdown-item {
-  color: #e4e4e9;
-  font-weight: 500;
-  text-decoration: none;
-  padding: 0.5rem 0.6rem;
-  border-radius: 8px;
-  transition: all 0.25s;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.dropdown-item:hover {
-  background: linear-gradient(90deg, #6ec1e420, #9b5de520, #f15bb520);
-  color: #ffd700;
-  transform: translateX(4px);
-}
-
-/* ✨ Animation */
-@keyframes dropdownFade {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@keyframes dropdownClose {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-}
-
-.fade-out {
-  animation: dropdownClose 0.3s ease-in-out forwards;
-  pointer-events: none;
-  opacity: 0;
-}
-
-
-/* ============================================================
-   📱 RESPONSIVE BEHAVIOR
-============================================================ */
-@media (max-width: 992px) {
+@media (max-width: 850px) {
   .vertical-navbar {
-    width: 85px;
-  }
-
-  .main-content {
-    margin-left: 85px;
-  }
-
-  .brand-text,
-  .profile-name-top {
     display: none;
   }
 
-  .profile-dropdown {
-    left: 70px;
-    width: 160px;
+  .mobile-nav {
+    display: flex;
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 92%;
+    padding: 12px 22px;
+
+    background: rgba(22, 18, 18, 0.55);
+    backdrop-filter: blur(18px);
+
+    border-radius: 22px;
+    box-shadow:
+      0 14px 20px rgba(0,0,0,0.45),
+      0 0 30px rgba(212,166,87,0.4);
+
+    justify-content: space-between;
   }
-}
-/* ============================================================
-   🎛 PROFILE TOGGLE BUTTON (Near Avatar)
-============================================================ */
-.profile-toggle-btn {
-  margin-top: 0.6rem;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  color: #eaeaff;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.35s ease;
-  box-shadow: 0 0 12px rgba(155, 93, 229, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-inline: auto;
-  position: relative;
-  z-index: 2;
-}
 
-.profile-toggle-btn:hover {
-  background: linear-gradient(90deg, #6ec1e4, #9b5de5, #f15bb5);
-  color: #fff;
-  transform: scale(1.08);
-  box-shadow: 0 0 20px rgba(155, 93, 229, 0.6);
-}
-
-/* ✨ Rotate when collapsed */
-.profile-toggle-btn.open {
-  transform: rotate(0deg);
-}
-
-.profile-toggle-btn.closed {
-  transform: rotate(180deg);
-  transition: transform 0.4s ease;
-}
-
-/* 🌈 Soft pulse aura behind the button */
-.profile-toggle-btn::after {
-  content: "";
-  position: absolute;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(155, 93, 229, 0.35), transparent 70%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: -1;
-}
-
-.profile-toggle-btn:hover::after {
-  opacity: 1;
-  animation: pulseGlow 1.4s infinite ease-in-out;
-}
-
-@keyframes pulseGlow {
-  0% { transform: scale(1); opacity: 0.8; }
-  50% { transform: scale(1.2); opacity: 0.4; }
-  100% { transform: scale(1); opacity: 0.8; }
-}
-/* 🎢 Smooth profile quick-action dropdown */
-.profile-quick-actions.slide-down {
-  animation: slideDown 0.4s ease forwards;
-}
-
-.profile-quick-actions.slide-up {
-  animation: slideUp 0.4s ease forwards;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-    max-height: 0;
+  .mobile-nav-item {
+    font-size: 1.35rem;
+    opacity: 0.65;
+    transition: 0.2s;
+    color: #f3e8d6;
   }
-  to {
+
+  .mobile-nav-item.active {
     opacity: 1;
-    transform: translateY(0);
-    max-height: 400px;
-  }
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-    max-height: 400px;
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-10px);
-    max-height: 0;
+    transform: translateY(-3px);
+    text-shadow: 0 0 12px rgba(212,166,87,0.9);
   }
 }

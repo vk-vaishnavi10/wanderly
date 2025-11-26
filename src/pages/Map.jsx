@@ -1,3 +1,4 @@
+// src/pages/MapPage.jsx
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import {
   GoogleMap,
@@ -33,13 +34,13 @@ export default function MapPage() {
   const [showMemoryModal, setShowMemoryModal] = useState(false);
   const autocompleteRef = useRef(null);
 
-  // 🧠 Load stored pins
+  // Load saved pins
   useEffect(() => {
     const savedPins = localStorage.getItem("wanderly_memories");
     if (savedPins) setMemoryPins(JSON.parse(savedPins));
   }, []);
 
-  // 💾 Save pins automatically
+  // Save automatically
   useEffect(() => {
     localStorage.setItem("wanderly_memories", JSON.stringify(memoryPins));
   }, [memoryPins]);
@@ -49,16 +50,17 @@ export default function MapPage() {
     mapInstance.setOptions({
       disableDefaultUI: false,
       styles: [
-        { elementType: "geometry", stylers: [{ color: "#e5e3df" }] },
-        { featureType: "water", stylers: [{ color: "#a6c8ff" }] },
+        { elementType: "geometry", stylers: [{ color: "#efe7dc" }] },
+        { featureType: "water", stylers: [{ color: "#d1bfa2" }] },
         { featureType: "road", stylers: [{ color: "#ffffff" }] },
-        { featureType: "road.highway", stylers: [{ color: "#ffd700" }] },
+        { featureType: "road.highway", stylers: [{ color: "#d4a657" }] },
       ],
     });
   }, []);
 
   const handleSearch = () => {
     if (!map || !autocompleteRef.current) return;
+
     const place = autocompleteRef.current.getPlace();
     if (!place || !place.geometry) {
       alert("Please select a valid location!");
@@ -69,11 +71,12 @@ export default function MapPage() {
       lat: place.geometry.location.lat(),
       lng: place.geometry.location.lng(),
     };
+
     map.panTo(newCenter);
     setCenter(newCenter);
 
     const service = new window.google.maps.places.PlacesService(map);
-    const request = { location: newCenter, radius: 7000, type: [searchType] };
+    const request = { location: newCenter, radius: 5000, type: [searchType] };
 
     service.nearbySearch(request, (results, status) => {
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
@@ -84,7 +87,7 @@ export default function MapPage() {
     });
   };
 
-  // 🌍 Add Memory Pin
+  // Add memory pin
   const handleMapClick = (e) => {
     const lat = e.latLng.lat();
     const lng = e.latLng.lng();
@@ -99,14 +102,15 @@ export default function MapPage() {
     }
   };
 
-  // 🗑️ Delete a pin
+  // Delete pin
   const deleteMemory = (index) => {
-    const updatedPins = memoryPins.filter((_, i) => i !== index);
-    setMemoryPins(updatedPins);
+    const updated = memoryPins.filter((_, i) => i !== index);
+    setMemoryPins(updated);
     setSelectedPlace(null);
   };
 
-  if (!isLoaded) return <div className="text-light">🌀 Loading Wanderly Map...</div>;
+  if (!isLoaded)
+    return <div className="text-light">🌀 Loading Wanderly Map...</div>;
 
   return (
     <section className="map-section">
@@ -115,7 +119,7 @@ export default function MapPage() {
         Drop golden pins to mark memories that stay with you forever 💫
       </p>
 
-      {/* 🔍 Search Bar */}
+      {/* Search Box */}
       <div className="map-search-box glassy">
         <Autocomplete onLoad={(ref) => (autocompleteRef.current = ref)}>
           <input
@@ -124,6 +128,7 @@ export default function MapPage() {
             className="map-input"
           />
         </Autocomplete>
+
         <select
           className="map-select"
           value={searchType}
@@ -135,12 +140,13 @@ export default function MapPage() {
           <option value="museum">🏛️ Museums</option>
           <option value="cafe">☕ Cafes</option>
         </select>
+
         <button className="map-btn" onClick={handleSearch}>
           Search
         </button>
       </div>
 
-      {/* 🗺️ Map */}
+      {/* Map */}
       <div className="map-container">
         <GoogleMap
           mapContainerStyle={containerStyle}
@@ -149,7 +155,7 @@ export default function MapPage() {
           onLoad={onMapLoad}
           onClick={handleMapClick}
         >
-          {/* 📍 Place results */}
+          {/* Search Results */}
           {places.map((place, index) => (
             <Marker
               key={index}
@@ -158,27 +164,27 @@ export default function MapPage() {
                 lng: place.geometry.location.lng(),
               }}
               icon={{
-                url: "https://maps.google.com/mapfiles/ms/icons/yellow-dot.png",
-                scaledSize: new window.google.maps.Size(40, 40),
+                url: "/src/assets/pins/chibi-hero.png",
+                scaledSize: new window.google.maps.Size(46, 46),
               }}
               onClick={() => setSelectedPlace(place)}
             />
           ))}
 
-          {/* 💛 Memory Pins */}
+          {/* Memory Pins */}
           {memoryPins.map((mem, i) => (
             <Marker
               key={i}
               position={{ lat: mem.lat, lng: mem.lng }}
               icon={{
-                url: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
-                scaledSize: new window.google.maps.Size(44, 44),
+                url: "/src/assets/pins/panda_pin.png",
+                scaledSize: new window.google.maps.Size(52, 52),
               }}
               onClick={() => setSelectedPlace({ ...mem, index: i })}
             />
           ))}
 
-          {/* 📜 InfoWindow for Memories or Places */}
+          {/* Info Window */}
           {selectedPlace && (
             <InfoWindow
               position={{
@@ -215,7 +221,7 @@ export default function MapPage() {
         </GoogleMap>
       </div>
 
-      {/* 💭 Add Memory Modal */}
+      {/* Memory Modal */}
       {showMemoryModal && (
         <div className="memory-modal-overlay">
           <div className="memory-modal">
@@ -244,7 +250,7 @@ export default function MapPage() {
 
       <footer className="map-footer">
         <p>
-          ✨ Your stories glow across the world —{" "}
+          ✨ Your memories sparkle across the world —{" "}
           <span className="wanderly-link">with Wanderly 💛</span>
         </p>
       </footer>

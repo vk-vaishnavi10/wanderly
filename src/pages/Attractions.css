@@ -1,47 +1,51 @@
 /* ============================================================
-   🌍 Wanderly Attractions – Aurora Glass Luxury Edition
-   by Vaishnavi 💜 (Violet × Cyan × Gold Harmony)
+   ☕ WANDERLY – ATTRACTIONS (Dark Mocha Premium Edition)
+   Full File – With Sidebar Padding Fix
 ============================================================ */
 
-/* 🌌 Base Layout */
+/* 🌌 BASE PAGE */
 .attractions-page {
-  background: radial-gradient(circle at top, #060018 0%, #120033 60%, #08001a 100%);
+  background: linear-gradient(135deg, #1A0E08, #20110C, #2B1810);
   min-height: 100vh;
   padding: 6rem 2rem 4rem;
+  padding-left: 300px;   /* ⭐ FIX: ensures cards move right from sidebar */
   font-family: "Poppins", sans-serif;
-  color: #eaf3ff;
-  animation: auroraFlow 14s ease-in-out infinite alternate;
+  color: #FFEEDB;
   overflow-x: hidden;
+  position: relative;
+  animation: backgroundFlow 12s ease-in-out infinite alternate;
 }
 
+/* RESPONSIVE FIXES */
+@media (max-width: 1100px) {
+  .attractions-page {
+    padding-left: 240px;
+  }
+}
+@media (max-width: 900px) {
+  .attractions-page {
+    padding-left: 20px;
+  }
+}
+
+@keyframes backgroundFlow {
+  0% { background-position: 0% 30%; }
+  100% { background-position: 100% 70%; }
+}
+
+/* TITLE */
 .page-title {
   text-align: center;
   font-size: 3rem;
   font-weight: 800;
-  letter-spacing: 1px;
-  background: linear-gradient(90deg, #a855f7, #6ee7b7, #ffd76b, #f472b6);
+  background: linear-gradient(90deg, #FFDCA8, #FFF1D6, #C4935C);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 25px rgba(255, 255, 255, 0.2),
-               0 0 35px rgba(0, 255, 255, 0.3),
-               0 0 55px rgba(255, 215, 0, 0.25);
-  animation: titleGlow 5s ease-in-out infinite alternate;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 25px rgba(255, 231, 190, 0.4);
 }
 
-@keyframes titleGlow {
-  0% {
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.2),
-                 0 0 25px rgba(0, 255, 255, 0.3);
-  }
-  100% {
-    text-shadow: 0 0 30px rgba(255, 215, 0, 0.4),
-                 0 0 50px rgba(255, 0, 255, 0.2);
-  }
-}
-
-
-
-/* 🔍 Search */
+/* SEARCH BOX */
 .search-container {
   display: flex;
   justify-content: center;
@@ -52,58 +56,49 @@
   width: 60%;
   max-width: 600px;
   padding: 1rem 1.2rem;
-  border-radius: 999px;
-  border: 1px solid rgba(0, 255, 255, 0.4);
-  background: rgba(15, 10, 35, 0.6);
-  color: #eafaff;
-  font-size: 1rem;
-  outline: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+  border-radius: 50px;
+  border: 1px solid rgba(255, 235, 205, 0.4);
+  background: rgba(40, 25, 15, 0.7);
+  color: #FFEEDB;
+  box-shadow: 0 0 18px rgba(255, 221, 168, 0.25);
 }
 
 .search-input::placeholder {
-  color: rgba(180, 230, 255, 0.8);
+  color: #E6C5A1;
 }
 
-.search-input:focus {
-  border-color: #ffd76b;
-  box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
-}
-
-/* 🎴 Attraction Cards Grid */
+/* GRID */
 .attractions-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2.5rem;
   justify-content: center;
+  padding-right: 1rem;
 }
 
-/* 🏰 Card Style */
+/* CARD */
 .attraction-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(0, 255, 255, 0.3);
+  background: rgba(255, 247, 235, 0.06);
+  border: 1px solid rgba(255, 203, 154, 0.35);
   border-radius: 18px;
-  box-shadow: 0 0 25px rgba(0, 255, 255, 0.15);
   overflow: hidden;
-  transition: all 0.3s ease;
   backdrop-filter: blur(12px);
-  text-align: center;
+  transition: 0.3s ease;
+  box-shadow: 0 0 25px rgba(255, 235, 200, 0.1);
+  position: relative;
 }
 
 .attraction-card:hover {
-  transform: translateY(-10px) scale(1.02);
-  border-color: rgba(255, 215, 0, 0.4);
-  box-shadow: 0 0 40px rgba(0, 255, 255, 0.3),
-              0 0 50px rgba(255, 215, 0, 0.25);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 0 40px rgba(255, 215, 170, 0.35);
 }
 
-/* 🖼️ Image */
+/* IMAGE */
 .attraction-img {
   width: 100%;
   height: 230px;
   object-fit: cover;
-  transition: all 0.4s ease;
+  transition: 0.4s ease;
   filter: brightness(0.9);
 }
 
@@ -112,80 +107,74 @@
   filter: brightness(1);
 }
 
-/* 📜 Info */
+/* INFO */
 .attraction-info {
-  padding: 1.2rem 1.3rem;
+  padding: 1.3rem;
 }
 
 .attraction-info h3 {
   font-size: 1.4rem;
-  background: linear-gradient(90deg, #00e0ff, #6ee7b7, #ffd76b);
+  background: linear-gradient(90deg, #FFE8C6, #FFDBA3);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 0.3rem;
   font-weight: 700;
+  margin-bottom: 0.4rem;
 }
 
 .attraction-info h6 {
-  color: #b8c0ff;
-  font-weight: 500;
+  color: #E7C7AA;
   margin-bottom: 0.8rem;
 }
 
 .attraction-info p {
-  font-size: 0.95rem;
-  color: rgba(240, 248, 255, 0.85);
+  color: #FFEEDB;
+  opacity: 0.85;
   line-height: 1.5;
 }
 
-/* ✨ Explore Button */
+/* BUTTON */
 .explore-btn {
   display: inline-block;
-  margin-bottom: 1.2rem;
-  background: linear-gradient(90deg, #00e0ff, #6ee7b7, #ffd76b);
-  color: #001a22;
-  font-weight: 600;
+  margin: 1rem 0 1.4rem;
+  padding: 0.7rem 1.4rem;
   border-radius: 30px;
-  padding: 0.6rem 1.4rem;
   text-decoration: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+  font-weight: 700;
+  color: #3A1E12;
+  background: linear-gradient(135deg, #C8965A, #D4A657, #FFF0D9);
+  box-shadow: 0 0 20px rgba(212, 166, 87, 0.35);
+  transition: 0.3s;
 }
 
 .explore-btn:hover {
-  background: linear-gradient(90deg, #ffd76b, #3ef3b2, #00e0ff);
-  transform: scale(1.05);
-  box-shadow: 0 0 40px rgba(255, 215, 0, 0.45),
-              0 0 50px rgba(0, 255, 255, 0.4);
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 0 35px rgba(255, 230, 180, 0.55);
+  background: linear-gradient(135deg, #FFF0D9, #D4A657, #C8965A);
 }
 
-/* 😢 No Results */
+/* NO RESULTS */
 .no-results {
   grid-column: 1 / -1;
   text-align: center;
-  color: #ffd76b;
+  color: #FFDDAC;
   margin-top: 2rem;
 }
 
-/* ✨ Details Page */
+/* DETAILS PAGE */
 .attraction-details-page {
-  background: radial-gradient(circle at top, #0a0020 0%, #13003a 60%, #090018 100%);
+  background: linear-gradient(135deg, #1A0E08, #2B1810);
   min-height: 100vh;
-  color: #fff;
   padding: 5rem 1rem;
+  color: #FFEEDB;
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: auroraFlow 14s ease-in-out infinite alternate;
 }
 
-/* 🎞️ Details Card */
 .details-card {
-  background: rgba(15, 10, 35, 0.85);
-  border: 1.5px solid rgba(0, 255, 255, 0.3);
+  background: rgba(40, 25, 15, 0.75);
+  border: 1px solid rgba(255, 203, 154, 0.35);
   border-radius: 20px;
-  box-shadow: 0 0 35px rgba(0, 255, 255, 0.3),
-              0 0 45px rgba(255, 215, 0, 0.25);
   max-width: 850px;
   overflow: hidden;
   backdrop-filter: blur(16px);
@@ -203,195 +192,23 @@
 }
 
 .details-body h2 {
-  background: linear-gradient(90deg, #00e0ff, #ffd76b);
+  background: linear-gradient(90deg, #FFE3BB, #D4A657);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 2rem;
-  font-weight: 700;
 }
 
-.details-body h5 {
-  color: #bcbaff;
-  margin-bottom: 1rem;
-}
-
-.details-body p {
-  color: #e5f6ff;
-  font-size: 1.1rem;
-  line-height: 1.6;
-}
-
-/* 🌟 Back Button */
 .back-btn {
   display: inline-block;
-  margin: 1.5rem auto;
-  background: linear-gradient(90deg, #00e0ff, #6ee7b7, #ffd76b);
-  color: #001a22;
-  font-weight: bold;
-  border-radius: 25px;
-  padding: 0.7rem 1.5rem;
+  margin-top: 1.5rem;
+  padding: 0.7rem 1.6rem;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #C8965A, #D4A657, #FFF0D9);
+  font-weight: 700;
   text-decoration: none;
-  transition: all 0.3s ease;
+  color: #3A1E12;
 }
 
 .back-btn:hover {
-  background: linear-gradient(90deg, #ffd76b, #00e0ff);
-  box-shadow: 0 0 40px rgba(0, 255, 255, 0.4);
   transform: translateY(-3px);
-}
-
-/* 🌀 Background Motion */
-@keyframes auroraFlow {
-  from { background-position: 0% 50%; }
-  to { background-position: 100% 50%; }
-}
-
-/* 📱 Responsive */
-@media (max-width: 768px) {
-  .page-title {
-    font-size: 2rem;
-  }
-
-  .search-input {
-    width: 85%;
-  }
-
-  .details-img {
-    height: 260px;
-  }
-}
-/* ==========================================================
-   🌠 Wanderly Dream Atlas Motion Edition — Vaishnavi 💜
-   Adds floating particles, glow pulse, and cinematic motion
-========================================================== */
-
-/* 🌌 Animated Background Overlay */
-.attractions-page::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at 25% 25%, rgba(0, 255, 255, 0.08), transparent),
-              radial-gradient(circle at 75% 75%, rgba(255, 215, 0, 0.08), transparent);
-  z-index: 0;
-  animation: backgroundDrift 12s ease-in-out infinite alternate;
-}
-
-@keyframes backgroundDrift {
-  from {
-    transform: translate(0px, 0px);
-    opacity: 0.9;
-  }
-  to {
-    transform: translate(40px, -30px);
-    opacity: 1;
-  }
-}
-
-/* 💎 Floating Lights (Particles) */
-@keyframes floatLight {
-  0% {
-    transform: translateY(0) scale(1);
-    opacity: 0.8;
-  }
-  50% {
-    transform: translateY(-15px) scale(1.1);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(0) scale(1);
-    opacity: 0.8;
-  }
-}
-
-.attractions-page::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at 15% 20%, rgba(255, 215, 0, 0.08), transparent),
-              radial-gradient(circle at 80% 60%, rgba(0, 255, 255, 0.08), transparent),
-              radial-gradient(circle at 40% 80%, rgba(155, 93, 229, 0.08), transparent);
-  pointer-events: none;
-  z-index: 1;
-  animation: floatLight 6s ease-in-out infinite;
-}
-
-/* ✨ Card Entrance Animation */
-.attraction-card {
-  animation: fadeSlideUp 1.2s ease forwards;
-  opacity: 0;
-}
-
-.attraction-card:nth-child(1) { animation-delay: 0.2s; }
-.attraction-card:nth-child(2) { animation-delay: 0.4s; }
-.attraction-card:nth-child(3) { animation-delay: 0.6s; }
-.attraction-card:nth-child(4) { animation-delay: 0.8s; }
-
-@keyframes fadeSlideUp {
-  from {
-    transform: translateY(40px) scale(0.97);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
-}
-
-/* 🌈 Hover Edge Glow (moving border shimmer) */
-.attraction-card {
-  position: relative;
-  overflow: hidden;
-}
-
-.attraction-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 18px;
-  background: linear-gradient(130deg, rgba(0, 255, 255, 0.3), rgba(255, 215, 0, 0.3));
-  opacity: 0;
-  transition: all 0.5s ease;
-}
-
-.attraction-card:hover::before {
-  opacity: 1;
-  box-shadow: 0 0 50px rgba(0, 255, 255, 0.4), 0 0 70px rgba(255, 215, 0, 0.3);
-  animation: shimmerFlow 2s linear infinite;
-}
-
-@keyframes shimmerFlow {
-  0% { transform: rotate(0deg); filter: brightness(1); }
-  50% { transform: rotate(180deg); filter: brightness(1.2); }
-  100% { transform: rotate(360deg); filter: brightness(1); }
-}
-
-/* 🌟 Button Sparkle Effect */
-.explore-btn {
-  position: relative;
-  overflow: hidden;
-}
-
-.explore-btn::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -75%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(120deg, rgba(255, 255, 255, 0.4), transparent);
-  transform: skewX(-25deg);
-  transition: all 0.5s ease;
-}
-
-.explore-btn:hover::after {
-  left: 130%;
-  transition: all 0.8s ease;
-}
-
-/* 💫 Search Input Glow Focus */
-.search-input:focus {
-  border-color: #ffd76b;
-  box-shadow: 0 0 25px rgba(255, 215, 0, 0.4),
-              0 0 40px rgba(0, 255, 255, 0.3);
-  background: rgba(15, 15, 35, 0.85);
+  box-shadow: 0 0 35px rgba(255, 215, 170, 0.4);
 }

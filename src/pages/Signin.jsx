@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import "./Signin.css";
+import girl from "../assets/signin.png"; // <-- your chibi girl
 
 const oceanVideo = "/videos/introbg.mp4";
 
@@ -18,7 +19,6 @@ export default function Signin() {
     if (navbar) {
       navbar.style.opacity = "0";
       navbar.style.pointerEvents = "none";
-      navbar.style.transition = "opacity 0.6s ease";
     }
     return () => {
       if (navbar) {
@@ -31,6 +31,7 @@ export default function Signin() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const savedUser = JSON.parse(localStorage.getItem("registeredUser"));
+
     if (!savedUser) {
       alert("No user found. Please register first.");
       return;
@@ -44,7 +45,7 @@ export default function Signin() {
     ) {
       login(savedUser);
       setShowWelcome(true);
-      setTimeout(() => navigate("/home"), 2800);
+      setTimeout(() => navigate("/home"), 2500);
     } else {
       alert("Invalid credentials ❌");
     }
@@ -56,6 +57,7 @@ export default function Signin() {
         <source src={oceanVideo} type="video/mp4" />
       </video>
 
+      {/* LEFT FORM CARD */}
       <div className="signin-overlay">
         <div className="signin-card">
           <h2 className="signin-title">
@@ -71,6 +73,7 @@ export default function Signin() {
               onChange={(e) => setWanderId(e.target.value)}
               required
             />
+
             <input
               type="password"
               className="signin-input"
@@ -94,22 +97,15 @@ export default function Signin() {
         </div>
       </div>
 
-      {showWelcome && (
-        <div className="welcome-overlay">
-          <div className="bird bird1"></div>
-          <div className="bird bird2"></div>
-          <div className="bird bird3"></div>
+      {/* CHIBI GIRL + SPEECH BUBBLE */}
+      <div className="signin-girl-wrapper">
+        <img src={girl} alt="helper" className="signin-girl" />
 
-          <div className="welcome-content">
-            <h1>
-              <span className="emoji">🌎</span> Welcome to <span>Wanderly</span>
-            </h1>
-            <p>
-              A little flock flew in just to say hello, traveller <span className="emoji">✈️</span>
-            </p>
-          </div>
+        <div className="signin-bubble">
+          ✨ Hey traveller, sign in to your account!
         </div>
-      )}
+      </div>
+
     </div>
   );
 }

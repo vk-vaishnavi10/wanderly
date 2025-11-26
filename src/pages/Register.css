@@ -268,8 +268,8 @@
 
 .register-cat-illustration {
   position: fixed;
-  top: 5vh;           /* move to top */
-  right: 3vw;         /* move to right */
+  bottom: 0vh;           /* move to top */
+  left: 22vw;         /* move to right */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -280,8 +280,8 @@
 }
 
 .register-cat-image {
-  width: 400px;       /* bigger because more space */
-  max-width: 400px;
+  width: 150px;       /* bigger because more space */
+  max-width: 150px;
   filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.9));
   animation: catWave 1.6s ease-in-out infinite alternate;
 }

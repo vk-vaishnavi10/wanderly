@@ -1,40 +1,45 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useContext,
+} from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import "./Home.css";
+
 import varImg from "../images/var.jpg";
-// Slideshow images
-import { UserContext } from "../context/UserContext";
-import { useContext } from "react";
-
-
 import manImg from "../images/man.jpg";
 import ham from "../images/ham.jpg";
 import ooty from "../images/ooty.jpg";
+import pandaPeek from "../assets/panda-peek.png";
+import chibiMini from "../assets/chibi-mini.png";
+import chibiHero from "../assets/chibi-hero.png";
 
 
-// Popular Destinations
+
+
 import tajmahal from "../images/tajmahal.jpg";
 import jaipur from "../images/jaipur.jpg";
 import kerala from "../images/kerala.jpg";
 import lehladakh from "../images/lehladakh.jpg";
 
+import { UserContext } from "../context/UserContext";
+
 export default function Home() {
   const [query, setQuery] = useState("");
-  const homeVideo = "/videos/homebg.mp4";
-
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [listening, setListening] = useState(false);
+
+  const [heroIndex, setHeroIndex] = useState(0);
+
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
 
-useEffect(() => {
-  if (!user) {
-    navigate("/signin"); // 🚫 Redirect if not logged in
-  }
-}, [user, navigate]);
-
-
+  // protect route
+  useEffect(() => {
+    if (!user) navigate("/signin");
+  }, [user, navigate]);
 
   const suggestions = [
     "Goa",
@@ -52,67 +57,56 @@ useEffect(() => {
     s.toLowerCase().includes(query.toLowerCase())
   );
 
-  // Slideshow auto-advance
-  
-
-  // Parallax mouse movement
+  // parallax hero (subtle tilt)
   const heroRef = useRef(null);
   useEffect(() => {
     const el = heroRef.current;
     if (!el) return;
+
     const handle = (e) => {
       const rect = el.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width - 0.5) * 20;
-      const y = ((e.clientY - rect.top) / rect.height - 0.5) * 10;
+      const x = ((e.clientX - rect.left) / rect.width - 0.5) * 10;
+      const y = ((e.clientY - rect.top) / rect.height - 0.5) * 6;
       el.style.setProperty("--parallax-x", `${x}deg`);
       el.style.setProperty("--parallax-y", `${y}px`);
     };
+
     window.addEventListener("mousemove", handle);
     return () => window.removeEventListener("mousemove", handle);
   }, []);
 
-  // Reveal animations
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add("visible");
-        });
-      },
-      { threshold: 0.18 }
-    );
-
-    document
-      .querySelectorAll(
-        ".animate-card, .deal-card, .whyus-card, .extra-card, .inspo-card"
-      )
-      .forEach((el) => observer.observe(el));
-  }, []);
-
-  // Voice recognition
+  // voice search
   const recognitionRef = useRef(null);
   useEffect(() => {
     const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) return;
+
     const r = new SpeechRecognition();
     r.lang = "en-IN";
     r.interimResults = false;
     r.maxAlternatives = 1;
+
     r.onresult = (e) => {
       const text = e.results[0][0].transcript;
-      setQuery(text);
+      const trimmed = text.trim();
+      setQuery(trimmed);
       setShowSuggestions(false);
       setListening(false);
-      navigate(`/destination/${encodeURIComponent(text.trim())}`);
+      if (trimmed) {
+        navigate(`/destination/${encodeURIComponent(trimmed)}`);
+      }
     };
+
     r.onend = () => setListening(false);
     recognitionRef.current = r;
   }, [navigate]);
 
   const toggleListen = () => {
-    if (!recognitionRef.current)
-      return alert("Voice search not supported in this browser.");
+    if (!recognitionRef.current) {
+      alert("Voice search not supported in this browser.");
+      return;
+    }
     if (listening) {
       recognitionRef.current.stop();
       setListening(false);
@@ -142,329 +136,580 @@ useEffect(() => {
     }
   };
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.12 } },
-    exit: { opacity: 0 },
-  };
-  const itemVariants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: { opacity: 1, y: 0 },
-  };
+  // ================= HERO SLIDER CONTENT =================
+
+  const heroSlides = [
+    {
+      img: varImg,
+      tag: "Spiritual Trails",
+      title: "Sunrise at Varanasi Ghats",
+      desc: "Morning aarti by the Ganges, lanterns and chants under soft amber skies.",
+      label: "Varanasi, Uttar Pradesh",
+    },
+    {
+      img: manImg,
+      tag: "Mountain Escapes",
+      title: "Snowy Peaks of Manali",
+      desc: "Cable cars, pine forests and slow café mornings.",
+      label: "Manali, Himachal Pradesh",
+    },
+    {
+      img: ham,
+      tag: "Ancient Ruins",
+      title: "Ruins of Hampi",
+      desc: "Stone temples, boulder hills and golden riverside sunsets.",
+      label: "Hampi, Karnataka",
+    },
+    {
+      img: ooty,
+      tag: "Tea Hill Getaway",
+      title: "Mist Over Ooty Hills",
+      desc: "Toy trains, tea gardens and cool breeze escapes.",
+      label: "Ooty, Tamil Nadu",
+    },
+  ];
+
+  const heroNextIndex = (index, step = 1) =>
+    (index + step + heroSlides.length) % heroSlides.length;
+
+  const heroPrev = () => setHeroIndex((prev) => heroNextIndex(prev, -1));
+  const heroNext = () => setHeroIndex((prev) => heroNextIndex(prev, 1));
+
+  // autoplay slider
+  useEffect(() => {
+    const id = setInterval(() => {
+      setHeroIndex((prev) => heroNextIndex(prev, 1));
+    }, 6500);
+    return () => clearInterval(id);
+  }, []);
+
+  // ================= BELOW-HERO CONTENT =================
 
   const inspirations = [
-    { img: varImg, title: "VARANASI", subtitle: "Uttar Pradesh Divine Experience" },
-    { img: manImg, title: "MANALI", subtitle: "Manali vibes and mountain highs." },
-    { img: ham, title: "HAMPI", subtitle: "Lost in the ancient charm of Hampi." },
-    { img: ooty, title: "OOTY", subtitle: "Life's better in the hills of Ooty" },
+    {
+      img: varImg,
+      title: "Varanasi",
+      subtitle: "Riverside dawn rituals and heritage ghats.",
+    },
+    {
+      img: manImg,
+      title: "Manali",
+      subtitle: "Mountain air, snow peaks and cosy stays.",
+    },
+    {
+      img: ham,
+      title: "Hampi",
+      subtitle: "Ancient stones, sunsets and slow walks.",
+    },
+    {
+      img: ooty,
+      title: "Ooty",
+      subtitle: "Toy trains, tea gardens and misty roads.",
+    },
   ];
 
   return (
     <AnimatePresence mode="wait">
       <motion.div
         className="home-root"
-        initial="hidden"
-        animate="visible"
-        exit="exit"
-        variants={containerVariants}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
       >
-        <section id="hero" className="hero-section" ref={heroRef}>
+        {/* ================= HERO ================= */}
+        <section
+          id="hero"
+          className="hero-premium"
+          ref={heroRef}
+          style={{ backgroundImage: `url(${heroSlides[heroIndex].img})` }}
+        >
+          <div className="hero-gradient-overlay" />
 
-        <video
-  className="hero-video-bg"
-  autoPlay
-  loop
-  muted
-  playsInline
-  preload="auto"
-  onLoadedData={() => console.log("✅ Home video loaded successfully")}
-  onError={(e) => console.error("❌ Home video load error:", e)}
->
-  <source src={homeVideo} type="video/mp4" />
-  Your browser does not support the video tag.
-</video>
+          <div className="hero-content">
+            <div className="hero-grid">
+              {/* LEFT – main management card */}
+              <div className="hero-left-card blob-shape">
+              <div className="hero-chibi-welcome">
+  <img src={chibiHero} alt="traveller chibi" className="chibi-welcome-img" />
 
-
-  {/* ✨ Floating Headline & Search */}
-  <div className="hero-floating-content">
-    <motion.h1
-      className="dreamy-heading"
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1 }}
-    >
-      Every Destination Begins With a Dream
-    </motion.h1>
-
-    <motion.p
-      className="dreamy-subtext"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 0.3 }}
-    >
-      Type your dream place and let’s go 🌍
-    </motion.p>
-
-    {/* 🌈 Floating Search Bar */}
-    <motion.div
-      className="floating-search-bar"
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.6 }}
-    >
-      <input
-        type="text"
-        placeholder="Where are you going?"
-        value={query}
-        onChange={(e) => {
-          setQuery(e.target.value);
-          setShowSuggestions(true);
-        }}
-        onKeyDown={handleKeyDown}
-        onBlur={() => setTimeout(() => setShowSuggestions(false), 120)}
-      />
-      <button className="icon-btn mic-btn" onClick={toggleListen} title="Voice search">
-        {listening ? "🎙️" : "🎤"}
-      </button>
-      <button className="search-icon-btn" onClick={() => handleSearch()}>
-        🔍
-      </button>
-    </motion.div>
-
-    {/* 🔽 Suggestions Dropdown */}
-    {showSuggestions && filtered.length > 0 && (
-      <motion.ul
-        className="suggestions-list"
-        initial={{ opacity: 0, y: -6 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.12 }}
-      >
-        {filtered.map((s, i) => (
-          <li
-            key={i}
-            onMouseDown={() => {
-              setQuery(s);
-              setShowSuggestions(false);
-              handleSearch(s);
-            }}
-          >
-            {s}
-          </li>
-        ))}
-      </motion.ul>
-    )}
+  <div className="chibi-welcome-text">
+    <h3>Welcome to Wanderly</h3>
+    <p>Your cosy travel companion ☕✨</p>
   </div>
+</div>
+
+                {/* Panda mascot – cute peek animation */}
+                <div className="hero-panda-wrap">
+  <img src={pandaPeek} alt="panda" className="hero-panda-img" />
+</div>
+
+
+                <div className="hero-eyebrow">
+                  WANDERLY • TRAVEL MANAGEMENT
+                </div>
+
+                <h1 className="hero-title welcome-title">
+  Welcome to Wanderly, Traveller ✈️✨
+</h1>
+
+
+                <p className="hero-subtitle">
+                  Discover destinations crafted like a perfect cup – layered,
+                  warm and unforgettable. Plan, track and manage every journey
+                  from a single, calm workspace.
+                </p>
+
+                <div className="hero-tag-row">
+                  <span className="hero-tag-pill">Curated itineraries</span>
+                  <span className="hero-tag-pill">Handpicked stays</span>
+                  <span className="hero-tag-pill">Seamless bookings</span>
+                </div>
+
+                {/* search */}
+                <div className="hero-search-shell">
+                  <div className="hero-search-row">
+                    <input
+                      type="text"
+                      placeholder="Search by city, country or experience"
+                      value={query}
+                      onChange={(e) => {
+                        setQuery(e.target.value);
+                        setShowSuggestions(true);
+                      }}
+                      onKeyDown={handleKeyDown}
+                      onBlur={() =>
+                        setTimeout(() => setShowSuggestions(false), 120)
+                      }
+                    />
+
+                    <button
+                      className={`hero-icon-btn mic-btn ${
+                        listening ? "is-active" : ""
+                      }`}
+                      onClick={toggleListen}
+                      type="button"
+                    >
+                      Mic
+                    </button>
+
+                    <button
+                      className="hero-icon-btn search-btn"
+                      onClick={() => handleSearch()}
+                      type="button"
+                    >
+                      Go
+                    </button>
+
+                    {showSuggestions && filtered.length > 0 && (
+                      <ul className="hero-suggestions">
+                        {filtered.map((s, i) => (
+                          <li
+                            key={i}
+                            onMouseDown={() => {
+                              setQuery(s);
+                              setShowSuggestions(false);
+                              handleSearch(s);
+                            }}
+                          >
+                            <span>{s}</span>
+                            <span className="hero-suggestion-arrow">↗</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+
+                  <div className="hero-metrics">
+                    <div className="hero-metric">
+                      <span className="metric-label">Trips planned</span>
+                      <span className="metric-value">1,248</span>
+                    </div>
+                    <div className="hero-metric">
+                      <span className="metric-label">Cities covered</span>
+                      <span className="metric-value">96</span>
+                    </div>
+                    <div className="hero-metric">
+                      <span className="metric-label">Avg. rating</span>
+                      <span className="metric-value">4.8</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* RIGHT – highlights + slider */}
+              <div className="hero-right-column">
+              <div className="hero-highlight-card blob-shape">
+
+                  <h2 className="highlight-title">Today&apos;s Highlights</h2>
+                  <p className="highlight-sub">
+                    Handpicked places trending among modern travellers –
+                    balanced between calm, culture and comfort.
+                  </p>
+
+                  <ul className="highlight-list">
+                    <li>
+                      <span className="dot" />
+                      Weekend hill escapes – long views, slow mornings.
+                    </li>
+                    <li>
+                      <span className="dot" />
+                      Culture and heritage – walk through stories and old towns.
+                    </li>
+                    <li>
+                      <span className="dot" />
+                      Coastal slow stays – sea-facing rooms and quiet beaches.
+                    </li>
+                  </ul>
+
+                  <button
+                    type="button"
+                    className="highlight-cta"
+                    onClick={() => navigate("/about")}
+                  >
+                    Discover how Wanderly works
+                  </button>
+                </div>
+
+                {/* slider zone */}
+                <div className="hero-slider-wrapper">
+                  <div className="hero-slider-header">
+                    <span className="slider-title">Featured Destinations</span>
+                    <div className="slider-nav">
+                      <button type="button" onClick={heroPrev}>
+                        ‹
+                      </button>
+                      <button type="button" onClick={heroNext}>
+                        ›
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="hero-slider-grid">
+                    {/* main card */}
+                    <div className="hero-slider-main blob-shape"
+
+                      style={{
+                        backgroundImage: `url(${heroSlides[heroIndex].img})`,
+                      }}
+                    >
+                      <div className="slider-main-overlay" />
+                      <div className="slider-main-text">
+                        <span className="slider-tag">
+                          {heroSlides[heroIndex].tag}
+                        </span>
+                        <h3>{heroSlides[heroIndex].title}</h3>
+                        <p>{heroSlides[heroIndex].desc}</p>
+                        <button
+                          type="button"
+                          className="slider-main-cta"
+                          onClick={() =>
+                            navigate(
+                              `/destination/${encodeURIComponent(
+                                heroSlides[heroIndex].label
+                              )}`
+                            )
+                          }
+                        >
+                          Explore destination
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* side mini cards */}
+                    <div className="hero-slider-side">
+                      {[1, 2].map((step) => {
+                        const idx = heroNextIndex(heroIndex, step);
+                        const slide = heroSlides[idx];
+                        return (
+                          <button
+                            key={idx}
+                            type="button"
+                            className="hero-slider-mini"
+                            style={{ backgroundImage: `url(${slide.img})` }}
+                            onClick={() => setHeroIndex(idx)}
+                          >
+                            <div className="hero-slider-mini-label">
+                              <span>{slide.label}</span>
+                              <span>↗</span>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        {/* ================= COFFEE THEME BOTTOM HERO ================= */}
+        <section className="bottom-hero-coffee">
+
+<div className="coffee-box">
+  <div className="bottom-hero-inner">
+
+
+  {/* text */}
+  <div className="coffee-hero-text">
+    <h2 className="coffee-hero-title">Travel Made Warm, Easy & Personal ☕✨</h2>
+
+    <p className="coffee-hero-sub">
+      A cosy workspace designed to guide your journey—from planning
+      to booking—served with caramel calm and mocha clarity.
+    </p>
+
+    <button
+      className="coffee-hero-btn"
+      type="button"
+      onClick={() => navigate("/about")}
+    >
+      Learn More
+    </button>
+  </div>
+
+  {/* girl */}
+  <div className="coffee-hero-girl">
+    <img src={chibiMini} alt="Traveller Girl" />
+  </div>
+
+</div>
+</div>
 </section>
 
 
-        <div className="section-separator" />
-
-        {/* Travel Inspiration */}
-        <motion.section
-          id="inspiration"
-          className="container py-5"
-          variants={itemVariants}
-        >
-          <h2 className="text-center mb-4">Travel Inspiration</h2>
-          <div className="inspo-carousel d-flex gap-3 justify-content-center">
-            {inspirations.map((it, i) => (
-              <motion.div
-                key={i}
-                className="card inspo-card animate-card"
-                whileHover={{ scale: 1.03, y: -6 }}
-                transition={{ type: "spring", stiffness: 140 }}
-              >
-                <div className="inspo-img-wrap">
-                  <img src={it.img} alt={it.title} />
-                </div>
-                <div className="card-body">
-                  <h5>{it.title}</h5>
-                  <p className="muted">{it.subtitle}</p>
-                  <button
-  className="btn btn-sm btn-outline-warning mt-2"
-  onClick={() =>
-    navigate(`/destination/${encodeURIComponent(it.title)}`)
-  }
->
-  Explore
-</button>
 
 
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
-
-        <div className="section-separator" />
-
-        {/* Popular Destinations */}
-        <motion.section
-          id="destinations"
-          className="container py-5"
-          variants={itemVariants}
-        >
-          <h2 className="popular-title">✨ Popular Destinations ✨</h2>
-
-          <div className="row g-4 text-center">
-            {[
-              { img: tajmahal, title: "Taj Mahal, Agra" },
-              { img: jaipur, title: "Jaipur, Rajasthan" },
-              { img: kerala, title: "Kerala Backwaters" },
-              { img: lehladakh, title: "Leh Ladakh" },
-            ].map((place, i) => (
-              <div key={i} className="col-6 col-md-3 animate-card">
-  <motion.div
-    className="card shadow-sm h-100 destination-card"
-    whileHover={{ scale: 1.04, rotateY: 5 }}
-    transition={{ type: "spring", stiffness: 140 }}
-  >
-    <img src={place.img} className="card-img-top" alt={place.title} />
-    <div className="card-body">
-      <h5 className="destination-name">{place.title}</h5>
-    </div>
-  </motion.div>
-</div>
-
-            ))}
-          </div>
-        </motion.section>
-
-        <div className="section-separator" />
-
-        {/* Top Deals */}
-        <motion.section
-          id="deals"
-          className="container py-5 text-center"
-          variants={itemVariants}
-        >
-          <h2 className="mb-4 text-warning">🔥 Top Deals & Offers</h2>
-          <div className="row g-4 mt-3">
-            {[
-              { title: "✈️ Flights to Dubai", desc: "Save up to 20% this month" },
-              { title: "🏨 Hotels in Goa", desc: "Stay 3 nights, get 1 free" },
-              { title: "🎒 Bali Packages", desc: "Up to 30% off holiday bundles" },
-            ].map((deal, i) => (
-              <motion.div key={i} className="col-md-4 deal-card" variants={itemVariants}>
-                <div className="p-4 bg-dark text-light rounded shadow-sm border border-warning">
-                  <h4>{deal.title}</h4>
-                  <p>{deal.desc}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
-
-        <div className="section-separator" />
-
-        {/* Why Choose Us */}
-        <motion.section
-          id="why-us"
-          className="container py-5 text-center"
-          variants={itemVariants}
-        >
-          <h2 className="mb-4 text-warning">💎 Why Choose Wanderly?</h2>
-          <div className="row g-4 mt-3">
-            {[
-              {
-                title: "💰 Best Prices",
-                desc: "We compare across 100+ travel sites to guarantee the lowest prices.",
-              },
-              {
-                title: "⚡ Easy Booking",
-                desc: "Book flights, hotels, cabs & packages in just a few clicks.",
-              },
-              {
-                title: "🌍 24/7 Support",
-                desc: "Your travel buddy — available anytime, anywhere.",
-              },
-              {
-                title: "🔒 Secure Payments",
-                desc: "Your data & payments are encrypted with top-grade security.",
-              },
-              {
-                title: "✨ Tailored Experiences",
-                desc: "Get personalized recommendations based on your interests.",
-              },
-            ].map((why, i) => (
-              <div key={i} className="col-md-4 whyus-card">
-                <motion.div
-                  className="p-4 bg-dark text-light rounded shadow-sm border border-warning h-100"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <h3>{why.title}</h3>
-                  <p>{why.desc}</p>
-                </motion.div>
+        {/* ================= BELOW HERO ================= */}
+        <div className="section-wrapper">
+          {/* Travel Inspiration */}
+          <section className="pull-section">
+            <div className="pull-header">
+              <div className="pull-badge">TI</div>
+              <div className="pull-label">
+                <span className="pull-title">Travel Inspiration</span>
+                <span className="pull-sub">
+                  Quick ideas to start planning your next journey.
+                </span>
               </div>
-            ))}
-          </div>
-        </motion.section>
+            </div>
 
-        <div className="section-separator" />
-
-        {/* About */}
-        <motion.section className="container py-5 text-center" variants={itemVariants}>
-          <h2 className="mb-4 text-warning">📖 About Wanderly</h2>
-          <p className="lead text-light">
-            Wanderly is built with a mission to make travel{" "}
-            <b>seamless, affordable, and memorable</b>. We bring everything —
-            <b> flights, hotels, cars, attractions, and cabs</b> — into one
-            platform.
-          </p>
-
-          <div className="row mt-4">
-            {[
-              {
-                icon: "🚀",
-                title: "Our Mission",
-                desc: "To simplify travel planning by offering everything in one place.",
-              },
-              {
-                icon: "🌟",
-                title: "Our Vision",
-                desc: "To be the world’s most trusted and traveler-friendly platform.",
-              },
-              {
-                icon: "🤝",
-                title: "Our Promise",
-                desc: "Affordable deals, safe payments, and 24/7 dedicated support.",
-              },
-            ].map((card, i) => (
-              <div key={i} className="col-md-4">
-                <div className="p-4 bg-dark text-light rounded shadow-sm border border-warning extra-card h-100">
-                  <h4>{card.icon} {card.title}</h4>
-                  <p>{card.desc}</p>
+            <div className="pull-envelope">
+              <div className="pull-envelope-inner">
+                <div className="inspo-carousel">
+                  {inspirations.map((it, i) => (
+                    <div key={i} className="cloud-card inspo-card">
+                      <img
+                        src={it.img}
+                        alt={it.title}
+                        className="inspo-img"
+                      />
+                      <h5>{it.title}</h5>
+                      <p>{it.subtitle}</p>
+                      <button
+                        className="cloud-btn"
+                        type="button"
+                        onClick={() =>
+                          navigate(
+                            `/destination/${encodeURIComponent(it.title)}`
+                          )
+                        }
+                      >
+                        View details
+                      </button>
+                    </div>
+                  ))}
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          </section>
 
-          <NavLink to="/about" className="btn btn-warning fw-bold mt-4 px-4">
-            Learn More →
-          </NavLink>
-        </motion.section>
+          {/* Popular Destinations */}
+          <section className="pull-section">
+            <div className="pull-header">
+              <div className="pull-badge">PD</div>
+              <div className="pull-label">
+                <span className="pull-title">Popular Destinations</span>
+                <span className="pull-sub">
+                  Places your fellow travellers are bookmarking the most.
+                </span>
+              </div>
+            </div>
 
-        <div className="section-separator" />
+            <div className="pull-envelope">
+              <div className="pull-envelope-inner popular-grid">
+                {[
+                  { img: tajmahal, title: "Taj Mahal, Agra" },
+                  { img: jaipur, title: "Jaipur, Rajasthan" },
+                  { img: kerala, title: "Kerala Backwaters" },
+                  { img: lehladakh, title: "Leh Ladakh" },
+                ].map((place, i) => (
+                  <div key={i} className="cloud-card popular-card">
+                    <img
+                      src={place.img}
+                      alt={place.title}
+                      className="popular-img"
+                    />
+                    <h5>{place.title}</h5>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
 
-        {/* Newsletter Signup */}
-        <motion.section className="container py-5 text-center" variants={itemVariants}>
-          <h2 className="text-warning">📩 Stay Updated</h2>
-          <p>Subscribe to get the latest travel offers in your inbox</p>
-          <div className="d-flex justify-content-center mt-3 flex-column flex-sm-row align-items-center gap-2">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="form-control subscribe-input"
-            />
-            <button className="btn btn-warning fw-bold">Subscribe</button>
-          </div>
-        </motion.section>
+          {/* Top Deals */}
+          <section className="pull-section">
+            <div className="pull-header">
+              <div className="pull-badge">TD</div>
+              <div className="pull-label">
+                <span className="pull-title">Top Deals & Offers</span>
+                <span className="pull-sub">
+                  Curated value trips across flights, stays and experiences.
+                </span>
+              </div>
+            </div>
 
-        {/* Chat bubble assistant */}
-       
+            <div className="pull-envelope">
+              <div className="pull-envelope-inner deal-grid">
+                {[
+                  {
+                    title: "Flights to Dubai",
+                    desc: "Save up to 20% on select departures this month.",
+                  },
+                  {
+                    title: "Hotels in Goa",
+                    desc: "Stay 3 nights, get the 4th night complimentary.",
+                  },
+                  {
+                    title: "Bali Packages",
+                    desc: "Up to 30% off curated week-long bundles.",
+                  },
+                ].map((deal, i) => (
+                  <div key={i} className="cloud-card deal-card">
+                    <h4>{deal.title}</h4>
+                    <p>{deal.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Why Choose Us */}
+          <section className="pull-section">
+            <div className="pull-header">
+              <div className="pull-badge">WU</div>
+              <div className="pull-label">
+                <span className="pull-title">Why Choose Wanderly?</span>
+                <span className="pull-sub">
+                  Built for travellers who like clarity, control and comfort.
+                </span>
+              </div>
+            </div>
+
+            <div className="pull-envelope">
+              <div className="pull-envelope-inner why-grid">
+                {[
+                  {
+                    title: "Best Prices",
+                    desc: "We compare across 100+ providers to secure consistent value.",
+                  },
+                  {
+                    title: "Easy Booking",
+                    desc: "Flights, stays and packages in a few clear, guided steps.",
+                  },
+                  {
+                    title: "24/7 Support",
+                    desc: "Assistance for changes, delays or last-minute plans.",
+                  },
+                  {
+                    title: "Secure Payments",
+                    desc: "Enterprise-grade encryption and multiple payment options.",
+                  },
+                  {
+                    title: "Tailored Experiences",
+                    desc: "Trips recommended based on your style and pace of travel.",
+                  },
+                  {
+                    title: "Single Workspace",
+                    desc: "Manage itineraries, vouchers and updates in one place.",
+                  },
+                ].map((why, i) => (
+                  <div key={i} className="cloud-card why-card">
+                    <h3>{why.title}</h3>
+                    <p>{why.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* About Wanderly */}
+          <section className="pull-section">
+            <div className="pull-header">
+              <div className="pull-badge">AB</div>
+              <div className="pull-label">
+                <span className="pull-title">About Wanderly</span>
+                <span className="pull-sub">
+                  A focused platform for calm, well-planned journeys.
+                </span>
+              </div>
+            </div>
+
+            <div className="pull-envelope">
+              <div className="pull-envelope-inner">
+                <div className="cloud-card about-card">
+                  <h2>About Wanderly</h2>
+                  <p>
+                    Wanderly is designed to make travel{" "}
+                    <b>structured, affordable and memorable</b>. From flights and
+                    stays to cabs and local experiences, everything is organised
+                    into a single, clear view – so you always know what comes
+                    next in your journey.
+                  </p>
+                  <NavLink
+                    to="/about"
+                    className="cloud-btn"
+                    style={{ marginTop: "14px", display: "inline-block" }}
+                  >
+                    Learn more
+                  </NavLink>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Newsletter */}
+          <section className="pull-section">
+            <div className="pull-header">
+              <div className="pull-badge">NL</div>
+              <div className="pull-label">
+                <span className="pull-title">Stay Updated</span>
+                <span className="pull-sub">
+                  Quiet, useful updates on offers and new itineraries.
+                </span>
+              </div>
+            </div>
+
+            <div className="pull-envelope">
+              <div className="pull-envelope-inner">
+                <div className="cloud-card newsletter-card">
+                  <h2>Stay Updated</h2>
+                  <p>
+                    Subscribe to receive curated travel deals and planning tips
+                    directly in your inbox.
+                  </p>
+                  <div className="newsletter-input">
+                    <input type="email" placeholder="Enter your email" />
+                    <button className="cloud-btn" type="button">
+                      Subscribe
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
       </motion.div>
     </AnimatePresence>
   );
 }
+

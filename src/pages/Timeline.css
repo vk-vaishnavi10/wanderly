@@ -1,8 +1,11 @@
-/* 🌌 WANDERLY TIMELINE — CATS & MEMORIES EDITION */
+
+
 :root {
   --scrollY: 0;
 }
-
+.timeline-section {
+  padding-left: 500px;   /* ⭐ same as Flights, Attractions, Map */
+}
 /* Base layout */
 .timeline-section {
   position: relative;
