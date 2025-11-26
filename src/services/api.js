@@ -1,11 +1,4 @@
-import axios from "axios";
 
-/* ============================================================
-   🌍 Wanderly — API Configuration (Optimized)
-   By Vaishnavi 💜 — Updated for AI Chat Integration & Stability
-============================================================ */
-
-// ✅ Base API URL (Switch automatically for production)
 import axios from "axios";
 
 /* ============================================================
