@@ -82,7 +82,7 @@ export default function DiningDetails() {
         },
       })
     );
-    
+  }
 
   return (
     <div className="dining-details container py-5">
