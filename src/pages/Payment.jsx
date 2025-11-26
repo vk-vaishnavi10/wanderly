@@ -22,7 +22,6 @@ export default function Payment() {
   // 🔹 Normalize price safely
   const cleanNumber = (v) => Number(String(v || "0").replace(/[^0-9]/g, ""));
   const amount = cleanNumber(paymentData?.price);
-  
 
   // ---- PAYMENT STATES ----
   const [method, setMethod] = useState("card");
@@ -49,6 +48,11 @@ export default function Payment() {
 
   const pax = paymentData.details?.pax || paymentData.details?.guests || "";
 
+  // 👉 Safe route display (fixes undefined → undefined)
+  const routeDisplay =
+    paymentData.details?.route ||
+    (pickup && drop ? `${pickup} → ${drop}` : "");
+
   // ----------- MAIN PAYMENT HANDLER -------------
   const handlePayment = async (e) => {
     if (e) e.preventDefault();
@@ -62,7 +66,7 @@ export default function Payment() {
           "Guest",
         email: paymentData.details?.email || "unknown@example.com",
         flightName: paymentData.title,
-        route: pickup && drop ? `${pickup} → ${drop}` : "",
+        route: routeDisplay || "",
         amount: amount,
         status: "SUCCESS",
       };
@@ -98,43 +102,64 @@ export default function Payment() {
   };
 
   return (
-    <div
-      className="payment-page text-light"
-      style={{ minHeight: "85vh" }}
-    >
-      {/* 🔮 PORTAL WRAPPER */}
+    <div className="payment-page">
+  
+      {/* ☕ GOLDEN PORTAL WRAPPER */}
       <div className="payment-portal-shell">
         <div className="portal-circle portal-circle-1" />
         <div className="portal-circle portal-circle-2" />
         <div className="portal-circle portal-circle-3" />
-
+  
+        {/* 🌟 FLOATING COFFEE DUST – PLACE IT HERE */}
+        {[...Array(18)].map((_, i) => (
+          <div
+            key={i}
+            className="coffee-dust"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 5}s`,
+              animationDuration: `${5 + Math.random() * 5}s`,
+            }}
+          />
+        ))}
+  
         {/* 💳 ACTUAL PAYMENT CARD */}
         <div className="payment-card portal-card">
-          <h2>💳 Payment</h2>
+
+          {/* Tiny eyebrow label */}
+          <div className="payment-eyebrow">
+            WANDERLY • SECURE PAYMENT
+          </div>
+
+          <h2 className="payment-title">Confirm your trip</h2>
+          <p className="payment-sub">
+            Warm, encrypted and easy – finish your booking in a single, calm step.
+          </p>
 
           {/* SUMMARY BOX */}
           <div className="summary-box">
             <h4>{paymentData.title}</h4>
-            <p style={{ color: "#dcdcf7" }}>
-              {paymentData.type === "flight" && (
+            <p className="summary-text">
+              {paymentData.type === "flight" && routeDisplay && (
                 <>
-                  ✈ {paymentData.details?.route} <br />
+                  ✈ {routeDisplay} <br />
                 </>
               )}
 
-              {paymentData.type === "hotel" && (
+              {paymentData.type === "hotel" && paymentData.details?.location && (
                 <>
-                  🏨 {paymentData.details?.location} <br />
+                  🏨 {paymentData.details.location} <br />
                 </>
               )}
 
-              {paymentData.type === "package" && (
+              {paymentData.type === "package" && paymentData.duration && (
                 <>
                   🎁 {paymentData.duration} <br />
                 </>
               )}
 
-              {paymentData.type === "dining" && (
+              {paymentData.type === "dining" && pax && (
                 <>
                   🍽 Guests: {pax} <br />
                 </>
@@ -143,25 +168,37 @@ export default function Payment() {
               {paymentData.type === "transport" && (
                 <>
                   🚗 {paymentData.details?.carType} <br />
-                  🗺 {pickup} → {drop} <br />
+                  {routeDisplay && (
+                    <>
+                      🗺 {routeDisplay} <br />
+                    </>
+                  )}
                 </>
               )}
 
               {paymentData.type === "car" && (
                 <>
                   🚘 {paymentData.details?.carType} <br />
-                  🗺 {pickup} → {drop} <br />
+                  {routeDisplay && (
+                    <>
+                      🗺 {routeDisplay} <br />
+                    </>
+                  )}
                 </>
               )}
 
               {paymentData.type === "cab" && (
                 <>
                   🚖 {paymentData.details?.cabType} <br />
-                  🗺 {pickup} → {drop} <br />
+                  {routeDisplay && (
+                    <>
+                      🗺 {routeDisplay} <br />
+                    </>
+                  )}
                 </>
               )}
 
-              <strong>💰 ₹{amount}</strong>
+              <strong className="summary-amount">💰 ₹{amount}</strong>
             </p>
           </div>
 
@@ -222,12 +259,13 @@ export default function Payment() {
             {/* UPI */}
             {method === "upi" && (
               <>
-                <p>Scan QR to pay</p>
+                <p className="upi-note">Scan to pay securely from any UPI app.</p>
                 <img src={qrImg} className="upi-qr" alt="upi qr" />
                 <button
                   type="button"
                   className="pay-btn"
                   onClick={handlePayment}
+                  disabled={loading}
                 >
                   {loading ? "Processing..." : `Pay ₹${amount}`}
                 </button>
@@ -253,7 +291,7 @@ export default function Payment() {
                     <button
                       type="button"
                       className="pay-btn"
-                      disabled={!bank}
+                      disabled={!bank || loading}
                       onClick={() => setStep(2)}
                     >
                       Continue
@@ -291,6 +329,7 @@ export default function Payment() {
                       type="button"
                       className="pay-btn"
                       onClick={handleVerifyOtp}
+                      disabled={loading}
                     >
                       Verify & Pay ₹{amount}
                     </button>

@@ -1,118 +1,176 @@
+/* ================================
+   🌄 Payment Success – Coffee Theme
+================================ */
+
 .payment-success-page {
-    height: 100vh;
-    background: linear-gradient(150deg, #0b061a, #1a103d);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  /* Envelope */
-  .envelope {
-    width: 320px;
-    height: 240px;
-    position: relative;
-    perspective: 900px;
-  }
-  
-  .envelope-body {
-    width: 100%;
-    height: 100%;
-    background: #ffffff;
-    border-radius: 14px;
-    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.35);
-    position: absolute;
-  }
-  
-  .envelope-flap {
-    width: 100%;
-    height: 60%;
-    background: #9b5de5;
-    border-radius: 14px 14px 0 0;
-    position: absolute;
-    top: 0;
-    transform-origin: top;
-    transform: rotateX(0deg);
-    transition: transform 1s ease-in-out;
-    z-index: 3;
-  }
-  
-  .envelope.open .envelope-flap {
-    transform: rotateX(160deg);
-  }
-  
-  /* Success card */
-  .success-card {
-    width: 270px;
-    padding: 20px;
-    background: linear-gradient(130deg, #00e0ff, #9b5de5);
-    color: #fff;
-    border-radius: 16px;
-    text-align: center;
-    font-weight: 600;
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    opacity: 0;
-    transform: translate(-50%, 50%) scale(0.7);
-    transition: 0.9s cubic-bezier(.17,.67,.53,1.47);
-    box-shadow: 0px 12px 30px rgba(0, 255, 255, 0.3);
-    z-index: 2;
-  }
-  
-  .envelope.open .success-card {
-    transform: translate(-50%, -130%) scale(1);
-    opacity: 1;
-  }
-  
-  /* Glow effect */
-  .success-card.glow {
-    animation: glowPulse 1.6s infinite ease-in-out;
-  }
-  
-  @keyframes glowPulse {
-    0% { box-shadow: 0 0 12px rgba(0,255,255,0.4); }
-    50% { box-shadow: 0 0 28px rgba(255,255,255,0.7); }
-    100% { box-shadow: 0 0 12px rgba(0,255,255,0.4); }
-  }
-  
-  .title {
-    font-size: 1.2rem;
-    margin: 10px 0;
-  }
-  
-  .details {
-    font-size: 1rem;
-    margin-bottom: 10px;
-    opacity: 0.9;
-  }
-  
-  .buttons {
-    margin-top: 14px;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-  }
-  
-  .btn {
-    border: none;
-    padding: 10px 14px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.2s;
-  }
-  
-  .home-btn {
-    background: #00e0ff;
-    color: #031216;
-  }
-  
-  .repeat-btn {
-    background: #ffd86b;
-    color: #3b2b00;
-  }
-  
-  .btn:hover {
-    transform: translateY(-4px);
-  }
-  
+  height: 100vh;
+  width: 100%;
+  background: radial-gradient(circle at 10% 20%, #2a1e17, #120c07, #0a0604);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  font-family: "Poppins", sans-serif;
+}
+
+/* ✨ Floating Gold Coffee Dust */
+.coffee-dust {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle, rgba(255, 215, 160, 0.9), transparent);
+  border-radius: 50%;
+  animation: floatDust linear infinite;
+  filter: blur(0.4px);
+  opacity: 0.7;
+}
+
+@keyframes floatDust {
+  0% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-30px) scale(1.3); }
+  100% { transform: translateY(0px) scale(1); }
+}
+
+/* ======================
+   ✉ Envelope Shell
+====================== */
+
+.envelope-shell {
+  width: 420px;
+  height: 300px;
+  position: relative;
+  perspective: 1200px;
+}
+
+.envelope-body {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg, #3c2b22, #1d140f);
+  border-radius: 18px;
+  border: 1px solid rgba(212, 166, 87, 0.6);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5),
+              0 0 50px rgba(212, 166, 87, 0.25);
+}
+
+/* Flap */
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 65%;
+  background: linear-gradient(160deg, #2e1f17, #1b130d);
+  border-radius: 18px 18px 0 0;
+  transform-origin: top;
+  transform: rotateX(0deg);
+  transition: transform 1.2s cubic-bezier(.17,.67,.53,1.47);
+  border-bottom: 1px solid rgba(212, 166, 87, 0.4);
+  z-index: 3;
+}
+
+.envelope-shell.open .envelope-flap {
+  transform: rotateX(165deg);
+}
+
+/* ======================
+   ✨ Success Card
+====================== */
+
+.success-card {
+  width: 340px;
+  padding: 26px;
+  background: linear-gradient(145deg, #2b1c16, #1a120d);
+  border-radius: 20px;
+  text-align: center;
+  color: #f5e6d2;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, 40%) scale(0.85);
+  opacity: 0;
+  transition: 1s cubic-bezier(.17,.67,.53,1.47);
+  border: 1px solid rgba(212, 166, 87, 0.55);
+  box-shadow: 
+    0 18px 45px rgba(0, 0, 0, 0.6),
+    inset 0 0 40px rgba(212, 166, 87, 0.18);
+}
+
+.envelope-shell.open .success-card {
+  transform: translate(-50%, -120%) scale(1);
+  opacity: 1;
+}
+
+/* Eyebrow */
+.card-eyebrow {
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  color: #d7c3a2;
+}
+
+/* Title */
+.title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  background: linear-gradient(120deg, #ffe8c6, #e0b77f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Details */
+.details {
+  font-size: 1rem;
+  margin-bottom: 12px;
+  opacity: 0.9;
+  line-height: 1.45;
+}
+
+.service-name {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.amount {
+  margin-top: 10px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  background: linear-gradient(120deg, #ffdfb0, #e9b873);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Buttons */
+.buttons {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.btn {
+  border: none;
+  padding: 10px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.25s;
+  font-size: 0.9rem;
+}
+
+.home-btn {
+  background: linear-gradient(135deg, #d4a657, #b98940);
+  color: #1c130b;
+  box-shadow: 0 8px 22px rgba(212, 166, 87, 0.45);
+}
+
+.repeat-btn {
+  background: linear-gradient(135deg, #9a8269, #6b5749);
+  color: #f8e7d4;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+}
+
+.btn:hover {
+  transform: translateY(-4px);
+}

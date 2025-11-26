@@ -18,7 +18,6 @@ export default function PaymentSuccess() {
     );
   }
 
-  // Clean amount again (safety)
   const cleanAmount = (value) =>
     Number(String(value ?? 0).replace(/[^\d]/g, "")) || 0;
   const amount = cleanAmount(paymentData.price);
@@ -38,48 +37,56 @@ export default function PaymentSuccess() {
     paymentData.details?.guests ||
     "";
 
-  // Open envelope after a short delay
+  // Reveal animation
   useEffect(() => {
-    const t = setTimeout(() => setOpenEnvelope(true), 600);
+    const t = setTimeout(() => setOpenEnvelope(true), 800);
     return () => clearTimeout(t);
   }, []);
 
-  // Simple confetti pieces
-  const confettiPieces = Array.from({ length: 60 });
+  const confettiPieces = Array.from({ length: 70 });
 
   return (
     <div className="payment-success-page">
-      {/* Confetti */}
+
+      {/* ✨ Floating Coffee Dust */}
+      {[...Array(20)].map((_, i) => (
+        <div
+          key={i}
+          className="coffee-dust"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            animationDelay: `${Math.random() * 6}s`,
+            animationDuration: `${5 + Math.random() * 6}s`,
+          }}
+        />
+      ))}
+
+      {/* 🎉 Confetti */}
       <div className="confetti-container">
         {confettiPieces.map((_, i) => (
           <span key={i} className="confetti-piece" />
         ))}
       </div>
 
-      {/* Envelope + card */}
-      <div className={`envelope ${openEnvelope ? "open" : ""}`}>
-        <div className="envelope-body" />
-        <div className="envelope-flap" />
+      {/* ✉ Luxury Envelope */}
+      <div className={`envelope-shell ${openEnvelope ? "open" : ""}`}>
+        <div className="envelope-body"></div>
+        <div className="envelope-flap"></div>
 
-        <div className="success-card glow">
-          <div>✨ Wanderly Booking</div>
+        {/* ✨ Success Card */}
+        <div className="success-card">
+          <div className="card-eyebrow">Wanderly – Receipt</div>
+
           <div className="title">Payment Successful!</div>
 
           <div className="details">
-            <div>{paymentData.title}</div>
+            <div className="service-name">{paymentData.title}</div>
 
-            {paymentData.type === "flight" && (
-              <div>✈ Flight Booking Confirmed</div>
-            )}
-            {paymentData.type === "hotel" && (
-              <div>🏨 Hotel Stay Confirmed</div>
-            )}
-            {paymentData.type === "package" && (
-              <div>🎁 Package Booked</div>
-            )}
-            {paymentData.type === "dining" && (
-              <div>🍽 Table Reserved — Guests: {pax}</div>
-            )}
+            {paymentData.type === "flight" && <div>✈ Flight Booking Confirmed</div>}
+            {paymentData.type === "hotel" && <div>🏨 Hotel Stay Confirmed</div>}
+            {paymentData.type === "package" && <div>🎁 Package Booked</div>}
+            {paymentData.type === "dining" && <div>🍽 Guests: {pax}</div>}
             {(paymentData.type === "transport" ||
               paymentData.type === "car" ||
               paymentData.type === "cab") && (
@@ -87,27 +94,20 @@ export default function PaymentSuccess() {
                 🚗 Ride Confirmed
                 {pickup && drop && (
                   <>
-                    <br />
-                    🗺 {pickup} → {drop}
+                    <br />🗺 {pickup} → {drop}
                   </>
                 )}
               </div>
             )}
 
-            <div style={{ marginTop: "8px" }}>💰 Paid: ₹{amount}</div>
+            <div className="amount">💰 Paid: ₹{amount}</div>
           </div>
 
           <div className="buttons">
-            <button
-              className="btn home-btn"
-              onClick={() => navigate("/home")}
-            >
-              🏠 Back to Home
+            <button className="btn home-btn" onClick={() => navigate("/home")}>
+              🏠 Home
             </button>
-            <button
-              className="btn repeat-btn"
-              onClick={() => navigate(-1)}
-            >
+            <button className="btn repeat-btn" onClick={() => navigate(-1)}>
               🔁 Book Again
             </button>
           </div>
