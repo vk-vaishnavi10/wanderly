@@ -57,7 +57,7 @@ export default function DiningDetails() {
       Swal.fire("⚠️ Please fill all fields correctly.", "", "warning");
       return;
     }
-
+  
     Swal.fire({
       title: "🍽️ Reservation Confirmed!",
       text: `Table booked at ${restaurant.name}!`,
@@ -65,13 +65,13 @@ export default function DiningDetails() {
       background: "#0b0018",
       color: "#fff",
       confirmButtonColor: "#ffd47f",
-    }).then(() =>
+    }).then(() => {
       navigate("/payment", {
         state: {
           paymentData: {
             type: "dining",
             title: restaurant.name,
-            price: 1000, // you can change this later
+            price: 1000,
             details: {
               restaurantName: restaurant.name,
               location: restaurant.location,
@@ -80,9 +80,10 @@ export default function DiningDetails() {
             },
           },
         },
-      })
-    );
-  }
+      });
+    });
+  };
+  
 
   return (
     <div className="dining-details container py-5">
