@@ -1,4 +1,4 @@
-// ✅ src/pages/PaymentSuccess.jsx
+// src/pages/PaymentSuccess.jsx
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./PaymentSuccess.css";
@@ -6,20 +6,23 @@ import "./PaymentSuccess.css";
 export default function PaymentSuccess() {
   const location = useLocation();
   const navigate = useNavigate();
+
   const paymentData = location.state?.paymentData;
 
-  const [openEnvelope, setOpenEnvelope] = useState(false);
+  const [open, setOpen] = useState(false);
 
+  // If no data → redirect style page
   if (!paymentData) {
     return (
-      <div className="text-center text-warning mt-5">
-        ⚠️ No payment info found.
+      <div className="blob-error">
+        ⚠️ No booking data found. Please book again.
       </div>
     );
   }
 
-  const cleanAmount = (value) =>
-    Number(String(value ?? 0).replace(/[^\d]/g, "")) || 0;
+  const cleanAmount = (v) =>
+    Number(String(v || 0).replace(/[^0-9]/g, "")) || 0;
+
   const amount = cleanAmount(paymentData.price);
 
   const pickup =
@@ -37,77 +40,79 @@ export default function PaymentSuccess() {
     paymentData.details?.guests ||
     "";
 
-  // Reveal animation
+  // Envelope animation trigger
   useEffect(() => {
-    const t = setTimeout(() => setOpenEnvelope(true), 800);
+    const t = setTimeout(() => setOpen(true), 600);
     return () => clearTimeout(t);
   }, []);
 
-  const confettiPieces = Array.from({ length: 70 });
-
   return (
-    <div className="payment-success-page">
+    <div className="payment-success-blobpage">
 
-      {/* ✨ Floating Coffee Dust */}
-      {[...Array(20)].map((_, i) => (
+      {/* Floating Coffee Dust */}
+      {[...Array(25)].map((_, i) => (
         <div
           key={i}
-          className="coffee-dust"
+          className="blob-coffee-dust"
           style={{
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
-            animationDelay: `${Math.random() * 6}s`,
-            animationDuration: `${5 + Math.random() * 6}s`,
+            animationDelay: `${Math.random() * 5}s`,
+            animationDuration: `${5 + Math.random() * 8}s`,
           }}
         />
       ))}
 
-      {/* 🎉 Confetti */}
-      <div className="confetti-container">
-        {confettiPieces.map((_, i) => (
-          <span key={i} className="confetti-piece" />
-        ))}
-      </div>
+      {/* Magical Portal Rings */}
+      <div className="blob-portal-ring ring1"></div>
+      <div className="blob-portal-ring ring2"></div>
+      <div className="blob-portal-ring ring3"></div>
 
-      {/* ✉ Luxury Envelope */}
-      <div className={`envelope-shell ${openEnvelope ? "open" : ""}`}>
-        <div className="envelope-body"></div>
-        <div className="envelope-flap"></div>
+      {/* Envelope */}
+      <div className={`blob-envelope ${open ? "open" : ""}`}>
+        <div className="blob-envelope-flap"></div>
 
-        {/* ✨ Success Card */}
-        <div className="success-card">
-          <div className="card-eyebrow">Wanderly – Receipt</div>
+        {/* FLOATING BLOB CARD */}
+        <div className="blob-card">
+          <div className="receipt-eyebrow">WANDERLY – RECEIPT</div>
 
-          <div className="title">Payment Successful!</div>
+          <h2 className="receipt-title">Payment Successful!</h2>
+          <p className="receipt-sub">{paymentData.title}</p>
 
-          <div className="details">
-            <div className="service-name">{paymentData.title}</div>
-
-            {paymentData.type === "flight" && <div>✈ Flight Booking Confirmed</div>}
-            {paymentData.type === "hotel" && <div>🏨 Hotel Stay Confirmed</div>}
-            {paymentData.type === "package" && <div>🎁 Package Booked</div>}
-            {paymentData.type === "dining" && <div>🍽 Guests: {pax}</div>}
+          <div className="receipt-details">
+            {paymentData.type === "flight" && (
+              <div>✈ Flight Confirmed</div>
+            )}
+            {paymentData.type === "hotel" && (
+              <div>🏨 Stay Confirmed</div>
+            )}
+            {paymentData.type === "package" && (
+              <div>🎁 Package Booked</div>
+            )}
+            {paymentData.type === "dining" && (
+              <div>🍽 Guests: {pax}</div>
+            )}
             {(paymentData.type === "transport" ||
               paymentData.type === "car" ||
               paymentData.type === "cab") && (
               <div>
-                🚗 Ride Confirmed
+                🚗 Ride Confirmed 
                 {pickup && drop && (
-                  <>
-                    <br />🗺 {pickup} → {drop}
-                  </>
+                  <div className="route">
+                    🗺 {pickup} → {drop}
+                  </div>
                 )}
               </div>
             )}
 
-            <div className="amount">💰 Paid: ₹{amount}</div>
+            <div className="paid-amount">💰 Paid: ₹{amount}</div>
           </div>
 
-          <div className="buttons">
-            <button className="btn home-btn" onClick={() => navigate("/home")}>
+          <div className="blob-buttons">
+            <button onClick={() => navigate("/home")} className="blob-btn home">
               🏠 Home
             </button>
-            <button className="btn repeat-btn" onClick={() => navigate(-1)}>
+            <button onClick={() => navigate(-1)} className="blob-btn again">
               🔁 Book Again
             </button>
           </div>

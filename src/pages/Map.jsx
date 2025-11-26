@@ -1,5 +1,6 @@
 // src/pages/MapPage.jsx
 import React, { useState, useCallback, useRef, useEffect } from "react";
+import chibiHero from "../assets/chibi-hero.png";
 import {
   GoogleMap,
   useLoadScript,
@@ -164,7 +165,7 @@ export default function MapPage() {
                 lng: place.geometry.location.lng(),
               }}
               icon={{
-                url: "/src/assets/pins/chibi-hero.png",
+                url: "/chibi-hero.png",
                 scaledSize: new window.google.maps.Size(46, 46),
               }}
               onClick={() => setSelectedPlace(place)}

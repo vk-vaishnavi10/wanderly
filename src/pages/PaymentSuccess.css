@@ -1,176 +1,167 @@
-/* ================================
-   🌄 Payment Success – Coffee Theme
-================================ */
-
-.payment-success-page {
+.payment-success-blobpage {
   height: 100vh;
-  width: 100%;
-  background: radial-gradient(circle at 10% 20%, #2a1e17, #120c07, #0a0604);
   display: flex;
   justify-content: center;
   align-items: center;
+  background: radial-gradient(circle at center, #2a1c14, #0c0806);
   overflow: hidden;
   position: relative;
-  font-family: "Poppins", sans-serif;
 }
 
-/* ✨ Floating Gold Coffee Dust */
-.coffee-dust {
+/* Coffee Dust Particles */
+.blob-coffee-dust {
   position: absolute;
-  width: 6px;
-  height: 6px;
-  background: radial-gradient(circle, rgba(255, 215, 160, 0.9), transparent);
+  width: 3px;
+  height: 3px;
+  background: rgba(255, 230, 180, 0.8);
   border-radius: 50%;
   animation: floatDust linear infinite;
-  filter: blur(0.4px);
   opacity: 0.7;
 }
-
 @keyframes floatDust {
-  0% { transform: translateY(0px) scale(1); }
-  50% { transform: translateY(-30px) scale(1.3); }
-  100% { transform: translateY(0px) scale(1); }
+  0% { transform: translateY(0px) scale(1); opacity: 0.8; }
+  50% { opacity: 0.5; }
+  100% { transform: translateY(-80px) scale(1.3); opacity: 0; }
 }
 
-/* ======================
-   ✉ Envelope Shell
-====================== */
+/* Portal Rings */
+.blob-portal-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 220, 150, 0.3);
+  animation: spinPortal linear infinite;
+}
 
-.envelope-shell {
-  width: 420px;
-  height: 300px;
+.ring1 {
+  width: 380px;
+  height: 380px;
+  animation-duration: 16s;
+}
+.ring2 {
+  width: 480px;
+  height: 480px;
+  animation-duration: 22s;
+}
+.ring3 {
+  width: 600px;
+  height: 600px;
+  animation-duration: 30s;
+}
+
+@keyframes spinPortal {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Envelope container */
+.blob-envelope {
+  width: 340px;
+  height: 260px;
   position: relative;
-  perspective: 1200px;
+  perspective: 900px;
 }
 
-.envelope-body {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(145deg, #3c2b22, #1d140f);
-  border-radius: 18px;
-  border: 1px solid rgba(212, 166, 87, 0.6);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5),
-              0 0 50px rgba(212, 166, 87, 0.25);
-}
-
-/* Flap */
-.envelope-flap {
-  position: absolute;
-  top: 0;
+.blob-envelope-flap {
   width: 100%;
-  height: 65%;
-  background: linear-gradient(160deg, #2e1f17, #1b130d);
-  border-radius: 18px 18px 0 0;
+  height: 60%;
+  background: linear-gradient(145deg, #d4a373, #50341a);
+  position: absolute;
+  border-radius: 20px 20px 10px 10px;
   transform-origin: top;
   transform: rotateX(0deg);
-  transition: transform 1.2s cubic-bezier(.17,.67,.53,1.47);
-  border-bottom: 1px solid rgba(212, 166, 87, 0.4);
-  z-index: 3;
+  transition: 1s ease;
 }
 
-.envelope-shell.open .envelope-flap {
-  transform: rotateX(165deg);
+.blob-envelope.open .blob-envelope-flap {
+  transform: rotateX(-160deg);
 }
 
-/* ======================
-   ✨ Success Card
-====================== */
-
-.success-card {
-  width: 340px;
-  padding: 26px;
-  background: linear-gradient(145deg, #2b1c16, #1a120d);
-  border-radius: 20px;
-  text-align: center;
-  color: #f5e6d2;
+/* BLOB CARD */
+.blob-card {
+  width: 290px;
+  padding: 22px;
   position: absolute;
-  top: 55%;
+  top: 45%;
   left: 50%;
-  transform: translate(-50%, 40%) scale(0.85);
   opacity: 0;
+  transform: translate(-50%, 60%) scale(0.8);
   transition: 1s cubic-bezier(.17,.67,.53,1.47);
-  border: 1px solid rgba(212, 166, 87, 0.55);
-  box-shadow: 
-    0 18px 45px rgba(0, 0, 0, 0.6),
-    inset 0 0 40px rgba(212, 166, 87, 0.18);
+
+  background: radial-gradient(circle at top, #3d2a1e, #1a120e);
+  border-radius: 45px 60px 55px 40px;
+
+  box-shadow:
+    0 0 25px rgba(255, 210, 150, 0.3),
+    0 0 40px rgba(150, 90, 40, 0.4);
 }
 
-.envelope-shell.open .success-card {
-  transform: translate(-50%, -120%) scale(1);
+.blob-envelope.open .blob-card {
   opacity: 1;
+  transform: translate(-50%, -130%) scale(1);
 }
 
-/* Eyebrow */
-.card-eyebrow {
-  font-size: 0.78rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-  color: #d7c3a2;
-}
-
-/* Title */
-.title {
-  font-size: 1.5rem;
-  font-weight: 800;
+.receipt-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  color: #f9d9a8;
   margin-bottom: 10px;
-  background: linear-gradient(120deg, #ffe8c6, #e0b77f);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  text-align: center;
 }
 
-/* Details */
-.details {
-  font-size: 1rem;
-  margin-bottom: 12px;
-  opacity: 0.9;
-  line-height: 1.45;
-}
-
-.service-name {
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-
-.amount {
-  margin-top: 10px;
+.receipt-title {
+  font-size: 1.3rem;
   font-weight: 700;
-  font-size: 1.1rem;
-  background: linear-gradient(120deg, #ffdfb0, #e9b873);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #ffe2b8;
+  text-align: center;
+}
+
+.receipt-sub {
+  text-align: center;
+  margin-top: 4px;
+  margin-bottom: 14px;
+  color: #e8caa1;
+}
+
+.receipt-details {
+  text-align: center;
+  color: #f4d4ac;
+  font-size: 0.95rem;
+  line-height: 1.4rem;
+}
+
+.paid-amount {
+  margin-top: 8px;
+  font-weight: bold;
+  color: #ffd9a0;
 }
 
 /* Buttons */
-.buttons {
-  margin-top: 14px;
+.blob-buttons {
+  margin-top: 15px;
   display: flex;
   justify-content: center;
-  gap: 12px;
+  gap: 10px;
 }
 
-.btn {
+.blob-btn {
+  padding: 8px 14px;
+  border-radius: 20px;
   border: none;
-  padding: 10px 16px;
-  border-radius: 999px;
-  cursor: pointer;
   font-weight: 600;
-  transition: 0.25s;
-  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.home-btn {
-  background: linear-gradient(135deg, #d4a657, #b98940);
-  color: #1c130b;
-  box-shadow: 0 8px 22px rgba(212, 166, 87, 0.45);
+.blob-btn.home {
+  background: #ffe0a8;
+  color: #5a3a0a;
 }
 
-.repeat-btn {
-  background: linear-gradient(135deg, #9a8269, #6b5749);
-  color: #f8e7d4;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+.blob-btn.again {
+  background: #ffc19a;
+  color: #55200e;
 }
 
-.btn:hover {
-  transform: translateY(-4px);
+.blob-btn:hover {
+  transform: translateY(-3px);
 }
