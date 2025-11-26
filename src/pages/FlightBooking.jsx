@@ -70,7 +70,8 @@ export default function FlightBooking() {
       const bookingDetails = {
         ...formData,
         flightName: flight.airline,
-        route: `${flight.from} → ${flight.to}`,
+        route: `${flight.fromCity || flight.from} → ${flight.toCity || flight.to}`,
+
         amount,
         takeoff,
         landing,
@@ -111,7 +112,9 @@ export default function FlightBooking() {
           <h2 className="airline-name">{flight.airline}</h2>
 
           <p className="flight-route">
-            {flight.from} <span className="plane-icon">✈️</span> {flight.to}
+          {flight.fromCity || flight.from} <span className="plane-icon">✈️</span> 
+{flight.toCity || flight.to}
+
           </p>
 
           <div className="time-box">

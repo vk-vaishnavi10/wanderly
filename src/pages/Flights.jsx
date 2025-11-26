@@ -306,21 +306,13 @@ export default function Flights() {
 
                     {/* ✔ CORRECT BUTTON WITH CLASS view-btn */}
                     <Link
-  to="/payment"
-  state={{
-    airline: flight.airline,
-    from: flight.fromCity,
-    to: flight.toCity,
-    price: flight.price,
-    duration: flight.duration,
-    departure: flight.departureTime,
-    arrival: flight.arrivalTime,
-    image: flight.image
-  }}
+  to={`/flights/${flight.id}`}
+  state={{ flight }}          // send the whole flight object
   className="view-btn w-100 mt-3 fw-bold"
 >
   Book Now
 </Link>
+
 
 
                   </div>

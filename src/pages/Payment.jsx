@@ -46,17 +46,28 @@ export default function Payment() {
   const pickup =
     details.pickup ||
     details.pickupLocation ||
+    details.fromCity ||
     details.from ||
+    details.departure ||
     details.departureCity ||
+    details.origin ||
+    details.start ||
     details.source ||
+    details.fromCity ||
+    details.locationFrom ||
     "";
 
   const drop =
     details.drop ||
     details.dropLocation ||
+    details.toCity ||
     details.to ||
+    details.arrival ||
     details.arrivalCity ||
     details.destination ||
+    details.end ||
+    details.toCity ||
+    details.locationTo ||
     "";
 
   const pax =
@@ -66,12 +77,12 @@ export default function Payment() {
     details.travelers ||
     "";
 
-  // ✈ Smart route extraction (works for flights, cabs, cars, packages, transport)
   const routeDisplay =
-    details.route ||
+    details.route ||                        // ⭐ from your FlightBooking
     details.flightRoute ||
-    details.path ||
+    paymentData.route ||                    // fallback if you ever pass route here
     (pickup && drop ? `${pickup} → ${drop}` : "");
+
 
   /* ======================================================
       MAIN PAYMENT HANDLER

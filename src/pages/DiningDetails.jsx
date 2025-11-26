@@ -65,8 +65,24 @@ export default function DiningDetails() {
       background: "#0b0018",
       color: "#fff",
       confirmButtonColor: "#ffd47f",
-    }).then(() => navigate("/payment"));
-  };
+    }).then(() =>
+      navigate("/payment", {
+        state: {
+          paymentData: {
+            type: "dining",
+            title: restaurant.name,
+            price: 1000, // you can change this later
+            details: {
+              restaurantName: restaurant.name,
+              location: restaurant.location,
+              pax: reservation.pax,
+              dateTime: reservation.dateTime,
+            },
+          },
+        },
+      })
+    );
+    
 
   return (
     <div className="dining-details container py-5">

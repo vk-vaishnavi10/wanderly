@@ -37,24 +37,18 @@ export default function MapPage() {
 
   const autocompleteRef = useRef(null);
 
-  /* ------------------------------
-        LOAD SAVED MEMORIES
-  ------------------------------- */
+  /* LOAD SAVED MEMORIES */
   useEffect(() => {
     const savedPins = localStorage.getItem("wanderly_memories");
     if (savedPins) setMemoryPins(JSON.parse(savedPins));
   }, []);
 
-  /* ------------------------------
-        AUTO SAVE MEMORIES
-  ------------------------------- */
+  /* AUTO SAVE MEMORIES */
   useEffect(() => {
     localStorage.setItem("wanderly_memories", JSON.stringify(memoryPins));
   }, [memoryPins]);
 
-  /* ------------------------------
-        ON MAP LOAD
-  ------------------------------- */
+  /* ON MAP LOAD */
   const onMapLoad = useCallback((mapInstance) => {
     setMap(mapInstance);
 
@@ -69,9 +63,7 @@ export default function MapPage() {
     });
   }, []);
 
-  /* ------------------------------
-        SEARCH LOCATIONS
-  ------------------------------- */
+  /* SEARCH LOCATIONS */
   const handleSearch = () => {
     if (!map || !autocompleteRef.current) return;
 
@@ -105,9 +97,7 @@ export default function MapPage() {
     });
   };
 
-  /* ------------------------------
-        ADD MEMORY PIN
-  ------------------------------- */
+  /* ADD MEMORY PIN */
   const handleMapClick = (e) => {
     setNewMemory({
       lat: e.latLng.lat(),
@@ -185,7 +175,7 @@ export default function MapPage() {
                 lng: place.geometry.location.lng(),
               }}
               icon={{
-                url: "/chibi-hero.png",   // ⭐ FROM PUBLIC
+                url: "/chibihero1.png", // ⭐ UPDATED
                 scaledSize: new window.google.maps.Size(46, 46),
               }}
               onClick={() => setSelectedPlace(place)}
@@ -198,7 +188,7 @@ export default function MapPage() {
               key={i}
               position={{ lat: mem.lat, lng: mem.lng }}
               icon={{
-                url: "/chibi-hero.png",   // ⭐ SAME HERO ICON
+                url: "/chibihero1.png", // ⭐ UPDATED
                 scaledSize: new window.google.maps.Size(52, 52),
               }}
               onClick={() => setSelectedPlace({ ...mem, index: i })}
