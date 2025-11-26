@@ -5,7 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 import "./DiningDetails.css"; 
-import CatMouseMascot from "../components/CatMouseMascot";
+import CatMouseMascot from "../Components/CatMouseMascot";
 import stImg from "../images/st.jpeg";
 
 const diningDetails = {
