@@ -1,6 +1,5 @@
-// ⭐ src/pages/MapPage.jsx
+// ⭐ src/pages/MapPage.jsx (Clean default map pins)
 import React, { useState, useCallback, useRef, useEffect } from "react";
-
 import {
   GoogleMap,
   useLoadScript,
@@ -125,18 +124,12 @@ export default function MapPage() {
   return (
     <section className="map-section">
       <h1 className="map-title">🌍 Explore with Wanderly</h1>
-      <p className="map-subtitle">
-        Drop golden pins to mark memories that stay with you forever 💫
-      </p>
+      <p className="map-subtitle">Drop pins to bookmark your beautiful memories 💫</p>
 
       {/* Search Box */}
       <div className="map-search-box glassy">
         <Autocomplete onLoad={(ref) => (autocompleteRef.current = ref)}>
-          <input
-            type="text"
-            placeholder="Search a city or location..."
-            className="map-input"
-          />
+          <input type="text" placeholder="Search a city or location..." className="map-input" />
         </Autocomplete>
 
         <select
@@ -165,8 +158,7 @@ export default function MapPage() {
           onLoad={onMapLoad}
           onClick={handleMapClick}
         >
-
-          {/* SEARCH RESULT PINS */}
+          {/* SEARCH PINS (default Google pin) */}
           {places.map((place, index) => (
             <Marker
               key={index}
@@ -174,23 +166,15 @@ export default function MapPage() {
                 lat: place.geometry.location.lat(),
                 lng: place.geometry.location.lng(),
               }}
-              icon={{
-                url: "/chibihero1.png", // ⭐ UPDATED
-                scaledSize: new window.google.maps.Size(46, 46),
-              }}
               onClick={() => setSelectedPlace(place)}
             />
           ))}
 
-          {/* MEMORY PINS */}
+          {/* MEMORY PINS (default pin) */}
           {memoryPins.map((mem, i) => (
             <Marker
               key={i}
               position={{ lat: mem.lat, lng: mem.lng }}
-              icon={{
-                url: "/chibihero1.png", // ⭐ UPDATED
-                scaledSize: new window.google.maps.Size(52, 52),
-              }}
               onClick={() => setSelectedPlace({ ...mem, index: i })}
             />
           ))}
@@ -213,10 +197,7 @@ export default function MapPage() {
                   <>
                     <h4>📍 Your Memory</h4>
                     <p>{selectedPlace.text}</p>
-                    <button
-                      className="delete-btn"
-                      onClick={() => deleteMemory(selectedPlace.index)}
-                    >
+                    <button className="delete-btn" onClick={() => deleteMemory(selectedPlace.index)}>
                       ❌ Delete
                     </button>
                   </>
@@ -239,9 +220,7 @@ export default function MapPage() {
             <h3>✨ Save this memory?</h3>
             <textarea
               placeholder="Describe your moment..."
-              onChange={(e) =>
-                setNewMemory({ ...newMemory, text: e.target.value })
-              }
+              onChange={(e) => setNewMemory({ ...newMemory, text: e.target.value })}
               className="form-control mt-2"
             ></textarea>
             <button className="map-btn mt-3" onClick={saveMemory}>

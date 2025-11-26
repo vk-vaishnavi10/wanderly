@@ -49,7 +49,11 @@ export default function DiningDetails() {
   });
 
   if (!restaurant) {
-    return <h2 className="text-center text-warning mt-5">⚠️ Restaurant not found!</h2>;
+    return (
+      <h2 className="text-center text-warning mt-5">
+        ⚠️ Restaurant not found!
+      </h2>
+    );
   }
 
   const handleBooking = () => {
@@ -57,7 +61,7 @@ export default function DiningDetails() {
       Swal.fire("⚠️ Please fill all fields correctly.", "", "warning");
       return;
     }
-  
+
     Swal.fire({
       title: "🍽️ Reservation Confirmed!",
       text: `Table booked at ${restaurant.name}!`,
@@ -65,7 +69,7 @@ export default function DiningDetails() {
       background: "#0b0018",
       color: "#fff",
       confirmButtonColor: "#ffd47f",
-    }).then(() => {
+    }).then(() =>
       navigate("/payment", {
         state: {
           paymentData: {
@@ -80,15 +84,12 @@ export default function DiningDetails() {
             },
           },
         },
-      });
-    });
+      })
+    );
   };
-  
 
   return (
     <div className="dining-details container py-5">
-
-      {/* ⭐ CSS MASCOT */}
       <CatMouseMascot />
 
       <div className="dining-hero-card mb-5">
@@ -112,7 +113,9 @@ export default function DiningDetails() {
           type="datetime-local"
           className="form-control"
           value={reservation.dateTime}
-          onChange={(e) => setReservation({ ...reservation, dateTime: e.target.value })}
+          onChange={(e) =>
+            setReservation({ ...reservation, dateTime: e.target.value })
+          }
         />
 
         <label className="form-label mt-3">👥 Number of Guests</label>
@@ -121,14 +124,15 @@ export default function DiningDetails() {
           min="1"
           className="form-control"
           value={reservation.pax}
-          onChange={(e) => setReservation({ ...reservation, pax: e.target.value })}
+          onChange={(e) =>
+            setReservation({ ...reservation, pax: e.target.value })
+          }
         />
 
         <button className="confirm-btn w-100 mt-4" onClick={handleBooking}>
           🍷 Confirm Reservation
         </button>
       </div>
-
     </div>
   );
 }
