@@ -1,5 +1,5 @@
 // src/pages/PaymentSuccess.jsx
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./PaymentSuccess.css";
 
@@ -9,113 +9,95 @@ export default function PaymentSuccess() {
 
   const paymentData = location.state?.paymentData;
 
-  const [open, setOpen] = useState(false);
-
-  // If no data → redirect style page
   if (!paymentData) {
     return (
-      <div className="blob-error">
-        ⚠️ No booking data found. Please book again.
+      <div className="ps-error">
+        ⚠️ No payment data found. Please try again.
       </div>
     );
   }
 
   const cleanAmount = (v) =>
     Number(String(v || 0).replace(/[^0-9]/g, "")) || 0;
-
   const amount = cleanAmount(paymentData.price);
 
-  const pickup =
-    paymentData.details?.pickup ||
-    paymentData.details?.pickupLocation ||
+  const details = paymentData.details || {};
+  const route =
+    details.route ||
+    details.pickup ||
+    details.pickupLocation ||
     "";
 
-  const drop =
-    paymentData.details?.drop ||
-    paymentData.details?.dropLocation ||
-    "";
+  const generateTicket = () => {
+    const content = `
+WANDERLY — E-TICKET
+------------------------------------
+Booking: ${paymentData.title}
+Amount Paid: ₹${amount}
+Status: SUCCESS
+------------------------------------
+Thank you for choosing Wanderly 💛
+    `;
 
-  const pax =
-    paymentData.details?.pax ||
-    paymentData.details?.guests ||
-    "";
-
-  // Envelope animation trigger
-  useEffect(() => {
-    const t = setTimeout(() => setOpen(true), 600);
-    return () => clearTimeout(t);
-  }, []);
+    const blob = new Blob([content], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "Wanderly_Ticket.txt";
+    link.click();
+  };
 
   return (
-    <div className="payment-success-blobpage">
+    <div className="ps-container">
 
-      {/* Floating Coffee Dust */}
-      {[...Array(25)].map((_, i) => (
+      {/* Background aura lights */}
+      <div className="ps-bg-circle c1"></div>
+      <div className="ps-bg-circle c2"></div>
+      <div className="ps-bg-circle c3"></div>
+
+      {/* Animated icons */}
+      {[..."✈️🚗🎒🗺️🏨🌍"].map((icon, i) => (
         <div
           key={i}
-          className="blob-coffee-dust"
+          className="ps-floating-icon"
           style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            animationDelay: `${Math.random() * 5}s`,
-            animationDuration: `${5 + Math.random() * 8}s`,
+            left: `${Math.random() * 90}%`,
+            top: `${Math.random() * 85}%`,
+            animationDelay: `${i * 0.5}s`,
           }}
-        />
+        >
+          {icon}
+        </div>
       ))}
 
-      {/* Magical Portal Rings */}
-      <div className="blob-portal-ring ring1"></div>
-      <div className="blob-portal-ring ring2"></div>
-      <div className="blob-portal-ring ring3"></div>
+      {/* Glass Card */}
+      <div className="ps-card">
+        <h2 className="ps-title">Payment Successful 🎉</h2>
+        <p className="ps-sub">Your booking is now confirmed!</p>
 
-      {/* Envelope */}
-      <div className={`blob-envelope ${open ? "open" : ""}`}>
-        <div className="blob-envelope-flap"></div>
+        <div className="ps-receipt-box">
+          <h3>{paymentData.title}</h3>
 
-        {/* FLOATING BLOB CARD */}
-        <div className="blob-card">
-          <div className="receipt-eyebrow">WANDERLY – RECEIPT</div>
+          {route && (
+            <p className="ps-route">🗺 {route}</p>
+          )}
 
-          <h2 className="receipt-title">Payment Successful!</h2>
-          <p className="receipt-sub">{paymentData.title}</p>
+          <p className="ps-amount">💰 Paid: <b>₹{amount}</b></p>
+          <p className="ps-status">Status: <span>SUCCESS</span></p>
+        </div>
 
-          <div className="receipt-details">
-            {paymentData.type === "flight" && (
-              <div>✈ Flight Confirmed</div>
-            )}
-            {paymentData.type === "hotel" && (
-              <div>🏨 Stay Confirmed</div>
-            )}
-            {paymentData.type === "package" && (
-              <div>🎁 Package Booked</div>
-            )}
-            {paymentData.type === "dining" && (
-              <div>🍽 Guests: {pax}</div>
-            )}
-            {(paymentData.type === "transport" ||
-              paymentData.type === "car" ||
-              paymentData.type === "cab") && (
-              <div>
-                🚗 Ride Confirmed 
-                {pickup && drop && (
-                  <div className="route">
-                    🗺 {pickup} → {drop}
-                  </div>
-                )}
-              </div>
-            )}
+        {/* Buttons */}
+        <div className="ps-btn-group">
+          <button className="ps-btn download" onClick={generateTicket}>
+            🎟 Download Ticket
+          </button>
 
-            <div className="paid-amount">💰 Paid: ₹{amount}</div>
-          </div>
+          <button className="ps-btn home" onClick={() => navigate("/home")}>
+            🏠 Go Home
+          </button>
 
-          <div className="blob-buttons">
-            <button onClick={() => navigate("/home")} className="blob-btn home">
-              🏠 Home
-            </button>
-            <button onClick={() => navigate(-1)} className="blob-btn again">
-              🔁 Book Again
-            </button>
-          </div>
+          <button className="ps-btn again" onClick={() => navigate(-1)}>
+            🔁 Book Again
+          </button>
         </div>
       </div>
     </div>

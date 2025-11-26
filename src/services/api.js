@@ -6,15 +6,23 @@ import axios from "axios";
 ============================================================ */
 
 // ✅ Base API URL (Switch automatically for production)
-const API_BASE =
-  import.meta.env.VITE_API_BASE || "http://localhost:8085/api";
+import axios from "axios";
 
-// ✅ Create reusable Axios instance
+/* ============================================================
+   🌍 Wanderly — API Configuration (Optimized)
+============================================================ */
+
+// ✅ Base API URL
+// - In dev:  set VITE_API_BASE="http://localhost:8085/api" in .env
+// - In Docker/K8s: it will default to "/api" (nginx proxy)
+const API_BASE = import.meta.env.VITE_API_BASE || "/api";
+
 const api = axios.create({
   baseURL: API_BASE,
   headers: { "Content-Type": "application/json" },
-  timeout: 15000, // ⏱️ Max wait 15s per request
+  timeout: 15000,
 });
+
 
 // ✅ Global response interceptor for consistent error handling
 api.interceptors.response.use(

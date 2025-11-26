@@ -1,6 +1,7 @@
 // src/pages/MapPage.jsx
 import React, { useState, useCallback, useRef, useEffect } from "react";
-import chibiHero from "../assets/chibi-hero.png";
+import chibiHero from "../assets/chibi-hero.png";   // ⭐ Correct image import
+
 import {
   GoogleMap,
   useLoadScript,
@@ -8,6 +9,7 @@ import {
   InfoWindow,
   Autocomplete,
 } from "@react-google-maps/api";
+
 import "./Map.css";
 
 const containerStyle = {
@@ -33,6 +35,7 @@ export default function MapPage() {
   const [memoryPins, setMemoryPins] = useState([]);
   const [newMemory, setNewMemory] = useState({ lat: null, lng: null, text: "" });
   const [showMemoryModal, setShowMemoryModal] = useState(false);
+
   const autocompleteRef = useRef(null);
 
   // Load saved pins
@@ -41,7 +44,7 @@ export default function MapPage() {
     if (savedPins) setMemoryPins(JSON.parse(savedPins));
   }, []);
 
-  // Save automatically
+  // Save pins automatically
   useEffect(() => {
     localStorage.setItem("wanderly_memories", JSON.stringify(memoryPins));
   }, [memoryPins]);
@@ -77,22 +80,26 @@ export default function MapPage() {
     setCenter(newCenter);
 
     const service = new window.google.maps.places.PlacesService(map);
-    const request = { location: newCenter, radius: 5000, type: [searchType] };
+    const request = {
+      location: newCenter,
+      radius: 5000,
+      type: [searchType],
+    };
 
     service.nearbySearch(request, (results, status) => {
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
         setPlaces(results);
-      } else {
-        setPlaces([]);
-      }
+      } else setPlaces([]);
     });
   };
 
   // Add memory pin
   const handleMapClick = (e) => {
-    const lat = e.latLng.lat();
-    const lng = e.latLng.lng();
-    setNewMemory({ lat, lng, text: "" });
+    setNewMemory({
+      lat: e.latLng.lat(),
+      lng: e.latLng.lng(),
+      text: "",
+    });
     setShowMemoryModal(true);
   };
 
@@ -103,10 +110,8 @@ export default function MapPage() {
     }
   };
 
-  // Delete pin
   const deleteMemory = (index) => {
-    const updated = memoryPins.filter((_, i) => i !== index);
-    setMemoryPins(updated);
+    setMemoryPins(memoryPins.filter((_, i) => i !== index));
     setSelectedPlace(null);
   };
 
@@ -142,9 +147,7 @@ export default function MapPage() {
           <option value="cafe">☕ Cafes</option>
         </select>
 
-        <button className="map-btn" onClick={handleSearch}>
-          Search
-        </button>
+        <button className="map-btn" onClick={handleSearch}>Search</button>
       </div>
 
       {/* Map */}
@@ -156,7 +159,8 @@ export default function MapPage() {
           onLoad={onMapLoad}
           onClick={handleMapClick}
         >
-          {/* Search Results */}
+
+          {/* Search Result Pins */}
           {places.map((place, index) => (
             <Marker
               key={index}
@@ -165,7 +169,7 @@ export default function MapPage() {
                 lng: place.geometry.location.lng(),
               }}
               icon={{
-                url: "/chibi-hero.png",
+                url: chibiHero, // ⭐ FIXED
                 scaledSize: new window.google.maps.Size(46, 46),
               }}
               onClick={() => setSelectedPlace(place)}
@@ -178,7 +182,7 @@ export default function MapPage() {
               key={i}
               position={{ lat: mem.lat, lng: mem.lng }}
               icon={{
-                url: "/src/assets/pins/panda_pin.png",
+                url: chibiHero, // ⭐ SAME HERO PIN
                 scaledSize: new window.google.maps.Size(52, 52),
               }}
               onClick={() => setSelectedPlace({ ...mem, index: i })}
@@ -190,10 +194,10 @@ export default function MapPage() {
             <InfoWindow
               position={{
                 lat:
-                  selectedPlace.lat ||
+                  selectedPlace.lat ??
                   selectedPlace.geometry?.location?.lat(),
                 lng:
-                  selectedPlace.lng ||
+                  selectedPlace.lng ??
                   selectedPlace.geometry?.location?.lng(),
               }}
               onCloseClick={() => setSelectedPlace(null)}
@@ -221,40 +225,6 @@ export default function MapPage() {
           )}
         </GoogleMap>
       </div>
-
-      {/* Memory Modal */}
-      {showMemoryModal && (
-        <div className="memory-modal-overlay">
-          <div className="memory-modal">
-            <h3>Add Memory 📍</h3>
-            <textarea
-              placeholder="Write something unforgettable..."
-              value={newMemory.text}
-              onChange={(e) =>
-                setNewMemory({ ...newMemory, text: e.target.value })
-              }
-            />
-            <div className="memory-buttons">
-              <button onClick={saveMemory} className="btn-save">
-                Save
-              </button>
-              <button
-                onClick={() => setShowMemoryModal(false)}
-                className="btn-cancel"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <footer className="map-footer">
-        <p>
-          ✨ Your memories sparkle across the world —{" "}
-          <span className="wanderly-link">with Wanderly 💛</span>
-        </p>
-      </footer>
     </section>
   );
 }

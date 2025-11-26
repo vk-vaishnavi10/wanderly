@@ -19,41 +19,63 @@ export default function Payment() {
     );
   }
 
-  // 🔹 Normalize price safely
+  /* ======================================================
+      PRICE — Safely Clean Numbers (₹ symbols removed)
+  ====================================================== */
   const cleanNumber = (v) => Number(String(v || "0").replace(/[^0-9]/g, ""));
   const amount = cleanNumber(paymentData?.price);
 
-  // ---- PAYMENT STATES ----
+  /* ======================================================
+     STATES
+  ====================================================== */
   const [method, setMethod] = useState("card");
   const [bank, setBank] = useState("");
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  // ---- OTP STATES ----
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
   const [generatedOtp, setGeneratedOtp] = useState("");
   const [otpSent, setOtpSent] = useState(false);
 
-  // ----------- NORMALIZE DETAILS -------------
+  /* ======================================================
+      NORMALIZE DETAILS (Fixes undefined → clean data)
+  ====================================================== */
+  const details = paymentData.details || {};
+
   const pickup =
-    paymentData.details?.pickup ||
-    paymentData.details?.pickupLocation ||
+    details.pickup ||
+    details.pickupLocation ||
+    details.from ||
+    details.departureCity ||
+    details.source ||
     "";
 
   const drop =
-    paymentData.details?.drop ||
-    paymentData.details?.dropLocation ||
+    details.drop ||
+    details.dropLocation ||
+    details.to ||
+    details.arrivalCity ||
+    details.destination ||
     "";
 
-  const pax = paymentData.details?.pax || paymentData.details?.guests || "";
+  const pax =
+    details.pax ||
+    details.guests ||
+    details.persons ||
+    details.travelers ||
+    "";
 
-  // 👉 Safe route display (fixes undefined → undefined)
+  // ✈ Smart route extraction (works for flights, cabs, cars, packages, transport)
   const routeDisplay =
-    paymentData.details?.route ||
+    details.route ||
+    details.flightRoute ||
+    details.path ||
     (pickup && drop ? `${pickup} → ${drop}` : "");
 
-  // ----------- MAIN PAYMENT HANDLER -------------
+  /* ======================================================
+      MAIN PAYMENT HANDLER
+  ====================================================== */
   const handlePayment = async (e) => {
     if (e) e.preventDefault();
     setLoading(true);
@@ -61,20 +83,29 @@ export default function Payment() {
     try {
       const payload = {
         userName:
-          paymentData.details?.userName ||
-          paymentData.details?.fullName ||
+          details.userName ||
+          details.fullName ||
+          details.name ||
           "Guest",
-        email: paymentData.details?.email || "unknown@example.com",
-        flightName: paymentData.title,
+
+        email: details.email || "unknown@example.com",
+
+        flightName: paymentData.title || paymentData.name || "Trip",
+
         route: routeDisplay || "",
+
         amount: amount,
+
         status: "SUCCESS",
       };
 
       console.log("💸 Sending Payment Payload:", payload);
+
       await addPayment(payload);
 
-      navigate("/payment/success", { state: { paymentData } });
+      navigate("/payment/success", {
+        state: { paymentData },
+      });
     } catch (err) {
       console.error("❌ Payment error:", err);
       alert("Payment failed. Try again.");
@@ -83,6 +114,9 @@ export default function Payment() {
     }
   };
 
+  /* ======================================================
+      OTP MOCK
+  ====================================================== */
   const handleSendOtp = () => {
     if (!phone) return alert("Enter phone number first.");
 
@@ -101,16 +135,16 @@ export default function Payment() {
     }
   };
 
+  /* ======================================================
+      UI LAYOUT
+  ====================================================== */
   return (
     <div className="payment-page">
-  
-      {/* ☕ GOLDEN PORTAL WRAPPER */}
       <div className="payment-portal-shell">
         <div className="portal-circle portal-circle-1" />
         <div className="portal-circle portal-circle-2" />
         <div className="portal-circle portal-circle-3" />
-  
-        {/* 🌟 FLOATING COFFEE DUST – PLACE IT HERE */}
+
         {[...Array(18)].map((_, i) => (
           <div
             key={i}
@@ -123,73 +157,56 @@ export default function Payment() {
             }}
           />
         ))}
-  
-        {/* 💳 ACTUAL PAYMENT CARD */}
-        <div className="payment-card portal-card">
 
-          {/* Tiny eyebrow label */}
+        <div className="payment-card portal-card">
           <div className="payment-eyebrow">
             WANDERLY • SECURE PAYMENT
           </div>
 
           <h2 className="payment-title">Confirm your trip</h2>
           <p className="payment-sub">
-            Warm, encrypted and easy – finish your booking in a single, calm step.
+            Warm, encrypted and easy – finish your booking in a single step.
           </p>
 
-          {/* SUMMARY BOX */}
+          {/* SUMMARY */}
           <div className="summary-box">
             <h4>{paymentData.title}</h4>
+
             <p className="summary-text">
+              {/* ====== FLIGHT ====== */}
               {paymentData.type === "flight" && routeDisplay && (
                 <>
                   ✈ {routeDisplay} <br />
                 </>
               )}
 
-              {paymentData.type === "hotel" && paymentData.details?.location && (
+              {/* ====== HOTEL ====== */}
+              {paymentData.type === "hotel" && details.location && (
                 <>
-                  🏨 {paymentData.details.location} <br />
+                  🏨 {details.location} <br />
                 </>
               )}
 
+              {/* ====== PACKAGE ====== */}
               {paymentData.type === "package" && paymentData.duration && (
                 <>
                   🎁 {paymentData.duration} <br />
                 </>
               )}
 
+              {/* ====== DINING ====== */}
               {paymentData.type === "dining" && pax && (
                 <>
                   🍽 Guests: {pax} <br />
                 </>
               )}
 
-              {paymentData.type === "transport" && (
+              {/* ====== TRANSPORT / CABS / CAR ====== */}
+              {(paymentData.type === "transport" ||
+                paymentData.type === "car" ||
+                paymentData.type === "cab") && (
                 <>
-                  🚗 {paymentData.details?.carType} <br />
-                  {routeDisplay && (
-                    <>
-                      🗺 {routeDisplay} <br />
-                    </>
-                  )}
-                </>
-              )}
-
-              {paymentData.type === "car" && (
-                <>
-                  🚘 {paymentData.details?.carType} <br />
-                  {routeDisplay && (
-                    <>
-                      🗺 {routeDisplay} <br />
-                    </>
-                  )}
-                </>
-              )}
-
-              {paymentData.type === "cab" && (
-                <>
-                  🚖 {paymentData.details?.cabType} <br />
+                  🚗 {details.carType || details.cabType} <br />
                   {routeDisplay && (
                     <>
                       🗺 {routeDisplay} <br />
