@@ -1,6 +1,5 @@
-// src/pages/MapPage.jsx
+// ⭐ src/pages/MapPage.jsx
 import React, { useState, useCallback, useRef, useEffect } from "react";
-import chibiHero from "../assets/chibi-hero.png";   // ⭐ Correct image import
 
 import {
   GoogleMap,
@@ -38,19 +37,27 @@ export default function MapPage() {
 
   const autocompleteRef = useRef(null);
 
-  // Load saved pins
+  /* ------------------------------
+        LOAD SAVED MEMORIES
+  ------------------------------- */
   useEffect(() => {
     const savedPins = localStorage.getItem("wanderly_memories");
     if (savedPins) setMemoryPins(JSON.parse(savedPins));
   }, []);
 
-  // Save pins automatically
+  /* ------------------------------
+        AUTO SAVE MEMORIES
+  ------------------------------- */
   useEffect(() => {
     localStorage.setItem("wanderly_memories", JSON.stringify(memoryPins));
   }, [memoryPins]);
 
+  /* ------------------------------
+        ON MAP LOAD
+  ------------------------------- */
   const onMapLoad = useCallback((mapInstance) => {
     setMap(mapInstance);
+
     mapInstance.setOptions({
       disableDefaultUI: false,
       styles: [
@@ -62,6 +69,9 @@ export default function MapPage() {
     });
   }, []);
 
+  /* ------------------------------
+        SEARCH LOCATIONS
+  ------------------------------- */
   const handleSearch = () => {
     if (!map || !autocompleteRef.current) return;
 
@@ -89,11 +99,15 @@ export default function MapPage() {
     service.nearbySearch(request, (results, status) => {
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
         setPlaces(results);
-      } else setPlaces([]);
+      } else {
+        setPlaces([]);
+      }
     });
   };
 
-  // Add memory pin
+  /* ------------------------------
+        ADD MEMORY PIN
+  ------------------------------- */
   const handleMapClick = (e) => {
     setNewMemory({
       lat: e.latLng.lat(),
@@ -147,10 +161,12 @@ export default function MapPage() {
           <option value="cafe">☕ Cafes</option>
         </select>
 
-        <button className="map-btn" onClick={handleSearch}>Search</button>
+        <button className="map-btn" onClick={handleSearch}>
+          Search
+        </button>
       </div>
 
-      {/* Map */}
+      {/* MAP */}
       <div className="map-container">
         <GoogleMap
           mapContainerStyle={containerStyle}
@@ -160,7 +176,7 @@ export default function MapPage() {
           onClick={handleMapClick}
         >
 
-          {/* Search Result Pins */}
+          {/* SEARCH RESULT PINS */}
           {places.map((place, index) => (
             <Marker
               key={index}
@@ -169,27 +185,27 @@ export default function MapPage() {
                 lng: place.geometry.location.lng(),
               }}
               icon={{
-                url: chibiHero, // ⭐ FIXED
+                url: "/chibi-hero.png",   // ⭐ FROM PUBLIC
                 scaledSize: new window.google.maps.Size(46, 46),
               }}
               onClick={() => setSelectedPlace(place)}
             />
           ))}
 
-          {/* Memory Pins */}
+          {/* MEMORY PINS */}
           {memoryPins.map((mem, i) => (
             <Marker
               key={i}
               position={{ lat: mem.lat, lng: mem.lng }}
               icon={{
-                url: chibiHero, // ⭐ SAME HERO PIN
+                url: "/chibi-hero.png",   // ⭐ SAME HERO ICON
                 scaledSize: new window.google.maps.Size(52, 52),
               }}
               onClick={() => setSelectedPlace({ ...mem, index: i })}
             />
           ))}
 
-          {/* Info Window */}
+          {/* INFO WINDOW */}
           {selectedPlace && (
             <InfoWindow
               position={{
@@ -225,6 +241,25 @@ export default function MapPage() {
           )}
         </GoogleMap>
       </div>
+
+      {/* MEMORY MODAL */}
+      {showMemoryModal && (
+        <div className="memory-modal-overlay">
+          <div className="memory-modal">
+            <h3>✨ Save this memory?</h3>
+            <textarea
+              placeholder="Describe your moment..."
+              onChange={(e) =>
+                setNewMemory({ ...newMemory, text: e.target.value })
+              }
+              className="form-control mt-2"
+            ></textarea>
+            <button className="map-btn mt-3" onClick={saveMemory}>
+              Save Memory
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
