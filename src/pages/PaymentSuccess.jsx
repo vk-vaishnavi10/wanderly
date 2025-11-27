@@ -2,6 +2,7 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./PaymentSuccess.css";
+import pigeon from "../assets/pigeon.png";
 
 export default function PaymentSuccess() {
   const location = useLocation();
@@ -33,6 +34,7 @@ export default function PaymentSuccess() {
 WANDERLY — E-TICKET
 ------------------------------------
 Booking: ${paymentData.title}
+Route: ${route || "N/A"}
 Amount Paid: ₹${amount}
 Status: SUCCESS
 ------------------------------------
@@ -48,56 +50,86 @@ Thank you for choosing Wanderly 💛
 
   return (
     <div className="ps-container">
-
       {/* Background aura lights */}
       <div className="ps-bg-circle c1"></div>
       <div className="ps-bg-circle c2"></div>
       <div className="ps-bg-circle c3"></div>
 
-      {/* Animated icons */}
+      {/* Floating icons (soft ambience) */}
       {[..."✈️🚗🎒🗺️🏨🌍"].map((icon, i) => (
         <div
           key={i}
           className="ps-floating-icon"
           style={{
-            left: `${Math.random() * 90}%`,
-            top: `${Math.random() * 85}%`,
-            animationDelay: `${i * 0.5}s`,
+            left: `${10 + Math.random() * 70}%`,
+            top: `${10 + Math.random() * 70}%`,
+            animationDelay: `${i * 0.6}s`,
           }}
         >
           {icon}
         </div>
       ))}
 
-      {/* Glass Card */}
-      <div className="ps-card">
-        <h2 className="ps-title">Payment Successful 🎉</h2>
-        <p className="ps-sub">Your booking is now confirmed!</p>
-
-        <div className="ps-receipt-box">
-          <h3>{paymentData.title}</h3>
-
-          {route && (
-            <p className="ps-route">🗺 {route}</p>
-          )}
-
-          <p className="ps-amount">💰 Paid: <b>₹{amount}</b></p>
-          <p className="ps-status">Status: <span>SUCCESS</span></p>
+      {/* HERO LAYOUT */}
+      <div className="ps-hero">
+        {/* Left – Pigeon illustration */}
+        <div className="ps-hero-left">
+          <div className="ps-pigeon-wrapper">
+            <img
+              src={pigeon}
+              alt="Wanderly payment success pigeon"
+              className="ps-pigeon-img"
+            />
+            <div className="ps-pigeon-shadow" />
+          </div>
+          <p className="ps-hero-caption">
+            Your e-ticket is on its way to you ✉️
+          </p>
         </div>
 
-        {/* Buttons */}
-        <div className="ps-btn-group">
-          <button className="ps-btn download" onClick={generateTicket}>
-            🎟 Download Ticket
-          </button>
+        {/* Right – Glass Card */}
+        <div className="ps-card">
+          <span className="ps-chip">Booking confirmed</span>
 
-          <button className="ps-btn home" onClick={() => navigate("/home")}>
-            🏠 Go Home
-          </button>
+          <h2 className="ps-title">Thank you! Payment Successful 🎉</h2>
+          <p className="ps-sub">
+            We’ve locked in your trip. A copy of your ticket has been generated
+            for you.
+          </p>
 
-          <button className="ps-btn again" onClick={() => navigate(-1)}>
-            🔁 Book Again
-          </button>
+          <div className="ps-divider" />
+
+          <div className="ps-receipt-box">
+            <h3 className="ps-trip-title">{paymentData.title}</h3>
+
+            {route && <p className="ps-route">🗺 {route}</p>}
+
+            <p className="ps-amount">
+              💰 Paid: <b>₹{amount}</b>
+            </p>
+
+            <p className="ps-status">
+              Status: <span>SUCCESS</span>
+            </p>
+          </div>
+
+          {/* Buttons */}
+          <div className="ps-btn-group">
+            <button className="ps-btn download" onClick={generateTicket}>
+              🎟 Download Ticket
+            </button>
+
+            <button
+              className="ps-btn home"
+              onClick={() => navigate("/home")}
+            >
+              🏠 Go Home
+            </button>
+
+            <button className="ps-btn again" onClick={() => navigate(-1)}>
+              🔁 Book Again
+            </button>
+          </div>
         </div>
       </div>
     </div>

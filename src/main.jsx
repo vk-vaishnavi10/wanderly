@@ -12,8 +12,8 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { BrowserRouter } from "react-router-dom";
 import { UserProvider } from "./context/UserContext.jsx";
 
-// ❌ REMOVE THIS → registerSW({ immediate: true });
-// ❌ No PWA import anymore
+// ❌ REMOVE this line completely
+// registerSW({ immediate: true });
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

@@ -1,4 +1,4 @@
-// ⭐ src/pages/MapPage.jsx (Clean default map pins)
+// ⭐ src/pages/MapPage.jsx
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import {
   GoogleMap,
@@ -9,6 +9,7 @@ import {
 } from "@react-google-maps/api";
 
 import "./Map.css";
+import customMarker from "../assets/chibi-hero.png"; // ⭐ your family marker
 
 const containerStyle = {
   width: "90%",
@@ -47,7 +48,7 @@ export default function MapPage() {
     localStorage.setItem("wanderly_memories", JSON.stringify(memoryPins));
   }, [memoryPins]);
 
-  /* ON MAP LOAD */
+  /* MAP LOAD */
   const onMapLoad = useCallback((mapInstance) => {
     setMap(mapInstance);
 
@@ -62,7 +63,7 @@ export default function MapPage() {
     });
   }, []);
 
-  /* SEARCH LOCATIONS */
+  /* SEARCH HANDLER */
   const handleSearch = () => {
     if (!map || !autocompleteRef.current) return;
 
@@ -81,22 +82,23 @@ export default function MapPage() {
     setCenter(newCenter);
 
     const service = new window.google.maps.places.PlacesService(map);
-    const request = {
-      location: newCenter,
-      radius: 5000,
-      type: [searchType],
-    };
-
-    service.nearbySearch(request, (results, status) => {
-      if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-        setPlaces(results);
-      } else {
-        setPlaces([]);
+    service.nearbySearch(
+      {
+        location: newCenter,
+        radius: 5000,
+        type: [searchType],
+      },
+      (results, status) => {
+        if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+          setPlaces(results);
+        } else {
+          setPlaces([]);
+        }
       }
-    });
+    );
   };
 
-  /* ADD MEMORY PIN */
+  /* CLICK TO ADD MEMORY */
   const handleMapClick = (e) => {
     setNewMemory({
       lat: e.latLng.lat(),
@@ -118,15 +120,14 @@ export default function MapPage() {
     setSelectedPlace(null);
   };
 
-  if (!isLoaded)
-    return <div className="text-light">🌀 Loading Wanderly Map...</div>;
+  if (!isLoaded) return <div className="text-light">🌀 Loading Wanderly Map...</div>;
 
   return (
     <section className="map-section">
       <h1 className="map-title">🌍 Explore with Wanderly</h1>
       <p className="map-subtitle">Drop pins to bookmark your beautiful memories 💫</p>
 
-      {/* Search Box */}
+      {/* SEARCH BOX */}
       <div className="map-search-box glassy">
         <Autocomplete onLoad={(ref) => (autocompleteRef.current = ref)}>
           <input type="text" placeholder="Search a city or location..." className="map-input" />
@@ -158,7 +159,7 @@ export default function MapPage() {
           onLoad={onMapLoad}
           onClick={handleMapClick}
         >
-          {/* SEARCH PINS (default Google pin) */}
+          {/* 🔶 SEARCH RESULT MARKERS with custom glowing image */}
           {places.map((place, index) => (
             <Marker
               key={index}
@@ -166,20 +167,32 @@ export default function MapPage() {
                 lat: place.geometry.location.lat(),
                 lng: place.geometry.location.lng(),
               }}
+              icon={{
+                url: customMarker,
+                scaledSize: new window.google.maps.Size(65, 65),
+                anchor: new window.google.maps.Point(32, 65),
+              }}
+              animation={window.google.maps.Animation.DROP}
               onClick={() => setSelectedPlace(place)}
             />
           ))}
 
-          {/* MEMORY PINS (default pin) */}
+          {/* 🔶 MEMORY PINS with same custom marker */}
           {memoryPins.map((mem, i) => (
             <Marker
               key={i}
               position={{ lat: mem.lat, lng: mem.lng }}
+              icon={{
+                url: customMarker,
+                scaledSize: new window.google.maps.Size(70, 70),
+                anchor: new window.google.maps.Point(35, 70),
+              }}
+              animation={window.google.maps.Animation.BOUNCE}
               onClick={() => setSelectedPlace({ ...mem, index: i })}
             />
           ))}
 
-          {/* INFO WINDOW */}
+          {/* 🔶 INFO WINDOW */}
           {selectedPlace && (
             <InfoWindow
               position={{
@@ -197,7 +210,10 @@ export default function MapPage() {
                   <>
                     <h4>📍 Your Memory</h4>
                     <p>{selectedPlace.text}</p>
-                    <button className="delete-btn" onClick={() => deleteMemory(selectedPlace.index)}>
+                    <button
+                      className="delete-btn"
+                      onClick={() => deleteMemory(selectedPlace.index)}
+                    >
                       ❌ Delete
                     </button>
                   </>

@@ -14,7 +14,7 @@
   overflow-x: hidden;
 }
 
-/* Golden floating dust */
+/* ⭐ Golden floating dust */
 .map-section::before {
   content: "";
   position: absolute;
@@ -30,15 +30,7 @@
   to { transform: translateY(40px); }
 }
 
-/* RESPONSIVE */
-@media (max-width: 1100px) {
-  .map-section { padding-left: 240px; }
-}
-@media (max-width: 900px) {
-  .map-section { padding-left: 20px; }
-}
-
-/* TITLE */
+/* ⭐ TITLE */
 .map-title {
   color: #FFD97A;
   font-size: 3rem;
@@ -62,7 +54,7 @@
   text-shadow: 0 0 10px rgba(255, 200, 150, 0.4);
 }
 
-/* SEARCH BAR */
+/* ⭐ SEARCH BAR */
 .map-search-box {
   display: flex;
   justify-content: center;
@@ -81,14 +73,6 @@
     0 0 10px rgba(255, 210, 150, 0.2),
     0 0 40px rgba(255, 210, 150, 0.15),
     0 0 80px rgba(255, 170, 90, 0.1);
-  transition: 0.3s ease;
-}
-
-.glassy:hover {
-  box-shadow:
-    0 0 20px rgba(255, 210, 160, 0.6),
-    0 0 60px rgba(255, 180, 120, 0.3);
-  transform: scale(1.02);
 }
 
 .map-input,
@@ -102,7 +86,7 @@
   color: #FFEEDB;
 }
 
-/* SEARCH BUTTON */
+/* ⭐ SEARCH BUTTON */
 .map-btn {
   background: linear-gradient(135deg, #f1c27d, #e5a24a, #f8d9a0);
   border: none;
@@ -110,7 +94,6 @@
   box-shadow:
     0 0 12px rgba(212, 166, 87, 0.6),
     0 0 24px rgba(255, 200, 120, 0.4);
-  transition: 0.3s;
 }
 
 .map-btn:hover {
@@ -120,7 +103,7 @@
     0 0 55px rgba(255, 180, 120, 0.7);
 }
 
-/* MAP CONTAINER */
+/* ⭐ MAP CONTAINER */
 .map-container {
   border: 2px solid rgba(212, 166, 87, 0.7);
   border-radius: 25px;
@@ -139,7 +122,7 @@
   100% { box-shadow: 0 0 35px rgba(212,166,87,0.4); }
 }
 
-/* INFO WINDOW */
+/* ⭐ INFO WINDOW */
 .info-window {
   background: #FFF4E1;
   padding: 12px;
@@ -158,7 +141,7 @@
   color: #8B5A2B;
 }
 
-/* DELETE BUTTON */
+/* ⭐ DELETE BUTTON */
 .delete-btn {
   background: linear-gradient(135deg, #FF7070, #FF4444);
   color: #fff;
@@ -175,7 +158,7 @@
   box-shadow: 0 0 15px rgba(255, 60, 60, 0.9);
 }
 
-/* MEMORY MODAL */
+/* ⭐ MEMORY MODAL */
 .memory-modal-overlay {
   position: fixed;
   inset: 0;
@@ -205,14 +188,10 @@
   to { transform: scale(1); opacity: 1; }
 }
 
-/* FOOTER */
-.map-footer {
-  margin-top: 2rem;
-  color: #FFDDAF;
-  text-shadow: 0 0 14px rgba(255, 210, 150, 0.4);
+/* ⭐ RESPONSIVE */
+@media (max-width: 1100px) {
+  .map-section { padding-left: 240px; }
 }
-
-.wanderly-link {
-  color: #ffca7f;
-  font-weight: 700;
+@media (max-width: 900px) {
+  .map-section { padding-left: 20px; }
 }
